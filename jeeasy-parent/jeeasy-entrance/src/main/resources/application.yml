@@ -1,0 +1,122 @@
+# Tomcat
+server:
+  # 端 口
+  port: 8080
+
+# Spring 配置
+spring:
+  # Druid Pool 运行环境
+  profiles:
+    # 运 行 环 境
+    active: dev
+# 数据源配置
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+        allow:
+      web-stat-filter:
+        enabled: true
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
+      druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+        # 连接池的配置信息
+        # 初始化大小，最小，最大
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 打开PSCache，并且指定每个连接上PSCache的大小
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        filters: stat,wall,slf4j
+        # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+#  activiti:
+    # 检 查 流 程 定 义 文 件
+#    check-process-definitions: false
+#
+## mybatis 配 置
+#mybatis:
+#  # 配 置 扫 描
+#  mapper-locations: classpath*:**/xml/**.xml
+#  # 别 名 扫 描
+#  type-aliases-package: com.pearadmin
+#
+## Pear 插 件 配 置 信 息
+#pear:
+#    # Document 配 置 信 息
+#  swagger:
+#      # 文 档 标 题
+#    title: Pear Admin API
+#      # 是 否 开 启
+#    enable: true
+#      # 描 述 信 息
+#    describe: 企 业 快 速 开 发 平 台
+#      # 扫 包 路 径
+#    scan-package: com.pearadmin
+#      # 协 议
+#    licence: apache
+#      # 协 议 地 址
+#    licence-url: https://gitee.com/pear_community
+#      # 组 织 信 息
+#    terms-of-service-url: https://gitee.com/pear_community
+#      # 版 本 信 息
+#    version: Release 2.0.0
+#      # 扩 展 信 息
+#    contact:
+#        # 作 者
+#      name: 就 眠 仪 式
+#        # 连 接
+#      url: www.pearadmin.cn
+#        # 邮 箱
+#      email: Jmys1992@gmail.com
+#  # 权 限 配 置
+#  security:
+#    # 不 需 要 权 限 拦 截 的 接 口 配 置
+#    open-api:
+#      - /login/**  # 开放 登录 接口
+#      - /system/captcha/** # 开放 验证码生成 接口
+#      - /assets/** # 开放 静态资源
+#      - /admin/** # 开放 静态资源
+#      - /component/** # 开放 静态资源
+#      - /favicon.ico # 开放 Logo
+#  # 上 传 配 置
+#  upload:
+#    # 当前系统环境
+#    os: windows
+#    # windows 上传路径
+#    windows-path: D:\home\uploads\
+#    # linux 上传路径
+#    linux-path: /home/uploads/
+#
+## Page Helper
+#pagehelper:
+#  # 方 言
+#  helper-dialect: mysql
+#  params: count=countSql
+#  reasonable: true
+#  support-methods-arguments: true
+
+# logging 配置
+logging:
+  # 日 志 级 别
+  level:
+    # 日 志 包 配 置
+    org.jeeasy.*: DEBUG
+
+
+

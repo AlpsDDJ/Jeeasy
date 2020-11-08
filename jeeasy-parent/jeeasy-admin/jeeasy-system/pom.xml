@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jeeasy-admin</artifactId>
+        <groupId>mobie.alps</groupId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jeeasy-system</artifactId>
+    <version>1.0.0-RELEASE</version>
+    <name>系统模块</name>
+
+    <!-- 引 用 依 赖 -->
+    <dependencies>
+        <!-- 公用模块 -->
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common</artifactId>
+        </dependency>
+        <!-- 安全模块 -->
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-security</artifactId>
+        </dependency>
+        <!-- Web 模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- MyBatis 框架 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 分页框架 -->
+        <!--<dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>-->
+        <!-- JSON 序列化框架 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!-- 接口文档 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <!-- 验证码 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
