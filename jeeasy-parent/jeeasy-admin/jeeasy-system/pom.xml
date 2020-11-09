@@ -18,13 +18,13 @@
         <!-- 公用模块 -->
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common</artifactId>
+            <artifactId>jeeasy-common-all</artifactId>
         </dependency>
         <!-- 安全模块 -->
-        <dependency>
+        <!--<dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-security</artifactId>
-        </dependency>
+        </dependency>-->
         <!-- Web 模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

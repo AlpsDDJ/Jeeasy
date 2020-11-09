@@ -126,7 +126,22 @@
             <!-- 公 用 模 块 -->
             <dependency>
                 <groupId>mobie.alps</groupId>
-                <artifactId>jeeasy-common</artifactId>
+                <artifactId>jeeasy-common-core</artifactId>
+                <version>${jeeasy.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>jeeasy-common-all</artifactId>
+                <version>${jeeasy.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>jeeasy-common-db</artifactId>
+                <version>${jeeasy.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>jeeasy-common-doc</artifactId>
                 <version>${jeeasy.common.version}</version>
             </dependency>
             <!-- 安 全 模 块 -->
@@ -196,7 +211,7 @@
                 <version>${captcha.version}</version>
             </dependency>
             <!-- 工 作 流 程 依 赖 -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-basic</artifactId>
                 <version>${activiti.version}</version>
@@ -231,7 +246,7 @@
                 <groupId>org.apache.xmlgraphics</groupId>
                 <artifactId>batik-svggen</artifactId>
                 <version>${apache.xmlgraphics.version}</version>
-            </dependency>
+            </dependency>-->
             <!-- 模 板 引 擎 -->
             <dependency>
                 <groupId>org.apache.velocity</groupId>

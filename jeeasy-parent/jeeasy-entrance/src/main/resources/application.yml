@@ -2,6 +2,8 @@
 server:
   # 端 口
   port: 8080
+  servlet:
+    context-path:
 
 # Spring 配置
 spring:
@@ -9,6 +11,8 @@ spring:
   profiles:
     # 运 行 环 境
     active: dev
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
 # 数据源配置
   datasource:
     druid:
@@ -45,6 +49,24 @@ spring:
         filters: stat,wall,slf4j
         # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+
+mybatis-plus:
+  mapper-locations: classpath*:org/jeeasy/**/mapper/xml/*Mapper.xml
+  type-aliases-package: org.jeeasy.**.entity
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
+      id-type: ASSIGN_ID
+      # 默认数据库表下划线命名
+      table-underline: true
+
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 返回类型为Map,显示null对应的字段
+    call-setters-on-nulls: true
 #  activiti:
     # 检 查 流 程 定 义 文 件
 #    check-process-definitions: false
@@ -111,12 +133,12 @@ spring:
 #  reasonable: true
 #  support-methods-arguments: true
 
-# logging 配置
-logging:
-  # 日 志 级 别
-  level:
-    # 日 志 包 配 置
-    org.jeeasy.*: DEBUG
+  # logging 配置
+  logging:
+    # 日 志 级 别
+    level:
+      # 日 志 包 配 置
+      org.jeeasy.*: DEBUG
 
 
 
