@@ -1,9 +1,9 @@
-package org.jeeasy.common.doc.tools;
+package org.jeeasy.common.core.doc.tools;
 
 import io.swagger.annotations.ApiOperation;
-import org.jeeasy.common.constant.CommonConstant;
-import org.jeeasy.common.doc.config.SwaggerModule;
-import org.jeeasy.common.tools.Tools;
+import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.doc.config.SwaggerModule;
+import org.jeeasy.common.core.tools.Tools;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;

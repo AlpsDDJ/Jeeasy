@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class SysUser implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty("主键")
+    @ApiModelProperty("ID")
     private String id;
 
     @ApiModelProperty("用户名")
@@ -27,5 +27,5 @@ public class SysUser implements Serializable {
     private String realName;
 
     @ApiModelProperty(value = "性别", notes = "1：男，0：女")
-    private int sex;
+    private Integer sex;
 }

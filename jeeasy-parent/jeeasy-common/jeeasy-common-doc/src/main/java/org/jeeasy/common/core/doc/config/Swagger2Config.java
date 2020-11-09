@@ -1,10 +1,9 @@
-package org.jeeasy.common.doc.config;
+package org.jeeasy.common.core.doc.config;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.doc.tools.SwaggerUtil;
-import org.jeeasy.common.tools.SpringUtil;
+import org.jeeasy.common.core.doc.tools.SwaggerUtil;
+import org.jeeasy.common.core.tools.SpringUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.Resource;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 /**

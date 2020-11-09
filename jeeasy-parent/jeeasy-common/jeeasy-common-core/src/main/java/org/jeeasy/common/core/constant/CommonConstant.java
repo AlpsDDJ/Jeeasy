@@ -1,4 +1,4 @@
-package org.jeeasy.common.constant;
+package org.jeeasy.common.core.constant;
 
 /**
  * @author AlpsDDJ

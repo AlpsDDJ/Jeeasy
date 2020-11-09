@@ -1,7 +1,7 @@
-package org.jeeasy.common.vo;
+package org.jeeasy.common.core.vo;
 
 import lombok.Data;
-import org.jeeasy.common.constant.CommonConstant;
+import org.jeeasy.common.core.constant.CommonConstant;
 
 import java.io.Serializable;
 
@@ -46,6 +46,17 @@ public class R<T> implements Serializable {
         this.message = message;
         this.code = CommonConstant.SC_OK_200;
         this.success = true;
+        return this;
+    }
+
+    public R<?> faild(String msg) {
+        return faild(CommonConstant.SC_INTERNAL_SERVER_ERROR_500, msg);
+    }
+
+    public R<?> faild(int code, String message) {
+        this.message = message;
+        this.code = code;
+        this.success = false;
         return this;
     }
 

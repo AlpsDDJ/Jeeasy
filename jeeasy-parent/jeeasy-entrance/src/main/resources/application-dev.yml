@@ -21,7 +21,6 @@ mybatis-plus:
 jeeasy:
   swagger:
     enable: true
-    defaultModule: jeeasy-system
     module:
       jeeasy-system:
         groupName: Jeeasy 系统管理

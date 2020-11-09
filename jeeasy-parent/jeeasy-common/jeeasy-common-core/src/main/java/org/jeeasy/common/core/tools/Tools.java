@@ -1,4 +1,4 @@
-package org.jeeasy.common.tools;
+package org.jeeasy.common.core.tools;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;

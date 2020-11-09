@@ -33,8 +33,6 @@
         <mysql.version>8.0.19</mysql.version>
         <!-- MyBatis 版 本 -->
         <mybatis.version>2.1.3</mybatis.version>
-        <!-- Swagger 版 本 -->
-        <swagger.version>2.9.2</swagger.version>
         <!-- Fast Json 序 列 化 版 本 -->
         <fastjson.version>1.2.68</fastjson.version>
         <!-- Lombok 版 本 -->
@@ -111,12 +109,6 @@
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic.datasource.version}</version>
             </dependency>
-            <!-- 接 口 文 档 -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
             <!-- JSON 解 析 工 具 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -149,12 +141,6 @@
                 <groupId>mobie.alps</groupId>
                 <artifactId>jeeasy-security</artifactId>
                 <version>${jeeasy.security.version}</version>
-            </dependency>
-            <!-- 接 口 文 档 -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
             </dependency>
             <!--Apache 工 具 包-->
             <dependency>

@@ -13,6 +13,10 @@
     <name>数据库连接</name>
 
     <dependencies>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common-core</artifactId>
+        </dependency>
         <!-- Mybatis 框架 -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
