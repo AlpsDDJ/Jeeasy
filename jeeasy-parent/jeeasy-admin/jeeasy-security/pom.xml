@@ -13,6 +13,11 @@
     <name>安全模块</name>
 
     <dependencies>
+        <!-- 公用模块 -->
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common-core</artifactId>
+        </dependency>
         <!-- 安全框架 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
