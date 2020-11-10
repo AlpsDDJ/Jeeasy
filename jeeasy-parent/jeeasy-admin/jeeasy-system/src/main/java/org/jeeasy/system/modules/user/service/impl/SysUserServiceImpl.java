@@ -1,12 +1,12 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeeasy.common.db.tools.QueryGenerator;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.service.ISysUserService;
+import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author AlpsDDJ
@@ -15,11 +15,20 @@ import javax.annotation.Resource;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
-    @Resource
-    SysUserMapper sysUserMapper;
+    @Override
+    public SysUser getByUserName(String userName) {
+        return this.getOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUserName, userName));
+    }
 
     @Override
-    public SysUser queryByUserName(String userName) {
-        return sysUserMapper.queryByUserName(userName);
+    public boolean checkPasswordById(String id, String password) {
+        SysUser sysUser = this.getById(id);
+        return SysUserUtil.create(sysUser).checkPassword(password);
+    }
+
+    @Override
+    public boolean checkPasswordByUserName(String userName, String password) {
+        SysUser sysUser = this.getByUserName(userName);
+        return SysUserUtil.create(sysUser).checkPassword(password);
     }
 }

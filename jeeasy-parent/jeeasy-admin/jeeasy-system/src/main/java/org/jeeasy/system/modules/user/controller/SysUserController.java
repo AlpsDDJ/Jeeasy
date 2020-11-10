@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.model.ChangePasswordByOldPasswordModel;
 import org.jeeasy.system.modules.user.service.ISysUserService;
+import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,7 @@ public class SysUserController extends SimpleBaseController<ISysUserService, Sys
     @PostMapping
     @ApiOperation(value = "添加用户", notes = "添加用户")
     public R<?> add(@RequestBody SysUser entity) {
-        return super.insert(entity);
+        return super.insert(SysUserUtil.create(entity).initSaltAndPassword());
     }
 
     @DeleteMapping("/{id}")
@@ -53,7 +55,40 @@ public class SysUserController extends SimpleBaseController<ISysUserService, Sys
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除用户", notes = "批量删除用户")
     public R<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+        return super.deleteByIds(ids);
+    }
+
+    /**
+     * 通过旧密码验证修改新密码
+     *
+     * @param model
+     * @return
+     */
+    @PutMapping("/changePasswordByOldPassword")
+    @ApiOperation(value = "修改用户密码", notes = "通过旧密码验证修改新密码")
+    public R<?> changePasswordByOldPassword(@RequestBody ChangePasswordByOldPasswordModel model) {
+        SysUser sysUser = this.service.getById(model.getId());
+        SysUserUtil sysUserUtil = SysUserUtil.create(sysUser);
+        if (sysUserUtil.checkPassword(model.getOldPassword())) {
+            sysUserUtil.changePassword(model.getNewPassword());
+            this.service.updateById(sysUser);
+            return R.ok("密码修改成功.");
+        } else {
+            return R.error("密码错误.");
+        }
+    }
+
+    /**
+     * 重置用户密码为初始密码 [123456]
+     *
+     * @param id 用户id
+     * @return
+     */
+    @PutMapping("/resetPassword")
+    @ApiOperation(value = "重置用户密码", notes = "重置用户密码为初始密码")
+    public R<?> resetPassword(@RequestBody String id) {
+        SysUser sysUser = this.service.getById(id);
+        return this.update(SysUserUtil.create(sysUser).initSaltAndPassword());
     }
 
 }
