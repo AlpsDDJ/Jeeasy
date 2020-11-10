@@ -7,16 +7,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.tools.QueryGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Alps
+ */
 @Slf4j
 public class SimpleBaseController<S extends IService<T>, T> {
-    @Resource
+
+    @Autowired
     protected S service;
 
     /**
@@ -89,7 +93,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
     public R<?> deleteByIds(String ids) {
         R<?> result = new R<>();
         if (Tools.isEmpty(ids)) {
-            result.faild("未选中租户.");
+            result.faild("未选中数据.");
         } else {
             List<String> ls = Arrays.asList(ids.split(","));
             service.removeByIds(ls);

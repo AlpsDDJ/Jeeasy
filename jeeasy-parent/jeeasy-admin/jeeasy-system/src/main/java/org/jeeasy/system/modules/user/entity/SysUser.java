@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel("系统用户")
+@Accessors(chain = true)
 public class SysUser implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
