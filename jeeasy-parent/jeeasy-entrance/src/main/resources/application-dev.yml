@@ -13,12 +13,33 @@ spring:
           password: 26yMBG8hRRNKrEMT
           driver-class-name: com.mysql.cj.jdbc.Driver
 
+  redis:
+    host: mobie.vip
+    password: KaK6Jm55PLaJyWtW
+    port: 6379
+    database: 10
+
 mybatis-plus:
   configuration:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 jeeasy:
+  # 权 限 配 置
+  security:
+    # 不 需 要 权 限 拦 截 的 接 口 配 置
+    open-api:
+      - /login/**  # 开放 登录 接口
+      - /noUser  # 开放 登录 接口
+      - /noAuth  # 开放 登录 接口
+      - /system/captcha/** # 开放 验证码生成 接口
+      #      - /assets/** # 开放 静态资源
+      #      - /admin/** # 开放 静态资源
+      #      - /component/** # 开放 静态资源
+      - /favicon.ico # 开放 Logo
+    login-url: /noUser
+    login-processing-url: /noUser
+    logout-url: /logout
   swagger:
     enable: true
     module:

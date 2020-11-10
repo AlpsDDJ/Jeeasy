@@ -36,7 +36,7 @@ public class SysUserUtil {
             return null;
         }
         String salt = getSalt();
-        String pwd = PwdUtil.encrypt(this.sysUser.getUserName(), DEFAULT_PASSWORD, salt);
+        String pwd = PwdUtil.encrypt(this.sysUser.getUsername(), DEFAULT_PASSWORD, salt);
         this.sysUser.setSalt(salt);
         this.sysUser.setPassword(pwd);
         return this.sysUser;
@@ -46,7 +46,7 @@ public class SysUserUtil {
         if(Tools.isEmpty(this.sysUser)){
             return null;
         }
-        String pwd = PwdUtil.encrypt(this.sysUser.getUserName(), password, this.sysUser.getSalt());
+        String pwd = PwdUtil.encrypt(this.sysUser.getUsername(), password, this.sysUser.getSalt());
         this.sysUser.setPassword(pwd);
         return this.sysUser;
     }
@@ -60,7 +60,7 @@ public class SysUserUtil {
         if(Tools.isEmpty(this.sysUser) || Tools.isEmpty(password)){
             return false;
         }
-        String encryptPassword = PwdUtil.encrypt(this.sysUser.getUserName(), password, this.sysUser.getSalt());
+        String encryptPassword = PwdUtil.encrypt(this.sysUser.getUsername(), password, this.sysUser.getSalt());
         String realPassword = this.sysUser.getPassword();
         if(StrUtil.hasEmpty(realPassword, realPassword)){
             return false;

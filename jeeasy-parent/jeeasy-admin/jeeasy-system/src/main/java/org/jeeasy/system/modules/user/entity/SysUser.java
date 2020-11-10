@@ -27,7 +27,7 @@ public class SysUser implements Serializable {
     private String id;
 
     @ApiModelProperty("用户名")
-    private String userName;
+    private String username;
 
     @ApiModelProperty("用户名编号")
     private Long userNo;

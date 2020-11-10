@@ -7,6 +7,7 @@ import org.jeeasy.common.core.tools.SpringUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -23,6 +24,7 @@ import java.util.Map;
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
 @ConditionalOnProperty(name = "jeeasy.swagger.enable", havingValue = "true")
+@DependsOn("SpringUtil")
 public class Swagger2Config implements WebMvcConfigurer, InitializingBean {
 
     @Resource

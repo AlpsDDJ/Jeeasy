@@ -18,8 +18,8 @@ spring:
     druid:
       stat-view-servlet:
         enabled: true
-        loginUsername: admin
-        loginPassword: 123456
+        login-username: admin
+        login-password: 123456
         allow:
       web-stat-filter:
         enabled: true

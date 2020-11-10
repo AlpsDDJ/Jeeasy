@@ -9,7 +9,11 @@ public class CommonConstant {
     public static final Integer SC_OK_200 = 200;
     public static final Integer SC_INTERNAL_SERVER_ERROR_500 = 500;
     /**
-     * 访问权限认证未通过 510
+     * 访问权限认证未通过 403
      */
-    public static final Integer SC_JEEASY_NO_AUTHZ = 510;
+    public static final Integer SC_JEEASY_NO_AUTH = 403;
+    /**
+     * 未登录 401
+     */
+    public static final Integer SC_JEEASY_NO_USER = 401;
 }

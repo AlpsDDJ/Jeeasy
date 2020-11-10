@@ -100,7 +100,14 @@ public class R<T> implements Serializable {
     /**
      * 无权限访问返回结果
      */
-    public static R<Object> noauth(String msg) {
-        return error(CommonConstant.SC_JEEASY_NO_AUTHZ, msg);
+    public static R<Object> noAuth(String msg) {
+        return error(CommonConstant.SC_JEEASY_NO_AUTH, msg);
+    }
+
+    /**
+     * 未登录用户
+     */
+    public static R<Object> noUser(String msg) {
+        return error(CommonConstant.SC_JEEASY_NO_USER, msg);
     }
 }

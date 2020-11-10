@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author AlpsDDJ
  * @date 2020/11/9
  */
-@Component
+@Component("SpringUtil")
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
@@ -75,45 +75,9 @@ public class SpringUtil implements ApplicationContextAware {
      * @return 返回注册到容器中的bean对象
      */
     public static <T> T registerBean(String name, T object) {
-//        if (applicationContext.containsBean(name)) {
-//            Object bean = applicationContext.getBean(name);
-//            if (bean.getClass().isAssignableFrom(clazz)) {
-//                return (T) bean;
-//            } else {
-//                throw new RuntimeException("BeanName 重复 " + name);
-//            }
-//        }
-//
-//
-//        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
-//        for (Object arg : args) {
-//            beanDefinitionBuilder.addConstructorArgValue(arg);
-//        }
-//        BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
-//
-//        BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory();
-//        beanFactory.registerBeanDefinition(name, beanDefinition);
-//        return applicationContext.getBean(name, clazz);
+        AnnotationConfigServletWebServerApplicationContext context = (AnnotationConfigServletWebServerApplicationContext) applicationContext;
 
-
-
-//        DefaultListableBeanFactory autowireCapableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-//        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(Animal.class);
-//        beanDefinitionBuilder.addConstructorArgValue("喜鹊").addConstructorArgValue("绿色").addConstructorArgValue(3);
-//        String beanName = "AnimalAutoName";
-//        //默认单例
-//        beanDefinitionBuilder.setScope("prototype");
-//        autowireCapableBeanFactory.registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
-//        Object bean = run.getBean(beanName);
-//        Animal animal = (Animal) bean;
-//        System.out.println(animal.getAge());
-//        System.out.println(animal.getColor());
-//        System.out.println(animal.getName());
-
-
-        AnnotationConfigServletWebServerApplicationContext context = (AnnotationConfigServletWebServerApplicationContext) SpringUtil.applicationContext;
-
-        if(SpringUtil.applicationContext.containsBeanDefinition(name)){
+        if(context.containsBeanDefinition(name)){
             context.removeBeanDefinition(name);
         } else {
             BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(object.getClass());
