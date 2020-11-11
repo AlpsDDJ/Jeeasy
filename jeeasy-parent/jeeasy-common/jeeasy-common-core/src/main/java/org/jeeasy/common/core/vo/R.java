@@ -1,7 +1,6 @@
 package org.jeeasy.common.core.vo;
 
 import lombok.Data;
-import org.jeeasy.common.core.constant.CommonConstant;
 
 import java.io.Serializable;
 
@@ -15,6 +14,25 @@ import java.io.Serializable;
 @Data
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final Integer SC_OK_200 = 200;
+    public static final Integer SC_INTERNAL_SERVER_ERROR_500 = 500;
+    /**
+     * 访问权限认证未通过 403
+     */
+    public static final Integer SC_JEEASY_NO_AUTH = 403;
+    /**
+     * 未登录 401
+     */
+    public static final Integer SC_JEEASY_NO_USER = 401;
+    /**
+     * not found 404
+     */
+    public static final Integer SC_JEEASY_NOT_FOUND = 404;
+    /**
+     * 请求方法不支持 405
+     */
+    public static final Integer SC_JEEASY_NOT_SUPPORTED = 405;
 
     /**
      * 成功标志
@@ -44,13 +62,13 @@ public class R<T> implements Serializable {
 
     public R<T> success(String message) {
         this.message = message;
-        this.code = CommonConstant.SC_OK_200;
+        this.code = SC_OK_200;
         this.success = true;
         return this;
     }
 
     public R<?> faild(String msg) {
-        return faild(CommonConstant.SC_INTERNAL_SERVER_ERROR_500, msg);
+        return faild(SC_INTERNAL_SERVER_ERROR_500, msg);
     }
 
     public R<?> faild(int code, String message) {
@@ -63,7 +81,7 @@ public class R<T> implements Serializable {
     public static<T> R<T> ok() {
         R<T> r = new R<T>();
         r.setSuccess(true);
-        r.setCode(CommonConstant.SC_OK_200);
+        r.setCode(SC_OK_200);
         r.setMessage("成功");
         return r;
     }
@@ -71,7 +89,7 @@ public class R<T> implements Serializable {
     public static<T> R<T> ok(T data) {
         R<T> r = new R<T>();
         r.setSuccess(true);
-        r.setCode(CommonConstant.SC_OK_200);
+        r.setCode(SC_OK_200);
         r.setResult(data);
         return r;
     }
@@ -79,14 +97,14 @@ public class R<T> implements Serializable {
     public static<T> R<T> ok(String msg, T data) {
         R<T> r = new R<T>();
         r.setSuccess(true);
-        r.setCode(CommonConstant.SC_OK_200);
+        r.setCode(SC_OK_200);
         r.setMessage(msg);
         r.setResult(data);
         return r;
     }
 
     public static R<Object> error(String msg) {
-        return error(CommonConstant.SC_INTERNAL_SERVER_ERROR_500, msg);
+        return error(SC_INTERNAL_SERVER_ERROR_500, msg);
     }
 
     public static R<Object> error(int code, String msg) {
@@ -101,13 +119,27 @@ public class R<T> implements Serializable {
      * 无权限访问返回结果
      */
     public static R<Object> noAuth(String msg) {
-        return error(CommonConstant.SC_JEEASY_NO_AUTH, msg);
+        return error(SC_JEEASY_NO_AUTH, msg);
     }
 
     /**
      * 未登录用户
      */
     public static R<Object> noUser(String msg) {
-        return error(CommonConstant.SC_JEEASY_NO_USER, msg);
+        return error(SC_JEEASY_NO_USER, msg);
+    }
+
+    /**
+     * notFound
+     */
+    public static R<Object> notFound(String msg) {
+        return error(SC_JEEASY_NOT_FOUND, msg);
+    }
+
+    /**
+     * NotSupported
+     */
+    public static R<Object> notSupported(String msg) {
+        return error(SC_JEEASY_NOT_SUPPORTED, msg);
     }
 }

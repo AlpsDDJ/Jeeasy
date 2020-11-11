@@ -14,4 +14,6 @@ public interface ISysUserService extends IService<SysUser>, UserDetailsService {
     boolean checkPasswordById(String id, String password);
 
     boolean checkPasswordByUserName(String userName, String password);
+
+    SysUser login(String username, String password);
 }

@@ -1,6 +1,8 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeeasy.common.core.exception.JeeasyException;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.db.tools.QueryGenerator;
 import org.jeeasy.system.modules.security.model.JeeasySysUserDetails;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -35,7 +37,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public SysUser login(String username, String password) {
+        SysUser sysUser = this.getByUserName(username);
+        if (Tools.isEmpty(sysUser)) {
+            throw new JeeasyException("用户名不存在.");
+        }
+        if (SysUserUtil.create(sysUser).checkPassword(password)) {
+            return sysUser;
+        } else {
+            throw new JeeasyException("密码错误.");
+        }
+    }
+
+    /**
+     * 登录处理
+     * @param s
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
     public JeeasySysUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return (JeeasySysUserDetails)getByUserName(s);
+        SysUser sysUser = getByUserName(s);
+        JeeasySysUserDetails jeeasySysUserDetails = JeeasySysUserDetails.create(sysUser);
+        return jeeasySysUserDetails;
     }
 }

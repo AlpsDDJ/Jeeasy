@@ -3,15 +3,22 @@ package org.jeeasy.system.modules.security.service.impl;
 import org.jeeasy.security.service.JeeasyUserDetailsService;
 import org.jeeasy.system.modules.security.model.JeeasySysUserDetails;
 import org.jeeasy.system.modules.user.service.ISysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Describe: Security 用户服务
- * Author: 就 眠 仪 式
- * CreateTime: 2019/10/23
+ * @author Alps
  */
 @Component
-public class SecurityUserDetailsService extends JeeasyUserDetailsService<ISysUserService, JeeasySysUserDetails> {
+public class SecurityUserDetailsService implements JeeasyUserDetailsService<ISysUserService, JeeasySysUserDetails> {
+
+    @Autowired
+    ISysUserService sysUserService;
+
+    @Override
+    public ISysUserService getService() {
+        return sysUserService;
+    }
 
 //    @Resource
 //    private ISysUserService sysUserService;

@@ -3,12 +3,18 @@ package org.jeeasy.security.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
-public class JeeasyUserDetailsService<S extends UserDetailsService, T extends UserDetails> implements UserDetailsService {
-    protected S service;
+/**
+ * @author Alps
+ */
+@Component
+public interface JeeasyUserDetailsService<S extends UserDetailsService, T extends UserDetails> extends UserDetailsService {
+
+    S getService();
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return service.loadUserByUsername(s);
+    default T loadUserByUsername(String s) throws UsernameNotFoundException {
+        return (T)getService().loadUserByUsername(s);
     }
 }

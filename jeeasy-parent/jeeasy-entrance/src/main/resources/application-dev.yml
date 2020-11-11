@@ -30,24 +30,35 @@ jeeasy:
     # 不 需 要 权 限 拦 截 的 接 口 配 置
     open-api:
       - /login/**  # 开放 登录 接口
-      - /noUser  # 开放 登录 接口
-      - /noAuth  # 开放 登录 接口
-      - /system/captcha/** # 开放 验证码生成 接口
+      - /noUser  # 开放 未登录重定向 接口
+      - /noAuth  # 开放 权限不足重定向 接口
+      - /captcha/** # 开放 验证码生成 接口
       #      - /assets/** # 开放 静态资源
       #      - /admin/** # 开放 静态资源
       #      - /component/** # 开放 静态资源
       - /favicon.ico # 开放 Logo
+      # swagger 排除
+      - /doc.html
+      - /webjars/**
+      - /swagger-resources
+      - /v2/api-docs
     login-url: /noUser
-    login-processing-url: /noUser
+    login-processing-url: /login
     logout-url: /logout
   swagger:
     enable: true
     module:
       jeeasy-system:
-        groupName: Jeeasy 系统管理
-        title: Jeeasy 系统管理 API接口文档
+        group-name: Jeeasy 系统管理
+        title: Jeeasy 系统管理接口 API文档
         version: 1.0
-        basePackage: org.jeeasy.system
+        base-package: org.jeeasy.system.modules
+      jeeasy-common:
+        group-name: Jeeasy 公共接口
+        title: Jeeasy 公共接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.common
+        annotation: org.springframework.web.bind.annotation.RequestMapping
 #      jeeasy-online:
 #        groupName: Jeeasy 在线开发
 #        title: Jeeasy 在线开发 API接口文档

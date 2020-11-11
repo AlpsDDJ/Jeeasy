@@ -1,6 +1,5 @@
 package org.jeeasy.common.core.doc.tools;
 
-import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.constant.CommonConstant;
 import org.jeeasy.common.core.doc.config.SwaggerModule;
 import org.jeeasy.common.core.tools.Tools;
@@ -31,7 +30,7 @@ public class SwaggerUtil {
                 //此包路径下的类，才生成接口文档
                 .apis(RequestHandlerSelectors.basePackage(module.getBasePackage()))
                 //加了ApiOperation注解的类，才生成接口文档
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(module.getAnnotation()))
                 .paths(Tools.isEmpty(module.getPaths()) ? PathSelectors.any() : PathSelectors.regex(module.getPaths()))
                 .build()
                 .securitySchemes(Collections.singletonList(securityScheme()))

@@ -4,7 +4,6 @@ import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.CaptchaVo;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,7 +17,7 @@ public class CommonController {
     /**
      * 验证码生成
      */
-    @GetMapping({"/noUser", "/403", "/401"})
+    @GetMapping("/noUser")
     public R<?> noUser() throws Exception {
         return R.noUser("未登录");
     }
@@ -28,7 +27,7 @@ public class CommonController {
      */
     @GetMapping("captcha/generate")
     public R<CaptchaVo> generate() throws Exception {
-        return Tools.createCaptcha(Tools.createId());
+        return Tools.createCaptcha(Tools.uuid());
     }
 
     /**
@@ -38,8 +37,11 @@ public class CommonController {
      * @param captcha 验证码
      * @return 验证结果
      */
-    @RequestMapping("captcha/verify")
+    @GetMapping("captcha/verify")
     public R<?> verify(String id, String captcha) {
-        return Tools.verifyCaptcha(id, captcha);
+        if(Tools.verifyCaptcha(id, captcha)){
+            return R.ok("验证通过.");
+        }
+        return R.error("验证失败.");
     }
 }

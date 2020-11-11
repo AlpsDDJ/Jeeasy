@@ -21,7 +21,7 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        R result = R.noUser("未知账户");
+        R result = R.noUser("未登录.");
         httpServletResponse.setHeader("Content-type","application/json;charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.getWriter().write(JSON.toJSONString(result));

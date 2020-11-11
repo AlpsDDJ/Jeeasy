@@ -8,6 +8,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.CaptchaVo;
 import org.jeeasy.common.core.vo.R;
 
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author AlpsDDJ
  * @date 2020/11/9
  */
+@Slf4j
 public class Tools {
 
     private static final Long CAPTCHA_TIME = DateUnit.SECOND.getMillis() * 3 * 60;
@@ -41,26 +44,27 @@ public class Tools {
         return "";
     }
 
-    public static String createId() {
-        return IdUtil.randomUUID();
+    public static String uuid() {
+        return IdUtil.simpleUUID();
     }
 
-    public static R<CaptchaVo> createCaptcha(String id) {
+    public static R<CaptchaVo> createCaptcha(String key) {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
-        captchaCache.put(id, lineCaptcha, CAPTCHA_TIME);
-        CaptchaVo captchaVo = new CaptchaVo(id, lineCaptcha.getImageBase64());
+        log.info("获取图片验证码: key = {}, code = {}", key, lineCaptcha.getCode());
+        captchaCache.put(key, lineCaptcha, CAPTCHA_TIME);
+        CaptchaVo captchaVo = new CaptchaVo(key, lineCaptcha.getImageBase64());
         return R.ok(captchaVo);
     }
 
-    public static R<?> verifyCaptcha(String id, String captcha) {
-        LineCaptcha lineCaptcha = captchaCache.get(id);
+    public static boolean verifyCaptcha(String key, String captcha) {
+        LineCaptcha lineCaptcha = captchaCache.get(key);
         if(isEmpty(lineCaptcha)){
-            return R.error("验证码失效");
+            throw new JeeasyException("验证码失效.");
         }
-        if(!captchaCache.get(id).verify(captcha)){
-            return R.error("验证码错误");
+        if(!captchaCache.get(key).verify(captcha)){
+            throw new JeeasyException("验证码错误.");
         }
-        return R.ok("验证通过");
+        return true;
     }
 
 }
