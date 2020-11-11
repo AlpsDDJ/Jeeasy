@@ -46,14 +46,14 @@ public class SysRoleController extends SimpleBaseController<ISysRoleService, Sys
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "根据ID删除角色", notes = "根据ID删除角色")
-    public R<?> delete(@PathVariable("id") String id) {
+    public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
 
     @DeleteMapping("/batch")
     @ApiOperation(value = "批量删除角色", notes = "批量删除角色")
-    public R<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteByIds(ids);
+    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
+        return super.deleteBatch(ids);
     }
 
 }

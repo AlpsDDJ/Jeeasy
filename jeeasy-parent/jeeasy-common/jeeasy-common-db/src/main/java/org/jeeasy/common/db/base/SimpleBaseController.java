@@ -90,7 +90,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @param ids
      * @return
      */
-    public R<?> deleteByIds(String ids) {
+    public R<?> deleteBatch(String ids) {
         R<?> result = new R<>();
         if (Tools.isEmpty(ids)) {
             result.faild("未选中数据.");
