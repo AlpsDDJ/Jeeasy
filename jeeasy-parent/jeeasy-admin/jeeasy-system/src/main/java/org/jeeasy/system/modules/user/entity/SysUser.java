@@ -79,4 +79,8 @@ public class SysUser implements Serializable {
     @TableLogic
     @ApiModelProperty("删除标记")
     private String delFlag;
+
+    public boolean izEnabled(){
+        return "1".equals(this.status);
+    }
 }

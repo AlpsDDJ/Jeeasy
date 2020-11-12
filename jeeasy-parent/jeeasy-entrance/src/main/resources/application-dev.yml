@@ -8,25 +8,36 @@ spring:
     dynamic:
       datasource:
         master:
-          url: jdbc:mysql://mobie.vip:3306/jeeasy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://jeeasy.cn:3306/jeeasy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
           username: jeeasy
           password: 26yMBG8hRRNKrEMT
           driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:
-    host: mobie.vip
+    host: jeeasy.cn
     password: KaK6Jm55PLaJyWtW
     port: 6379
     database: 10
-
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 1ms
+        max-idle: 8
+        min-idle: 0
 mybatis-plus:
   configuration:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 jeeasy:
+  system:
+    enable-captcha: false
   # 权 限 配 置
   security:
+    jwt:
+      header: Authorization
+      secret: jeeasy
+      expiration: 1000
     # 不 需 要 权 限 拦 截 的 接 口 配 置
     open-api:
       - /login/**  # 开放 登录 接口

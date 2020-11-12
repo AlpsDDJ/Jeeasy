@@ -1,14 +1,16 @@
 package org.jeeasy.system.modules.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
+import org.jeeasy.security.domain.JwtUserDetails;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 
-public class JeeasySysUserDetails extends SysUser implements Serializable, UserDetails {
+/**
+ * @author Alps
+ */
+public class JeeasySysUserDetails extends SysUser implements JwtUserDetails {
 
     public static JeeasySysUserDetails create(SysUser sysUser) {
         return BeanUtil.toBean(sysUser, JeeasySysUserDetails.class);
@@ -36,6 +38,6 @@ public class JeeasySysUserDetails extends SysUser implements Serializable, UserD
 
     @Override
     public boolean isEnabled() {
-        return super.getStatus().equals("0");
+        return this.izEnabled();
     }
 }

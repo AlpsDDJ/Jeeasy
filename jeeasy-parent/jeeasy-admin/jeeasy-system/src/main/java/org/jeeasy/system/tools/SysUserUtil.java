@@ -60,11 +60,22 @@ public class SysUserUtil {
         if(Tools.isEmpty(this.sysUser) || Tools.isEmpty(password)){
             return false;
         }
-        String encryptPassword = PwdUtil.encrypt(this.sysUser.getUsername(), password, this.sysUser.getSalt());
-        String realPassword = this.sysUser.getPassword();
-        if(StrUtil.hasEmpty(realPassword, realPassword)){
+        return checkPassword(sysUser.getUsername(), password, this.sysUser.getPassword(),  this.sysUser.getSalt());
+    }
+
+    /**
+     * 密码验证
+     * @param username 用户名
+     * @param password 用户输入的密码
+     * @param realPassword 数据库中取出的真实存储密码
+     * @param salt 密码盐
+     * @return
+     */
+    public static boolean checkPassword(String username, String password, String realPassword, String salt){
+        if(StrUtil.hasEmpty(realPassword, username, realPassword, salt)){
             return false;
         }
+        String encryptPassword = PwdUtil.encrypt(username, password, salt);
         return encryptPassword.equals(realPassword);
     }
 }

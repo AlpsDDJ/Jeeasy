@@ -6,4 +6,8 @@ package org.jeeasy.common.core.constant;
  */
 public class CommonConstant {
     public static final String X_ACCESS_TOKEN = "JEEASY-ACCESS-TOKEN";
+
+    public static final String SYS_USER_JWT_KEY_PREFIX = "jwt:sys:";
+    public static final String SYS_USER_JWT_SUBJECT_RACE_KEY_PREFIX = "jwt:sys:subject:race:";
+
 }

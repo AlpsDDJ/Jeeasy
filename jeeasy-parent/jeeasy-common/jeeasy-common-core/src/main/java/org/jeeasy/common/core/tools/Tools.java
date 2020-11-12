@@ -8,6 +8,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.CaptchaVo;
@@ -29,10 +30,16 @@ public class Tools {
     private static Cache<String, LineCaptcha> captchaCache = CacheUtil.newFIFOCache(10000);
 
     public static boolean isEmpty(Object obj) {
+        if(obj instanceof String){
+            return StrUtil.isEmpty((String)obj);
+        }
         return BeanUtil.isEmpty(obj);
     }
 
     public static boolean isNotEmpty(Object obj) {
+        if(obj instanceof String){
+            return StrUtil.isNotEmpty((String)obj);
+        }
         return BeanUtil.isNotEmpty(obj);
     }
 

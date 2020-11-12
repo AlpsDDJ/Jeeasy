@@ -19,6 +19,7 @@
         <module>jeeasy-common-db</module>
         <module>jeeasy-common-doc</module>
         <module>jeeasy-common-all</module>
+        <module>jeeasy-common-cache</module>
     </modules>
 
 </project>

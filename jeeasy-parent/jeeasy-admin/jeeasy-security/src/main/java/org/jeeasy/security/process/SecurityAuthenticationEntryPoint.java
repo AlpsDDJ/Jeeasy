@@ -1,6 +1,5 @@
 package org.jeeasy.security.process;
 
-import com.alibaba.fastjson.JSON;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -21,9 +20,10 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        R result = R.noUser("未登录.");
-        httpServletResponse.setHeader("Content-type","application/json;charset=UTF-8");
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSON.toJSONString(result));
+//        R<?> result = R.noUser("未登录.");
+//        httpServletResponse.setHeader("Content-type","application/json;charset=UTF-8");
+//        httpServletResponse.setCharacterEncoding("UTF-8");
+//        httpServletResponse.getWriter().write(JSON.toJSONString(result));
+        R.noUser("未登录.").responseWrite(httpServletResponse);
     }
 }

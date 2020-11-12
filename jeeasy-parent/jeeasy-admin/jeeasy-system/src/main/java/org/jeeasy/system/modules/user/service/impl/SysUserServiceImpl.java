@@ -9,6 +9,7 @@ import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.service.ISysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @date 2020/11/9
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService, UserDetailsService {
 
     @Override
     public SysUser getByUserName(String userName) {

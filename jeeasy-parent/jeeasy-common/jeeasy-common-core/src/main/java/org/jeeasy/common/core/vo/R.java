@@ -1,7 +1,10 @@
 package org.jeeasy.common.core.vo;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -78,7 +81,7 @@ public class R<T> implements Serializable {
         return this;
     }
 
-    public static<T> R<T> ok() {
+    public static <T> R<T> ok() {
         R<T> r = new R<T>();
         r.setSuccess(true);
         r.setCode(SC_OK_200);
@@ -86,7 +89,7 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    public static<T> R<T> ok(T data) {
+    public static <T> R<T> ok(T data) {
         R<T> r = new R<T>();
         r.setSuccess(true);
         r.setCode(SC_OK_200);
@@ -94,7 +97,7 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    public static<T> R<T> ok(String msg, T data) {
+    public static <T> R<T> ok(String msg, T data) {
         R<T> r = new R<T>();
         r.setSuccess(true);
         r.setCode(SC_OK_200);
@@ -125,6 +128,13 @@ public class R<T> implements Serializable {
     /**
      * 未登录用户
      */
+    public static R<Object> noUser() {
+        return error(SC_JEEASY_NO_USER, "未登录");
+    }
+
+    /**
+     * 未登录用户
+     */
     public static R<Object> noUser(String msg) {
         return error(SC_JEEASY_NO_USER, msg);
     }
@@ -141,5 +151,23 @@ public class R<T> implements Serializable {
      */
     public static R<Object> notSupported(String msg) {
         return error(SC_JEEASY_NOT_SUPPORTED, msg);
+    }
+
+    public void responseWrite(HttpServletResponse httpServletResponse) throws IOException {
+        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.getWriter().write(JSON.toJSONString(this));
+    }
+
+    public static void responseWriteSuccess(Object obj, HttpServletResponse httpServletResponse) throws IOException {
+        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.getWriter().write(JSON.toJSONString(R.ok(obj)));
+    }
+
+    public static void responseWriteError(String message, HttpServletResponse httpServletResponse) throws IOException {
+        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.getWriter().write(JSON.toJSONString(R.error(message)));
     }
 }
