@@ -1,14 +1,12 @@
 package org.jeeasy.security.filter;
 
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.security.service.JeeasyUserDetailsService;
+import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.tools.JwtTokenUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -21,15 +19,20 @@ import java.io.IOException;
  * @author AlpsDDJ
  * @date 2020/11/12
  */
-@Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+//@Component
+public class JwtAuthenticationFilter<U extends JeeasySecurityUserDetails> extends OncePerRequestFilter {
 
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+//    @Autowired
+    private JwtTokenUtil<U> jwtTokenUtil;
 
-    @Autowired
-    private JeeasyUserDetailsService userDetailsService;
+//    @Autowired
+    private IJeeasySecurityService<U> securityService;
+
+    public JwtAuthenticationFilter(JwtTokenUtil<U> jwtTokenUtil, IJeeasySecurityService<U> securityService) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.securityService = securityService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -37,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (Tools.isNotEmpty(token)) {
             String username = jwtTokenUtil.getUsernameFromToken(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                U userDetails = securityService.getUserByUsername(username);
                 if (jwtTokenUtil.validateToken(token, userDetails)) {
                     // 将用户信息存入 authentication，方便后续校验
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

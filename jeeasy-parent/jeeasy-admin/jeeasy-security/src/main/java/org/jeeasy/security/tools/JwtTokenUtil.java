@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2020/11/12
  */
 @Component
-public class JwtTokenUtil<T extends UserDetails> implements Serializable {
+public class JwtTokenUtil<U extends UserDetails> implements Serializable {
     private static final long serialVersionUID = -4324967L;
 
     private static final String CLAIM_KEY_USERNAME = "sub";
@@ -30,7 +30,7 @@ public class JwtTokenUtil<T extends UserDetails> implements Serializable {
     private static final String CLAIM_KEY_ROLES = "roles";
 
     @Autowired
-    private RedisUtil<Serializable, T> redisTemplate;
+    private RedisUtil<Serializable, U> redisTemplate;
 
     @Value("${jeeasy.security.jwt.secret}")
     private String secret;
@@ -58,6 +58,10 @@ public class JwtTokenUtil<T extends UserDetails> implements Serializable {
             token = request.getHeader(CommonConstant.X_ACCESS_TOKEN);
         }
         return token;
+    }
+
+    public Serializable getUsernameByRequest(HttpServletRequest request){
+        return getUsernameFromToken(getTokenFromRequest(request));
     }
 
     /**
@@ -97,7 +101,7 @@ public class JwtTokenUtil<T extends UserDetails> implements Serializable {
      * @param userDetails 用户
      * @return 令牌
      */
-    public String generateToken(T userDetails) {
+    public String generateToken(U userDetails) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put(Claims.SUBJECT, userDetails.getUsername());
         claims.put(Claims.ISSUED_AT, new Date());
@@ -162,7 +166,7 @@ public class JwtTokenUtil<T extends UserDetails> implements Serializable {
      * @param userDetails 用户
      * @return 是否有效
      */
-    public Boolean validateToken(String token, T userDetails) {
+    public Boolean validateToken(String token, U userDetails) {
         try {
             String username = getUsernameFromToken(token);
             return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

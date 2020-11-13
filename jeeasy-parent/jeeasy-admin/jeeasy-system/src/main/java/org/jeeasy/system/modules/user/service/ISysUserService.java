@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface ISysUserService extends IService<SysUser>, UserDetailsService {
     SysUser getByUserName(String userName);
 
-    boolean checkPasswordById(String id, String password);
+//    boolean checkPasswordById(String id, String password);
 
-    boolean checkPasswordByUserName(String userName, String password);
+//    boolean checkPasswordByUserName(String userName, String password);
 
-    SysUser login(String username, String password);
+//    SysUser login(String username, String password);
 }

@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.security.model;
 
-import cn.hutool.core.bean.BeanUtil;
-import org.jeeasy.security.domain.JwtUserDetails;
+import lombok.Data;
+import org.jeeasy.security.domain.JeeasySecurityUserDetails;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,15 +10,36 @@ import java.util.Collection;
 /**
  * @author Alps
  */
-public class JeeasySysUserDetails extends SysUser implements JwtUserDetails {
+@Data
+public class JeeasySysUserDetails extends JeeasySecurityUserDetails {
+
+    private SysUser sysUser;
+
+    public JeeasySysUserDetails(SysUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
+    public String getSalt(){
+        return this.sysUser.getSalt();
+    }
 
     public static JeeasySysUserDetails create(SysUser sysUser) {
-        return BeanUtil.toBean(sysUser, JeeasySysUserDetails.class);
+        return new JeeasySysUserDetails(sysUser);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return sysUser.getUsername();
     }
 
     @Override
@@ -38,6 +59,6 @@ public class JeeasySysUserDetails extends SysUser implements JwtUserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.izEnabled();
+        return false;
     }
 }

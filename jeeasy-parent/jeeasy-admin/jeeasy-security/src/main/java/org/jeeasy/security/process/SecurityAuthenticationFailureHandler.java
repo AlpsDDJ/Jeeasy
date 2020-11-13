@@ -1,9 +1,9 @@
 package org.jeeasy.security.process;
 
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.security.domain.JeeasySecurityUserDetails;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +15,8 @@ import java.io.IOException;
  * Author: 就 眠 仪 式
  * CreateTime: 2019/10/23
  * */
-@Component
-public class SecurityAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+//@Component
+public class SecurityAuthenticationFailureHandler<U extends JeeasySecurityUserDetails> extends SimpleUrlAuthenticationFailureHandler {
 
     /**
      * 日 志 服 务

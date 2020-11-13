@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("系统用户")
 @Accessors(chain = true)
-public class SysUser implements Serializable {
+public class SysUser {
 
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty("ID")
@@ -83,4 +82,34 @@ public class SysUser implements Serializable {
     public boolean izEnabled(){
         return "1".equals(this.status);
     }
+
+//    @JsonIgnore
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
+//
+//    @JsonIgnore
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return false;
+//    }
+//
+//    @JsonIgnore
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return false;
+//    }
+//
+//    @JsonIgnore
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return false;
+//    }
+//
+//    @JsonIgnore
+//    @Override
+//    public boolean isEnabled() {
+//        return izEnabled();
+//    }
 }

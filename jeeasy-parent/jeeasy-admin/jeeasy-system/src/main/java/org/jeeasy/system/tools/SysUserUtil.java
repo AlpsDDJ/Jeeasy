@@ -56,6 +56,11 @@ public class SysUserUtil {
     }
 
 
+    /**
+     *
+     * @param password 用户输入的密码
+     * @return
+     */
     public boolean checkPassword(String password){
         if(Tools.isEmpty(this.sysUser) || Tools.isEmpty(password)){
             return false;
