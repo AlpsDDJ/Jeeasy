@@ -33,4 +33,15 @@ public class SecurityProperty {
      * logoutUrl
      * */
     private String logoutUrl = "/logout";
+
+    /**
+     * logoutUrl
+     * */
+    private Long expiration = 3600L;
+
+    /**
+     * 最大登录设备数 = 0 无限制
+     *
+     * */
+    private Integer loginDevicesMax = 0;
 }

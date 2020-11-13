@@ -1,5 +1,6 @@
 package org.jeeasy.security.process;
 
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
@@ -49,13 +50,15 @@ public class SecurityAuthenticationSuccessHandler<U extends JeeasyBaseSecurityUs
 
 //        R result = R.ok("登陆成功");
         // 将当前用户存入 Session 缓存
-        U userDetails = (U) authentication.getPrincipal();
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenUtil.generateToken(userDetails);
-        renderToken(httpServletResponse, token);
-//        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
-//        httpServletResponse.setCharacterEncoding("UTF-8");
-//        httpServletResponse.getWriter().write(JSON.toJSONString(result));
+        try{
+            U userDetails = (U) authentication.getPrincipal();
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtTokenUtil.generateToken(userDetails);
+            securityService.onAuthenticationSuccess(userDetails);
+            renderToken(httpServletResponse, token);
+        }catch (JeeasyException e){
+            R.error(e.getMessage()).responseWrite(httpServletResponse);
+        }
     }
 
     /**
@@ -65,6 +68,7 @@ public class SecurityAuthenticationSuccessHandler<U extends JeeasyBaseSecurityUs
      * @throws IOException
      */
     public void renderToken(HttpServletResponse response, String token) throws IOException {
+
         R.ok(token).responseWrite(response);
     }
 }

@@ -47,6 +47,10 @@ public class Tools {
         return DateUtil.now();
     }
 
+    public static String getProxyIp() {
+        return getProxyIp(ServletUtil.getRequest());
+    }
+
     public static String getProxyIp(HttpServletRequest request) {
         return "";
     }

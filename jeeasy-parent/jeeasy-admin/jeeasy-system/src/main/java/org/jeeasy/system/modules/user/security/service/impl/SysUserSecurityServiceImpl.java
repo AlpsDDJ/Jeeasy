@@ -1,13 +1,18 @@
-package org.jeeasy.system.modules.security.service.impl;
+package org.jeeasy.system.modules.user.security.service.impl;
 
 import lombok.Setter;
+import org.jeeasy.common.cache.tools.RedisUtil;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.ServletUtil;
+import org.jeeasy.common.core.tools.SpringUtil;
 import org.jeeasy.common.core.tools.Tools;
+import org.jeeasy.security.config.property.SecurityProperty;
 import org.jeeasy.security.domain.JeeasySecurityPermission;
+import org.jeeasy.security.domain.JwtUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
-import org.jeeasy.system.modules.security.model.SysUserDetails;
+import org.jeeasy.security.tools.JwtTokenUtil;
 import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.security.model.SysUserDetails;
 import org.jeeasy.system.modules.user.service.ISysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -28,6 +34,10 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<SysUse
 
     @Autowired
     ISysUserService sysUserService;
+    private JwtTokenUtil<SysUserDetails> jwtTokenUtil = SpringUtil.getBean(JwtTokenUtil.class);
+
+    private RedisUtil<String, Object> redisUtil = SpringUtil.getBean(RedisUtil.class);
+    private SecurityProperty securityProperty = SpringUtil.getBean(SecurityProperty.class);
 
     @Setter
     @Value("${jeeasy.system.enable-captcha}")
@@ -69,6 +79,20 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<SysUse
         }
 //        if(SysUserUtil.create(sysUser).checkPassword(password)){
         if (SysUserUtil.checkPassword(username, password, sysUser.getPassword(), sysUser.getSalt())) {
+
+            try {
+                JwtUserDetails jwtUserDetails = new JwtUserDetails(username, jwtTokenUtil.getUserLoginNumber(username, securityProperty.getLoginDevicesMax()), LocalDateTime.now(), Tools.getProxyIp());
+                // 保存JWT tokenUser 登录基础信息
+                jwtTokenUtil.saveUserToRedis(jwtUserDetails);
+                jwtTokenUtil.saveUserToRedis(sysUser);
+//                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername(), jwtUserDetails.getNumber()), jwtUserDetails, securityProperty.getExpiration());
+                // 保存 SysUserDetails 用户详细信息
+                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername()), sysUser, securityProperty.getExpiration() * 2);
+            } catch (JeeasyException e) {
+                throw new BadCredentialsException(e.getMessage());
+            }
+
+
             return sysUser;
         } else {
             throw new BadCredentialsException("密码错误.");

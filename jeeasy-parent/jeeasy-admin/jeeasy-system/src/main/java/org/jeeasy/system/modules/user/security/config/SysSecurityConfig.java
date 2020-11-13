@@ -1,9 +1,9 @@
-package org.jeeasy.system.modules.security.config;
+package org.jeeasy.system.modules.user.security.config;
 
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.support.JeeasySecurityHandlerProvider;
 import org.jeeasy.security.tools.JwtTokenUtil;
-import org.jeeasy.system.modules.security.model.SysUserDetails;
+import org.jeeasy.system.modules.user.security.model.SysUserDetails;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

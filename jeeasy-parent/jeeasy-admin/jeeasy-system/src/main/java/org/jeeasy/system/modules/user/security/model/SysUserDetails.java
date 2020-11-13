@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.security.model;
+package org.jeeasy.system.modules.user.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
@@ -24,12 +24,12 @@ public class SysUserDetails extends SysUser implements JeeasyBaseSecurityUserDet
 
     @Override
     public String password() {
-        return null;
+        return this.getPassword();
     }
 
     @Override
     public String username() {
-        return null;
+        return this.getUsername();
     }
 
     @Override

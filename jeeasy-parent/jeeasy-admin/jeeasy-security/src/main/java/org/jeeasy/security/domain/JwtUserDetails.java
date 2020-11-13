@@ -1,14 +1,23 @@
-//package org.jeeasy.security.domain;
-//
-//import org.springframework.security.core.userdetails.UserDetails;
-//
-//import java.io.Serializable;
-//
-///**
-// * @author AlpsDDJ
-// * @date 2020/11/12
-// */
-//public interface JwtUserDetails extends UserDetails {
-//    Serializable getId();
-//    String getSalt();
-//}
+package org.jeeasy.security.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+
+/**
+ * @author AlpsDDJ
+ * @date 2020/11/12
+ */
+@Data
+@Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class JwtUserDetails {
+    private String username;
+    private Integer number;
+    private LocalDateTime loginTime;
+    private String loginIp;
+}

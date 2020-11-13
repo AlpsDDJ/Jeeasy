@@ -2,7 +2,7 @@ package org.jeeasy.security.support;
 
 import org.jeeasy.common.core.tools.SpringUtil;
 import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
-import org.jeeasy.security.filter.JwtAuthenticationFilter;
+//import org.jeeasy.security.filter.JwtAuthenticationFilter;
 import org.jeeasy.security.process.*;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.tools.JwtTokenUtil;
@@ -16,7 +16,7 @@ public class JeeasySecurityHandlerProvider<U extends JeeasyBaseSecurityUserDetai
     public void init(String moduleName, JwtTokenUtil<U> jwtTokenUtil, IJeeasySecurityService<U> securityService){
         registerBean(moduleName, securityPermissionEvaluator(securityService));
         registerBean(moduleName, sysUserSecurityAuthenticationProvider(securityService));
-        registerBean(moduleName, jwtAuthenticationFilter(jwtTokenUtil, securityService));
+//        registerBean(moduleName, jwtAuthenticationFilter(jwtTokenUtil, securityService));
         registerBean(moduleName, securityAccessDeniedHandler());
         registerBean(moduleName, securityAuthenticationEntryPoint());
         registerBean(moduleName, securityAuthenticationFailureHandler());
@@ -39,9 +39,9 @@ public class JeeasySecurityHandlerProvider<U extends JeeasyBaseSecurityUserDetai
     }
 
 //    @Bean
-    public JwtAuthenticationFilter<U> jwtAuthenticationFilter(JwtTokenUtil<U> jwtTokenUtil, IJeeasySecurityService<U> securityService){
-        return new JwtAuthenticationFilter<>(jwtTokenUtil, securityService);
-    }
+//    public JwtAuthenticationFilter<U> jwtAuthenticationFilter(JwtTokenUtil<U> jwtTokenUtil, IJeeasySecurityService<U> securityService){
+//        return new JwtAuthenticationFilter<>(jwtTokenUtil, securityService);
+//    }
 
 
 //    @Bean
