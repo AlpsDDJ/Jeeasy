@@ -1,7 +1,7 @@
 package org.jeeasy.security.service;
 
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.domain.JeeasySecurityPermission;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
 import org.springframework.security.core.Authentication;
 
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
  * @author AlpsDDJ
  * @date 2020/11/13
  */
-public interface IJeeasySecurityService<U extends JeeasySecurityUserDetails> {
+public interface IJeeasySecurityService<U extends JeeasyBaseSecurityUserDetails> {
 
     /**
      * 根据用户名获取用户信息
@@ -21,6 +21,8 @@ public interface IJeeasySecurityService<U extends JeeasySecurityUserDetails> {
     U getUserByUsername(String username);
 
     /**
+     * 登录验证逻辑
+     *
      * @param authentication
      * @return
      */

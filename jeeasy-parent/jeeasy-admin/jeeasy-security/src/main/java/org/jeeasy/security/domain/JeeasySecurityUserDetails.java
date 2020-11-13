@@ -17,6 +17,10 @@ public abstract class JeeasySecurityUserDetails<U extends JeeasyBaseSecurityUser
     @Setter
     private U user;
 
+    public JeeasySecurityUserDetails(U user) {
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.authorities();

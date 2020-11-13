@@ -17,12 +17,9 @@ import org.springframework.context.annotation.DependsOn;
 @DependsOn("SpringUtil")
 public class SystemSecurityConfig implements InitializingBean {
 
-    //    @Bean("jeeasySecurityHandlerProvider")
-//    public void securityHandlerProvider(){
-//        new JeeasySecurityHandlerProvider<>().init();
-//    }
     @Autowired
     private JwtTokenUtil<JeeasySysUserDetails> jwtTokenUtil;
+    
     @Autowired
     private IJeeasySecurityService<JeeasySysUserDetails> securityService;
 

@@ -2,12 +2,9 @@ package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeeasy.common.db.tools.QueryGenerator;
-import org.jeeasy.system.modules.security.model.JeeasySysUserDetails;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.service.ISysUserService;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @date 2020/11/9
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService, UserDetailsService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Override
     public SysUser getByUserName(String userName) {
@@ -47,16 +44,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        }
 //    }
 
-    /**
-     * 登录处理
-     * @param s
-     * @return
-     * @throws UsernameNotFoundException
-     */
-    @Override
-    public JeeasySysUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        SysUser sysUser = getByUserName(s);
-        JeeasySysUserDetails jeeasySysUserDetails = JeeasySysUserDetails.create(sysUser);
-        return jeeasySysUserDetails;
-    }
+//    /**
+//     * 登录处理
+//     * @param s
+//     * @return
+//     * @throws UsernameNotFoundException
+//     */
+//    @Override
+//    public JeeasySysUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+//        SysUser sysUser = getByUserName(s);
+//        JeeasySysUserDetails jeeasySysUserDetails = JeeasySysUserDetails.create(sysUser);
+//        return jeeasySysUserDetails;
+//    }
 }

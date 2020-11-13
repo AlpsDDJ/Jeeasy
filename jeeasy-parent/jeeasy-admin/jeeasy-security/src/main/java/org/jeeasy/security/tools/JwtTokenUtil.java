@@ -5,9 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.jeeasy.common.cache.tools.RedisUtil;
 import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2020/11/12
  */
 @Component
-public class JwtTokenUtil<U extends UserDetails> implements Serializable {
+public class JwtTokenUtil<U extends JeeasyBaseSecurityUserDetails> implements Serializable {
     private static final long serialVersionUID = -4324967L;
 
     private static final String CLAIM_KEY_USERNAME = "sub";
@@ -103,7 +103,7 @@ public class JwtTokenUtil<U extends UserDetails> implements Serializable {
      */
     public String generateToken(U userDetails) {
         Map<String, Object> claims = new HashMap<>(2);
-        claims.put(Claims.SUBJECT, userDetails.getUsername());
+        claims.put(Claims.SUBJECT, userDetails.username());
         claims.put(Claims.ISSUED_AT, new Date());
         return generateToken(claims);
     }
@@ -169,7 +169,7 @@ public class JwtTokenUtil<U extends UserDetails> implements Serializable {
     public Boolean validateToken(String token, U userDetails) {
         try {
             String username = getUsernameFromToken(token);
-            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+            return (username.equals(userDetails.username()) && !isTokenExpired(token));
         } catch (Exception exception) {
             return false;
         }

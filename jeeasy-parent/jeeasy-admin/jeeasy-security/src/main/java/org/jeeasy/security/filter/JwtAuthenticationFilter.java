@@ -1,7 +1,7 @@
 package org.jeeasy.security.filter;
 
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.tools.JwtTokenUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.io.IOException;
  * @date 2020/11/12
  */
 //@Component
-public class JwtAuthenticationFilter<U extends JeeasySecurityUserDetails> extends OncePerRequestFilter {
+public class JwtAuthenticationFilter<U extends JeeasyBaseSecurityUserDetails> extends OncePerRequestFilter {
 
 
 //    @Autowired
@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter<U extends JeeasySecurityUserDetails> extend
                 U userDetails = securityService.getUserByUsername(username);
                 if (jwtTokenUtil.validateToken(token, userDetails)) {
                     // 将用户信息存入 authentication，方便后续校验
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     // 将 authentication 存入 ThreadLocal，方便后续获取用户信息
                     SecurityContextHolder.getContext().setAuthentication(authentication);

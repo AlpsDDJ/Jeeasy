@@ -1,7 +1,7 @@
 package org.jeeasy.security.support;
 
 import org.jeeasy.common.core.tools.SpringUtil;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.filter.JwtAuthenticationFilter;
 import org.jeeasy.security.process.*;
 import org.jeeasy.security.service.IJeeasySecurityService;
@@ -11,7 +11,7 @@ import org.jeeasy.security.tools.JwtTokenUtil;
  * @author AlpsDDJ
  * @date 2020/11/13
  */
-public class JeeasySecurityHandlerProvider<U extends JeeasySecurityUserDetails> {
+public class JeeasySecurityHandlerProvider<U extends JeeasyBaseSecurityUserDetails> {
 
     public void init(String moduleName, JwtTokenUtil<U> jwtTokenUtil, IJeeasySecurityService<U> securityService){
         registerBean(moduleName, securityPermissionEvaluator(securityService));

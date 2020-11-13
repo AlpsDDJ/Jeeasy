@@ -2,7 +2,7 @@ package org.jeeasy.security.support;
 
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +15,7 @@ import org.springframework.security.core.AuthenticationException;
  * @author Alps
  */
 //@Component
-public class JeeasySecurityAuthenticationProvider<U extends JeeasySecurityUserDetails> implements AuthenticationProvider {
+public class JeeasySecurityAuthenticationProvider<U extends JeeasyBaseSecurityUserDetails> implements AuthenticationProvider {
 
 //    @Autowired
     private IJeeasySecurityService<U> securityService;
@@ -33,7 +33,7 @@ public class JeeasySecurityAuthenticationProvider<U extends JeeasySecurityUserDe
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         U userDetails = securityService.verifyLogin(authentication);
         if (Tools.isNotEmpty(userDetails)) {
-            return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(userDetails, userDetails.password(), userDetails.authorities());
         } else {
             throw new JeeasyException("登录失败.");
         }

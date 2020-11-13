@@ -1,7 +1,7 @@
 package org.jeeasy.security.process;
 
 import org.jeeasy.common.core.vo.R;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
  * CreateTime: 2019/10/23
  * */
 //@Component
-public class SecurityLogoutSuccessHandler<U extends JeeasySecurityUserDetails> implements LogoutSuccessHandler {
+public class SecurityLogoutSuccessHandler<U extends JeeasyBaseSecurityUserDetails> implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {

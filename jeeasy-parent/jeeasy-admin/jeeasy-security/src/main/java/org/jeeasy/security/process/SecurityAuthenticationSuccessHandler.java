@@ -1,7 +1,7 @@
 package org.jeeasy.security.process;
 
 import org.jeeasy.common.core.vo.R;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.tools.JwtTokenUtil;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ import java.io.IOException;
  * CreateTime: 2019/10/23
  */
 //@Component
-public class SecurityAuthenticationSuccessHandler<U extends JeeasySecurityUserDetails> implements AuthenticationSuccessHandler {
+public class SecurityAuthenticationSuccessHandler<U extends JeeasyBaseSecurityUserDetails> implements AuthenticationSuccessHandler {
 
 //    public static final Logger log = LoggerFactory.getLogger(SecurityAccessDeniedHandler.class);
 

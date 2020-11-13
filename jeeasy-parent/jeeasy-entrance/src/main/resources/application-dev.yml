@@ -31,7 +31,7 @@ mybatis-plus:
 
 jeeasy:
   system:
-    enable-captcha: false
+    enable-captcha: true
   # 权 限 配 置
   security:
     jwt:

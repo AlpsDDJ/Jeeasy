@@ -1,6 +1,6 @@
 package org.jeeasy.security.support;
 
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,7 @@ import java.util.Set;
  */
 //@Component
 //@NoArgsConstructor
-public class JeeasySecurityPermissionEvaluator<U extends JeeasySecurityUserDetails> implements PermissionEvaluator {
+public class JeeasySecurityPermissionEvaluator<U extends JeeasyBaseSecurityUserDetails> implements PermissionEvaluator {
 
     // @Autowired
     private IJeeasySecurityService<U> securityService;
@@ -35,7 +35,7 @@ public class JeeasySecurityPermissionEvaluator<U extends JeeasySecurityUserDetai
     @Override
     public boolean hasPermission(Authentication authentication, Object o, Object o1) {
         U securityUserDetails = (U) authentication.getPrincipal();
-        Set<String> permissions = securityService.getPermissionSetByUsername(securityUserDetails.getUsername());
+        Set<String> permissions = securityService.getPermissionSetByUsername(securityUserDetails.username());
 //        for (SysPower sysPower :powerList) {
 //            permissions.add(sysPower.getPowerCode());
 //        }

@@ -36,7 +36,7 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<Jeeasy
     @Override
     public JeeasySysUserDetails getUserByUsername(String username) {
         SysUser sysUser = sysUserService.getByUserName(username);
-        if(Tools.isNotEmpty(sysUser)){
+        if (Tools.isNotEmpty(sysUser)) {
             return JeeasySysUserDetails.create(sysUser);
         }
         return null;
@@ -51,13 +51,19 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<Jeeasy
 
         String captcha = ServletUtil.getRequest().getParameter("captcha");
         String captchaKey = ServletUtil.getRequest().getParameter("captchaKey");
-        if (enableCaptcha && Tools.verifyCaptcha(captchaKey, captcha)) {
-            throw new JeeasyException("验证码错误");
+        try {
+            if (enableCaptcha) {
+                Tools.verifyCaptcha(captchaKey, captcha);
+            }
+        } catch (JeeasyException e) {
+            throw new BadCredentialsException(e.getMessage());
         }
+
         if (Tools.isEmpty(sysUser)) {
             throw new UsernameNotFoundException("用户名不存在.");
         }
-        if (!sysUser.isEnabled()) {
+
+        if (!sysUser.izEnabled()) {
             throw new DisabledException("账号已冻结.");
         }
 //        if(SysUserUtil.create(sysUser).checkPassword(password)){

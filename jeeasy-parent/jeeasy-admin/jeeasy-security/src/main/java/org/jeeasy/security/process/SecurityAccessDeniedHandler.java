@@ -1,7 +1,7 @@
 package org.jeeasy.security.process;
 
 import org.jeeasy.common.core.vo.R;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
  * */
 //@Slf4j
 //@Component
-public class SecurityAccessDeniedHandler<U extends JeeasySecurityUserDetails> implements AccessDeniedHandler {
+public class SecurityAccessDeniedHandler<U extends JeeasyBaseSecurityUserDetails> implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {

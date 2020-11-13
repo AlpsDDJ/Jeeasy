@@ -1,7 +1,7 @@
 package org.jeeasy.security.process;
 
 import org.jeeasy.common.core.vo.R;
-import org.jeeasy.security.domain.JeeasySecurityUserDetails;
+import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
  * CreateTime: 2019/10/23
  * */
 //@Component
-public class SecurityAuthenticationEntryPoint<U extends JeeasySecurityUserDetails> implements AuthenticationEntryPoint {
+public class SecurityAuthenticationEntryPoint<U extends JeeasyBaseSecurityUserDetails> implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
