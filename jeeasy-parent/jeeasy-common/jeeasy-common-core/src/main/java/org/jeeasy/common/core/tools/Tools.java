@@ -63,7 +63,7 @@ public class Tools {
         return R.ok(captchaVo);
     }
 
-    public static boolean verifyCaptcha(String key, String captcha) {
+    public static boolean verifyCaptcha(String key, String captcha) throws JeeasyException {
         LineCaptcha lineCaptcha = captchaCache.get(key);
         if(isEmpty(lineCaptcha)){
             throw new JeeasyException("验证码失效.");

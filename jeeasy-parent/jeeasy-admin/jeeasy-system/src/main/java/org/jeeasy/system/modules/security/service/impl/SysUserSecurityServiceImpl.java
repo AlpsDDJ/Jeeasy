@@ -6,7 +6,7 @@ import org.jeeasy.common.core.tools.ServletUtil;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.security.domain.JeeasySecurityPermission;
 import org.jeeasy.security.service.IJeeasySecurityService;
-import org.jeeasy.system.modules.security.model.JeeasySysUserDetails;
+import org.jeeasy.system.modules.security.model.SysUserDetails;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.service.ISysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
@@ -24,7 +24,7 @@ import java.util.Set;
  * @author Alps
  */
 @Component
-public class SysUserSecurityServiceImpl implements IJeeasySecurityService<JeeasySysUserDetails> {
+public class SysUserSecurityServiceImpl implements IJeeasySecurityService<SysUserDetails> {
 
     @Autowired
     ISysUserService sysUserService;
@@ -34,30 +34,31 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<Jeeasy
     private boolean enableCaptcha = true;
 
     @Override
-    public JeeasySysUserDetails getUserByUsername(String username) {
+    public SysUserDetails getUserByUsername(String username) {
         SysUser sysUser = sysUserService.getByUserName(username);
         if (Tools.isNotEmpty(sysUser)) {
-            return JeeasySysUserDetails.create(sysUser);
+            return SysUserDetails.create(sysUser);
         }
         return null;
     }
 
     @Override
-    public JeeasySysUserDetails verifyLogin(Authentication authentication) {
-        String username = (String) authentication.getPrincipal();
-        String password = (String) authentication.getCredentials();
-
-        JeeasySysUserDetails sysUser = this.getUserByUsername(username);
-
-        String captcha = ServletUtil.getRequest().getParameter("captcha");
-        String captchaKey = ServletUtil.getRequest().getParameter("captchaKey");
+    public SysUserDetails verifyLogin(Authentication authentication) {
         try {
+            // 验证码
             if (enableCaptcha) {
+                String captcha = ServletUtil.getRequest().getParameter("captcha");
+                String captchaKey = ServletUtil.getRequest().getParameter("captchaKey");
                 Tools.verifyCaptcha(captchaKey, captcha);
             }
         } catch (JeeasyException e) {
             throw new BadCredentialsException(e.getMessage());
         }
+
+        String username = (String) authentication.getPrincipal();
+        String password = (String) authentication.getCredentials();
+
+        SysUserDetails sysUser = this.getUserByUsername(username);
 
         if (Tools.isEmpty(sysUser)) {
             throw new UsernameNotFoundException("用户名不存在.");
@@ -90,7 +91,7 @@ public class SysUserSecurityServiceImpl implements IJeeasySecurityService<Jeeasy
     }
 
     @Override
-    public void onAuthenticationSuccess(JeeasySysUserDetails securityUserDetails) {
+    public void onAuthenticationSuccess(SysUserDetails securityUserDetails) {
 
     }
 

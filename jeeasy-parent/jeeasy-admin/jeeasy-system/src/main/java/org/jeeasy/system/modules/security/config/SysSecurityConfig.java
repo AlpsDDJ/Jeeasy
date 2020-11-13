@@ -3,7 +3,7 @@ package org.jeeasy.system.modules.security.config;
 import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.security.support.JeeasySecurityHandlerProvider;
 import org.jeeasy.security.tools.JwtTokenUtil;
-import org.jeeasy.system.modules.security.model.JeeasySysUserDetails;
+import org.jeeasy.system.modules.security.model.SysUserDetails;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,16 +15,16 @@ import org.springframework.context.annotation.DependsOn;
  */
 @Configuration
 @DependsOn("SpringUtil")
-public class SystemSecurityConfig implements InitializingBean {
+public class SysSecurityConfig implements InitializingBean {
 
     @Autowired
-    private JwtTokenUtil<JeeasySysUserDetails> jwtTokenUtil;
-    
+    private JwtTokenUtil<SysUserDetails> jwtTokenUtil;
+
     @Autowired
-    private IJeeasySecurityService<JeeasySysUserDetails> securityService;
+    private IJeeasySecurityService<SysUserDetails> securityService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        new JeeasySecurityHandlerProvider<JeeasySysUserDetails>().init("JeeasySystem", jwtTokenUtil, securityService);
+        new JeeasySecurityHandlerProvider<SysUserDetails>().init("JeeasySystem", jwtTokenUtil, securityService);
     }
 }

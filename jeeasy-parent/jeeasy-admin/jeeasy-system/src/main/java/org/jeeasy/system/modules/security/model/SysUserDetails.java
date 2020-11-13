@@ -12,10 +12,10 @@ import java.util.Collection;
  * @author Alps
  */
 @Data
-public class JeeasySysUserDetails extends SysUser implements JeeasyBaseSecurityUserDetails {
+public class SysUserDetails extends SysUser implements JeeasyBaseSecurityUserDetails {
 
-    public static JeeasySysUserDetails create(SysUser sysUser) {
-        return BeanUtil.toBean(sysUser, JeeasySysUserDetails.class);
+    public static SysUserDetails create(SysUser sysUser) {
+        return BeanUtil.toBean(sysUser, SysUserDetails.class);
     }
     @Override
     public Collection<? extends GrantedAuthority> authorities() {
