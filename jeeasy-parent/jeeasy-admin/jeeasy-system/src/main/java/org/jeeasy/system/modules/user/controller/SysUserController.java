@@ -25,8 +25,7 @@ public class SysUserController extends SimpleBaseController<ISysUserService, Sys
     @GetMapping
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        R<IPage<SysUser>> query = super.query(entity, pageNo, pageSize, req);
-        return query;
+        return super.query(entity, pageNo, pageSize, req);
     }
 
     @GetMapping("/{id}")

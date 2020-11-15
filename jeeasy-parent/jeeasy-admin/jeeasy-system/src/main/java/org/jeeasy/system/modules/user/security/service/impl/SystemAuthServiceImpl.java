@@ -40,7 +40,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     }
 
     @Override
-    public SystemAuthUser getUserByUsername(String username) {
+    public SystemAuthUser getAuthUserByUsername(String username) {
         SysUser sysUser = sysUserService.getByUserName(username);
         if (Tools.isNotEmpty(sysUser)) {
             return IAuthUser.create(sysUser, SystemAuthUser.class);
@@ -64,7 +64,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        SystemAuthUser systemAuthUser = this.getUserByUsername(username);
+        SystemAuthUser systemAuthUser = this.getAuthUserByUsername(username);
 
         if (Tools.isEmpty(systemAuthUser)) {
             throw new UsernameNotFoundException("用户名不存在.");

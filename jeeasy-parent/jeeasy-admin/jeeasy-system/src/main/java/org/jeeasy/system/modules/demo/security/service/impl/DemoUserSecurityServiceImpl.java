@@ -33,7 +33,7 @@ public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails
     }
 
     @Override
-    public DemoUserDetails getUserByUsername(String username) {
+    public DemoUserDetails getAuthUserByUsername(String username) {
         DemoUser demoUser = new DemoUser().setUsername(username).setId(Tools.uuid()).setPassword(Tools.uuid());
         if (Tools.isNotEmpty(demoUser)) {
             return DemoUserDetails.create(demoUser);

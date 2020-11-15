@@ -34,8 +34,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      */
     protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        IPage<T> page = service.page(new Page<T>(pageNo, pageSize), queryWrapper);;
-        return R.ok(page);
+        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
     }
 
     /**

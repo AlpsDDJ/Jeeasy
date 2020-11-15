@@ -28,7 +28,7 @@ public interface IAuthService<U extends IAuthUser> {
      * @param username
      * @return
      */
-    U getUserByUsername(String username);
+    U getAuthUserByUsername(String username);
 
     /**
      * 登录验证逻辑
