@@ -17,7 +17,7 @@ public class CommonController {
     /**
      * 验证码生成
      */
-    @GetMapping("/noUser")
+    @GetMapping("/nouser")
     public R<?> noUser() throws Exception {
         return R.noUser("未登录");
     }

@@ -40,7 +40,7 @@ jeeasy:
       expiration: 1000
     # 不 需 要 权 限 拦 截 的 接 口 配 置
     open-api:
-      - /login/**  # 开放 登录 接口
+      - /auth/**  # 开放 登录 接口
       - /noUser  # 开放 未登录重定向 接口
       - /noAuth  # 开放 权限不足重定向 接口
       - /captcha/** # 开放 验证码生成 接口
@@ -53,9 +53,9 @@ jeeasy:
       - /webjars/**
       - /swagger-resources
       - /v2/api-docs
-    login-url: /noUser
-    login-processing-url: /login
-    logout-url: /logout
+#    login-url: /nouser
+#    login-processing-url: /login
+#    logout-url: /logout
   swagger:
     enable: true
     module:

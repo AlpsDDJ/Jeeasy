@@ -1,9 +1,9 @@
 package org.jeeasy.system.modules.demo.security.service.impl;
 
 import lombok.Setter;
+import org.jeeasy.auth.domain.Permission;
+import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.security.domain.JeeasySecurityPermission;
-import org.jeeasy.security.service.IJeeasySecurityService;
 import org.jeeasy.system.modules.demo.security.model.DemoUser;
 import org.jeeasy.system.modules.demo.security.model.DemoUserDetails;
 import org.jeeasy.system.modules.user.service.ISysUserService;
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Alps
  */
 @Component
-public class DemoUserSecurityServiceImpl implements IJeeasySecurityService<DemoUserDetails> {
+public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails> {
 
     @Autowired
     ISysUserService sysUserService;
@@ -26,6 +26,11 @@ public class DemoUserSecurityServiceImpl implements IJeeasySecurityService<DemoU
     @Setter
     @Value("${jeeasy.system.enable-captcha}")
     private boolean enableCaptcha = true;
+
+    @Override
+    public String getAuthMethod() {
+        return "demo";
+    }
 
     @Override
     public DemoUserDetails getUserByUsername(String username) {
@@ -81,7 +86,7 @@ public class DemoUserSecurityServiceImpl implements IJeeasySecurityService<DemoU
     }
 
     @Override
-    public Set<JeeasySecurityPermission> getAllPermission() {
+    public Set<Permission> getAllPermission() {
         return null;
     }
 

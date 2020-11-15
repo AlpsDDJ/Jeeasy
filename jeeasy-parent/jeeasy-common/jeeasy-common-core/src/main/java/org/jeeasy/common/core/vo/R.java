@@ -2,6 +2,7 @@ package org.jeeasy.common.core.vo;
 
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 @Data
+@Accessors(chain = true)
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 

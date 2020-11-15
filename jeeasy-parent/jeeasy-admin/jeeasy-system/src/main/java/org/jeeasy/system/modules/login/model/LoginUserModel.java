@@ -24,4 +24,7 @@ public class LoginUserModel {
     @ApiModelProperty("验证码key")
     private String captchaKey;
 
+    @ApiModelProperty("验证方式")
+    private String authMethod;
+
 }

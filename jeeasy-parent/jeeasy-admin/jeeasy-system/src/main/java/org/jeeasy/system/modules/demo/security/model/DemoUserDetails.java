@@ -2,7 +2,7 @@ package org.jeeasy.system.modules.demo.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
-import org.jeeasy.security.domain.JeeasyBaseSecurityUserDetails;
+import org.jeeasy.auth.domain.IAuthUser;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -11,11 +11,12 @@ import java.util.Collection;
  * @author Alps
  */
 @Data
-public class DemoUserDetails extends DemoUser implements JeeasyBaseSecurityUserDetails {
+public class DemoUserDetails extends DemoUser implements IAuthUser {
 
     public static DemoUserDetails create(DemoUser sysUser) {
         return BeanUtil.toBean(sysUser, DemoUserDetails.class);
     }
+
     @Override
     public Collection<? extends GrantedAuthority> authorities() {
         return null;
@@ -50,4 +51,9 @@ public class DemoUserDetails extends DemoUser implements JeeasyBaseSecurityUserD
     public boolean izEnabled() {
         return false;
     }
+
+//    @Override
+//    public UserDetails toAuthUserDetails() {
+//        return null;
+//    }
 }

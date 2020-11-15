@@ -1,4 +1,4 @@
-package org.jeeasy.security.config.property;
+package org.jeeasy.auth.config.property;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class SecurityProperty {
     /**
      * 开 放 接 口 列 表
      * */
-    private String[] openApi;
+    private String[] openApi = new String[0];
 
     /**
      * loginPage
@@ -27,7 +27,7 @@ public class SecurityProperty {
     /**
      * loginProcessingUrl
      * */
-    private String loginProcessingUrl = "/auth/*";
+    private String loginProcessingUrl = "/login";
 
     /**
      * logoutUrl
