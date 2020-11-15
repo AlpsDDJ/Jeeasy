@@ -1,34 +1,28 @@
 package org.jeeasy.auth.config;
 
-import cn.hutool.core.util.ArrayUtil;
-import org.jeeasy.auth.annotation.AnonymousAccess;
 import org.jeeasy.auth.config.property.SecurityProperty;
-import org.jeeasy.common.core.tools.SpringUtil;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @Description: 启动基于Spring Security的安全认证
@@ -39,6 +33,7 @@ import java.util.Set;
  */
 @Configuration
 @EnableWebSecurity
+@EnableRedisHttpSession
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(SecurityProperty.class)
 public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
@@ -69,14 +64,12 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        String aaa = "123";
-
         http
                 // 去掉 CSRF（Cross-site request forgery）跨站请求伪造,依赖web浏览器，被混淆过的代理人攻击,使用无状态认证时要关闭
                 .csrf().disable()
                 // 使用 JWT，使用无状态会话，不需要session
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 //配置 Http Basic 验证
                 .httpBasic()
                 //匿名用户异常拦截处理器
@@ -88,7 +81,7 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 /**
                  * ant路径风格有三种通配符：[?]匹配任何单字符；[*]匹配0或者任意数量的字符；[**]匹配0或更多的目录
                  */
-                .antMatchers(getAnonymousUrls()).permitAll()
+                .antMatchers(securityProperty.getAnonymousUrls()).permitAll()
                 .anyRequest().authenticated()
                 // RBAC 动态 url 认证
 //                .access("@rbacServiceImpl.hasPermission(request, authentication)")
@@ -135,29 +128,6 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    /**
-     * 获取匿名访问地址
-     *
-     * @return
-     */
-    private String[] getAnonymousUrls() {
-        // 搜寻 匿名标记 url： PreAuthorize("hasAnyRole('anonymous')") 和 PreAuthorize("@el.check('anonymous')") 和 AnonymousAccess
-        Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = SpringUtil.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
-        Set<String> anonymousUrls = new HashSet<>();
-        for (Map.Entry<RequestMappingInfo, HandlerMethod> infoEntry : handlerMethodMap.entrySet()) {
-            HandlerMethod handlerMethod = infoEntry.getValue();
-            AnonymousAccess anonymousAccess = handlerMethod.getMethodAnnotation(AnonymousAccess.class);
-            PreAuthorize preAuthorize = handlerMethod.getMethodAnnotation(PreAuthorize.class);
-            if (null != preAuthorize && preAuthorize.value().toLowerCase().contains("anonymous")) {
-                anonymousUrls.addAll(infoEntry.getKey().getPatternsCondition().getPatterns());
-            } else if (null != anonymousAccess && null == preAuthorize) {
-                anonymousUrls.addAll(infoEntry.getKey().getPatternsCondition().getPatterns());
-            }
-        }
-        String[] anonymousUrlArr = ArrayUtil.append(securityProperty.getOpenApi(), securityProperty.getLoginUrl(), securityProperty.getLoginProcessingUrl());
-        return ArrayUtil.addAll(anonymousUrls.toArray(new String[0]), anonymousUrlArr);
-    }
-
 //    @Override
 //    public UserDetailsService userDetailsService(){
 //        return authUserDetailsService;
@@ -192,5 +162,16 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 加入自定义的安全认证
         auth.authenticationProvider(authenticationProvider);
+    }
+
+    /**
+     * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
+     *
+     * @return 认证管理对象
+     */
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

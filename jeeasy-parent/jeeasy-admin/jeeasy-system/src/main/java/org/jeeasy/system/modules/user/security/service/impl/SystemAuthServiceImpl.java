@@ -26,7 +26,7 @@ import java.util.Set;
  * @author Alps
  */
 @Component
-public class SysUserSecurityServiceImpl implements IAuthService<SystemAuthUser> {
+public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Autowired
     ISysUserService sysUserService;

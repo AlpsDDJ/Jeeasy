@@ -3,6 +3,7 @@ package org.jeeasy.auth.domain;
 import cn.hutool.core.bean.BeanUtil;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Collection;
  * @description JeeasyAuthUser 自定义认证用户接口
  * @date 2020-11-14
  */
-public interface IAuthUser {
+public interface IAuthUser extends Serializable {
 
     public static <T extends IAuthUser> T create(Object user, Class<T> clazz){
         return BeanUtil.toBean(user, clazz);

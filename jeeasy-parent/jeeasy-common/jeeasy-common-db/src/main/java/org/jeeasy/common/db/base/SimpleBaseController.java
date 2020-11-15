@@ -1,6 +1,7 @@
 package org.jeeasy.common.db.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +32,10 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @param req
      * @return
      */
-    protected R<Page<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
+    protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        Page<T> page = new Page<T>(pageNo, pageSize);
-        return R.ok(service.page(page, queryWrapper));
+        IPage<T> page = service.page(new Page<T>(pageNo, pageSize), queryWrapper);;
+        return R.ok(page);
     }
 
     /**

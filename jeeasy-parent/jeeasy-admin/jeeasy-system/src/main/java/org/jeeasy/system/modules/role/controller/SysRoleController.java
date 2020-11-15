@@ -1,6 +1,6 @@
 package org.jeeasy.system.modules.role.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.vo.R;
@@ -22,7 +22,7 @@ public class SysRoleController extends SimpleBaseController<ISysRoleService, Sys
 
     @GetMapping
     @ApiOperation(value = "角色列表", notes = "角色列表")
-    public R<Page<SysRole>> list(SysRole entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public R<IPage<SysRole>> list(SysRole entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         return super.query(entity, pageNo, pageSize, req);
     }
 
