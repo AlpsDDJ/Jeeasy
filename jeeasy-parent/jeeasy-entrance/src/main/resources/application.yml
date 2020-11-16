@@ -13,6 +13,9 @@ spring:
     active: dev
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  #true为使用 CGLIB 代理，false为JDK代理，默认为false
+#  aop:
+#    proxy-target-class: true
   # 数据源配置
   datasource:
     druid:

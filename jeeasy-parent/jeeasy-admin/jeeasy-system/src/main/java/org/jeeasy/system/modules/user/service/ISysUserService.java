@@ -8,11 +8,11 @@ import org.jeeasy.system.modules.user.entity.SysUser;
  * @date 2020/11/9
  */
 public interface ISysUserService extends IService<SysUser> {
-    SysUser getByUserName(String userName);
+    SysUser getByUserName(String username);
 
 //    boolean checkPasswordById(String id, String password);
 
-//    boolean checkPasswordByUserName(String userName, String password);
+    boolean checkPasswordByUserName(String username, String password);
 
 //    SysUser login(String username, String password);
 }

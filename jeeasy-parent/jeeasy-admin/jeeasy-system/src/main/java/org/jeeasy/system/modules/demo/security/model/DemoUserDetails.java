@@ -3,9 +3,6 @@ package org.jeeasy.system.modules.demo.security.model;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
 import org.jeeasy.auth.domain.IAuthUser;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * @author Alps
@@ -17,10 +14,10 @@ public class DemoUserDetails extends DemoUser implements IAuthUser {
         return BeanUtil.toBean(sysUser, DemoUserDetails.class);
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> authorities() {
-        return null;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> authorities() {
+//        return null;
+//    }
 
     @Override
     public String password() {

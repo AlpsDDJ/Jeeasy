@@ -8,23 +8,21 @@ import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.demo.security.model.DemoUser;
 import org.jeeasy.system.modules.demo.security.model.DemoUserDetails;
-import org.jeeasy.system.modules.user.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 /**
  * @author Alps
  */
-@Component
+@Service("demoUserSecurityService")
 @AuthMethod("demo")
 public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails> {
 
-    @Autowired
-    ISysUserService sysUserService;
+//    @Autowired
+//    ISysUserService sysUserService;
 
     @Setter
     @Value("${jeeasy.system.enable-captcha}")
@@ -40,9 +38,9 @@ public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails
     }
 
     @Override
-    public DemoUserDetails verifyLogin(Authentication authentication) {
+    public boolean verifyLogin(Authentication authentication) {
         // TODO 登录验证
-        return new DemoUserDetails();
+        return true;
     }
 
     @Override

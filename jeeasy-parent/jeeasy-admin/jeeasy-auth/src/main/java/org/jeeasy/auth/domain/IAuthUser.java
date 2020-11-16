@@ -4,10 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * @author AlpsDDJ
@@ -21,7 +19,7 @@ public interface IAuthUser extends Serializable {
         return BeanUtil.copyProperties(user, clazz);
     }
 
-    Collection<? extends GrantedAuthority> authorities();
+//    Collection<? extends GrantedAuthority> authorities();
 
     String password();
 

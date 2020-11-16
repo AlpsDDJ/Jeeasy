@@ -1,10 +1,16 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.db.tools.QueryGenerator;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.service.ISysUserService;
+import org.jeeasy.system.tools.SysUserUtil;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +21,9 @@ import org.springframework.stereotype.Service;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Override
-    public SysUser getByUserName(String userName) {
-        return this.getOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, userName));
+    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#username")
+    public SysUser getByUserName(String username) {
+        return this.getOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
     }
 
 //    @Override
@@ -25,11 +32,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        return SysUserUtil.create(sysUser).checkPassword(password);
 //    }
 
-//    @Override
-//    public boolean checkPasswordByUserName(String userName, String password) {
-//        SysUser sysUser = this.getByUserName(userName);
-//        return SysUserUtil.create(sysUser).checkPassword(password);
-//    }
+    @Override
+    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#username")
+    public boolean checkPasswordByUserName(String username, String password) {
+        SysUser sysUser = this.getByUserName(username);
+        if (Tools.isEmpty(sysUser)) {
+            throw new UsernameNotFoundException("用户名不存在.");
+        }
+        return SysUserUtil.create(sysUser).checkPassword(password);
+    }
 
 //    @Override
 //    public SysUser login(String username, String password) {

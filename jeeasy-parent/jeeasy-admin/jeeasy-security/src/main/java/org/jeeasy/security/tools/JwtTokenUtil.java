@@ -224,8 +224,8 @@ public class JwtTokenUtil<U extends JeeasyBaseSecurityUserDetails> implements Se
         return refreshedToken;
     }
 
-    public void refreshToken(String userName, Integer number) {
-        redisUtil.expire(getRedisKey(userName, number), expiration);
+    public void refreshToken(String username, Integer number) {
+        redisUtil.expire(getRedisKey(username, number), expiration);
 //        redisUtil.expire(userKey, null);
 
     }

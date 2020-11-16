@@ -11,14 +11,11 @@ import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.security.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.ISysUserService;
-import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +23,7 @@ import java.util.Set;
 /**
  * @author Alps
  */
-@Component
+@Service("systemAuthService")
 @AuthMethod(value = "system", izDefault = true)
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
@@ -47,7 +44,8 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     }
 
     @Override
-    public SystemAuthUser verifyLogin(Authentication authentication) {
+//    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#authentication.principal")
+    public boolean verifyLogin(Authentication authentication) {
         try {
             // 验证码
             if (enableCaptcha) {
@@ -62,37 +60,43 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        SystemAuthUser systemAuthUser = this.getAuthUserByUsername(username);
+        return sysUserService.checkPasswordByUserName(username, password);
 
-        if (Tools.isEmpty(systemAuthUser)) {
-            throw new UsernameNotFoundException("用户名不存在.");
-        }
-
-        if (!systemAuthUser.izEnabled()) {
-            throw new DisabledException("账号已冻结.");
-        }
+//        if (Tools.isEmpty(systemAuthUser)) {
+//            throw new UsernameNotFoundException("用户名不存在.");
+//        }
+////
+////        if (!systemAuthUser.izEnabled()) {
+////            throw new DisabledException("账号已冻结.");
+////        }
+//        return SysUserUtil.checkPassword(username, password, systemAuthUser.getPassword(), systemAuthUser.getSalt());
 //        if(SysUserUtil.create(sysUser).checkPassword(password)){
-        if (SysUserUtil.checkPassword(username, password, systemAuthUser.getPassword(), systemAuthUser.getSalt())) {
-
-//            try {
-//                JwtUserDetails jwtUserDetails = new JwtUserDetails(username, jwtTokenUtil.getUserLoginNumber(username, securityProperty.getLoginDevicesMax()), LocalDateTime.now(), Tools.getProxyIp());
-//                // 保存JWT tokenUser 登录基础信息
-//                jwtTokenUtil.saveUserToRedis(jwtUserDetails);
-//                jwtTokenUtil.saveUserToRedis(sysUser);
-////                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername(), jwtUserDetails.getNumber()), jwtUserDetails, securityProperty.getExpiration());
-//                // 保存 SysUserDetails 用户详细信息
-//                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername()), sysUser, securityProperty.getExpiration() * 2);
-//            } catch (JeeasyException e) {
-//                throw new BadCredentialsException(e.getMessage());
-//            }
-
-            systemAuthUser.setPermissions(this.getPermissionSetByUsername(username));
-            systemAuthUser.setRoles(this.getRoleSetByUsername(username));
-            return systemAuthUser;
-        } else {
-            throw new BadCredentialsException("密码错误.");
-        }
+//        if (SysUserUtil.checkPassword(username, password, systemAuthUser.getPassword(), systemAuthUser.getSalt())) {
+//
+////            try {
+////                JwtUserDetails jwtUserDetails = new JwtUserDetails(username, jwtTokenUtil.getUserLoginNumber(username, securityProperty.getLoginDevicesMax()), LocalDateTime.now(), Tools.getProxyIp());
+////                // 保存JWT tokenUser 登录基础信息
+////                jwtTokenUtil.saveUserToRedis(jwtUserDetails);
+////                jwtTokenUtil.saveUserToRedis(sysUser);
+//////                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername(), jwtUserDetails.getNumber()), jwtUserDetails, securityProperty.getExpiration());
+////                // 保存 SysUserDetails 用户详细信息
+////                redisUtil.set(jwtTokenUtil.getRedisKey(jwtUserDetails.getUsername()), sysUser, securityProperty.getExpiration() * 2);
+////            } catch (JeeasyException e) {
+////                throw new BadCredentialsException(e.getMessage());
+////            }
+//
+//            systemAuthUser.setPermissions(this.getPermissionSetByUsername(username));
+//            systemAuthUser.setRoles(this.getRoleSetByUsername(username));
+//            return systemAuthUser;
+//        } else {
+//            throw new BadCredentialsException("密码错误.");
+//        }
     }
+
+//    @Override
+//    public boolean verifyLogin(SystemAuthUser authUser, Authentication authentication) {
+//        return false;
+//    }
 
     @Override
     public Set<String> getRoleSetByUsername(String username) {

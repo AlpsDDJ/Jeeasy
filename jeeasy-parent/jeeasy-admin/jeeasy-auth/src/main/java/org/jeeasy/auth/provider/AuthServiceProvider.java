@@ -1,5 +1,6 @@
 package org.jeeasy.auth.provider;
 
+import lombok.Setter;
 import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
 import org.jeeasy.auth.service.IAuthService;
@@ -26,6 +27,7 @@ public class AuthServiceProvider {
 
 
     @Autowired
+    @Setter
     private List<IAuthService<?>> authServiceList;
 
 //    public static final String DEFAULT_AUTH_METHOD = "system";

@@ -5,7 +5,6 @@ import org.jeeasy.auth.config.property.SecurityProperty;
 import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.provider.AuthServiceProvider;
-import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.auth.tools.JwtTokenUtils;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.R;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +35,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
 
 /**
  * @Description: 启动基于Spring Security的安全认证
@@ -78,7 +77,8 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
-
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -145,10 +145,13 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                     JeeasyWebAuthenticationDetails details = (JeeasyWebAuthenticationDetails) authentication.getDetails();
                     boolean isRemember = details.getRememberMe() == 1;
 
-                    IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
+//                    IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
 
-                    Set<String> roleSetByUsername = authService.getRoleSetByUsername(userDetails.getUsername());
-                    String token = JwtTokenUtils.createToken(userDetails.getUsername(), roleSetByUsername, isRemember);
+//                    Set<String> roleSetByUsername = authService.getRoleSetByUsername(userDetails.getUsername());
+
+
+
+                    String token = JwtTokenUtils.createToken(userDetails, isRemember);
                     R.ok(JwtTokenUtils.TOKEN_PREFIX + token).setMessage("登录成功.").responseWrite(response);
                 })
                 // 登录失败

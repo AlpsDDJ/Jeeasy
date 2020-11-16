@@ -7,13 +7,13 @@ import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * 自定义身份认证
  *
  * @author AlpsDDJ
@@ -33,11 +33,21 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
-        SecurityUserDetails<?> userDetails = authService.verifyLogin(authentication).createUserDetails();
+        String username = (String) authentication.getPrincipal();
+        SecurityUserDetails<?> userDetails = authService.getAuthUserByUsername(username).createUserDetails();
+        if (authService.verifyLogin(authentication)) {
+//            userDetails = authService.getAuthUserByUsername(username).createUserDetails();
+            userDetails.setRoles(authService.getRoleSetByUsername(username));
+            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
+        }
         if (Tools.isNotEmpty(userDetails)) {
 
-            if(!userDetails.isAccountNonExpired()){
+            if (!userDetails.isAccountNonExpired()) {
                 throw new AccountExpiredException("帐户过期.");
+            }
+
+            if (!userDetails.isEnabled()) {
+                throw new DisabledException("账号已冻结.");
             }
 
 //            if(!userDetails.isAccountNonLocked()){

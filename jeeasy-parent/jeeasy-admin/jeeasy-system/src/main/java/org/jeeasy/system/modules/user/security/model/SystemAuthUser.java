@@ -4,13 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.auth.domain.IAuthUser;
-import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.user.entity.SysUser;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,17 +19,17 @@ public class SystemAuthUser extends SysUser implements IAuthUser {
     private Set<String> roles;
     private Set<String> permissions;
 
-    @Override
-    public Collection<? extends GrantedAuthority> authorities() {
-        if(Tools.isEmpty(roles)){
-             roles = new HashSet<>();
-        }
-        Set<SimpleGrantedAuthority> authoritieSet = new HashSet<>();
-        permissions.forEach(p -> {
-            authoritieSet.add(new SimpleGrantedAuthority(p));
-        });
-        return authoritieSet;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> authorities() {
+//        if(Tools.isEmpty(roles)){
+//             roles = new HashSet<>();
+//        }
+//        Set<SimpleGrantedAuthority> authoritieSet = new HashSet<>();
+//        permissions.forEach(p -> {
+//            authoritieSet.add(new SimpleGrantedAuthority(p));
+//        });
+//        return authoritieSet;
+//    }
 
     @Override
     public String password() {

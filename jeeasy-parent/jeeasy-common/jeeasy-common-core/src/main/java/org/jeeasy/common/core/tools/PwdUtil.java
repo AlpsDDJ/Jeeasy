@@ -21,40 +21,40 @@ public class PwdUtil {
 
     /**
      * 加密
-     * @param userName
+     * @param username
      * @param password
      * @param salt
      * @return
      */
-    public static String encrypt(String userName, String password, String salt){
-        SymmetricCrypto crypto = getSymmetricCrypto(userName, salt);
+    public static String encrypt(String username, String password, String salt){
+        SymmetricCrypto crypto = getSymmetricCrypto(username, salt);
         return crypto.encryptHex(password, CHARSET);
     }
 
     /**
      * 解密
-     * @param userName
+     * @param username
      * @param password
      * @param salt
      * @return
      */
-    public static String decrypt(String userName, String password, String salt){
-        SymmetricCrypto crypto = getSymmetricCrypto(userName, salt);
+    public static String decrypt(String username, String password, String salt){
+        SymmetricCrypto crypto = getSymmetricCrypto(username, salt);
         return crypto.decryptStr(password, CHARSET);
     }
 
-    private static SymmetricCrypto getSymmetricCrypto(String userName, String salt){
-        String key = MD5.create().digestHex16(userName + salt, CHARSET);
+    private static SymmetricCrypto getSymmetricCrypto(String username, String salt){
+        String key = MD5.create().digestHex16(username + salt, CHARSET);
         return new SymmetricCrypto(ALGORITHM, SecureUtil.generateKey(ALGORITHM.getValue(), key.getBytes(CHARSET)).getEncoded());
     }
 
 //    public static void main(String[] args) {
-//        String userName = "admi1你好213123n1";
+//        String username = "admi1你好213123n1";
 //        String password = "1234564567456748456345623463756";
 //        String salt = "kjyck2";
-//        String encryptPwd = PwdUtil.encrypt(userName, password, salt);
+//        String encryptPwd = PwdUtil.encrypt(username, password, salt);
 //        System.out.println(encryptPwd);
-//        String pwd = decrypt(userName, encryptPwd, salt);
+//        String pwd = decrypt(username, encryptPwd, salt);
 //        System.out.println(pwd);
 //    }
 }

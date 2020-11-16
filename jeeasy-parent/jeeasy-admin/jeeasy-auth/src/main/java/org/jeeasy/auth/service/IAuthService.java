@@ -28,7 +28,15 @@ public interface IAuthService<U extends IAuthUser> {
      * @param authentication
      * @return
      */
-    U verifyLogin(Authentication authentication);
+    boolean verifyLogin(Authentication authentication);
+
+    /**
+     * 登录验证逻辑
+     *
+     * @param authUser
+     * @return
+     */
+//    boolean verifyLogin(U authUser, Authentication authentication);
 
     /**
      * 根据用户名获取用户角色
