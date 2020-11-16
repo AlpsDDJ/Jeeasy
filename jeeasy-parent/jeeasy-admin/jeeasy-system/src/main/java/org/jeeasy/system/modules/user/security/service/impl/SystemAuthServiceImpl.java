@@ -1,6 +1,7 @@
 package org.jeeasy.system.modules.user.security.service.impl;
 
 import lombok.Setter;
+import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
@@ -26,6 +27,7 @@ import java.util.Set;
  * @author Alps
  */
 @Component
+@AuthMethod(value = "system", izDefault = true)
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Autowired
@@ -34,10 +36,6 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     @Setter
     @Value("${jeeasy.system.enable-captcha}")
     private boolean enableCaptcha = true;
-
-    public String getAuthMethod(){
-        return "system";
-    }
 
     @Override
     public SystemAuthUser getAuthUserByUsername(String username) {
@@ -88,7 +86,8 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 //                throw new BadCredentialsException(e.getMessage());
 //            }
 
-
+            systemAuthUser.setPermissions(this.getPermissionSetByUsername(username));
+            systemAuthUser.setRoles(this.getRoleSetByUsername(username));
             return systemAuthUser;
         } else {
             throw new BadCredentialsException("密码错误.");
@@ -97,7 +96,9 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Override
     public Set<String> getRoleSetByUsername(String username) {
-        return new HashSet<>();
+        Set<String> roles = new HashSet<>();
+        roles.add("admin");
+        return roles;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     }
 
     @Override
-    public void onAuthenticationSuccess(SystemAuthUser securityUserDetails) {
+    public void onAuthenticationSuccess(IAuthUser securityUserDetails) {
 
     }
 

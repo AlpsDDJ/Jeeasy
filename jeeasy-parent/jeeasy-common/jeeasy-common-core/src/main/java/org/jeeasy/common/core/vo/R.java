@@ -128,6 +128,13 @@ public class R<T> implements Serializable {
     }
 
     /**
+     * 无权限访问返回结果
+     */
+    public static R<Object> noAuth() {
+        return error(SC_JEEASY_NO_AUTH, "权限不足.");
+    }
+
+    /**
      * 未登录用户
      */
     public static R<Object> noUser() {

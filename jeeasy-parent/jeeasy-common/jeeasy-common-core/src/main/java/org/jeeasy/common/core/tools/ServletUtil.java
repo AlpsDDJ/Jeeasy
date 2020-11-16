@@ -1,11 +1,13 @@
 package org.jeeasy.common.core.tools;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Describe: Servlet 工具类
@@ -138,6 +140,14 @@ public class ServletUtil {
             return "IPhone";
         } else {
             return "UnKnown, More-Info: " + userAgent;
+        }
+    }
+
+    public static<T> T getParamMap(HttpServletRequest request, Class<T> clazz){
+        try {
+            return new ObjectMapper().readValue(request.getInputStream(), clazz);
+        } catch (IOException e) {
+            return null;
         }
     }
 

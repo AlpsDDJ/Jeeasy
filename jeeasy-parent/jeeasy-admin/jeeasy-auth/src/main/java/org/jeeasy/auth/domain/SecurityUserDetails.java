@@ -1,25 +1,41 @@
 package org.jeeasy.auth.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author AlpsDDJ
  * @date 2020/11/13
  */
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
 
     @Getter
 //    @Setter
     private U user;
 
+    @Getter
+    @Setter
+    private Set<String> roles;
+
+    @Getter
+    @Setter
+    private Set<String> permissions;
+
+
+    @Getter
+    @Setter
+    private String issuer;
+
     public SecurityUserDetails(U user) {
         this.user = user;
+//        SecurityUserDetails.builder().permissions();
     }
 
     @Override

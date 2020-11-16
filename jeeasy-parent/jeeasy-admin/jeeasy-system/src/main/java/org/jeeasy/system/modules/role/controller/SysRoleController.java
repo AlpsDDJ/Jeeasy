@@ -7,6 +7,8 @@ import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.role.entity.SysRole;
 import org.jeeasy.system.modules.role.service.ISysRoleService;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,8 @@ public class SysRoleController extends SimpleBaseController<ISysRoleService, Sys
     @GetMapping
     @ApiOperation(value = "角色列表", notes = "角色列表")
     public R<IPage<SysRole>> list(SysRole entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Object principal = context.getAuthentication().getPrincipal();
         return super.query(entity, pageNo, pageSize, req);
     }
 

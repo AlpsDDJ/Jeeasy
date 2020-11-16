@@ -1,5 +1,6 @@
 package org.jeeasy.auth.domain;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import lombok.Getter;
 import org.jeeasy.common.core.tools.Tools;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class JeeasyWebAuthenticationDetails extends WebAuthenticationDetails {
 
     public static final String AUTH_METHOD_KEY = "authMethod";
+    public static final String AUTH_REMEMBER_ME_KEY = "rememberMe";
 
     @Getter
     private String authMethod;
@@ -35,5 +37,13 @@ public class JeeasyWebAuthenticationDetails extends WebAuthenticationDetails {
             return null;
         }
         return params.get(key);
+    }
+
+    public Integer getRememberMe(){
+        Integer rememberMe = MapUtil.getInt(params, AUTH_REMEMBER_ME_KEY);
+        if(Tools.isEmpty(rememberMe)){
+            return 0;
+        }
+        return rememberMe;
     }
 }

@@ -1,6 +1,13 @@
 package org.jeeasy.auth.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.SecurityProperty;
+import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
+import org.jeeasy.auth.domain.SecurityUserDetails;
+import org.jeeasy.auth.provider.AuthServiceProvider;
+import org.jeeasy.auth.service.IAuthService;
+import org.jeeasy.auth.tools.JwtTokenUtils;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,11 +25,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Set;
 
 /**
  * @Description: 启动基于Spring Security的安全认证
@@ -31,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date: 2019/6/28 15:31
  * @Version: 1.0
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession
@@ -59,17 +73,21 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
+    private AuthServiceProvider authServiceProvider;
+
+    @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 // 去掉 CSRF（Cross-site request forgery）跨站请求伪造,依赖web浏览器，被混淆过的代理人攻击,使用无状态认证时要关闭
                 .csrf().disable()
                 // 使用 JWT，使用无状态会话，不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).disable()
-//                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 //配置 Http Basic 验证
                 .httpBasic()
                 //匿名用户异常拦截处理器
@@ -86,6 +104,29 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 // RBAC 动态 url 认证
 //                .access("@rbacServiceImpl.hasPermission(request, authentication)")
                 .and()
+                .addFilterAt((ServletRequest req, ServletResponse resp, FilterChain chain) -> {
+                    // log.info(request.getParameterMap().toString());
+
+                    HttpServletRequest request = (HttpServletRequest) req;
+                    HttpServletResponse response = (HttpServletResponse) resp;
+                    String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
+                    // 如果请求头中没有Authorization信息则直接放行了
+                    if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+                        chain.doFilter(request, response);
+                        return;
+                    }
+                    // 如果请求头中有token，则进行解析，并且设置认证信息
+                    try {
+                        SecurityContextHolder.getContext().setAuthentication(JwtTokenUtils.getAuthentication(tokenHeader));
+                    } catch (JeeasyException e) {
+                        //返回json形式的错误信息
+                        R.error(e.getMessage()).responseWrite(response);
+                        return;
+                    }
+                    chain.doFilter(request, response);
+//                    doFilterInternal(request, response, chain);
+//                    super.doFilterInternal(request, resp, chain);
+                }, UsernamePasswordAuthenticationFilter.class)
                 //指定支持基于表单的身份验证。如果未指定FormLoginConfigurer#loginPage(String)，则将生成默认登录页面
                 .formLogin()
                 //自定义登录页url,默认为/login
@@ -99,7 +140,16 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .passwordParameter("password")
                 // 登录成功
                 .successHandler((HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
-                    R.ok().setMessage("登录成功.").responseWrite(response);
+
+                    SecurityUserDetails<?> userDetails = (SecurityUserDetails<?>) authentication.getPrincipal();
+                    JeeasyWebAuthenticationDetails details = (JeeasyWebAuthenticationDetails) authentication.getDetails();
+                    boolean isRemember = details.getRememberMe() == 1;
+
+                    IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
+
+                    Set<String> roleSetByUsername = authService.getRoleSetByUsername(userDetails.getUsername());
+                    String token = JwtTokenUtils.createToken(userDetails.getUsername(), roleSetByUsername, isRemember);
+                    R.ok(JwtTokenUtils.TOKEN_PREFIX + token).setMessage("登录成功.").responseWrite(response);
                 })
                 // 登录失败
                 .failureHandler((HttpServletRequest request, HttpServletResponse response, AuthenticationException e) -> {
@@ -111,14 +161,15 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 // 注销登录
                 .logoutSuccessHandler((HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> {
+                    SecurityContextHolder.clearContext();
                     R.ok("注销成功.").responseWrite(response);
                 })
                 .permitAll()
                 .and()
                 //认证过的用户访问无权限资源时的处理
                 .exceptionHandling().accessDeniedHandler((HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) -> {
-
-        });
+                    R.noAuth().responseWrite(response);
+                });
 //                .and()
 //                    //将JWT Token Filter验证配置到Spring Security
 //                    .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -127,7 +178,6 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(60);
 
     }
-
 //    @Override
 //    public UserDetailsService userDetailsService(){
 //        return authUserDetailsService;
@@ -170,8 +220,7 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
      * @return 认证管理对象
      */
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    public AuthenticationManager getAuthenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 }

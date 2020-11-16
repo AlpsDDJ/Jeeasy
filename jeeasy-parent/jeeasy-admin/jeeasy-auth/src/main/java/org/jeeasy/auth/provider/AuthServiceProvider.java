@@ -1,9 +1,11 @@
 package org.jeeasy.auth.provider;
 
+import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ public class AuthServiceProvider {
     @Autowired
     private List<IAuthService<?>> authServiceList;
 
+//    public static final String DEFAULT_AUTH_METHOD = "system";
+
     /**
      * 根据方法参数获取对应的 AuthService
      *
@@ -33,14 +37,21 @@ public class AuthServiceProvider {
      * @return
      */
     public IAuthService<?> getAuthService(String method) {
+//        if(Tools.isEmpty(method)){
+//            method = DEFAULT_AUTH_METHOD;
+//        }
         AtomicReference<IAuthService<?>> authService = new AtomicReference<>();
         authServiceList.forEach(s -> {
-            if (s.getAuthMethod().equals(method)) {
+            AuthMethod authMethod = AnnotationUtils.getAnnotation(s.getClass(), AuthMethod.class);
+            if(Tools.isEmpty(authMethod)){
+                return;
+            }
+            if (authMethod.izDefault() || authMethod.method().equals(method)) {
                 authService.set(s);
             }
         });
         IAuthService<?> service = authService.get();
-        if(Tools.isEmpty(service)){
+        if (Tools.isEmpty(service)) {
             throw new BadCredentialsException("无匹配验证方式.");
         }
         return service;

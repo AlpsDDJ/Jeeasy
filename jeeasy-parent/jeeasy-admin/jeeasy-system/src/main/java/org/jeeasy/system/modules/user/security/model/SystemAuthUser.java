@@ -1,34 +1,39 @@
 package org.jeeasy.system.modules.user.security.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Alps
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 public class SystemAuthUser extends SysUser implements IAuthUser {
 
-//    public static SystemAuthUser create(SysUser sysUser) {
-//        return BeanUtil.toBean(sysUser, SystemAuthUser.class);
-//    }
-
-    private Collection<? extends GrantedAuthority> roles;
+    private Set<String> roles;
+    private Set<String> permissions;
 
     @Override
     public Collection<? extends GrantedAuthority> authorities() {
         if(Tools.isEmpty(roles)){
              roles = new HashSet<>();
         }
-        return roles;
+        Set<SimpleGrantedAuthority> authoritieSet = new HashSet<>();
+        permissions.forEach(p -> {
+            authoritieSet.add(new SimpleGrantedAuthority(p));
+        });
+        return authoritieSet;
     }
 
     @Override
@@ -41,23 +46,19 @@ public class SystemAuthUser extends SysUser implements IAuthUser {
         return this.getUsername();
     }
 
-//    @Override
-//    public boolean izAccountNonExpired() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean izAccountNonLocked() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean izCredentialsNonExpired() {
-//        return false;
-//    }
+    @Override
+    public boolean izAccountNonExpired() {
+        return true;
+    }
 
-//    @Override
-//    public UserDetails toAuthUserDetails() {
-//        return null;
-//    }
+    @Override
+    public boolean izAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean izCredentialsNonExpired() {
+        return false;
+    }
+
 }

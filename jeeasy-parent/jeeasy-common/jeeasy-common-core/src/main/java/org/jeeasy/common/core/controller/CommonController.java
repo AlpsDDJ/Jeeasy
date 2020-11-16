@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Describe: 验证码控制器
- * Author: 就 眠 仪 式
- * CreateTime: 2019/10/23
+ * 验证码控制器
+ *
+ * @author Alps
  */
 @RestController
 public class CommonController {
@@ -39,7 +39,7 @@ public class CommonController {
      */
     @GetMapping("captcha/verify")
     public R<?> verify(String id, String captcha) {
-        if(Tools.verifyCaptcha(id, captcha)){
+        if (Tools.verifyCaptcha(id, captcha)) {
             return R.ok("验证通过.");
         }
         return R.error("验证失败.");

@@ -15,14 +15,6 @@ import java.util.Set;
 public interface IAuthService<U extends IAuthUser> {
 
     /**
-     * 获取认证方式
-     * 同登录form添加参数 authMethod
-     * 用于匹配IAuthService
-     * @return
-     */
-    String getAuthMethod();
-
-    /**
      * 根据用户名获取用户信息
      *
      * @param username
@@ -67,5 +59,5 @@ public interface IAuthService<U extends IAuthUser> {
      * @param authUser 登录用户信息
      * @return
      */
-    void onAuthenticationSuccess(U authUser);
+    void onAuthenticationSuccess(IAuthUser authUser);
 }
