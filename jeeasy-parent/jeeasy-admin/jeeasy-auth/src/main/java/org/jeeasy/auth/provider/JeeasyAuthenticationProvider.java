@@ -1,5 +1,6 @@
 package org.jeeasy.auth.provider;
 
+import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.exception.JeeasyException;
@@ -34,11 +35,13 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
         String username = (String) authentication.getPrincipal();
-        SecurityUserDetails<?> userDetails = authService.getAuthUserByUsername(username).createUserDetails();
-        if (authService.verifyLogin(authentication)) {
+        IAuthUser authUser = authService.verifyLogin(username, authentication);
+        SecurityUserDetails<?> userDetails = null;
+        if (Tools.isNotEmpty(authUser)) {
+            userDetails = authUser.createUserDetails();
 //            userDetails = authService.getAuthUserByUsername(username).createUserDetails();
-            userDetails.setRoles(authService.getRoleSetByUsername(username));
-            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
+//            userDetails.setRoles(authService.getRoleSetByUsername(username));
+//            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
         }
         if (Tools.isNotEmpty(userDetails)) {
 
@@ -58,6 +61,8 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
 //            return authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities())
 //            );
+            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
+            userDetails.setRoles(authService.getRoleSetByUsername(username));
             return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         } else {
             throw new JeeasyException("登录失败.");

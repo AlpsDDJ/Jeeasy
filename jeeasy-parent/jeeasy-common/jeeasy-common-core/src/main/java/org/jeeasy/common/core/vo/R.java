@@ -1,6 +1,8 @@
 package org.jeeasy.common.core.vo;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+
+import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -165,18 +167,18 @@ public class R<T> implements Serializable {
     public void responseWrite(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSON.toJSONString(this));
+        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(this));
     }
 
     public static void responseWriteSuccess(Object obj, HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSON.toJSONString(R.ok(obj)));
+        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(R.ok(obj)));
     }
 
     public static void responseWriteError(String message, HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSON.toJSONString(R.error(message)));
+        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(R.error(message)));
     }
 }

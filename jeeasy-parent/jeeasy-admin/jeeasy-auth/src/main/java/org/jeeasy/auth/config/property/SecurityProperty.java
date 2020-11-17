@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.jeeasy.auth.annotation.AnonymousAccess;
 import org.jeeasy.common.core.tools.SpringUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -61,6 +62,7 @@ public class SecurityProperty {
      *
      * @return
      */
+    @Bean("anonymousUrls")
     public String[] getAnonymousUrls() {
         // 搜寻 匿名标记 url： PreAuthorize("hasAnyRole('anonymous')") 和 PreAuthorize("@el.check('anonymous')") 和 AnonymousAccess
         Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = SpringUtil.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();

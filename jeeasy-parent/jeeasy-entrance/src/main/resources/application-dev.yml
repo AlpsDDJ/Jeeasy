@@ -31,6 +31,17 @@ mybatis-plus:
 
 
 jeeasy:
+  modules:
+    system:
+      # 登录图片验证码开关
+      enableCaptcha: false
+  cache:
+    manager:
+      configs:
+        - key: menu
+          second: 300
+        - key: user
+          second: 1800
   system:
     enable-captcha: false
   # 权 限 配 置

@@ -9,7 +9,6 @@ import org.jeeasy.auth.domain.IAuthUser;
  * @author Alps
  */
 @Data
-@AuthMethod("demo")
 public class DemoUserDetails extends DemoUser implements IAuthUser {
 
     public static DemoUserDetails create(DemoUser sysUser) {

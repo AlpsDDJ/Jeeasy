@@ -94,7 +94,7 @@ public class JwtTokenUtils {
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
         boolean expiration = JwtTokenUtils.isExpiration(token);
         if (expiration) {
-            throw new JeeasyException("token超时了");
+            throw new JeeasyException("Token超时.");
         } else {
             String username = JwtTokenUtils.getUsername(token);
             List<String> roles = JwtTokenUtils.getUserRole(token);

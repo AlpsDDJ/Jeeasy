@@ -28,7 +28,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.util.AntPathMatcher;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -76,6 +78,9 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
+    @Resource(name = "anonymousUrls")
+    private String[] anonymousUrls;
+
 //    @Autowired
 //    RedisTemplate<String, Object> redisTemplate;
 
@@ -98,7 +103,7 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 /**
                  * ant路径风格有三种通配符：[?]匹配任何单字符；[*]匹配0或者任意数量的字符；[**]匹配0或更多的目录
                  */
-                .antMatchers(securityProperty.getAnonymousUrls()).permitAll()
+                .antMatchers(anonymousUrls).permitAll()
                 .anyRequest().authenticated()
                 // RBAC 动态 url 认证
 //                .access("@rbacServiceImpl.hasPermission(request, authentication)")
@@ -110,10 +115,22 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                     HttpServletResponse response = (HttpServletResponse) resp;
                     String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
                     // 如果请求头中没有Authorization信息则直接放行了
-                    if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
-                        chain.doFilter(request, response);
-                        return;
+//                    if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+                    String requestURI = request.getRequestURI();
+
+                    AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+                    for (String anonymousUrl : anonymousUrls) {
+                        if (antPathMatcher.match(anonymousUrl, requestURI)) {
+                            chain.doFilter(request, response);
+                            return;
+                        }
                     }
+
+//                    if (ArrayUtil(anonymousUrls, requestURI)) {
+//                        chain.doFilter(request, response);
+//                        return;
+//                    }
                     // 如果请求头中有token，则进行解析，并且设置认证信息
                     try {
                         SecurityContextHolder.getContext().setAuthentication(JwtTokenUtils.getAuthentication(tokenHeader));
@@ -149,7 +166,6 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //                    Set<String> roleSetByUsername = authService.getRoleSetByUsername(userDetails.getUsername());
 
 
-
                     String token = JwtTokenUtils.createToken(userDetails, isRemember);
                     R.ok(JwtTokenUtils.TOKEN_PREFIX + token).setMessage("登录成功.").responseWrite(response);
                 })
@@ -170,8 +186,8 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //认证过的用户访问无权限资源时的处理
                 .exceptionHandling().accessDeniedHandler((HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) -> {
-                    R.noAuth().responseWrite(response);
-                });
+            R.noAuth().responseWrite(response);
+        });
 //                .and()
 //                    //将JWT Token Filter验证配置到Spring Security
 //                    .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

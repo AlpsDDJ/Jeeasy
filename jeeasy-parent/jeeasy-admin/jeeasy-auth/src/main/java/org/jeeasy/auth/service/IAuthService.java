@@ -1,17 +1,16 @@
 package org.jeeasy.auth.service;
 
-import cn.hutool.core.util.ClassUtil;
-import cn.hutool.core.util.TypeUtil;
 import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.core.Authentication;
 
-import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
+ * 登录认证服务接口
+ *
  * @author AlpsDDJ
  * @version v1.0
  * @description IAuthService
@@ -25,10 +24,10 @@ public interface IAuthService<U extends IAuthUser> {
      */
     default AuthMethod getAuthMethod() {
         try {
-            Type typeArgument = TypeUtil.getTypeArgument(this.getClass());
-            String typeName = typeArgument.getTypeName();
-            Class<Object> objectClass = ClassUtil.loadClass(typeName);
-            return AnnotationUtils.getAnnotation(objectClass, AuthMethod.class);
+//            Type typeArgument = TypeUtil.getTypeArgument(this.getClass());
+//            String typeName = typeArgument.getTypeName();
+//            Class<Object> objectClass = ClassUtil.loadClass(typeName);
+            return AnnotationUtils.getAnnotation(this.getClass(), AuthMethod.class);
         } catch (Exception e) {
             return null;
         }
@@ -48,7 +47,7 @@ public interface IAuthService<U extends IAuthUser> {
      * @param authentication
      * @return
      */
-    boolean verifyLogin(Authentication authentication);
+    U verifyLogin(String username, Authentication authentication);
 
     /**
      * 登录验证逻辑

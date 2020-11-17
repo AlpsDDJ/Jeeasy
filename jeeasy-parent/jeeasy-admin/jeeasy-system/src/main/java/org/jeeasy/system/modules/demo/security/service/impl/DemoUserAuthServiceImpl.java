@@ -1,6 +1,7 @@
 package org.jeeasy.system.modules.demo.security.service.impl;
 
 import lombok.Setter;
+import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
@@ -16,8 +17,9 @@ import java.util.Set;
 /**
  * @author Alps
  */
-@Component("demoUserSecurityService")
-public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails> {
+@AuthMethod("demo")
+@Component("demoUserAuthService")
+public class DemoUserAuthServiceImpl implements IAuthService<DemoUserDetails> {
 
 //    @Autowired
 //    ISysUserService sysUserService;
@@ -36,9 +38,9 @@ public class DemoUserSecurityServiceImpl implements IAuthService<DemoUserDetails
     }
 
     @Override
-    public boolean verifyLogin(Authentication authentication) {
+    public DemoUserDetails verifyLogin(String username, Authentication authentication) {
         // TODO 登录验证
-        return true;
+        return null;
     }
 
     @Override

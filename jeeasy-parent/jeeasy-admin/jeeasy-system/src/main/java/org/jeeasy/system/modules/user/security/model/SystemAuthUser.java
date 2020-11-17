@@ -3,11 +3,8 @@ package org.jeeasy.system.modules.user.security.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.system.modules.user.entity.SysUser;
-
-import java.util.Set;
 
 /**
  * @author Alps
@@ -15,11 +12,10 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@AuthMethod(value = "system", izDefault = true)
 public class SystemAuthUser extends SysUser implements IAuthUser {
 
-    private Set<String> roles;
-    private Set<String> permissions;
+//    private Set<String> roles;
+//    private Set<String> permissions;
 
 //    @Override
 //    public Collection<? extends GrantedAuthority> authorities() {

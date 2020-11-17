@@ -27,8 +27,6 @@ public class AuthServiceProvider {
     @Resource
     private List<IAuthService<?>> authServiceList;
 
-//    public static final String DEFAULT_AUTH_METHOD = "system";
-
     /**
      * 根据方法参数获取对应的 AuthService
      *
@@ -36,13 +34,10 @@ public class AuthServiceProvider {
      * @return
      */
     public IAuthService<?> getAuthService(String method) {
-//        if(Tools.isEmpty(method)){
-//            method = DEFAULT_AUTH_METHOD;
-//        }
         AtomicReference<IAuthService<?>> authService = new AtomicReference<>();
         authServiceList.forEach(s -> {
             AuthMethod authMethod = s.getAuthMethod();
-            if(Tools.isEmpty(authMethod)){
+            if (Tools.isEmpty(authMethod)) {
                 return;
             }
             if (authMethod.izDefault() || authMethod.method().equals(method)) {
