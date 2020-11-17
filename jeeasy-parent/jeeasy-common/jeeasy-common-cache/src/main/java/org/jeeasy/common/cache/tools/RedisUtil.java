@@ -104,7 +104,7 @@ public class RedisUtil<K, V> {
 	 */
 	public boolean set(K key, V value) {
 		try {
-			redisTemplate.opsForValue().set(key, value);
+			redisTemplate.opsForValue().set(key, value, 1, TimeUnit.HOURS);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

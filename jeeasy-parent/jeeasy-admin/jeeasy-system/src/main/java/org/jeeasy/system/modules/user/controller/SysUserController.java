@@ -31,7 +31,7 @@ public class SysUserController extends SimpleBaseController<ISysUserService, Sys
     @GetMapping("/{id}")
     @ApiOperation(value = "根据ID查找用户", notes = "根据ID查找用户")
     public R<SysUser> info(@PathVariable("id") String id) {
-        return super.getById(id);
+        return R.ok(service.getByUserId(id));
     }
 
     @PutMapping

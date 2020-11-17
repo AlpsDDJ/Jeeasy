@@ -1,16 +1,14 @@
 package org.jeeasy.auth.provider;
 
-import lombok.Setter;
 import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -26,8 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class AuthServiceProvider {
 
 
-    @Autowired
-    @Setter
+    @Resource
     private List<IAuthService<?>> authServiceList;
 
 //    public static final String DEFAULT_AUTH_METHOD = "system";
@@ -44,7 +41,7 @@ public class AuthServiceProvider {
 //        }
         AtomicReference<IAuthService<?>> authService = new AtomicReference<>();
         authServiceList.forEach(s -> {
-            AuthMethod authMethod = AnnotationUtils.getAnnotation(s.getClass(), AuthMethod.class);
+            AuthMethod authMethod = s.getAuthMethod();
             if(Tools.isEmpty(authMethod)){
                 return;
             }

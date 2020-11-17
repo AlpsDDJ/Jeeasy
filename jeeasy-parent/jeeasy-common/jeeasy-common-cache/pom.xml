@@ -17,6 +17,10 @@
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
         <!-- redis依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -10,6 +10,8 @@ import org.jeeasy.system.modules.user.entity.SysUser;
 public interface ISysUserService extends IService<SysUser> {
     SysUser getByUserName(String username);
 
+    SysUser getByUserId(String id);
+
 //    boolean checkPasswordById(String id, String password);
 
     boolean checkPasswordByUserName(String username, String password);

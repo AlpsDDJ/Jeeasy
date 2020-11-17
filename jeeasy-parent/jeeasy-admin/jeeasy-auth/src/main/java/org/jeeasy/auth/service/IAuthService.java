@@ -1,9 +1,14 @@
 package org.jeeasy.auth.service;
 
+import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.TypeUtil;
+import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.core.Authentication;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
@@ -13,6 +18,21 @@ import java.util.Set;
  * @date 2020-11-14
  */
 public interface IAuthService<U extends IAuthUser> {
+
+    /**
+     * 获取认证类型
+     * @return
+     */
+    default AuthMethod getAuthMethod() {
+        try {
+            Type typeArgument = TypeUtil.getTypeArgument(this.getClass());
+            String typeName = typeArgument.getTypeName();
+            Class<Object> objectClass = ClassUtil.loadClass(typeName);
+            return AnnotationUtils.getAnnotation(objectClass, AuthMethod.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * 根据用户名获取用户信息

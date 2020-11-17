@@ -8,7 +8,6 @@ import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.service.ISysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,9 +20,15 @@ import org.springframework.stereotype.Service;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Override
-    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#username")
+//    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#username")
     public SysUser getByUserName(String username) {
-        return this.getOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
+        return baseMapper.selectOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
+    }
+
+    @Override
+    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#id")
+    public SysUser getByUserId(String id) {
+        return baseMapper.selectById(id);
     }
 
 //    @Override
@@ -33,9 +38,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //    }
 
     @Override
-    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#username")
+//    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#username")
     public boolean checkPasswordByUserName(String username, String password) {
-        SysUser sysUser = this.getByUserName(username);
+        SysUser sysUser = baseMapper.selectOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
         if (Tools.isEmpty(sysUser)) {
             throw new UsernameNotFoundException("用户名不存在.");
         }

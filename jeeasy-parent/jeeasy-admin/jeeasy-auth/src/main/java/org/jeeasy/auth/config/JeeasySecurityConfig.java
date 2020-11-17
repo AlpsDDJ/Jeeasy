@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -77,8 +76,8 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
-    @Autowired
-    RedisTemplate<String, Object> redisTemplate;
+//    @Autowired
+//    RedisTemplate<String, Object> redisTemplate;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

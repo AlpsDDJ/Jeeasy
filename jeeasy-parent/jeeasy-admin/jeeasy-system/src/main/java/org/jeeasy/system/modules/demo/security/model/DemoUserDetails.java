@@ -2,12 +2,14 @@ package org.jeeasy.system.modules.demo.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
+import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 
 /**
  * @author Alps
  */
 @Data
+@AuthMethod("demo")
 public class DemoUserDetails extends DemoUser implements IAuthUser {
 
     public static DemoUserDetails create(DemoUser sysUser) {

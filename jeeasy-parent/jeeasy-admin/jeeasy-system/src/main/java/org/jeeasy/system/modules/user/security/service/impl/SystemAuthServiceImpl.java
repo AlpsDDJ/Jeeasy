@@ -1,50 +1,69 @@
 package org.jeeasy.system.modules.user.security.service.impl;
 
 import lombok.Setter;
-import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
+import org.jeeasy.common.cache.tools.RedisUtil;
+import org.jeeasy.common.core.constant.CommonConstant;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.ServletUtil;
 import org.jeeasy.common.core.tools.Tools;
+import org.jeeasy.common.db.tools.QueryGenerator;
 import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.security.model.SystemAuthUser;
-import org.jeeasy.system.modules.user.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Alps
  */
-@Service("systemAuthService")
-@AuthMethod(value = "system", izDefault = true)
+@Component("systemAuthService")
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
-    @Autowired
-    ISysUserService sysUserService;
+    @Resource
+    SysUserMapper sysUserMapper;
 
     @Setter
     @Value("${jeeasy.system.enable-captcha}")
     private boolean enableCaptcha = true;
 
+    @Resource
+    RedisUtil<String, Object> redisUtil;
+
     @Override
+    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "username")
     public SystemAuthUser getAuthUserByUsername(String username) {
-        SysUser sysUser = sysUserService.getByUserName(username);
+        String cacheKey = CommonConstant.CACHE_USER_KEY + username;
+        SystemAuthUser cacheUser = (SystemAuthUser) redisUtil.get(cacheKey);
+        if (Tools.isNotEmpty(cacheUser)) {
+            return cacheUser;
+        }
+        SysUser sysUser = getSysUserByUsername(username);
         if (Tools.isNotEmpty(sysUser)) {
-            return IAuthUser.create(sysUser, SystemAuthUser.class);
+            SystemAuthUser systemAuthUser = IAuthUser.create(sysUser, SystemAuthUser.class);
+            redisUtil.set(cacheKey, systemAuthUser);
+            return systemAuthUser;
         }
         return null;
     }
 
+    private SysUser getSysUserByUsername(String username){
+        return sysUserMapper.selectOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
+    }
+
     @Override
-//    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#authentication.principal")
+    @CacheEvict(value = CommonConstant.CACHE_USER_KEY, key= "#authentication.principal.toString()")
     public boolean verifyLogin(Authentication authentication) {
         try {
             // 验证码
@@ -60,7 +79,10 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        return sysUserService.checkPasswordByUserName(username, password);
+        SysUser sysUser = getSysUserByUsername(username);
+        return SysUserUtil.create(sysUser).checkPassword(password);
+
+//        return sysUserMapper.checkPasswordByUserName(username, password);
 
 //        if (Tools.isEmpty(systemAuthUser)) {
 //            throw new UsernameNotFoundException("用户名不存在.");
