@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Alps
  */
 @Component("systemAuthService")
-@AuthMethod(value = "system1", izDefault = true)
+@AuthMethod(value = "system", izDefault = true)
 @EnableConfigurationProperties(SystemConfigProperties.class)
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 

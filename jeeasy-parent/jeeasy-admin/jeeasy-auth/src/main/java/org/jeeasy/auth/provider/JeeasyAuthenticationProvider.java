@@ -63,7 +63,10 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
 //            );
             userDetails.setPermissions(authService.getPermissionSetByUsername(username));
             userDetails.setRoles(authService.getRoleSetByUsername(username));
-            return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+            userDetails.setIssuer(authService.getAuthMethod().method());
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+            token.setDetails(authentication.getDetails());
+            return token;
         } else {
             throw new JeeasyException("登录失败.");
         }

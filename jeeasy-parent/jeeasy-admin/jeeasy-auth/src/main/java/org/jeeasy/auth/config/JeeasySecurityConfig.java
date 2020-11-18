@@ -133,7 +133,12 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //                    }
                     // 如果请求头中有token，则进行解析，并且设置认证信息
                     try {
-                        SecurityContextHolder.getContext().setAuthentication(JwtTokenUtils.getAuthentication(tokenHeader));
+                        if (JwtTokenUtils.verity(tokenHeader)) {
+                            SecurityContextHolder.getContext().setAuthentication(JwtTokenUtils.getAuthentication(tokenHeader));
+                        } else {
+                            R.noAuth("Token超时.").responseWrite(response);
+                            return;
+                        }
                     } catch (JeeasyException e) {
                         //返回json形式的错误信息
                         R.error(e.getMessage()).responseWrite(response);
@@ -167,6 +172,8 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                     String token = JwtTokenUtils.createToken(userDetails, isRemember);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                     R.ok(JwtTokenUtils.TOKEN_PREFIX + token).setMessage("登录成功.").responseWrite(response);
                 })
                 // 登录失败

@@ -89,6 +89,11 @@ public class JwtTokenUtils {
                 .getBody();
     }
 
+    public static boolean verity(String tokenHeader){
+        String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
+        return !JwtTokenUtils.isExpiration(token);
+    }
+
     // 这里从token中获取用户信息并新建一个token
     public static UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) throws JeeasyException {
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");

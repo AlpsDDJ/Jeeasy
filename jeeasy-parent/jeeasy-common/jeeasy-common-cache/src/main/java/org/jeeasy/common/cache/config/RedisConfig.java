@@ -44,18 +44,20 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * RedisTemplate配置
+     *
      * @param factory
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory
+            , RedisSerializer<String> keySerializer, RedisSerializer<Object> valueSerializer) {
 //        RedisSerializer<Object> serializer = redisSerializer();
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         //配置连接工厂
         template.setConnectionFactory(factory);
-        template.setKeySerializer(keySerializer());
-        template.setValueSerializer(valueSerializer());
-        template.setHashKeySerializer(keySerializer());
-        template.setValueSerializer(valueSerializer());
+        template.setKeySerializer(keySerializer);
+        template.setValueSerializer(valueSerializer);
+        template.setHashKeySerializer(keySerializer);
+        template.setValueSerializer(valueSerializer);
         return template;
     }
 
@@ -81,6 +83,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .build();
     }
 
+    @Override
     @Bean
     public KeyGenerator keyGenerator() {
         return (target, method, objects) -> {
@@ -102,16 +105,20 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer));
     }
 
-    /*
-  key采用序列化策略
-   */
+    /**
+     * key采用序列化策略
+     *
+     * @return
+     */
     @Bean
     public RedisSerializer<String> keySerializer() {
         return new StringRedisSerializer();
     }
 
-    /*
-    value采用序列化策略
+    /**
+     * value采用序列化策略
+     *
+     * @return
      */
     @Bean
     public RedisSerializer<Object> valueSerializer() {

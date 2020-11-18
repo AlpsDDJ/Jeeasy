@@ -1,6 +1,9 @@
 package org.jeeasy.auth.tools;
 
+import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.common.core.constant.CommonConstant;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author AlpsDDJ
@@ -12,9 +15,12 @@ public class AuthUtil {
 
 
 
-//    public static IAuthUser curr(){
-//
-//    }
+    public static IAuthUser curr(){
+        // 获取用户认证信息对象。
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        SecurityContextHolder.getContext().setAuthentication();
+        return null;
+    }
 
 
 }
