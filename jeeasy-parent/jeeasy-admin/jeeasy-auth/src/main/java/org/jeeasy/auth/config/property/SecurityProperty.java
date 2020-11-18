@@ -24,6 +24,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ConfigurationProperties("jeeasy.security")
+//@AutoConfigureAfter({RequestMappingHandlerMapping.class, SpringUtil.class})
+//@DependsOn("SpringUtil")
 public class SecurityProperty {
 
     /**

@@ -39,10 +39,10 @@ public class JeeasyWebAuthenticationDetails extends WebAuthenticationDetails {
         return params.get(key);
     }
 
-    public Integer getRememberMe(){
-        Integer rememberMe = MapUtil.getInt(params, AUTH_REMEMBER_ME_KEY);
+    public Boolean getRememberMe(){
+        Boolean rememberMe = MapUtil.getBool(params, AUTH_REMEMBER_ME_KEY);
         if(Tools.isEmpty(rememberMe)){
-            return 0;
+            rememberMe = false;
         }
         return rememberMe;
     }

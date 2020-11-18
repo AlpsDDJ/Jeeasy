@@ -4,14 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.SecurityProperty;
 import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
 import org.jeeasy.auth.domain.SecurityUserDetails;
-import org.jeeasy.auth.provider.AuthServiceProvider;
+import org.jeeasy.auth.filter.JwtAuthenticationFilter;
 import org.jeeasy.auth.tools.JwtTokenUtils;
-import org.jeeasy.common.core.exception.JeeasyException;
+import org.jeeasy.auth.tools.JwtUtil;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,31 +26,35 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.Resource;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Description: 启动基于Spring Security的安全认证
- * @ProjectName: spring-parent
- * @Package: com.yaomy.security.config.BaseSecurityConfig
- * @Date: 2019/6/28 15:31
- * @Version: 1.0
+ * @author Alps
+ * @description: 启动基于Spring Security的安全认证
+ * @projectName: spring-parent
+ * @package: com.yaomy.security.config.BaseSecurityConfig
+ * @date: 2019/6/28 15:31
+ * @version: 1.0
  */
 @Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableConfigurationProperties(SecurityProperty.class)
+@EnableConfigurationProperties({SecurityProperty.class})
+//@AutoConfigureAfter({RequestMappingHandlerMapping.class, SpringUtil.class})
+@DependsOn("SpringUtil")
 public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Autowired
 //    UserAuthenticationEntryPoint authenticationEntryPoint;
@@ -73,13 +78,16 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
-    private AuthServiceProvider authServiceProvider;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
     @Resource(name = "anonymousUrls")
     private String[] anonymousUrls;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
 //    @Autowired
 //    RedisTemplate<String, Object> redisTemplate;
@@ -90,15 +98,16 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 // 去掉 CSRF（Cross-site request forgery）跨站请求伪造,依赖web浏览器，被混淆过的代理人攻击,使用无状态认证时要关闭
                 .csrf().disable()
                 // 使用 JWT，使用无状态会话，不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 //配置 Http Basic 验证
-                .httpBasic()
+                .httpBasic().disable()
                 //匿名用户异常拦截处理器
-                .authenticationEntryPoint((HttpServletRequest request, HttpServletResponse response, AuthenticationException e) -> {
-                    R.noUser().responseWrite(response);
-                })
-                .and()
+
+//                .authenticationEntryPoint((HttpServletRequest request, HttpServletResponse response, AuthenticationException e) -> {
+//                    R.noUser().responseWrite(response);
+//                })
+//                .and()
                 .authorizeRequests()
                 /**
                  * ant路径风格有三种通配符：[?]匹配任何单字符；[*]匹配0或者任意数量的字符；[**]匹配0或更多的目录
@@ -108,7 +117,7 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                 // RBAC 动态 url 认证
 //                .access("@rbacServiceImpl.hasPermission(request, authentication)")
                 .and()
-                .addFilterAt((ServletRequest req, ServletResponse resp, FilterChain chain) -> {
+                /*.addFilterAt((ServletRequest req, ServletResponse resp, FilterChain chain) -> {
                     // log.info(request.getParameterMap().toString());
 
                     HttpServletRequest request = (HttpServletRequest) req;
@@ -147,7 +156,7 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
                     chain.doFilter(request, response);
 //                    doFilterInternal(request, response, chain);
 //                    super.doFilterInternal(request, resp, chain);
-                }, UsernamePasswordAuthenticationFilter.class)
+                }, UsernamePasswordAuthenticationFilter.class)*/
                 //指定支持基于表单的身份验证。如果未指定FormLoginConfigurer#loginPage(String)，则将生成默认登录页面
                 .formLogin()
                 //自定义登录页url,默认为/login
@@ -164,16 +173,17 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 
                     SecurityUserDetails<?> userDetails = (SecurityUserDetails<?>) authentication.getPrincipal();
                     JeeasyWebAuthenticationDetails details = (JeeasyWebAuthenticationDetails) authentication.getDetails();
-                    boolean isRemember = details.getRememberMe() == 1;
+//                    boolean isRemember = details.getRememberMe();
 
 //                    IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
 
 //                    Set<String> roleSetByUsername = authService.getRoleSetByUsername(userDetails.getUsername());
 
-
-                    String token = JwtTokenUtils.createToken(userDetails, isRemember);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    Boolean rememberMe = details.getRememberMe();
+                    String token = jwtUtil.createJwt(authentication, rememberMe, false);
+                    String jwt_refresh = jwtUtil.createJwt(authentication, rememberMe, true);
+//                    SecurityContextHolder.getContext().setAuthentication(authentication);
+//                    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                     R.ok(JwtTokenUtils.TOKEN_PREFIX + token).setMessage("登录成功.").responseWrite(response);
                 })
                 // 登录失败
@@ -199,8 +209,11 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //                    //将JWT Token Filter验证配置到Spring Security
 //                    .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // 记住我
-        http.rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(60);
+        http.sessionManagement()
+                // 因为使用了JWT，所以这里不管理Session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 添加自定义 JWT 过滤器
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 //    @Override
@@ -228,6 +241,27 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
 //        return authenticationProvider;
 //    }
 
+
+    /**
+     * 解决session失效后 sessionRegistry中session没有同步失效的问题
+     * @return
+     */
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     /**
      * @Description Spring Security认证服务中的相关实现重新定义
      * @Date 2019/7/4 17:40
@@ -247,5 +281,13 @@ public class JeeasySecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager getAuthenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+    /**
+     * 设置加密方式
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

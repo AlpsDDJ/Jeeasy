@@ -21,6 +21,8 @@ public interface IAuthUser extends Serializable {
 
 //    Collection<? extends GrantedAuthority> authorities();
 
+    String id();
+
     String password();
 
     String username();

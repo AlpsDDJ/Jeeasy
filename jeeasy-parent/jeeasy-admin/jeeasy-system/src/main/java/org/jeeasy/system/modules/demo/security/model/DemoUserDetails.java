@@ -2,7 +2,6 @@ package org.jeeasy.system.modules.demo.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
-import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 
 /**
@@ -19,6 +18,11 @@ public class DemoUserDetails extends DemoUser implements IAuthUser {
 //    public Collection<? extends GrantedAuthority> authorities() {
 //        return null;
 //    }
+
+    @Override
+    public String id() {
+        return this.getId();
+    }
 
     @Override
     public String password() {

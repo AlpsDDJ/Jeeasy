@@ -43,10 +43,14 @@ public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> simpleGrantedAuthoritySet = new HashSet<>();
-        permissions.forEach(role -> {
-            simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority(role));
+        roles.forEach(role -> {
+            simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
         });
         return simpleGrantedAuthoritySet;
+    }
+
+    public String getId(){
+        return user.id();
     }
 
     @Override

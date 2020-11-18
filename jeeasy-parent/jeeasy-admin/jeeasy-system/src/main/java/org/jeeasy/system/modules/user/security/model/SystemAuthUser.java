@@ -30,6 +30,11 @@ public class SystemAuthUser extends SysUser implements IAuthUser {
 //    }
 
     @Override
+    public String id() {
+        return this.getId();
+    }
+
+    @Override
     public String password() {
         return this.getPassword();
     }
