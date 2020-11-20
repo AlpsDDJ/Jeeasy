@@ -1,6 +1,7 @@
 package org.jeeasy.auth.filter;
 
 import cn.hutool.core.util.StrUtil;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.SecurityProperty;
 import org.jeeasy.auth.domain.SecurityUserDetails;
@@ -66,8 +67,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (StrUtil.isNotBlank(jwt)) {
             try {
-                String username = jwtUtil.getUsernameFromJwt(jwt, false);
+//                String username = jwtUtil.getUsernameFromJwt(jwt, false);
+                Claims claims = jwtUtil.parseJwt(jwt, false);
+                String username = claims.getSubject();
 
+                // TODO 获取当前用户登录类型
                 SecurityUserDetails<?> userDetails = authServiceProvider.getAuthService("").getAuthUserByUsername(username).createUserDetails();
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

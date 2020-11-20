@@ -1,9 +1,6 @@
 package org.jeeasy.auth.domain;
 
 import cn.hutool.core.bean.BeanUtil;
-import org.jeeasy.auth.annotation.AuthMethod;
-import org.jeeasy.common.core.tools.Tools;
-import org.springframework.core.annotation.AnnotationUtils;
 
 import java.io.Serializable;
 
@@ -50,12 +47,12 @@ public interface IAuthUser extends Serializable {
      */
     default SecurityUserDetails<?> createUserDetails() {
         SecurityUserDetails<IAuthUser> userDetails = new SecurityUserDetails<>(this);
-        AuthMethod authMethod = AnnotationUtils.getAnnotation(this.getClass(), AuthMethod.class);
-        String issuer = "";
-        if(Tools.isNotEmpty(authMethod)){
-            issuer = authMethod.method();
-        }
-        userDetails.setIssuer(issuer);
+//        AuthMethod authMethod = AnnotationUtils.getAnnotation(this.getClass(), AuthMethod.class);
+//        String issuer = "";
+//        if(Tools.isNotEmpty(authMethod)){
+//            issuer = authMethod.method();
+//        }
+//        userDetails.setIssuer(issuer);
         return userDetails;
     }
 

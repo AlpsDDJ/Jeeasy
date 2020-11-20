@@ -57,13 +57,13 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
 //                throw new AccountLockedException("帐户过期.");
 //            }
 
-            authService.onAuthenticationSuccess(userDetails.getUser());
+            authService.onAuthenticationSuccess(userDetails.getAuthUser());
 //            return authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities())
 //            );
             userDetails.setPermissions(authService.getPermissionSetByUsername(username));
             userDetails.setRoles(authService.getRoleSetByUsername(username));
-            userDetails.setIssuer(authService.getAuthMethod().method());
+//            userDetails.setIssuer(authService.getAuthMethod().method());
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
             token.setDetails(authentication.getDetails());
             return token;

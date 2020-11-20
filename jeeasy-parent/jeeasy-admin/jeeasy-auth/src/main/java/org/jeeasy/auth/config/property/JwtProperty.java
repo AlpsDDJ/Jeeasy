@@ -1,6 +1,7 @@
-package org.jeeasy.auth.config;
+package org.jeeasy.auth.config.property;
 
 import lombok.Data;
+import org.jeeasy.common.core.constant.CommonConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,16 +12,21 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "jeeasy.jwt")
 @Data
-public class JwtConfig {
+public class JwtProperty {
     /**
      * jwt 加密 key，默认值：jeeasy.
      */
     private String secret = "jeeasy";
 
     /**
-     * jwt 过期时间，默认值：600000 {@code 10 分钟}.
+     * token前缀，默认值 Bearer
      */
-    private Long ttl = 600000L;
+    private String prefix = CommonConstant.TOKEN_PREFIX;
+
+    /**
+     * jwt 过期时间，默认值：3600000 {@code 1 小时}.
+     */
+    private Long ttl = 1000L * 60 * 60;
 
     /**
      * 开启 记住我 之后 jwt 过期时间，默认值 604800000 {@code 7 天}

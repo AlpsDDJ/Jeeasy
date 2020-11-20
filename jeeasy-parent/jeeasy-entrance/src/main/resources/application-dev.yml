@@ -82,6 +82,12 @@ jeeasy:
         version: 1.0
         base-package: org.jeeasy.common
         annotation: org.springframework.web.bind.annotation.RequestMapping
+      jeeasy-auth:
+        group-name: Jeeasy 认证接口
+        title: Jeeasy 认证接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.auth
+        annotation: org.springframework.web.bind.annotation.RequestMapping
 #      jeeasy-online:
 #        groupName: Jeeasy 在线开发
 #        title: Jeeasy 在线开发 API接口文档

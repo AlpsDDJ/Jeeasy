@@ -1,4 +1,4 @@
-package org.jeeasy.auth.domain;
+package org.jeeasy.auth.vo;
 
 import lombok.Data;
 
@@ -16,5 +16,7 @@ public class AuthUserFormModel {
     private String password;
 
     private String authMethod;
+
+    private Boolean rememberMe = false;
 
 }

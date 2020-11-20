@@ -3,7 +3,6 @@ package org.jeeasy.system.modules.user.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.jeeasy.auth.tools.AuthUtil;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -26,7 +25,6 @@ public class SysUserController extends SimpleBaseController<ISysUserService, Sys
     @GetMapping
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        AuthUtil.curr();
         return super.query(entity, pageNo, pageSize, req);
     }
 

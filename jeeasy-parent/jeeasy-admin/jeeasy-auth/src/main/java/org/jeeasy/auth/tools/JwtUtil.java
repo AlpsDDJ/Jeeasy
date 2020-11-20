@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.auth.config.JwtConfig;
+import org.jeeasy.auth.config.property.JwtProperty;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.common.core.constant.CommonConstant;
 import org.jeeasy.common.core.exception.JeeasyException;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author daiyp
  * @date 2018-9-26
  */
-@EnableConfigurationProperties(JwtConfig.class)
+@EnableConfigurationProperties(JwtProperty.class)
 @Configuration
 @Slf4j
 public class JwtUtil {
@@ -37,7 +37,7 @@ public class JwtUtil {
 
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtProperty jwtProperty;
 
     /**
      * 创建JWT
@@ -57,7 +57,7 @@ public class JwtUtil {
      * @param id          用户id
      * @param subject     用户名
      * @param roles       用户角色
-     * @param authorities 用户权限
+     * @param permissions 用户权限
      * @return JWT
      */
     public String createJwt(Boolean isRefresh,
@@ -71,13 +71,13 @@ public class JwtUtil {
                 .setId(id)
                 .setSubject(subject)
                 .setIssuedAt(now)
-                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
+                .signWith(SignatureAlgorithm.HS256, jwtProperty.getSecret())
                 .claim(CLAIM_ROLES_KEY, roles)
                 // .claim("perms", menus)
                 .claim(CLAIM_PERMISSIONS_KEY, permissions);
 
         // 设置过期时间
-        Long ttl = rememberMe ? jwtConfig.getRemember() : jwtConfig.getTtl();
+        Long ttl = rememberMe ? jwtProperty.getRemember() : jwtProperty.getTtl();
         String redisKey;
         if (isRefresh) {
             ttl *= 3;
@@ -92,7 +92,7 @@ public class JwtUtil {
         String jwt = builder.compact();
         // 将生成的JWT保存至Redis
         redisTemplate.opsForValue().set(redisKey, jwt, ttl, TimeUnit.MILLISECONDS);
-        return jwt;
+        return jwtProperty.getPrefix() + jwt;
     }
 
     /**
@@ -104,7 +104,8 @@ public class JwtUtil {
     public Claims parseJwt(String jwt, Boolean isRefresh) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(jwtConfig.getSecret())
+                    .setSigningKey(jwtProperty.getSecret())
+
                     .parseClaimsJws(jwt)
                     .getBody();
 
@@ -177,7 +178,7 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    public Map<String, String> refreshJWT(String token) {
+    public Map<String, String> refreshJwt(String token) {
         Claims claims = parseJwt(token, true);
         // 获取签发时间
         Date lastTime = claims.getExpiration();

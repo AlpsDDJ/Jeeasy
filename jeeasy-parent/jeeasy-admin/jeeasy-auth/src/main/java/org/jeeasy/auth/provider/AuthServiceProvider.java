@@ -1,7 +1,8 @@
 package org.jeeasy.auth.provider;
 
 import org.jeeasy.auth.annotation.AuthMethod;
-import org.jeeasy.auth.domain.JeeasyWebAuthenticationDetails;
+import org.jeeasy.auth.vo.AuthUserFormModel;
+import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,7 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -35,13 +38,13 @@ public class AuthServiceProvider {
      */
     public IAuthService<?> getAuthService(String method) {
         AtomicReference<IAuthService<?>> authService = new AtomicReference<>();
-        authServiceList.forEach(s -> {
-            AuthMethod authMethod = s.getAuthMethod();
+        authServiceList.forEach(service -> {
+            AuthMethod authMethod = service.getAuthMethod();
             if (Tools.isEmpty(authMethod)) {
                 return;
             }
             if (authMethod.izDefault() || authMethod.method().equals(method)) {
-                authService.set(s);
+                authService.set(service);
             }
         });
         IAuthService<?> service = authService.get();
@@ -51,8 +54,32 @@ public class AuthServiceProvider {
         return service;
     }
 
+    private String getServiceAuthMethod(IAuthService<?> service) {
+        AuthMethod authMethod = service.getAuthMethod();
+        if (Tools.isEmpty(authMethod)) {
+            return null;
+        }
+        return authMethod.method();
+    }
+
     public IAuthService<?> getAuthService(Authentication authentication) {
-        JeeasyWebAuthenticationDetails details = (JeeasyWebAuthenticationDetails) authentication.getDetails();
+        AuthUserFormModel details = (AuthUserFormModel) authentication.getDetails();
         return getAuthService(details.getAuthMethod());
+    }
+
+    public List<Permission> getAllAuthorities() {
+        List<Permission> allAuthorities = new ArrayList<>();
+        authServiceList.forEach(service -> {
+            Set<Permission> allPermission = service.getAllPermission();
+            if (Tools.isNotEmpty(allPermission)) {
+                allAuthorities.addAll(allPermission);
+            }
+//            if(Tools.isNotEmpty(allAuthorities)){
+//                allPermission.forEach(permission -> {
+//                    allAuthorities.add(permission.getMethod(), permission);
+//                });
+//            }
+        });
+        return allAuthorities;
     }
 }

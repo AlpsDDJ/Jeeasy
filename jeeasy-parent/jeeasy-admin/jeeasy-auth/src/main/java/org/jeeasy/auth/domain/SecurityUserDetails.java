@@ -1,6 +1,7 @@
 package org.jeeasy.auth.domain;
 
 import lombok.*;
+import org.jeeasy.common.core.tools.Tools;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,73 +14,70 @@ import java.util.Set;
  * @author AlpsDDJ
  * @date 2020/11/13
  */
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
 
-    @Getter
-//    @Setter
-    private U user;
+    private U authUser;
 
-    @Getter
-    @Setter
     private Set<String> roles;
 
-    @Getter
-    @Setter
     private Set<String> permissions;
 
 
-    @Getter
-    @Setter
-    private String issuer;
-
-    public SecurityUserDetails(U user) {
-        this.user = user;
+    public SecurityUserDetails(U authUser) {
+        this.authUser = authUser;
 //        SecurityUserDetails.builder().permissions();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> simpleGrantedAuthoritySet = new HashSet<>();
-        roles.forEach(role -> {
-            simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
-        });
+        if (Tools.isNotEmpty(roles)) {
+            roles.forEach(role -> {
+                simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
+            });
+        }
+        if (Tools.isNotEmpty(permissions)) {
+            permissions.forEach(p -> {
+                simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority(p));
+            });
+        }
         return simpleGrantedAuthoritySet;
     }
 
-    public String getId(){
-        return user.id();
+    public String getId() {
+        return authUser.id();
     }
 
     @Override
     public String getPassword() {
-        return user.password();
+        return authUser.password();
     }
 
     @Override
     public String getUsername() {
-        return user.username();
+        return authUser.username();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return user.izAccountNonExpired();
+        return authUser.izAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.izAccountNonLocked();
+        return authUser.izAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return user.izCredentialsNonExpired();
+        return authUser.izCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return user.izEnabled();
+        return authUser.izEnabled();
     }
 }
