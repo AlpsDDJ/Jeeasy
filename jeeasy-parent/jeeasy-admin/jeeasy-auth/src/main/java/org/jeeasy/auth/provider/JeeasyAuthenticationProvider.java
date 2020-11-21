@@ -1,10 +1,14 @@
 package org.jeeasy.auth.provider;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
+import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
+import org.jeeasy.common.core.vo.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Component;
  * @description JeeasyAuthenticationProvider
  * @date 2020-11-14
  */
+@Slf4j
 @Component
 public class JeeasyAuthenticationProvider implements AuthenticationProvider {
 
@@ -35,7 +40,12 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         IAuthService<?> authService = authServiceProvider.getAuthService(authentication);
         String username = (String) authentication.getPrincipal();
-        IAuthUser authUser = authService.verifyLogin(username, authentication);
+        IAuthUser authUser = null;
+        if(authService.verifyLogin(username, authentication)){
+            TimeInterval timer = DateUtil.timer();
+            authUser = authService.getAuthUserByUsername(username);
+            log.info("AuthenticationProvider 获取用户信息耗时: " + timer.interval());
+        }
         SecurityUserDetails<?> userDetails = null;
         if (Tools.isNotEmpty(authUser)) {
             userDetails = authUser.createUserDetails();
@@ -57,18 +67,19 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
 //                throw new AccountLockedException("帐户过期.");
 //            }
 
-            authService.onAuthenticationSuccess(userDetails.getAuthUser());
+//            authService.onAuthenticationSuccess(userDetails.getAuthUser());
 //            return authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities())
 //            );
-            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
-            userDetails.setRoles(authService.getRoleSetByUsername(username));
+//            userDetails.setPermissions(authService.getPermissionSetByUsername(username));
+//            userDetails.setRoles(authService.getRoleSetByUsername(username));
 //            userDetails.setIssuer(authService.getAuthMethod().method());
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
             token.setDetails(authentication.getDetails());
+            authService.onAuthenticationSuccess(authUser);
             return token;
         } else {
-            throw new JeeasyException("登录失败.");
+            throw new JeeasyException(RestCode.ERROR, "登录失败");
         }
     }
 

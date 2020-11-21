@@ -6,6 +6,8 @@ import lombok.experimental.Accessors;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.system.modules.user.entity.SysUser;
 
+import java.util.Collection;
+
 /**
  * @author Alps
  */
@@ -14,8 +16,8 @@ import org.jeeasy.system.modules.user.entity.SysUser;
 @Accessors(chain = true)
 public class SystemAuthUser extends SysUser implements IAuthUser {
 
-//    private Set<String> roles;
-//    private Set<String> permissions;
+    private Collection<String> roles;
+    private Collection<String> permissions;
 
 //    @Override
 //    public Collection<? extends GrantedAuthority> authorities() {

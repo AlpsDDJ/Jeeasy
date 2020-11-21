@@ -1,13 +1,19 @@
 package org.jeeasy.auth.tools;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.*;
+import lombok.Builder;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.JwtProperty;
+import org.jeeasy.auth.domain.JwtClaims;
 import org.jeeasy.auth.domain.SecurityUserDetails;
+import org.jeeasy.auth.vo.AuthUserFormModel;
 import org.jeeasy.common.core.constant.CommonConstant;
 import org.jeeasy.common.core.exception.JeeasyException;
+import org.jeeasy.common.core.vo.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +54,19 @@ public class JwtUtil {
      */
     public String createJwt(Authentication authentication, Boolean rememberMe, Boolean isRefresh) {
         SecurityUserDetails<?> user = (SecurityUserDetails<?>) authentication.getPrincipal();
-        return createJwt(isRefresh, rememberMe, user.getId(), user.getUsername(), user.getRoles(), user.getPermissions());
+        AuthUserFormModel authUserFormModel = (AuthUserFormModel)authentication.getDetails();
+        return createJwt(isRefresh, rememberMe, user.getId(), user.getUsername(), authUserFormModel.getAuthMethod(), user.getRoles(), user.getPermissions());
+    }
+
+    /**
+     * 创建JWT
+     *
+     * @param authentication 用户认证信息
+     * @param rememberMe     记住我
+     * @return JWT
+     */
+    public JwtTokens createJwtTokens(Authentication authentication, Boolean rememberMe) {
+        return JwtTokens.builder().token(createJwt(authentication, rememberMe, false)).refreshToken(createJwt(authentication, rememberMe, true)).build();
     }
 
     /**
@@ -64,17 +82,23 @@ public class JwtUtil {
                             Boolean rememberMe,
                             String id,
                             String subject,
-                            Set<String> roles,
-                            Set<String> permissions) {
+                            String authMethod,
+                            Collection<String> roles,
+                            Collection<String> permissions) {
         Date now = new Date();
+
+        JwtClaims jwtClaims = new JwtClaims().setAuthMethod(authMethod).setRoles(roles).setPermissions(permissions);
+
+
         JwtBuilder builder = Jwts.builder()
                 .setId(id)
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, jwtProperty.getSecret())
-                .claim(CLAIM_ROLES_KEY, roles)
-                // .claim("perms", menus)
-                .claim(CLAIM_PERMISSIONS_KEY, permissions);
+                .addClaims(BeanUtil.beanToMap(jwtClaims));
+//                .claim(CLAIM_ROLES_KEY, roles)
+//                // .claim("perms", menus)
+//                .claim(CLAIM_PERMISSIONS_KEY, permissions);
 
         // 设置过期时间
         Long ttl = rememberMe ? jwtProperty.getRemember() : jwtProperty.getTtl();
@@ -105,38 +129,41 @@ public class JwtUtil {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(jwtProperty.getSecret())
-
                     .parseClaimsJws(jwt)
                     .getBody();
 
             String username = claims.getSubject();
-            String redisKey = (isRefresh ? CommonConstant.REDIS_JWT_REFRESH_TOKEN_KEY_PREFIX : CommonConstant.REDIS_JWT_TOKEN_KEY_PREFIX)
-                    + username;
+            String redisKey = (isRefresh ? CommonConstant.REDIS_JWT_REFRESH_TOKEN_KEY_PREFIX : CommonConstant.REDIS_JWT_TOKEN_KEY_PREFIX) + username;
 
             // 校验redis中的JWT是否存在
             Long expire = redisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
-                throw new JeeasyException("token 已过期");
+                throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 已过期");
             }
 
             // 校验redis中的JWT是否与当前的一致，不一致则代表用户已注销/用户在不同设备登录，均代表JWT已过期
             String redisToken = (String) redisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
-                throw new JeeasyException("当前用户已在别处登录.");
+                throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 当前用户已在别处登录");
+//                throw new JeeasyException("当前用户已在别处登录.");
             }
             return claims;
         } catch (ExpiredJwtException e) {
             log.error("Token 已过期");
-            throw new JeeasyException("用户 刷新令牌过期");
+            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 刷新令牌过期");
+//            throw new JeeasyException("用户 刷新令牌过期");
         } catch (UnsupportedJwtException e) {
             log.error("不支持的 Token");
-            throw new JeeasyException("token 解析失败: 不支持.");
+            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 不支持");
+//            throw new JeeasyException("token 解析失败: 不支持.");
         } catch (MalformedJwtException e) {
             log.error("Token 无效");
-            throw new JeeasyException("token 解析失败: 无效.");
+            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 无效");
+//            throw new JeeasyException("token 解析失败: 无效.");
         } catch (IllegalArgumentException e) {
             log.error("Token 参数不存在");
-            throw new JeeasyException("token 解析失败: 参数不存在.");
+            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 参数不存在");
+//            throw new JeeasyException("token 解析失败: 参数不存在.");
         }
     }
 
@@ -178,27 +205,28 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    public Map<String, String> refreshJwt(String token) {
+    public JwtTokens refreshJwt(String token) {
         Claims claims = parseJwt(token, true);
+        JwtClaims jwtClaims = JwtClaims.build(claims);
         // 获取签发时间
         Date lastTime = claims.getExpiration();
         // 1. 判断refreshToken是否过期
         if (!new Date().before(lastTime)) {
-            throw new JeeasyException("token 已过期");
+            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token 已过期");
         }
         // 2. 在redis中删除之前的token和refreshToken
         String username = claims.getSubject();
         // redisTemplate.delete(Constant.REDIS_JWT_REFRESH_TOKEN_KEY_PREFIX + username);
         // redisTemplate.delete(Constant.REDIS_JWT_TOKEN_KEY_PREFIX + username);
         // 3. 创建新的token和refreshToken并存入redis
-        String jwtToken = createJwt(false, false, claims.getId(), username,
-                (Set<String>) claims.get(CLAIM_ROLES_KEY), (Set<String>) claims.get(CLAIM_PERMISSIONS_KEY));
-        String refreshJwtToken = createJwt(true, false, claims.getId(), username,
-                (Set<String>) claims.get(CLAIM_ROLES_KEY), (Set<String>) claims.get(CLAIM_PERMISSIONS_KEY));
-        Map<String, String> map = new HashMap<>();
-        map.put("token", jwtToken);
-        map.put("refreshToken", refreshJwtToken);
-        return map;
+        String jwtToken = createJwt(false, false, claims.getId(), username, jwtClaims.getAuthMethod(),
+                jwtClaims.getRoles(), jwtClaims.getPermissions());
+        String refreshJwtToken = createJwt(true, false, claims.getId(), username, jwtClaims.getAuthMethod(),
+                jwtClaims.getRoles(), jwtClaims.getPermissions());
+//        Map<String, String> map = new HashMap<>();
+        //        map.put("token", jwtToken);
+//        map.put("refreshToken", refreshJwtToken);
+        return JwtTokens.builder().token(jwtToken).refreshToken(refreshJwtToken).build();
     }
 
     /**
@@ -240,12 +268,11 @@ public class JwtUtil {
         return verify(jwt, secret).get(key);
     }
 
-    public static void main(String[] args) {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVf6LaF57qn566h55CG5ZGYIl0sImV4cCI6MTU2MjgzMjU5Nn0.eH57RyBH-Kwct6GmLyHDN9TjRTF02wDNma-NKZx711w";
-        Claims claims = verify(token, "janche");
-        Object value = getValueFromToken(token, CLAIM_ROLES_KEY, "janche");
-        System.out.println(value);
-        System.out.println(claims);
+    @Data
+    @Builder
+    public static class JwtTokens{
+        private String token;
+        private String refreshToken;
     }
 
 }

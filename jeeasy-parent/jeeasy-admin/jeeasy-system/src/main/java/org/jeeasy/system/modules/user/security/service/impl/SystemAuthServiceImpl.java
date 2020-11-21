@@ -1,5 +1,6 @@
 package org.jeeasy.system.modules.user.security.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.annotation.AuthMethod;
 import org.jeeasy.auth.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
@@ -14,6 +15,7 @@ import org.jeeasy.system.modules.user.security.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.ISysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -29,6 +31,7 @@ import java.util.Set;
  *
  * @author Alps
  */
+@Slf4j
 @Component("systemAuthService")
 @AuthMethod(value = "system", izDefault = true)
 @EnableConfigurationProperties(SystemConfigProperties.class)
@@ -41,17 +44,21 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     private SystemConfigProperties properties;
 
     @Override
+    @Cacheable(value = CommonConstant.CACHE_SYS_USER_KEY, key= "#username")
     public SystemAuthUser getAuthUserByUsername(String username) {
         SysUser sysUser = sysUserService.getByUserName(username);
         if (Tools.isNotEmpty(sysUser)) {
-            return IAuthUser.create(sysUser, SystemAuthUser.class);
+            SystemAuthUser authUser = IAuthUser.create(sysUser, SystemAuthUser.class);
+            authUser.setPermissions(this.getPermissionSetByUsername(username)).setRoles(this.getRoleSetByUsername(username));
+            return authUser;
+//            return IAuthUser.create(sysUser, SystemAuthUser.class);
         }
         return null;
     }
 
     @Override
-    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#username")
-    public SystemAuthUser verifyLogin(String username, Authentication authentication) {
+    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key= "#username")
+    public boolean verifyLogin(String username, Authentication authentication) {
         try {
             // 验证码
             if (properties.getEnableCaptcha()) {
@@ -70,7 +77,10 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
             throw new UsernameNotFoundException("用户名不存在.");
         }
         if(SysUserUtil.create(sysUser).checkPassword(password)){
-            return IAuthUser.create(sysUser, SystemAuthUser.class);
+//            SystemAuthUser authUser = IAuthUser.create(sysUser, SystemAuthUser.class);
+//            authUser.setPermissions(this.getPermissionSetByUsername(username)).setRoles(this.getRoleSetByUsername(username));
+//            return authUser;
+            return true;
         } else {
             throw new BadCredentialsException("密码错误.");
         }
@@ -94,8 +104,8 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     }
 
     @Override
-    public void onAuthenticationSuccess(IAuthUser securityUserDetails) {
-
+    public void onAuthenticationSuccess(IAuthUser authUser) {
+        log.info("用户[ {} ]登录成功", authUser.username());
     }
 
 }

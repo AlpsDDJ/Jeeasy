@@ -38,9 +38,9 @@ public class DemoUserAuthServiceImpl implements IAuthService<DemoUserDetails> {
     }
 
     @Override
-    public DemoUserDetails verifyLogin(String username, Authentication authentication) {
+    public boolean verifyLogin(String username, Authentication authentication) {
         // TODO 登录验证
-        return null;
+        return true;
     }
 
     @Override

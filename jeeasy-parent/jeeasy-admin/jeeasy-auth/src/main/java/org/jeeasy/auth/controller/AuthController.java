@@ -1,7 +1,7 @@
 package org.jeeasy.auth.controller;
 
-import org.jeeasy.auth.vo.AuthUserFormModel;
 import org.jeeasy.auth.tools.JwtUtil;
+import org.jeeasy.auth.vo.AuthUserFormModel;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author AlpsDDJ
@@ -26,9 +24,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
-//    @Autowired
-//    List<IAuthService<?>> authServiceList;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,12 +38,13 @@ public class AuthController {
         authenticationToken.setDetails(userFormModel);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), false);
-        String refreshToken = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), true);
-        Map<String, String> map = new HashMap<>();
-        map.put("token", token);
-        map.put("refreshToken", refreshToken);
-        return R.ok(map).setMessage("登录成功.");
+//        String token = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), false);
+//        String refreshToken = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), true);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("token", token);
+//        map.put("refreshToken", refreshToken);
+        JwtUtil.JwtTokens jwtTokens = jwtUtil.createJwtTokens(authentication, userFormModel.getRememberMe());
+        return R.ok(jwtTokens).setMessage("登录成功.");
     }
 
     /**
@@ -60,7 +56,7 @@ public class AuthController {
     public R<?> logout(HttpServletRequest request) {
         // 设置JWT过期
         jwtUtil.invalidateJwt(request);
-        return R.ok().setMessage("退出成功.");
+        return R.ok().setMessage("注销成功");
     }
 
     /**
@@ -70,10 +66,10 @@ public class AuthController {
      */
     @PostMapping("/refresh/token")
     public R<?> refreshToken(String refreshToken) {
-        Map<String, String> map;
+//        Map<String, String> map;
         // 刷新
-        map = jwtUtil.refreshJwt(refreshToken);
-        return R.ok(map).setMessage("token刷新成功");
+//        jwtUtil.refreshJwt(refreshToken);
+        return R.ok(jwtUtil.refreshJwt(refreshToken)).setMessage("token刷新成功");
     }
 
 }

@@ -2,6 +2,7 @@ package org.jeeasy.common.core.exception;
 
 import lombok.Getter;
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.vo.RestCode;
 
 /**
  * Jeeasy 自定义异常
@@ -15,8 +16,16 @@ public class JeeasyException extends RuntimeException {
     @Getter
     private int code = R.SC_INTERNAL_SERVER_ERROR_500;
 
+    public JeeasyException(RestCode restCode) {
+        this(restCode.getCode(), restCode.getMessage());
+    }
+
+    public JeeasyException(RestCode restCode, String message) {
+        this(restCode.getCode(), message);
+    }
+
     public JeeasyException(String message) {
-        super(message);
+        this(RestCode.ERROR, message);
     }
 
     public JeeasyException(int code, String message) {

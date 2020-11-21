@@ -1,13 +1,18 @@
 package org.jeeasy.auth.filter;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.SecurityProperty;
+import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.auth.domain.JwtClaims;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.provider.AuthServiceProvider;
 import org.jeeasy.auth.tools.JwtUtil;
 import org.jeeasy.common.core.exception.JeeasyException;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -69,10 +74,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
 //                String username = jwtUtil.getUsernameFromJwt(jwt, false);
                 Claims claims = jwtUtil.parseJwt(jwt, false);
-                String username = claims.getSubject();
 
-                // TODO 获取当前用户登录类型
-                SecurityUserDetails<?> userDetails = authServiceProvider.getAuthService("").getAuthUserByUsername(username).createUserDetails();
+                JwtClaims jwtClaims = JwtClaims.build(claims);
+                String username = jwtClaims.getUsername();
+                String authMethod = jwtClaims.getAuthMethod();
+
+                TimeInterval timer = DateUtil.timer();
+                IAuthUser authUser = authServiceProvider.getAuthService(authMethod).getAuthUserByUsername(username);
+                if(Tools.isEmpty(authUser)){
+                    R.error("账号不存在.").responseWrite(response);
+                    return;
+                }
+                log.info("JwtFilter 获取用户信息耗时: " + timer.interval());
+                SecurityUserDetails<?> userDetails = authUser.createUserDetails();
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

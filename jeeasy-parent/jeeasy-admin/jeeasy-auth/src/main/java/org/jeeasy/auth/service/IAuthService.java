@@ -47,7 +47,7 @@ public interface IAuthService<U extends IAuthUser> {
      * @param authentication
      * @return
      */
-    U verifyLogin(String username, Authentication authentication);
+    boolean verifyLogin(String username, Authentication authentication);
 
     /**
      * 登录验证逻辑

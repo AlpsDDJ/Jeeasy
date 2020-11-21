@@ -8,9 +8,9 @@ public class CommonConstant {
     public static final String X_ACCESS_TOKEN = "JEEASY-ACCESS-TOKEN";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    public static final String CACHE_USER_KEY = "session:user:";
-    public static final String SYS_USER_JWT_KEY_PREFIX = "jwt:sys:";
-    public static final String SYS_USER_JWT_SUBJECT_RACE_KEY_PREFIX = "jwt:sys:subject:race:";
+    public static final String CACHE_SYS_USER_KEY = "sys:user:";
+//    public static final String SYS_USER_JWT_KEY_PREFIX = "jwt:sys:";
+//    public static final String SYS_USER_JWT_SUBJECT_RACE_KEY_PREFIX = "jwt:sys:subject:race:";
 
     /**
      * JWT-token 在 Redis 中保存的key前缀

@@ -26,7 +26,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#id")
+    @Cacheable(value = CommonConstant.CACHE_SYS_USER_KEY, key= "#id")
     public SysUser getByUserId(String id) {
         return baseMapper.selectById(id);
     }

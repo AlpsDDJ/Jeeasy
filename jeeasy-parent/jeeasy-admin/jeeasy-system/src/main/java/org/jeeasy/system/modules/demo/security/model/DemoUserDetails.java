@@ -4,11 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
 import org.jeeasy.auth.domain.IAuthUser;
 
+import java.util.Collection;
+
 /**
  * @author Alps
  */
 @Data
 public class DemoUserDetails extends DemoUser implements IAuthUser {
+
+    private Collection<String> roles;
+    private Collection<String> permissions;
 
     public static DemoUserDetails create(DemoUser sysUser) {
         return BeanUtil.toBean(sysUser, DemoUserDetails.class);

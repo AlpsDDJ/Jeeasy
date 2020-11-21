@@ -3,6 +3,7 @@ package org.jeeasy.auth.domain;
 import cn.hutool.core.bean.BeanUtil;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @author AlpsDDJ
@@ -16,7 +17,8 @@ public interface IAuthUser extends Serializable {
         return BeanUtil.copyProperties(user, clazz);
     }
 
-//    Collection<? extends GrantedAuthority> authorities();
+    Collection<String> getRoles();
+    Collection<String> getPermissions();
 
     String id();
 

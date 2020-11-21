@@ -21,30 +21,39 @@ public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
 
     private U authUser;
 
-    private Set<String> roles;
-
-    private Set<String> permissions;
-
-
-    public SecurityUserDetails(U authUser) {
-        this.authUser = authUser;
-//        SecurityUserDetails.builder().permissions();
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> simpleGrantedAuthoritySet = new HashSet<>();
+        if (Tools.isNotEmpty(authUser)) {
+            return simpleGrantedAuthoritySet;
+        }
+        Collection<String> roles = authUser.getRoles();
         if (Tools.isNotEmpty(roles)) {
             roles.forEach(role -> {
                 simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
             });
         }
+        Collection<String> permissions = authUser.getPermissions();
         if (Tools.isNotEmpty(permissions)) {
             permissions.forEach(p -> {
                 simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority(p));
             });
         }
         return simpleGrantedAuthoritySet;
+    }
+
+    public Collection<String> getRoles() {
+        if (Tools.isEmpty(authUser)) {
+            return new HashSet<>();
+        }
+        return this.authUser.getRoles();
+    }
+
+    public Collection<String> getPermissions() {
+        if (Tools.isEmpty(authUser)) {
+            return new HashSet<>();
+        }
+        return this.authUser.getPermissions();
     }
 
     public String getId() {
