@@ -35,7 +35,7 @@ public class JeeasySecurityAuthenticationProvider<U extends JeeasyBaseSecurityUs
         if (Tools.isNotEmpty(userDetails)) {
             return new UsernamePasswordAuthenticationToken(userDetails, userDetails.password(), userDetails.authorities());
         } else {
-            throw new JeeasyException("登录失败.");
+            throw new JeeasyException("登录失败");
         }
     }
 

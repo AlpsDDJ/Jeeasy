@@ -184,7 +184,7 @@ public class JwtTokenUtil<U extends JeeasyBaseSecurityUserDetails> implements Se
                     return i;
                 }
             }
-            throw new JeeasyException("同时登录数超限.");
+            throw new JeeasyException("同时登录数超限");
         }
     }
 

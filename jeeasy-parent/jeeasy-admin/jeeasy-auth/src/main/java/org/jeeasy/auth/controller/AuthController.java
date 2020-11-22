@@ -44,7 +44,7 @@ public class AuthController {
 //        map.put("token", token);
 //        map.put("refreshToken", refreshToken);
         JwtUtil.JwtTokens jwtTokens = jwtUtil.createJwtTokens(authentication, userFormModel.getRememberMe());
-        return R.ok(jwtTokens).setMessage("登录成功.");
+        return R.ok(jwtTokens).setMessage("登录成功");
     }
 
     /**

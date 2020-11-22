@@ -1,7 +1,7 @@
-package org.jeeasy.common.core.doc.tools;
+package org.jeeasy.common.doc.tools;
 
 import org.jeeasy.common.core.constant.CommonConstant;
-import org.jeeasy.common.core.doc.config.SwaggerModule;
+import org.jeeasy.common.doc.config.SwaggerModule;
 import org.jeeasy.common.core.tools.Tools;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -63,7 +63,7 @@ public class SwaggerUtil {
                 // 描述
                 .description(description)
                 // 作者
-                .contact(contact)
+                .contact(new Contact(contact, "", ""))
                 .license("The Apache License, Version 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .build();

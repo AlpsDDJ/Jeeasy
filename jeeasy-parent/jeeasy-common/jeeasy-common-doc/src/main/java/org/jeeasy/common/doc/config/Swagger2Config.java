@@ -1,8 +1,8 @@
-package org.jeeasy.common.core.doc.config;
+package org.jeeasy.common.doc.config;
 
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.doc.tools.SwaggerUtil;
+import org.jeeasy.common.doc.tools.SwaggerUtil;
 import org.jeeasy.common.core.tools.SpringUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

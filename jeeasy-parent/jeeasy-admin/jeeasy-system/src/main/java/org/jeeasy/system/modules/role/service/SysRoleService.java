@@ -7,5 +7,5 @@ import org.jeeasy.system.modules.role.entity.SysRole;
  * @author AlpsDDJ
  * @date 2020/11/9
  */
-public interface ISysRoleService extends IService<SysRole> {
+public interface SysRoleService extends IService<SysRole> {
 }

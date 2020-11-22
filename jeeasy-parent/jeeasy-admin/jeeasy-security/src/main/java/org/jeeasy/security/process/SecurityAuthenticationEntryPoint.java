@@ -20,7 +20,7 @@ public class SecurityAuthenticationEntryPoint<U extends JeeasyBaseSecurityUserDe
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-//        R<?> result = R.noUser("未登录.");
+//        R<?> result = R.noUser("未登录");
 //        httpServletResponse.setHeader("Content-type","application/json;charset=UTF-8");
 //        httpServletResponse.setCharacterEncoding("UTF-8");
 //        httpServletResponse.getWriter().write(JSON.toJSONString(result));

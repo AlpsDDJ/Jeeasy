@@ -3,10 +3,12 @@ package org.jeeasy.system.modules.user.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -17,10 +19,11 @@ import java.time.LocalDateTime;
  * 系统用户
  * @author Alps
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel("系统用户")
 @Accessors(chain = true)
-public class SysUser implements Serializable {
+public class SysUser extends Model<SysUser> implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty("ID")
@@ -53,7 +56,7 @@ public class SysUser implements Serializable {
     private String salt;
 
     @ApiModelProperty("状态")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty("邮箱")
     private String email;
@@ -78,39 +81,6 @@ public class SysUser implements Serializable {
 
     @TableLogic
     @ApiModelProperty("删除标记")
-    private String delFlag;
+    private Integer delFlag;
 
-    public boolean izEnabled(){
-        return "1".equals(this.status);
-    }
-
-//    @JsonIgnore
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return null;
-//    }
-//
-//    @JsonIgnore
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return false;
-//    }
-//
-//    @JsonIgnore
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return false;
-//    }
-//
-//    @JsonIgnore
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return false;
-//    }
-//
-//    @JsonIgnore
-//    @Override
-//    public boolean isEnabled() {
-//        return izEnabled();
-//    }
 }

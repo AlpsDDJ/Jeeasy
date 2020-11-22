@@ -133,7 +133,7 @@ public class R<T> implements Serializable {
      * 无权限访问返回结果
      */
     public static R<Object> noAuth() {
-        return error(SC_JEEASY_NO_AUTH, "权限不足.");
+        return error(SC_JEEASY_NO_AUTH, "权限不足");
     }
 
     /**

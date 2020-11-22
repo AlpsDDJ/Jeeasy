@@ -49,7 +49,7 @@ public class AuthServiceProvider {
         });
         IAuthService<?> service = authService.get();
         if (Tools.isEmpty(service)) {
-            throw new BadCredentialsException("无匹配验证方式.");
+            throw new BadCredentialsException("无匹配验证方式");
         }
         return service;
     }

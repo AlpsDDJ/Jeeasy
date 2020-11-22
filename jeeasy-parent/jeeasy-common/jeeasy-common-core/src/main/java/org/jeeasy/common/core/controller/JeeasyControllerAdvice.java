@@ -28,11 +28,11 @@ public class JeeasyControllerAdvice {
     @ExceptionHandler(JeeasyException.class)
     public R<?> jeeasyExceptionHandler(JeeasyException ex) {
         log.error(ex.getMessage());
-        return R.error(ex.getMessage());
+        return R.error(ex.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public R<?> handlerNoFoundException(Exception e) {
+    public R<?> handlerNoFoundException(NoHandlerFoundException e) {
         log.error(e.getMessage(), e);
         return R.notFound("路径不存在，请检查路径是否正确");
     }

@@ -7,14 +7,14 @@ import org.jeeasy.system.modules.user.entity.SysUser;
  * @author AlpsDDJ
  * @date 2020/11/9
  */
-public interface ISysUserService extends IService<SysUser> {
+public interface SysUserService extends IService<SysUser> {
     SysUser getByUserName(String username);
 
     SysUser getByUserId(String id);
 
-//    boolean checkPasswordById(String id, String password);
-
     boolean checkPasswordByUserName(String username, String password);
 
-//    SysUser login(String username, String password);
+    void addUserWithRole(SysUser sysUser, String roles);
+
+    void editUserWithRole(SysUser sysUser, String roles);
 }

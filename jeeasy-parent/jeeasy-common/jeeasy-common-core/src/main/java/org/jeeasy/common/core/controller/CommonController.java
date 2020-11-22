@@ -40,8 +40,8 @@ public class CommonController {
     @GetMapping("captcha/verify")
     public R<?> verify(String id, String captcha) {
         if (Tools.verifyCaptcha(id, captcha)) {
-            return R.ok("验证通过.");
+            return R.ok("验证通过");
         }
-        return R.error("验证失败.");
+        return R.error("验证失败");
     }
 }

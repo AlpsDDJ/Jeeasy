@@ -22,82 +22,116 @@ import java.util.List;
 public class SimpleBaseController<S extends IService<T>, T> {
 
     @Autowired
-    protected S service;
+    protected S baseService;
 
     /**
      * 列表分页查询
+     *
      * @param entity
      * @param pageNo
      * @param pageSize
      * @param req
-     * @return
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> page(T entity, IPage<T> page, HttpServletRequest req) {
+        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
+        return R.ok(baseService.page(page, queryWrapper));
+    }
+
+    /**
+     * 列表分页查询
+     *
+     * @param entity
+     * @param pageNo
+     * @param pageSize
+     * @param req
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
      */
     protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
+        return R.ok(baseService.page(new Page<T>(pageNo, pageSize), queryWrapper));
     }
 
     /**
      * 通过id获取对象
+     *
      * @param id
-     * @return
+     * @return {@link R<T>}
+     * @author mobie
+     * @date 2020/11/21 16:22
      */
     protected R<T> getById(Serializable id) {
-        return R.ok(service.getById(id));
+        return R.ok(baseService.getById(id));
     }
 
     /**
      * 保存对象
+     *
      * @param entity
-     * @return
+     * @return {@link R<?>}
+     * @author mobie
+     * @date 2020/11/21 16:23
      */
     protected R<?> insert(T entity) {
-        if (service.save(entity)) {
-            return R.ok("新增成功.");
+        if (baseService.save(entity)) {
+            return R.ok("新增成功");
         } else {
-            return R.error("新增失败.");
+            return R.error("新增失败");
         }
     }
 
     /**
      * 修改对象
+     *
      * @param entity
-     * @return
+     * @return {@link R<?>}
+     * @author mobie
+     * @date 2020/11/21 16:24
      */
     protected R<?> update(T entity) {
-        if (service.updateById(entity)) {
-            return R.ok("编辑成功.");
+        if (baseService.updateById(entity)) {
+            return R.ok("编辑成功");
         } else {
-            return R.error("编辑失败.");
+            return R.error("编辑失败");
         }
     }
 
     /**
      * 根据id删除对象
+     *
      * @param id
-     * @return
+     * @return {@link R<?>}
+     * @author mobie
+     * @date 2020/11/21 16:24
      */
     protected R<?> deleteById(Serializable id) {
-        if (service.removeById(id)) {
-            return R.ok("删除成功.");
+        if (baseService.removeById(id)) {
+            return R.ok("删除成功");
         } else {
-            return R.error("删除失败.");
+            return R.error("删除失败");
         }
     }
 
     /**
      * 根据ids批量删除对象
+     *
      * @param ids
-     * @return
+     * @return {@link R<?>}
+     * @author mobie
+     * @date 2020/11/21 16:24
      */
     public R<?> deleteBatch(String ids) {
         R<?> result = new R<>();
         if (Tools.isEmpty(ids)) {
-            result.faild("未选中数据.");
+            result.faild("未选中数据");
         } else {
             List<String> ls = Arrays.asList(ids.split(","));
-            service.removeByIds(ls);
-            result.success("批量删除成功.");
+            baseService.removeByIds(ls);
+            result.success("批量删除成功");
         }
         return result;
     }

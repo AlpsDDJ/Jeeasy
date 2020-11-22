@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.doc.config;
+package org.jeeasy.common.doc.config;
 
 import lombok.Getter;
 import lombok.Setter;

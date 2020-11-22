@@ -145,25 +145,26 @@ public class JwtUtil {
             String redisToken = (String) redisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
                 throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 当前用户已在别处登录");
-//                throw new JeeasyException("当前用户已在别处登录.");
+//                throw new JeeasyException("当前用户已在别处登录");
             }
             return claims;
         } catch (ExpiredJwtException e) {
+            e.printStackTrace();
             log.error("Token 已过期");
             throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 刷新令牌过期");
 //            throw new JeeasyException("用户 刷新令牌过期");
         } catch (UnsupportedJwtException e) {
             log.error("不支持的 Token");
             throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 不支持");
-//            throw new JeeasyException("token 解析失败: 不支持.");
+//            throw new JeeasyException("token 解析失败: 不支持");
         } catch (MalformedJwtException e) {
             log.error("Token 无效");
             throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 无效");
-//            throw new JeeasyException("token 解析失败: 无效.");
+//            throw new JeeasyException("token 解析失败: 无效");
         } catch (IllegalArgumentException e) {
             log.error("Token 参数不存在");
             throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 参数不存在");
-//            throw new JeeasyException("token 解析失败: 参数不存在.");
+//            throw new JeeasyException("token 解析失败: 参数不存在");
         }
     }
 

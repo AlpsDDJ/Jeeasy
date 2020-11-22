@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.role.entity.SysRole;
-import org.jeeasy.system.modules.role.service.ISysRoleService;
+import org.jeeasy.system.modules.role.service.SysRoleService;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @Api(tags = "系统角色")
 @RequestMapping("/sys/role")
-public class SysRoleController extends SimpleBaseController<ISysRoleService, SysRole> {
+public class SysRoleController extends SimpleBaseController<SysRoleService, SysRole> {
 
     @GetMapping
     @ApiOperation(value = "角色列表", notes = "角色列表")

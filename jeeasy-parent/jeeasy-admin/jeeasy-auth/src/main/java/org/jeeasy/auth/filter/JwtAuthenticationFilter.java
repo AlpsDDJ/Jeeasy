@@ -94,7 +94,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 chain.doFilter(request, response);
             } catch (JeeasyException e) {
-                R.error(e.getMessage()).responseWrite(response);
+                R.error(e.getCode(), e.getMessage()).responseWrite(response);
 //                ResponseUtils.renderJson(request, response, e, applicationConfig.getOrigins());
             }
         } else {

@@ -70,10 +70,10 @@ public class Tools {
     public static boolean verifyCaptcha(String key, String captcha) throws JeeasyException {
         LineCaptcha lineCaptcha = captchaCache.get(key);
         if(isEmpty(lineCaptcha)){
-            throw new JeeasyException("验证码失效.");
+            throw new JeeasyException("验证码失效");
         }
         if(!captchaCache.get(key).verify(captcha)){
-            throw new JeeasyException("验证码错误.");
+            throw new JeeasyException("验证码错误");
         }
         return true;
     }

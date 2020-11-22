@@ -62,9 +62,10 @@ jeeasy:
       - /favicon.ico # 开放 Logo
       # swagger 排除
       - /doc.html
+      - /swagger-ui.html
       - /webjars/**
-      - /swagger-resources
-      - /v2/api-docs
+      - /swagger-resources/**
+      - /v2/**
 #    login-url: /nouser
 #    login-processing-url: /login
 #    logout-url: /logout

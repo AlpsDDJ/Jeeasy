@@ -56,15 +56,15 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
         if (Tools.isNotEmpty(userDetails)) {
 
             if (!userDetails.isAccountNonExpired()) {
-                throw new AccountExpiredException("帐户过期.");
+                throw new AccountExpiredException("帐户过期");
             }
 
             if (!userDetails.isEnabled()) {
-                throw new DisabledException("账号已冻结.");
+                throw new DisabledException("账号已冻结");
             }
 
 //            if(!userDetails.isAccountNonLocked()){
-//                throw new AccountLockedException("帐户过期.");
+//                throw new AccountLockedException("帐户过期");
 //            }
 
 //            authService.onAuthenticationSuccess(userDetails.getAuthUser());

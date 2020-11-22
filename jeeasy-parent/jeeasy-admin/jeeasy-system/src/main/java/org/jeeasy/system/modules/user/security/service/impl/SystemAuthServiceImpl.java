@@ -12,7 +12,7 @@ import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.config.property.SystemConfigProperties;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.security.model.SystemAuthUser;
-import org.jeeasy.system.modules.user.service.ISysUserService;
+import org.jeeasy.system.modules.user.service.SysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.CacheEvict;
@@ -38,7 +38,7 @@ import java.util.Set;
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Resource
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
 
     @Resource
     private SystemConfigProperties properties;
@@ -74,7 +74,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         SysUser sysUser = sysUserService.getByUserName(username);
 
         if (Tools.isEmpty(sysUser)) {
-            throw new UsernameNotFoundException("用户名不存在.");
+            throw new UsernameNotFoundException("用户名不存在");
         }
         if(SysUserUtil.create(sysUser).checkPassword(password)){
 //            SystemAuthUser authUser = IAuthUser.create(sysUser, SystemAuthUser.class);
@@ -82,7 +82,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 //            return authUser;
             return true;
         } else {
-            throw new BadCredentialsException("密码错误.");
+            throw new BadCredentialsException("密码错误");
         }
     }
 

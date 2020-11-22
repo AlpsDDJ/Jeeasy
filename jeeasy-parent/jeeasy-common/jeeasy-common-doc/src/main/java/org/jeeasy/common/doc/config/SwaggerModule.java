@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.doc.config;
+package org.jeeasy.common.doc.config;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;

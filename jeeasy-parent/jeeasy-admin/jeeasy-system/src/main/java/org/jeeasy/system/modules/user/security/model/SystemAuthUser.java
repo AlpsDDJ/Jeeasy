@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.system.enums.SysUserStatusEnum;
 import org.jeeasy.system.modules.user.entity.SysUser;
 
 import java.util.Collection;
@@ -59,6 +60,11 @@ public class SystemAuthUser extends SysUser implements IAuthUser {
     @Override
     public boolean izCredentialsNonExpired() {
         return false;
+    }
+
+    @Override
+    public boolean izEnabled(){
+        return SysUserStatusEnum.NORMAL.getValue().equals(this.getStatus());
     }
 
 }

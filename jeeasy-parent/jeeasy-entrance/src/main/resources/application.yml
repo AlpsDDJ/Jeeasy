@@ -56,6 +56,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:org/jeeasy/**/mapper/xml/*Mapper.xml
   type-aliases-package: org.jeeasy.**.entity
+  type-enums-package: org.jeeasy.**.enums
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
