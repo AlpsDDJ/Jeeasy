@@ -5,23 +5,20 @@ import lombok.Getter;
 import org.jeeasy.common.core.enums.DictEnum;
 
 /**
- * SysUserStatusEnum: 系统用户状态
+ * 菜单外链发开方式
+ * 0:内部打开 1:外部打开
  *
  * @author AlpsDDJ
- * @version v1.0
- * @date 2020/11/22 2:10
+ * @date 2020/11/23 16:27
  */
 @Getter
 @AllArgsConstructor
-public enum SysUserStatusEnum implements DictEnum<Integer> {
-
-    // 正常状态
-    NORMAL(1, "正常"),
-    // 冻结状态
-    FREEZE(0, "冻结"),
+public enum LinkOpenTypeEnum implements DictEnum<Integer> {
+    // 菜单外链发开方式
+    INTERNAL(0, "内部打开"),
+    EXTERNAL(1, "外部打开"),
     ;
 
     private final Integer value;
     private final String text;
-
 }

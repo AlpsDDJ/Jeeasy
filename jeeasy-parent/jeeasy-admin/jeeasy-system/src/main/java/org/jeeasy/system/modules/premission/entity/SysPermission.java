@@ -7,6 +7,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.enums.BooleanEnum;
+import org.jeeasy.common.core.enums.DelFlagEnum;
+import org.jeeasy.common.core.enums.EnableFlagEnum;
+import org.jeeasy.system.enums.LinkOpenTypeEnum;
+import org.jeeasy.system.enums.MenuTypeEnum;
+import org.jeeasy.system.enums.PermsTypeEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -73,6 +80,7 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 菜单类型(0:一级菜单 1:子菜单 2:按钮权限)
      */
     @ApiModelProperty(value = "菜单类型", notes = "0:一级菜单 1:子菜单 2:按钮权限")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = MenuTypeEnum.class)
     private Integer menuType;
 
     /**
@@ -85,6 +93,7 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 权限策略     1显示2禁用
      */
     @ApiModelProperty(value = "权限策略", notes = "1:显示 2:禁用")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = PermsTypeEnum.class)
     private Integer permsType;
 
     /**
@@ -97,6 +106,7 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 聚合子路由: 1是0否
      */
     @ApiModelProperty(value = "聚合子路由", notes = "1:是 0:不是")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer alwaysShow;
 
     /**
@@ -109,24 +119,28 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 是否路由菜单: 0:不是  1:是（默认值1）
      */
     @ApiModelProperty(value = "是否路由菜单", notes = "1:是 0:不是（默认值1）")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer isRoute;
 
     /**
      * 是否叶子节点:    1:是   0:不是
      */
     @ApiModelProperty(value = "是否叶子节点", notes = "1:是 0:不是")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer isLeaf;
 
     /**
      * 是否缓存该页面:    1:是   0:不是
      */
     @ApiModelProperty(value = "是否缓存该页面", notes = "1:是 0:不是")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer keepAlive;
 
     /**
      * 是否隐藏路由: 0否,1是
      */
     @ApiModelProperty(value = "是否隐藏路由", notes = "0:否 1:是")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer hidden;
 
     /**
@@ -165,6 +179,7 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 删除状态 0正常 1已删除
      */
     @ApiModelProperty(value = "删除状态", notes = "0:正常 1:已删除")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = DelFlagEnum.class)
     @TableLogic
     private Integer delFlag;
 
@@ -172,18 +187,21 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 是否添加数据权限1是0否
      */
     @ApiModelProperty(value = "是否添加数据权限", notes = "1:是 0:否")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
     private Integer ruleFlag;
 
     /**
      * 按钮权限状态(0无效1有效)
      */
-    @ApiModelProperty(value = "按钮权限状态", notes = "0:无效 1:有效")
-    private Integer status;
+    @ApiModelProperty(value = "启用标记", notes = "0:未启用 1:启用")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = EnableFlagEnum.class)
+    private Integer enableFlag;
 
     /**
      * 外链菜单打开方式 0/内部打开 1/外部打开
      */
     @ApiModelProperty(value = "外链菜单打开方式", notes = "0:内部打开 1:外部打开")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = LinkOpenTypeEnum.class)
     private Integer internalOrExternal;
 
 }

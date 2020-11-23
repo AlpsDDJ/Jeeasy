@@ -10,6 +10,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.enums.DelFlagEnum;
+import org.jeeasy.system.enums.SysUserStatusEnum;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -56,6 +59,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private String salt;
 
     @ApiModelProperty("状态")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = SysUserStatusEnum.class)
     private Integer status;
 
     @ApiModelProperty("邮箱")
@@ -81,6 +85,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
 
     @TableLogic
     @ApiModelProperty("删除标记")
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = DelFlagEnum.class)
     private Integer delFlag;
 
 }

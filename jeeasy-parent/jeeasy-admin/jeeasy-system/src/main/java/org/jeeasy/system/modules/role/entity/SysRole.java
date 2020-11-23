@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.enums.EnableFlagEnum;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +31,8 @@ public class SysRole {
     private String roleCode;
 
     @ApiModelProperty("启用标记")
-    private String enableFlag;
+    @Dict(dictType = Dict.DictType.ENUM, dictEnum = EnableFlagEnum.class)
+    private Integer enableFlag;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;

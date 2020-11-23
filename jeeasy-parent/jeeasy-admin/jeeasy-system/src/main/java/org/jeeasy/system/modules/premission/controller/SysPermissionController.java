@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.premission.entity.SysPermission;
@@ -29,6 +30,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
 
 
     @GetMapping
+    @DictTranslation
     @ApiOperation(value = "权限列表", notes = "权限列表")
     public R<IPage<SysPermission>> list(SysPermission entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         return super.query(entity, pageNo, pageSize, req);
@@ -41,6 +43,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @return {@link R}
      */
     @GetMapping("/{id}")
+    @DictTranslation
     @ApiOperation(value = "根据ID查找权限", notes = "根据ID查找权限")
     public R<SysPermission> info(@PathVariable("id") String id) {
         return super.getById(id);

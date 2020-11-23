@@ -3,6 +3,7 @@ package org.jeeasy.system.modules.role.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.role.entity.SysRole;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SysRoleController extends SimpleBaseController<SysRoleService, SysRole> {
 
     @GetMapping
+    @DictTranslation
     @ApiOperation(value = "角色列表", notes = "角色列表")
     public R<IPage<SysRole>> list(SysRole entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -31,6 +33,7 @@ public class SysRoleController extends SimpleBaseController<SysRoleService, SysR
     }
 
     @GetMapping("/{id}")
+    @DictTranslation
     @ApiOperation(value = "根据ID查找角色", notes = "根据ID查找角色")
     public R<SysRole> info(@PathVariable("id") String id) {
         return super.getById(id);

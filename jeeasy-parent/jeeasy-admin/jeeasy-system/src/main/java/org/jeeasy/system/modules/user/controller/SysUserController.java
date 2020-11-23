@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
-import org.jeeasy.common.db.tools.PageQuery;
 import org.jeeasy.system.modules.user.entity.SysUser;
 import org.jeeasy.system.modules.user.model.ChangePasswordByOldPasswordModel;
 import org.jeeasy.system.modules.user.model.UserInfoModel;
@@ -27,22 +27,24 @@ import javax.servlet.http.HttpServletRequest;
 public class SysUserController extends SimpleBaseController<SysUserService, SysUser> {
 
     @GetMapping
+    @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        log.info(entity.getStatus().toString());
+//        log.info(entity.getStatus().toString());
         R<IPage<SysUser>> query = super.query(entity, pageNo, pageSize, req);
         return query;
     }
 
-    @GetMapping("/page")
-    @ApiOperation(value = "用户列表", notes = "用户列表")
-    public R<IPage<SysUser>> page(PageQuery<SysUser, SysUser> pageQuery, HttpServletRequest req) {
-//        log.info(entity.getStatus().toString());
-        R<IPage<SysUser>> query = super.page(pageQuery.getModel(), pageQuery, req);
-        return query;
-    }
+//    @GetMapping("/page")
+//    @ApiOperation(value = "用户列表", notes = "用户列表")
+//    public R<IPage<SysUser>> page(PageQuery<SysUser, SysUser> pageQuery, HttpServletRequest req) {
+////        log.info(entity.getStatus().toString());
+//        R<IPage<SysUser>> query = super.page(pageQuery.getModel(), pageQuery, req);
+//        return query;
+//    }
 
     @GetMapping("/{id}")
+    @DictTranslation
     @ApiOperation(value = "根据ID查找用户", notes = "根据ID查找用户")
     public R<SysUser> info(@PathVariable("id") String id) {
         return super.getById(id);
