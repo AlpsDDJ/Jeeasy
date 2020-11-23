@@ -31,7 +31,7 @@ public class SysRole {
     private String roleCode;
 
     @ApiModelProperty("启用标记")
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = EnableFlagEnum.class)
+    @Dict(dictEnum = EnableFlagEnum.class)
     private Integer enableFlag;
 
     @ApiModelProperty("创建时间")

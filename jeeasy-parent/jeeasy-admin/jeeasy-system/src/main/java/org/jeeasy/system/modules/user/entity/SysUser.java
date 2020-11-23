@@ -59,7 +59,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private String salt;
 
     @ApiModelProperty("状态")
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = SysUserStatusEnum.class)
+    @Dict(dictEnum = SysUserStatusEnum.class)
     private Integer status;
 
     @ApiModelProperty("邮箱")
@@ -85,7 +85,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
 
     @TableLogic
     @ApiModelProperty("删除标记")
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = DelFlagEnum.class)
+    @Dict(dictEnum = DelFlagEnum.class)
     private Integer delFlag;
 
 }

@@ -43,7 +43,7 @@ public class SysDictItem implements Serializable {
     @ApiModelProperty(value = "sortOrder", notes = "排序")
     private Double sortOrder;
 
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = EnableFlagEnum.class)
+    @Dict(dictEnum = EnableFlagEnum.class)
     @ApiModelProperty(value = "enableFlag", notes = "启用状态")
     private Integer enableFlag;
 
@@ -60,11 +60,11 @@ public class SysDictItem implements Serializable {
     private LocalDateTime updateTime;
 
     @ApiModelProperty(value = "allowDelete", notes = "允许删除")
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
+    @Dict(dictEnum = BooleanEnum.class)
     private Integer allowDelete;
 
     @ApiModelProperty(value = "allowUpdate", notes = "允许修改")
-    @Dict(dictType = Dict.DictType.ENUM, dictEnum = BooleanEnum.class)
+    @Dict(dictEnum = BooleanEnum.class)
     private Integer allowUpdate;
 
 }

@@ -31,12 +31,19 @@ mybatis-plus:
 
 
 jeeasy:
+  dict:
+    dict-table-flag: ["@", "#"]
+    dict-text-suffix: _dict
+    auto-translate-enum-class:
+      enableFlag: org.jeeasy.common.core.enums.EnableFlagEnum
+      delFlag: org.jeeasy.common.core.enums.DelFlagEnum
   modules:
     system:
       # 登录图片验证码开关
-      enableCaptcha: false
+      enable-captcha: false
   cache:
     manager:
+      # cache自定义键 过期时间
       configs:
         - key: menu
           second: 300
@@ -70,7 +77,9 @@ jeeasy:
 #    login-processing-url: /login
 #    logout-url: /logout
   swagger:
+    # 是否启用swagger文档
     enable: true
+    # 为不同模块单独配置swagger分组
     module:
       jeeasy-system:
         group-name: Jeeasy 系统管理

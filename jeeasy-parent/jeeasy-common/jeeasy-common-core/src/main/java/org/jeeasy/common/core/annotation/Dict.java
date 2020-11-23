@@ -19,11 +19,11 @@ public @interface Dict {
      */
     String dictCode() default "";
 
-    /**
-     * 字典类型
-     * @return {@link Dict.DictType}
-     */
-    DictType dictType() default DictType.DICT;
+//    /**
+//     * 字典类型
+//     * @return {@link Dict.DictType}
+//     */
+//    DictType dictType() default DictType.DICT;
 
     /**
      * 当 type = ENUM 时，enum之前的class
@@ -31,13 +31,13 @@ public @interface Dict {
      */
     Class<? extends Enum> dictEnum() default Enum.class;
 
-    enum DictType {
-        // 数据字典表
-        DICT,
-        // 其他数据表
-        TABLE,
-        // enum
-        ENUM,
-        ;
-    }
+//    enum DictType {
+//        // 数据字典表
+//        DICT,
+//        // 其他数据表
+//        TABLE,
+//        // enum
+//        ENUM,
+//        ;
+//    }
 }
