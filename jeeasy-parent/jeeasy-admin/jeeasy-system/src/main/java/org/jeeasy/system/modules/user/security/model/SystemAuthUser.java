@@ -3,7 +3,7 @@ package org.jeeasy.system.modules.user.security.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.system.enums.SysUserStatusEnum;
 import org.jeeasy.system.modules.user.entity.SysUser;
 

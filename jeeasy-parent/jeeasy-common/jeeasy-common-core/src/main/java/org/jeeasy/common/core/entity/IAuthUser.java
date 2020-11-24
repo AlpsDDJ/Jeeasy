@@ -1,4 +1,4 @@
-package org.jeeasy.auth.domain;
+package org.jeeasy.common.core.entity;
 
 import cn.hutool.core.bean.BeanUtil;
 
@@ -42,20 +42,20 @@ public interface IAuthUser extends Serializable {
         return true;
     }
 
-    /**
-     * 创建 SecurityUserDetails
-     *
-     * @return
-     */
-    default SecurityUserDetails<?> createUserDetails() {
-        SecurityUserDetails<IAuthUser> userDetails = new SecurityUserDetails<>(this);
-//        AuthMethod authMethod = AnnotationUtils.getAnnotation(this.getClass(), AuthMethod.class);
-//        String issuer = "";
-//        if(Tools.isNotEmpty(authMethod)){
-//            issuer = authMethod.method();
-//        }
-//        userDetails.setIssuer(issuer);
-        return userDetails;
-    }
+//    /**
+//     * 创建 SecurityUserDetails
+//     *
+//     * @return
+//     */
+//    default SecurityUserDetails<?> createUserDetails() {
+//        SecurityUserDetails<IAuthUser> userDetails = new SecurityUserDetails<>(this);
+////        AuthMethod authMethod = AnnotationUtils.getAnnotation(this.getClass(), AuthMethod.class);
+////        String issuer = "";
+////        if(Tools.isNotEmpty(authMethod)){
+////            issuer = authMethod.method();
+////        }
+////        userDetails.setIssuer(issuer);
+//        return userDetails;
+//    }
 
 }

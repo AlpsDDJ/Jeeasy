@@ -3,7 +3,7 @@ package org.jeeasy.auth.provider;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.exception.JeeasyException;
@@ -48,7 +48,7 @@ public class JeeasyAuthenticationProvider implements AuthenticationProvider {
         }
         SecurityUserDetails<?> userDetails = null;
         if (Tools.isNotEmpty(authUser)) {
-            userDetails = authUser.createUserDetails();
+            userDetails = new SecurityUserDetails<>(authUser);
 //            userDetails = authService.getAuthUserByUsername(username).createUserDetails();
 //            userDetails.setRoles(authService.getRoleSetByUsername(username));
 //            userDetails.setPermissions(authService.getPermissionSetByUsername(username));

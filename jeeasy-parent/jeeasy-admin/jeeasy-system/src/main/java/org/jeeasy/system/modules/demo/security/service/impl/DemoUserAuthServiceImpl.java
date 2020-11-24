@@ -2,7 +2,7 @@ package org.jeeasy.system.modules.demo.security.service.impl;
 
 import lombok.Setter;
 import org.jeeasy.auth.annotation.AuthMethod;
-import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
 import org.jeeasy.common.core.tools.Tools;
@@ -25,7 +25,7 @@ public class DemoUserAuthServiceImpl implements IAuthService<DemoUserDetails> {
 //    ISysUserService sysUserService;
 
     @Setter
-    @Value("${jeeasy.system.enable-captcha}")
+    @Value("${jeeasy.modules.system.enable-captcha}")
     private boolean enableCaptcha = true;
 
     @Override

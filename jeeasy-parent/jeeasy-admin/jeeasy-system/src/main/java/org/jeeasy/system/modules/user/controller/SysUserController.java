@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.auth.tools.SecurityUtil;
 import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -31,6 +33,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 //        log.info(entity.getStatus().toString());
+        IAuthUser currentAuthUser = SecurityUtil.getCurrentAuthUser();
         R<IPage<SysUser>> query = super.query(entity, pageNo, pageSize, req);
         return query;
     }

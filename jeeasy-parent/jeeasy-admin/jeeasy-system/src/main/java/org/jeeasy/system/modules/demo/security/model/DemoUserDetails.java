@@ -2,7 +2,7 @@ package org.jeeasy.system.modules.demo.security.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import lombok.Data;
-import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.common.core.entity.IAuthUser;
 
 import java.util.Collection;
 

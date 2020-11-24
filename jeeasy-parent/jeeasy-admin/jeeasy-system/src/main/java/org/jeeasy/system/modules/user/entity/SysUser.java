@@ -1,8 +1,6 @@
 package org.jeeasy.system.modules.user.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
-import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.system.enums.SysUserStatusEnum;
 
 import java.io.Serializable;
@@ -24,6 +21,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@TableName("sys_user")
 @ApiModel("系统用户")
 @Accessors(chain = true)
 public class SysUser extends Model<SysUser> implements Serializable {
@@ -45,6 +43,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private String realName;
 
     @ApiModelProperty(value = "性别", notes = "1：男，0：女")
+//    @Dict(dictEnum = SexEnum.class)
     private Integer sex;
 
     @ApiModelProperty("生日")
@@ -60,6 +59,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
 
     @ApiModelProperty("状态")
     @Dict(dictEnum = SysUserStatusEnum.class)
+    @TableField(fill = FieldFill.INSERT)
     private Integer status;
 
     @ApiModelProperty("邮箱")
@@ -69,15 +69,19 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private String avatar;
 
     @ApiModelProperty("创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     @ApiModelProperty("修改时间")
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty("修改人")
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     @ApiModelProperty("备注")
@@ -85,7 +89,8 @@ public class SysUser extends Model<SysUser> implements Serializable {
 
     @TableLogic
     @ApiModelProperty("删除标记")
-    @Dict(dictEnum = DelFlagEnum.class)
+    @TableField(fill = FieldFill.UPDATE)
+//    @Dict(dictEnum = DelFlagEnum.class)
     private Integer delFlag;
 
 }

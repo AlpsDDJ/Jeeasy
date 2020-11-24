@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.config.property.SecurityProperty;
-import org.jeeasy.auth.domain.IAuthUser;
+import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.auth.domain.JwtClaims;
 import org.jeeasy.auth.domain.SecurityUserDetails;
 import org.jeeasy.auth.provider.AuthServiceProvider;
@@ -86,7 +86,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     return;
                 }
                 log.info("JwtFilter 获取用户信息耗时: " + timer.interval());
-                SecurityUserDetails<?> userDetails = authUser.createUserDetails();
+                SecurityUserDetails<?> userDetails = new SecurityUserDetails<>(authUser);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
