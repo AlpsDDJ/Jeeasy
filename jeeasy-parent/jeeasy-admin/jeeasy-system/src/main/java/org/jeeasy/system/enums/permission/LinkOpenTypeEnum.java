@@ -1,4 +1,4 @@
-package org.jeeasy.system.enums;
+package org.jeeasy.system.enums.permission;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

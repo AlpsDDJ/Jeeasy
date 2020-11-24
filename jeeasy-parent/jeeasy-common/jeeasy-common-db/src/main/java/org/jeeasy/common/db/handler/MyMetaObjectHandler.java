@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
 import org.jeeasy.common.core.service.CurrentAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime::now, LocalDateTime.class);
         this.strictInsertFill(metaObject, CREATE_BY, currentAuthUser::id, String.class);
+        // 启用标记 - 默认启用
         this.strictInsertFill(metaObject, ENABLE_FLAG, EnableFlagEnum.YES::getValue, Integer.class);
-        this.strictInsertFill(metaObject, DEL_FLAG, EnableFlagEnum.YES::getValue, Integer.class);
+        // 删除标记 - 默认未删除
+        this.strictInsertFill(metaObject, DEL_FLAG, DelFlagEnum.NO::getValue, Integer.class);
+        // 默认状态 - 1
         this.strictInsertFill(metaObject, STATUS, () -> DEFAULT_STATUS, Integer.class);
     }
 

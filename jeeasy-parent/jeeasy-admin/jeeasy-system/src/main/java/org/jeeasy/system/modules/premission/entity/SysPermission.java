@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
-import org.jeeasy.system.enums.LinkOpenTypeEnum;
-import org.jeeasy.system.enums.MenuTypeEnum;
-import org.jeeasy.system.enums.PermsTypeEnum;
+import org.jeeasy.system.enums.permission.LinkOpenTypeEnum;
+import org.jeeasy.system.enums.permission.MenuTypeEnum;
+import org.jeeasy.system.enums.permission.PermsTypeEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

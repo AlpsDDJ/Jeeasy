@@ -1,22 +1,22 @@
-package org.jeeasy.system.enums;
+package org.jeeasy.system.enums.depart;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jeeasy.common.core.enums.DictEnum;
 
 /**
- * 权限策略
- * 1:显示 0:禁用
+ * 机构类型
+ * 1: 一级部门 2: 子部门
  *
  * @author AlpsDDJ
  * @date 2020/11/23 16:27
  */
 @Getter
 @AllArgsConstructor
-public enum PermsTypeEnum implements DictEnum<Integer> {
-    // 权限策略
-    DISABLE(0, "禁用"),
-    DISPLAY(1, "显示"),
+public enum OrgTypeEnum implements DictEnum<Integer> {
+    // 机构类型
+    TOP(1, "一级部门"),
+    SUB(2, "子部门"),
     ;
 
     private final Integer value;

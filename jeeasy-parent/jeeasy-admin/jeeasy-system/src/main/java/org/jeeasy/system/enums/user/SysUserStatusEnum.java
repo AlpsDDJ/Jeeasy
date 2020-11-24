@@ -1,4 +1,4 @@
-package org.jeeasy.system.enums;
+package org.jeeasy.system.enums.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
