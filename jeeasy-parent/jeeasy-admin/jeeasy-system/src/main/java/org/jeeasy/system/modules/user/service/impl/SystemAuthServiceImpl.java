@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.user.security.service.impl;
+package org.jeeasy.system.modules.user.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.annotation.AuthMethod;
@@ -11,7 +11,7 @@ import org.jeeasy.common.core.tools.ServletUtil;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.config.property.SystemConfigProperties;
 import org.jeeasy.system.modules.user.entity.SysUser;
-import org.jeeasy.system.modules.user.security.model.SystemAuthUser;
+import org.jeeasy.system.modules.user.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.SysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

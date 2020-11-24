@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.user.security.model;
+package org.jeeasy.system.modules.user.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,18 +19,6 @@ public class SystemAuthUser extends SysUser implements IAuthUser {
 
     private Collection<String> roles;
     private Collection<String> permissions;
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> authorities() {
-//        if(Tools.isEmpty(roles)){
-//             roles = new HashSet<>();
-//        }
-//        Set<SimpleGrantedAuthority> authoritieSet = new HashSet<>();
-//        permissions.forEach(p -> {
-//            authoritieSet.add(new SimpleGrantedAuthority(p));
-//        });
-//        return authoritieSet;
-//    }
 
     @Override
     public String id() {

@@ -38,11 +38,6 @@ public class AuthController {
         authenticationToken.setDetails(userFormModel);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String token = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), false);
-//        String refreshToken = jwtUtil.createJwt(authentication, userFormModel.getRememberMe(), true);
-//        Map<String, String> map = new HashMap<>();
-//        map.put("token", token);
-//        map.put("refreshToken", refreshToken);
         JwtUtil.JwtTokens jwtTokens = jwtUtil.createJwtTokens(authentication, userFormModel.getRememberMe());
         return R.ok(jwtTokens).setMessage("登录成功");
     }
@@ -66,9 +61,6 @@ public class AuthController {
      */
     @PostMapping("/refresh/token")
     public R<?> refreshToken(String refreshToken) {
-//        Map<String, String> map;
-        // 刷新
-//        jwtUtil.refreshJwt(refreshToken);
         return R.ok(jwtUtil.refreshJwt(refreshToken)).setMessage("token刷新成功");
     }
 

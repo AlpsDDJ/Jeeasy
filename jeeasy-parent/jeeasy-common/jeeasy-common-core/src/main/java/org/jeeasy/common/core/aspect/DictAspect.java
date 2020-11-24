@@ -37,10 +37,6 @@ import java.util.Map;
 @Component
 @EnableConfigurationProperties({DictEnumProperty.class})
 public class DictAspect {
-    /**
-     * 表对应字段加上_dictText即可显示出文本
-     */
-//    private static String DICT_TEXT_SUFFIX = "_dictText";
 
     @Autowired
     private DictEnumProperty dictEnumProperty;
@@ -198,42 +194,5 @@ public class DictAspect {
         }
         return tmpValue;
     }
-
-//    /**
-//     * 根据dictType获取字典值
-//     * @param code
-//     * @param dictType
-//     * @param enumClass
-//     * @param key
-//     * @return
-//     */
-//    private String translate(String code, Dict.DictType dictType, Class<? extends Enum> enumClass, Object key) {
-//
-//        String tmpValue = null;
-//        if(Tools.isNotEmpty(enumClass) && !enumClass.equals(Enum.class)){
-//            tmpValue = dictTranslationService.translateDictFromEnum(enumClass, key);
-//        }
-//        if(Tools.isNotEmpty(code)){
-//            if(code.indexOf("#") == 0){
-//                tmpValue = dictTranslationService.translateDictFromTable(code, key);
-//            }else{
-//                tmpValue = dictTranslationService.translateDict(code, key);
-//            }
-//        }
-//        switch (dictType) {
-//            case DICT:
-//                tmpValue = dictTranslationService.translateDict(code, key);
-//                break;
-//            case ENUM:
-//                tmpValue = dictTranslationService.translateDictFromEnum(enumClass, key);
-//                break;
-//            case TABLE:
-//                tmpValue = dictTranslationService.translateDictFromTable(code, key);
-//                break;
-//            default:
-//                break;
-//        }
-//        return tmpValue;
-//    }
 
 }

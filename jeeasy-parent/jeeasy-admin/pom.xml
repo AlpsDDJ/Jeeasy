@@ -16,7 +16,6 @@
 
     <modules>
         <module>jeeasy-system</module>
-        <module>jeeasy-security</module>
         <module>jeeasy-generator</module>
         <module>jeeasy-auth</module>
     </modules>
