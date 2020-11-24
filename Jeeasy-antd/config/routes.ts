@@ -12,7 +12,7 @@
   },
   {
     path: '/',
-    component: '../layouts/SecurityLayout',
+    component: '@/layouts/SecurityLayout',
     routes: [
       {
         path: '/',

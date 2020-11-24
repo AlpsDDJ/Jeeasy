@@ -15,7 +15,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jeeasy.modules.system")
 public class SystemConfigProperties {
 
-    // 验证码开关
+    /**
+     * 验证码开关
+     */
     private Boolean enableCaptcha;
 
 }

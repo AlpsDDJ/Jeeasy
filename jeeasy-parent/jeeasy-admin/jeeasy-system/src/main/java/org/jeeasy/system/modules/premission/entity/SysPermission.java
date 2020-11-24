@@ -54,7 +54,7 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
      * 路径
      */
     @ApiModelProperty("路径")
-    private String url;
+    private String path;
 
     /**
      * 组件

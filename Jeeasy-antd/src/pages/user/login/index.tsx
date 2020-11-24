@@ -6,14 +6,14 @@ import {
   TaobaoCircleOutlined,
   UserOutlined,
   WeiboCircleOutlined,
-} from '@ant-design/icons';
-import { Alert, Space, message, Tabs } from 'antd';
-import React, { useState } from 'react';
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { connect, Dispatch, useIntl, FormattedMessage } from 'umi';
-import { StateType } from '@/models/login';
-import { getFakeCaptcha, LoginParamsType } from '@/services/login';
-import { ConnectState } from '@/models/connect';
+} from '@ant-design/icons'
+import { Alert, Space, message, Tabs } from 'antd'
+import React, { useState } from 'react'
+import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form'
+import { connect, Dispatch, useIntl, FormattedMessage } from 'umi'
+import { StateType } from '@/models/login'
+import { getFakeCaptcha, LoginParamsType } from '@/services/login'
+import { ConnectState } from '@/models/connect'
 
 import styles from './index.less';
 
@@ -97,7 +97,7 @@ const Login: React.FC<LoginProps> = (props) => {
         {type === 'account' && (
           <>
             <ProFormText
-              name="userName"
+              name="username"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -106,6 +106,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 id: 'pages.login.username.placeholder',
                 defaultMessage: '用户名: admin or user',
               })}
+              initialValue="admin"
               rules={[
                 {
                   required: true,
@@ -128,6 +129,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 id: 'pages.login.password.placeholder',
                 defaultMessage: '密码: ant.design',
               })}
+              initialValue="123456"
               rules={[
                 {
                   required: true,
