@@ -1,7 +1,6 @@
 //package org.jeeasy.common.core.aspect;
 //
-//import com.alibaba.fastjson.JSON;
-//import com.alibaba.fastjson.serializer.SerializerFeature;
+//import cn.hutool.json.JSONUtil;
 //import lombok.extern.slf4j.Slf4j;
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.annotation.Around;
@@ -29,6 +28,7 @@
 //    @Pointcut("execution(* org.jeeasy.**.controller..*(..))")
 //    public void requestServer() {
 //    }
+//
 //    @Around("requestServer()")
 //    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 //        //记录请求开始执行时间：
@@ -57,15 +57,14 @@
 //                    break;
 //                }
 //                if ((parameterValues[i] instanceof HttpServletRequest) || (parameterValues[i] instanceof HttpServletResponse)) {
-//                    sb.
-//                            append("[").
-//                            append(parameterNames[i]).append("=").append(parameterValues[i])
+//                    sb.append("[")
+//                            .append(parameterNames[i]).append("=").append(parameterValues[i])
 //                            .append("]");
 //                } else {
-//                    sb.
-//                            append("[").
-//                            append(parameterNames[i]).append("=")
-//                            .append(JSON.toJSONString(parameterValues[i], SerializerFeature.WriteDateUseDateFormat))
+//                    sb
+//                            .append("[")
+//                            .append(parameterNames[i]).append("=")
+//                            .append(JSONUtil.toJsonStr(parameterValues[i]))
 //                            .append("]");
 //                }
 //            }
@@ -86,7 +85,7 @@
 //        String resultJosnString = "";
 //        if (result != null) {
 //            if (result instanceof R) {
-//                resultJosnString = JSON.toJSONString(result, SerializerFeature.WriteDateUseDateFormat);
+//                resultJosnString = JSONUtil.toJsonStr(result);
 //            } else {
 //                resultJosnString = String.valueOf(result);
 //            }

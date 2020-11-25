@@ -1,6 +1,8 @@
 package org.jeeasy.common.core.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
@@ -56,10 +58,11 @@ public class DictAspect {
 
     @Around(value = "@annotation(dictTranslation)")
     public Object doTranslation(final ProceedingJoinPoint pjp, DictTranslation dictTranslation) throws Throwable {
-        long time1 = System.currentTimeMillis();
+//        long time1 = System.currentTimeMillis();
+        TimeInterval timer = DateUtil.timer();
         Object result = pjp.proceed();
-        long time2 = System.currentTimeMillis();
-        log.debug("获取JSON数据 耗时：" + (time2 - time1) + "ms");
+//        long time2 = System.currentTimeMillis();
+        log.debug("获取JSON数据 耗时：" + timer.interval() + "ms");
         long start = System.currentTimeMillis();
         if (result instanceof R) {
             R dataResult = (R) result;
