@@ -5,6 +5,7 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 import { TOKEN_KEY } from "@/utils/Const";
+import { path2url } from "@/utils/utils";
 
 // const codeMessage = {
 //   200: '服务器成功返回请求的数据。',
@@ -69,23 +70,21 @@ const contentTypeMap = {
  * 默认: path|GET|json
  * 例:  /api/getOne|GET|json
  */
-request.interceptors.request.use((url, options) => {
+request.interceptors.request.use((api, { payload, ...options }) => {
   const token = localStorage.getItem(TOKEN_KEY) || ''
-
-  const urls = url.split('|')
-  const path = urls[0]
-  const method = urls[1] || 'GET'
-  const contentType = urls[2] || 'json'
+  const { url, method, type } = path2url(api)
 
   const headers = {
     [TOKEN_KEY]: token,
-    'Content-Type': contentTypeMap[contentType]
+    'Content-Type': contentTypeMap[type]
   }
   return {
-    url: path,
+    url,
     options: {
-      method,
       ...options,
+      method,
+      params: method === 'GET' ? payload : undefined,
+      data: method !== 'GET' ? payload : undefined,
       headers,
     }
   }
