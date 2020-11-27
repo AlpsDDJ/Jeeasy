@@ -29,7 +29,7 @@ const LoginMessage = ({ content }) => (
   />
 );
 
-const Login = (props) => {
+const Index = (props) => {
   const { userLogin = {}, submitting } = props;
   const { status, type: loginType } = userLogin;
   const [type, setType] = useState('account');
@@ -277,4 +277,4 @@ export default container(false, namespace, (obj) => {
     userLogin: auth,
     submitting: loading.effects['auth/login'],
   }
-})(Login);
+})(Index);
