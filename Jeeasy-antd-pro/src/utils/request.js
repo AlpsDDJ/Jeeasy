@@ -4,8 +4,9 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import { TOKEN_KEY } from "@/utils/Const";
+// import { TOKEN_KEY } from "@/utils/Const";
 import { path2url } from "@/utils/utils";
+import {getToken, TOKEN_KEY} from "@/utils/JeeasyUtil";
 
 // const codeMessage = {
 //   200: '服务器成功返回请求的数据。',
@@ -71,7 +72,7 @@ const contentTypeMap = {
  * 例:  /api/getOne|GET|json
  */
 request.interceptors.request.use((api, { payload, ...options }) => {
-  const token = localStorage.getItem(TOKEN_KEY) || ''
+  const token = getToken()
   const { url, method, type } = path2url(api)
 
   const headers = {

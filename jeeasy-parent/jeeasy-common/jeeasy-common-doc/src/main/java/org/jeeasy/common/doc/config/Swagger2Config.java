@@ -1,9 +1,9 @@
 package org.jeeasy.common.doc.config;
 
-import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.doc.tools.SwaggerUtil;
 import org.jeeasy.common.core.tools.SpringUtil;
+import org.jeeasy.common.doc.tools.SwaggerUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,8 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @EnableSwagger2
-@EnableSwaggerBootstrapUI
+@EnableKnife4j
+//@EnableSwaggerBootstrapUI
 @ConditionalOnProperty(name = "jeeasy.swagger.enable", havingValue = "true")
 @DependsOn("SpringUtil")
 public class Swagger2Config implements WebMvcConfigurer, InitializingBean {
