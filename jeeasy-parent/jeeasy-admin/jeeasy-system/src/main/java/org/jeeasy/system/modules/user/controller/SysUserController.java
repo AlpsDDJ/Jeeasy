@@ -31,10 +31,10 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
-    public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "current", defaultValue = "1") Integer current, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 //        log.info(entity.getStatus().toString());
         IAuthUser currentAuthUser = SecurityUtil.getCurrentAuthUser();
-        R<IPage<SysUser>> query = super.query(entity, pageNo, pageSize, req);
+        R<IPage<SysUser>> query = super.query(entity, current, pageSize, req);
         return query;
     }
 

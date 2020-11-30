@@ -25,10 +25,19 @@ export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 
 /**
  * 把 url.yml 里的路径，根据接口映射规则转换成完整请求路径
- * @param {String} p
+ * @param {String} path
  */
-export const path2url = (p = '') => {
-  const [url, method = 'GET', type = 'json'] = p.split('|')
+export const path2url = (path = '', params = {}) => {
+  const [url, method = 'GET', type = 'json'] = path.split('|')
+  const pathReg = /{(\w+)}/g
+  if (pathReg.test(url)) {
+    return {
+      method, type,
+      url: url.replace(pathReg, (match, $1) => {
+        return params[$1]
+      })
+    }
+  }
   return { url, method, type }
 }
 

@@ -73,7 +73,7 @@ const contentTypeMap = {
  */
 request.interceptors.request.use((api, { payload, ...options }) => {
   const token = getToken()
-  const { url, method, type } = path2url(api)
+  const { url, method, type } = path2url(api, payload)
 
   const headers = {
     [TOKEN_KEY]: token,

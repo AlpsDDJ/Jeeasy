@@ -9,6 +9,9 @@ const proSettings = {
   colorWeak: false,
   title: 'Ant Design Pro',
   pwa: false,
+  menu: {
+    disableLocal: true, // 禁用多语言功能
+  },
   iconfontUrl: '',
 };
 export default proSettings;

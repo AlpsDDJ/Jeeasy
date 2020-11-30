@@ -27,3 +27,13 @@ export const mapAction = (actionSet, prefix = []) => {
     }
   })
 }
+
+export const pageState = {
+  result: {
+    current: 1,
+    size: 10,
+    total: 0,
+    pages: 0,
+    records: []
+  },
+}
