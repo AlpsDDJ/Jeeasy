@@ -2,10 +2,12 @@ import React, { useRef } from 'react'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import container from '@/utils/container'
-import ACTIONS, { namespace, SysUser } from './models/list/actions'
+import ACTIONS, { namespace } from './models/list/actions'
+import SysUser from './components/SysUser'
 
 const {fields, listColumns} = SysUser
 
+// @container(false, namespace)
 const SysUserList = (props) =>{
 
   const loadDataList = (search = {}) => {
@@ -20,6 +22,11 @@ const SysUserList = (props) =>{
       pageSize,
     },
   } = props
+
+  // const columns = Object.keys(fields).filter(key => listHidden.indexOf(key) === -1).map(key => ({
+  //   title: labels[key] || '',
+  //   dataIndex: fields[key]
+  // }))
 
   const actionRef = useRef();
 

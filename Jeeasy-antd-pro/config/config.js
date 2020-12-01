@@ -10,17 +10,18 @@ export default defineConfig({
   antd: {},
   dva: {
     hmr: true,
+    immer: true,
   },
   history: {
     type: 'browser',
   },
   locale: {
-    // enable: false,
     // default zh-CN
+    // enable: false,
     default: 'zh-CN',
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: false,
+    baseNavigator: true,
   },
   dynamicImport: {
     loading: '@/components/PageLoading/index',

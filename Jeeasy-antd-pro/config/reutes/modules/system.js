@@ -6,7 +6,7 @@ export default {
     {
       path: './user',
       name: '用户管理',
-      component: './modules/system/user'
+      component: './modules/system/user/SysUserList'
     },
     {
       path: './role',
