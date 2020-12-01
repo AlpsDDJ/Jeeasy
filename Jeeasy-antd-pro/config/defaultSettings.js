@@ -1,13 +1,13 @@
 const proSettings = {
-  navTheme: 'dark',
+  navTheme: 'realDark',
   // 拂晓蓝
-  primaryColor: '#1890ff',
+  primaryColor: '#13C2C2',
   layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'Jeeasy',
   pwa: false,
   menu: {
     disableLocal: true, // 禁用多语言功能

@@ -42,12 +42,26 @@ const listColumnsConf = {
 }
 
 const listHidden = [fields.id, fields.password, fields.salt, fields.remark]
-const listColumns = Object.keys(fields).filter(key => listHidden.indexOf(key) === -1).map(key => ({
-  renderText: (text, record) => (record[`${key}_dict`] || text),
-  title: labels[key] || '',
-  dataIndex: fields[key],
-  ...(listColumnsConf[key] || {})
-}))
+const searchColumns = [fields.username, fields.phone, fields.realName, fields.status]
+const listColumns = _this => {
+  console.log(_this)
+  return [...Object.keys(fields).filter(key => listHidden.indexOf(key) === -1).map(key => ({
+    renderText: (text, record) => (record[`${key}_dict`] || text),
+    title: labels[key] || '',
+    dataIndex: fields[key],
+    search: searchColumns.indexOf(key) !== -1,
+    ...(listColumnsConf[key] || {})
+  })), {
+    title: '操作',
+    dataIndex: fields.id,
+    valueType: 'option',
+    render: id => {
+      return (
+        <a >修改</a>
+      )
+    }
+  }]
+}
 
 export default {
   fields,
