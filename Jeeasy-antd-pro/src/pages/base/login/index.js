@@ -6,17 +6,17 @@ import {
   TaobaoCircleOutlined,
   UserOutlined,
   WeiboCircleOutlined,
-} from '@ant-design/icons'
-import { Alert, Space, message, Tabs } from 'antd'
-import React, { useState } from 'react'
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form'
-import { useIntl, FormattedMessage, history } from 'umi'
-import { getFakeCaptcha } from '@/services/login'
-import ACTION, { namespace } from '@/models/login/actions'
-import container from "@/utils/container";
-import { REFRESH_TOKEN_KEY, TOKEN_KEY } from "@/utils/Const";
-import { getPageQuery } from "@/utils/utils";
-import styles from './index.less'
+} from '@ant-design/icons';
+import { Alert, Space, message, Tabs } from 'antd';
+import React, { useState } from 'react';
+import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import { useIntl, FormattedMessage, history } from 'umi';
+import { getFakeCaptcha } from '@/services/login';
+import ACTION, { namespace } from '@/models/login/actions';
+import container from '@/utils/container';
+import { REFRESH_TOKEN_KEY, TOKEN_KEY } from '@/utils/Const';
+import { getPageQuery } from '@/utils/utils';
+import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -37,8 +37,8 @@ const Index = (props) => {
 
   const handleSubmit = (values) => {
     const { dispatch } = props;
-    dispatch(ACTION.LOGIN, { ...values, type }).then(payload => {
-      const { token, refreshToken } = payload.result
+    dispatch(ACTION.LOGIN, { ...values, type }).then((payload) => {
+      const { token, refreshToken } = payload.result;
       localStorage.setItem(TOKEN_KEY, token);
       localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
       const urlParams = new URL(window.location.href);
@@ -62,7 +62,7 @@ const Index = (props) => {
       }
 
       history.replace(redirect || '/');
-    })
+    });
   };
 
   return (
@@ -116,7 +116,7 @@ const Index = (props) => {
               name="username"
               fieldProps={{
                 size: 'large',
-                prefix: <UserOutlined className={styles.prefixIcon}/>,
+                prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
               placeholder={intl.formatMessage({
                 id: 'pages.login.username.placeholder',
@@ -126,12 +126,7 @@ const Index = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.username.required"
-                      defaultMessage="请输入用户名!"
-                    />
-                  ),
+                  message: '用户名是必填项！',
                 },
               ]}
             />
@@ -139,7 +134,7 @@ const Index = (props) => {
               name="password"
               fieldProps={{
                 size: 'large',
-                prefix: <LockTwoTone className={styles.prefixIcon}/>,
+                prefix: <LockTwoTone className={styles.prefixIcon} />,
               }}
               placeholder={intl.formatMessage({
                 id: 'pages.login.password.placeholder',
@@ -149,12 +144,7 @@ const Index = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="请输入密码！"
-                    />
-                  ),
+                  message: '密码是必填项！',
                 },
               ]}
             />
@@ -162,14 +152,14 @@ const Index = (props) => {
         )}
 
         {status === 'error' && loginType === 'mobile' && !submitting && (
-          <LoginMessage content="验证码错误"/>
+          <LoginMessage content="验证码错误" />
         )}
         {type === 'mobile' && (
           <>
             <ProFormText
               fieldProps={{
                 size: 'large',
-                prefix: <MobileTwoTone className={styles.prefixIcon}/>,
+                prefix: <MobileTwoTone className={styles.prefixIcon} />,
               }}
               name="mobile"
               placeholder={intl.formatMessage({
@@ -179,28 +169,18 @@ const Index = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.required"
-                      defaultMessage="请输入手机号！"
-                    />
-                  ),
+                  message: '手机号是必填项！',
                 },
                 {
                   pattern: /^1\d{10}$/,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.invalid"
-                      defaultMessage="手机号格式错误！"
-                    />
-                  ),
+                  message: '不合法的手机号！',
                 },
               ]}
             />
             <ProFormCaptcha
               fieldProps={{
                 size: 'large',
-                prefix: <MailTwoTone className={styles.prefixIcon}/>,
+                prefix: <MailTwoTone className={styles.prefixIcon} />,
               }}
               captchaProps={{
                 size: 'large',
@@ -212,24 +192,19 @@ const Index = (props) => {
               captchaTextRender={(timing, count) =>
                 timing
                   ? `${count} ${intl.formatMessage({
-                    id: 'pages.getCaptchaSecondText',
-                    defaultMessage: '获取验证码',
-                  })}`
+                      id: 'pages.getCaptchaSecondText',
+                      defaultMessage: '获取验证码',
+                    })}`
                   : intl.formatMessage({
-                    id: 'pages.login.phoneLogin.getVerificationCode',
-                    defaultMessage: '获取验证码',
-                  })
+                      id: 'pages.login.phoneLogin.getVerificationCode',
+                      defaultMessage: '获取验证码',
+                    })
               }
               name="captcha"
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.captcha.required"
-                      defaultMessage="请输入验证码！"
-                    />
-                  ),
+                  message: '验证码是必填项！',
                 },
               ]}
               onGetCaptcha={async (mobile) => {
@@ -250,31 +225,31 @@ const Index = (props) => {
           }}
         >
           <ProFormCheckbox noStyle name="autoLogin">
-            <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录"/>
+            自动登录
           </ProFormCheckbox>
           <a
             style={{
               float: 'right',
             }}
           >
-            <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码"/>
+            忘记密码 ?
           </a>
         </div>
       </ProForm>
       <Space className={styles.other}>
-        <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式"/>
-        <AlipayCircleOutlined className={styles.icon}/>
-        <TaobaoCircleOutlined className={styles.icon}/>
-        <WeiboCircleOutlined className={styles.icon}/>
+        其他登录方式 :
+        <AlipayCircleOutlined className={styles.icon} />
+        <TaobaoCircleOutlined className={styles.icon} />
+        <WeiboCircleOutlined className={styles.icon} />
       </Space>
     </div>
   );
 };
 
 export default container(false, namespace, (obj) => {
-  const { auth, loading } = obj
+  const { auth, loading } = obj;
   return {
     userLogin: auth,
     submitting: loading.effects['auth/login'],
-  }
+  };
 })(Index);
