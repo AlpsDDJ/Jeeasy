@@ -1,27 +1,39 @@
 import ProTable from '@ant-design/pro-table'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { PageContainer } from '@ant-design/pro-layout'
-import { Popconfirm } from 'antd'
+import { Button, Popconfirm } from 'antd'
+import JFormModal from '@/components/Jeeasy/JFormModal'
 
 const ListPage = props => {
+  const [modalVisible, handleModalVisible] = useState(false);
 
-  const {dispatch, ACTIONS, fields, labels, rowKey, current = 1, pageSize = 10, total = 0, beforeSearch = search => search,
-    rowAction = ['edit', 'delete'], searchColumns = [], columnsConf = {}, listHidden = [], ...options} = props
+  const {
+    dispatch, ACTIONS, fields, labels, rowKey, current = 1, pageSize = 10, total = 0, beforeSearch = search => search,
+    rowAction = ['edit', 'delete'], searchColumns = [], columnsConf = {}, listHidden = [], toolBar = ['add'], ...options
+  } = props
 
   const dataKey = rowKey || fields.id
 
   const actionMap = {
     edit: {
       title: '修改',
-      fn: (id, record) =>{
-        return (<a onClick={() => {console.log('修改', id)}}> 修改 </a>)
+      fn: (id, record) => {
+        return (<a key="edit" onClick={() => {
+          console.log('修改', id)
+        }}> 修改 </a>)
       }
     },
     'delete': {
       title: '删除',
       fn: id => (
-        <Popconfirm title="确定删除？" okText="确定" cancelText="取消"
-          onConfirm={() => {console.log('删除', id)}}
+        <Popconfirm
+          title="确定删除？"
+          okText="确定"
+          cancelText="取消"
+          key="delete"
+          onConfirm={() => {
+            console.log('删除', id)
+          }}
         >
           <a> 删除 </a>
         </Popconfirm>
@@ -30,11 +42,17 @@ const ListPage = props => {
   }
 
   const actionCol = () => {
-    return rowAction? [{
+    return rowAction ? [{
       title: '操作',
       dataIndex: dataKey,
       render: (text, record) => rowAction.map(actionKey => (actionMap[actionKey].fn(text, record)))
     }] : []
+  }
+
+  const valueTypeRender = {
+    'view': (text, record) => (<a onClick={() => {
+      console.log(record[dataKey])
+    }}>{text}</a>)
   }
 
   const listColumns = () => {
@@ -43,7 +61,10 @@ const ListPage = props => {
       title: labels[key] || '',
       dataIndex: fields[key],
       search: searchColumns.indexOf(key) !== -1,
-      ...(columnsConf[key] || {})
+      ...({
+        ...columnsConf[key],
+        render: valueTypeRender[(columnsConf[key] || {}).valueType || undefined] || undefined
+      } || {})
     })), ...actionCol()]
   }
 
@@ -55,10 +76,41 @@ const ListPage = props => {
       })
     )))
 
+  const handleAdd = () => {
+    console.log('添加')
+  }
+
+  const handleExport = () => {
+    console.log('导出')
+  }
+
+  const handleImport = () => {
+    console.log('导入')
+  }
+
+  const toolBarButtons = {
+    add: <Button type="primary" onClick={() => handleModalVisible(true)} key="add">添加</Button>,
+    'export': <Button type="primary" onClick={handleExport} key="export">导出</Button>,
+    'import': <Button type="primary" onClick={handleImport} key="import">导入</Button>,
+  }
+
+  const toolBarRender = () => {
+    const btns = toolBar.map(act => toolBarButtons[act] || undefined).filter(btn => !!btn)
+
+    return ([
+      ...options.toolBarRender || [],
+      ...btns
+    ])
+  }
+  const actionRef = useRef();
+
+  const columns = listColumns()
+
   const tableOptions = {
     rowKey: dataKey,
-    actionRef: useRef(),
-    columns: listColumns(),
+    toolBarRender,
+    actionRef,
+    columns,
     request: loadDataList,
     pagination: {
       current,
@@ -73,9 +125,9 @@ const ListPage = props => {
       <ProTable
         {...tableOptions}
       />
+      <JFormModal onClose={() => handleModalVisible(false)} visible={modalVisible} columns={columns} columnsConf={columnsConf}/>
     </PageContainer>
   )
-
 }
 
 export default ListPage

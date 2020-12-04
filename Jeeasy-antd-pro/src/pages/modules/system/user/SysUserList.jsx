@@ -3,6 +3,7 @@ import React  from 'react'
 // import ProTable from '@ant-design/pro-table'
 import container from '@/utils/container'
 import ListPage from '@/components/Jeeasy/JListPage'
+import { ProFormDatePicker } from '@ant-design/pro-form'
 import ACTIONS, { namespace } from './models/list/actions'
 import SysUser from './components/SysUser'
 
@@ -31,6 +32,10 @@ const SysUserList = (props) => {
       //   console.log(action)
       //   return (<a>{text}</a>)
       // }
+    },
+    [fields.birthday]: {
+      formRender: (conf) => (<ProFormDatePicker {...conf} />),
+      cols: 2
     }
   }
 

@@ -10,7 +10,7 @@ import {
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, FormattedMessage, history } from 'umi';
+import { useIntl, history } from 'umi';
 import { getFakeCaptcha } from '@/services/login';
 import ACTION, { namespace } from '@/models/login/actions';
 import container from '@/utils/container';
