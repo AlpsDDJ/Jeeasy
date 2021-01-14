@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.auth.tools.SecurityUtil;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -33,9 +31,8 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "current", defaultValue = "1") Integer current, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 //        log.info(entity.getStatus().toString());
-        IAuthUser currentAuthUser = SecurityUtil.getCurrentAuthUser();
-        R<IPage<SysUser>> query = super.query(entity, current, pageSize, req);
-        return query;
+//        IAuthUser currentAuthUser = SecurityUtil.getCurrentAuthUser();
+        return super.query(entity, current, pageSize, req);
     }
 
 //    @GetMapping("/page")
@@ -103,10 +100,10 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     /**
      * 重置用户密码为初始密码 [123456]
      *
-     * @author AlpsDDJ
-     * @date 2020/11/21 21:50
      * @param id
      * @return {@link R<?>}
+     * @author AlpsDDJ
+     * @date 2020/11/21 21:50
      */
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置用户密码", notes = "重置用户密码为初始密码")

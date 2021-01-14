@@ -28,8 +28,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * 列表分页查询
      *
      * @param entity
-     * @param pageNo
-     * @param pageSize
+     * @param page
      * @param req
      * @return {@link R< IPage<T>>}
      * @author mobie
