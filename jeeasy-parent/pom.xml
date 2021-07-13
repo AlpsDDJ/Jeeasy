@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
+        <version>2.3.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -62,11 +62,11 @@
         <!-- 分 页 工 具 类 -->
         <pagehelper.version>1.2.10</pagehelper.version>
         <!-- mybatis-plus 依 赖 -->
-        <mybatis.plus.version>3.4.0</mybatis.plus.version>
+        <mybatis.plus.version>3.4.1</mybatis.plus.version>
         <!-- dynamic-datasource 依 赖 -->
         <dynamic.datasource.version>3.2.1</dynamic.datasource.version>
         <!-- 代 码 生 成 依 赖 -->
-        <mybatis.plus.generator.version>3.4.0</mybatis.plus.generator.version>
+        <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
         <!-- freemarker 版本 -->
         <freemarker.version>2.3.30</freemarker.version>
         <!-- 验 证 码 版 本 -->

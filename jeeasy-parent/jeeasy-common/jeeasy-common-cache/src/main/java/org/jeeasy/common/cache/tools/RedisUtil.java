@@ -1,10 +1,10 @@
 package org.jeeasy.common.cache.tools;
 
+import cn.hutool.core.collection.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -79,7 +79,8 @@ public class RedisUtil<K, V> {
 			if (key.length == 1) {
 				redisTemplate.delete(key[0]);
 			} else {
-				redisTemplate.delete(CollectionUtils.arrayToList(key));
+//				redisTemplate.delete(CollectionUtils.arrayToList(key));
+				redisTemplate.delete(ListUtil.toList(key));
 			}
 		}
 	}

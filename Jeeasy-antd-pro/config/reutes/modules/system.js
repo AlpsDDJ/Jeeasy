@@ -18,5 +18,10 @@ export default {
       name: '菜单权限',
       component: './modules/system/permission'
     },
+    {
+      path: './gen',
+      name: '代码生成',
+      component: './modules/generate/genTable/GenTableList'
+    },
   ]
 }
