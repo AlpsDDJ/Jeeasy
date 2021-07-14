@@ -1,5 +1,5 @@
 <template>
-  <el-row class="menus">
+  <el-row class="tag-nav">
     <el-menu>
       <nav-bar-item v-for="m in menus" :menu="m" :key="m.path"/>
     </el-menu>

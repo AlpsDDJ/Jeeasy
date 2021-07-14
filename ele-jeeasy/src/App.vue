@@ -30,11 +30,8 @@ export default {
   }
 }
 </script>
+
 <style lang="less">
-  html, body, #app{
-    width: 100vw;
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
-  }
+/*@import "./style/index.less";*/
+@import './assets/css/index.less';
 </style>

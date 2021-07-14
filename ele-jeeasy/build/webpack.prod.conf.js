@@ -14,6 +14,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    'theme-dark': './src/assets/css/theme-dark.scss',
+    'theme-default': './src/assets/css/theme-default.scss'
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
