@@ -5,8 +5,8 @@
                     <el-col>
                         <el-button type="primary" @click="add(0)">新增一级</el-button>
                     </el-col>
-                   
-                </el-row>              
+
+                </el-row>
             </div>
 
             <div class="screen-conent">
@@ -34,7 +34,7 @@
                             size="mini"
                             @click.stop="del(data)">
                             删除
-                        </el-button> 
+                        </el-button>
                     </template>
                 </tree-table>
             </div>
@@ -42,12 +42,12 @@
              <div style="padding-top:24px"></div>
 
 
-           
-            
+
+
     </div>
 </template>
 <script>
-import TreeTable from '@/components/TreeTable';
+import TreeTable from '@/components/TreeTable'
 export default {
     components: {
         TreeTable
@@ -80,7 +80,7 @@ export default {
                         short: 'three 1-1-1'
                     }]
                     }]
-                }, 
+                },
                 {
                     id: 2,
                     label1: '一级 2',
@@ -138,19 +138,19 @@ export default {
                     }]
                 }
             ]
-      };
+      }
     },
     methods: {
         add(level, data) {
-            console.log(level, data);
+            console.log(level, data)
             this.$message({
                 message: '这里可以显示一个弹框表单',
                 type: 'success'
-            });
+            })
         },
         del(data) {
-            console.log(data);
-            const _this = this;
+            console.log(data)
+            const _this = this
             _this.$confirm('是否确认删除?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -159,9 +159,9 @@ export default {
                 _this.$message({
                     message: '删除成功',
                     type: 'success'
-                });
-            }).catch(()=>{});
+                })
+            }).catch(()=>{})
         }
     }
-};
+}
 </script>

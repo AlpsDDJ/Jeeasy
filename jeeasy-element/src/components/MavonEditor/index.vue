@@ -1,5 +1,5 @@
 <template>
-    <mavon-editor        
+    <mavon-editor
         ref="mavonEditor"
         class="mavon-editor"
         :value="value"
@@ -35,10 +35,10 @@
  * 如, 设置组件的 ref="editor",可以用下面方法调用 mavonEditor 的方法
  * this.$refs['editor'].$refs['mavonEditor'].方法名
  * props 、events 事件绑定，等有需要的，自己进行扩展
- */ 
-import { mavonEditor } from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
-import request from '@/service/lib/request';
+ */
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+import request from '@/service/lib/request'
 export default {
     name: 'MavonEditor',
     props: {
@@ -159,7 +159,7 @@ export default {
                     /* 2.2.1 */
                     subfield: true, // 单双栏模式
                     preview: true // 预览
-                };
+                }
             }
         },
         /**
@@ -178,55 +178,55 @@ export default {
     },
     computed: {
         style() {
-            let sty = {};
+            let sty = {}
             if (this.height !== ''){
-                sty['height'] = this.height;
+                sty['height'] = this.height
             }
-            return sty;
+            return sty
         }
     },
     methods: {
         change(value, render) {
-            this.$emit('change', value, render);
+            this.$emit('change', value, render)
         },
         $imgAdd(pos, $file){
-            const _this = this;           
+            const _this = this
             // console.log(pos, $file);
             // function string
-            const typeofImgUpload = typeof _this.imgUpload;
+            const typeofImgUpload = typeof _this.imgUpload
             switch (typeofImgUpload) {
                case 'string': // 表示是上传地址
-                    var formdata = new FormData();
-                    formdata.append('image', $file);
+                    var formdata = new FormData()
+                    formdata.append('image', $file)
                     request({
                         url: _this.imgUpload,
                         method: 'post',
                         data: formdata,
                         headers: { 'Content-Type': 'multipart/form-data' }
-                    }).then(res => {  
-                        const { data } = res;
-                        // data 就是img 的 url 地址   
-                        _this.$refs.mavonEditor.$img2Url(pos, data);
-                    }).catch(err => {                       
-                        console.log(err);
-                    });
-                   break;
+                    }).then(res => {
+                        const { data } = res
+                        // data 就是img 的 url 地址
+                        _this.$refs.mavonEditor.$img2Url(pos, data)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                   break
                case 'function': // 表示自定义上传
-                   _this.imgUpload(pos, $file , _this.$refs.mavonEditor);
-                   break;           
+                   _this.imgUpload(pos, $file , _this.$refs.mavonEditor)
+                   break
                default: // 返回 base64
-                   _this.$refs.mavonEditor.$img2Url(pos, $file.miniurl);
-                   break;
+                   _this.$refs.mavonEditor.$img2Url(pos, $file.miniurl)
+                   break
             }
             /**
-             * 自定义 删除刚上传的img记录 
+             * 自定义 删除刚上传的img记录
              * 不让在菜单栏-图片菜单下显示，不要有删除按钮
              * 因为目前删除 base64 正则报错
              */
-            _this.$refs.mavonEditor.$refs.toolbar_left.img_file = [[0, null]];           
+            _this.$refs.mavonEditor.$refs.toolbar_left.img_file = [[0, null]]
         }
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 .mavon-editor {

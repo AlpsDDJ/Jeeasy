@@ -1,5 +1,5 @@
 <template>
-    <div  class="main-conent main-conent-minheight">        
+    <div  class="main-conent main-conent-minheight">
         <el-card shadow="never" class="border-none">
             <CKEditor v-model="editorData"></CKEditor>
         </el-card>
@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-import CKEditor from '@/components/CKEditor';
+import CKEditor from '@/components/CKEditor'
 export default {
     components: {
         CKEditor
@@ -20,7 +20,7 @@ export default {
     data(){
         return {
             editorData: '<p>Content of the editor.</p>'
-        };
+        }
     }
-};
+}
 </script>

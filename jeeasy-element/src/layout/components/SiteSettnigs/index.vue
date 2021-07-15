@@ -21,7 +21,7 @@
             </el-form-item>
         </el-form>
     </el-drawer>
-</div>    
+</div>
 </template>
 <script>
 export default {
@@ -29,46 +29,46 @@ export default {
     data() {
       return {
         drawer: false
-      };
+      }
     },
     computed: {
         topNavEnable: {
             get() {
-                return this.$store.state.app.siteTopNavEnable;
+                return this.$store.state.app.siteTopNavEnable
             },
             set(val) {
                 // 启用顶部导航如果启用了，(固定右侧头部,显示侧边栏LOGO)必须启用
                 if (val) {
-                    this.fiexdHeader = val;
-                    this.sidebarLogo = val;
+                    this.fiexdHeader = val
+                    this.sidebarLogo = val
                 }
-                this.$store.commit('app/SET_SITE_TOPNAV_ENABLE',val);
+                this.$store.commit('app/SET_SITE_TOPNAV_ENABLE',val)
             }
         },
         fiexdHeader: {
             get() {
-                return this.$store.state.app.siteFiexdHeader;
+                return this.$store.state.app.siteFiexdHeader
             },
             set(val) {
-                this.$store.commit('app/SET_SITE_FIEXD_HEADER',val);
+                this.$store.commit('app/SET_SITE_FIEXD_HEADER',val)
             }
         },
         sidebarLogo: {
             get() {
-                return this.$store.state.app.siteSidebarLogo;
+                return this.$store.state.app.siteSidebarLogo
             },
             set(val) {
-                this.$store.commit('app/SET_SITE_SIDEBAR_LOGO',val);
+                this.$store.commit('app/SET_SITE_SIDEBAR_LOGO',val)
             }
         },
         // =================
         // 启用顶部导航的值决定着 (固定右侧头部,显示侧边栏LOGO)是否可设置
         topNavEnableChildDisabled: function() {
-            return this.topNavEnable;
+            return this.topNavEnable
         }
 
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/css/variables.scss";

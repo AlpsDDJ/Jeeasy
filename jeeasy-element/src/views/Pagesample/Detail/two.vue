@@ -1,7 +1,7 @@
 <template>
     <div class="main-conent main-conent-minheight">
             <page-header><strong>模块详情页</strong></page-header>
-        
+
             <el-card shadow="never" class="border-none margin-t24">
                 <div slot="header">
                     基本信息
@@ -65,7 +65,7 @@
                         <span class="main-conent-detail-content">某某村</span>
                     </el-col>
                 </el-row>
-          
+
             </el-card>
 
             <el-card shadow="never" class="border-none margin-t24">
@@ -92,7 +92,7 @@
                         min-width="300">
                     </el-table-column>
                 </el-table>
-                
+
             </el-card>
 
             <el-card shadow="never" class="border-none margin-t24">
@@ -119,13 +119,13 @@
                         min-width="300">
                     </el-table-column>
                 </el-table>
-                
+
 
             </el-card>
     </div>
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader';
+import PageHeader from '@/layout/components/PageHeader'
 export default {
     components: {
       PageHeader
@@ -149,9 +149,9 @@ export default {
             name: '王小虎',
             address: '上海市普陀区金沙江路 1516 弄'
           }]
-        };
+        }
       }
-};
+}
 </script>
 <style lang="scss" scoped>
 
@@ -161,7 +161,7 @@ export default {
         padding-bottom: 16px;
         line-height: 20px;
         font-size: 14px;
-        
+
     }
     .main-conent-detail-lable {
         white-space: nowrap;

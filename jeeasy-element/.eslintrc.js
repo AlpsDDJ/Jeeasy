@@ -23,7 +23,7 @@ module.exports = {
   * 如 'semi': ['error', 'never'], never就是额外的配置项
   * ● 也可直接用别人的：
   * 如->饿了么：https://github.com/ElemeFE/eslint-config-elemefe
-  * 如->VUE：https://github.com/vuejs/eslint-config-vue  
+  * 如->VUE：https://github.com/vuejs/eslint-config-vue
   */
   rules: {
     // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -36,7 +36,7 @@ module.exports = {
     'no-use-before-define': 'error', // 禁止在变量定义之前使用它们
 
     // Stylistic Issues
-    'semi': ["error", "always"], // 要求或禁止使用分号代替 ASI ["always" (默认) 要求在语句末尾使用分号]
+    'semi': ["error", "never"], // 要求或禁止使用分号代替 ASI ["always" (默认) 要求在语句末尾使用分号]
     "semi-spacing": ["error", {"before": false, "after": true}], // 强制分号之前和之后使用一致的空格
     'array-bracket-spacing': ['error', 'never'], // 强制数组方括号中使用一致的空格
     'comma-dangle': ["error", "never"] // 要求或禁止末尾逗号 [never,禁止]

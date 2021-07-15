@@ -1,18 +1,18 @@
 <template>
     <div class="document-editor">
         <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"  @ready="onReady"></ckeditor>
-    </div>    
+    </div>
 </template>
 <script>
 /**
- *  ckeditor5-build-decoupled-document 编辑器 
+ *  ckeditor5-build-decoupled-document 编辑器
  *  使用此组件需要安装 npm install @ckeditor/ckeditor5-build-decoupled-document
  */
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import defaultOptions from './default-options';
-import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn';
-import request from '@/service/lib/request';
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
+import defaultOptions from './default-options'
+import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn'
+import request from '@/service/lib/request'
 export default {
     name: 'CKEditor',
     components: {
@@ -26,7 +26,7 @@ export default {
         options: {
             type: Object,
             default() {
-                return defaultOptions;
+                return defaultOptions
             }
         },
         language: {
@@ -37,22 +37,22 @@ export default {
     computed: {
         editorData: {
             get() {
-                return this.value;
+                return this.value
             },
             set(val) {
-                this.$emit('input', val);
+                this.$emit('input', val)
             }
         },
         editorConfig: function() {
-            const options = Object.assign({}, defaultOptions, this.options);
-            options.language = this.language;
-            return options;
+            const options = Object.assign({}, defaultOptions, this.options)
+            options.language = this.language
+            return options
         }
     },
     data() {
         return {
             editor: DecoupledEditor
-        };
+        }
     },
     methods: {
         onReady( editor )  {
@@ -60,7 +60,7 @@ export default {
                 editor.ui.getEditableElement().parentElement.insertBefore(
                     editor.ui.view.toolbar.element,
                     editor.ui.getEditableElement()
-                );
+                )
 
                 editor.plugins.get('FileRepository').createUploadAdapter = loader => {
                     //let val = editor.getData();
@@ -69,8 +69,8 @@ export default {
                             return await loader.file.then(f => {
                                 // console.log("file:", f);
 
-                                let param = new FormData();
-                                param.append("file",f);
+                                let param = new FormData()
+                                param.append("file",f)
 
                                 return new Promise((resolve, reject) => {
                                     request({
@@ -78,28 +78,28 @@ export default {
                                         url: '/uploads',
                                         method: 'POST',
                                         data: param
-                                    }).then(res => {  
-                                            const { code, data } = res;     
+                                    }).then(res => {
+                                            const { code, data } = res
                                             if(code === 200 ) {
                                                 resolve({
                                                     default: data.url || ''
-                                                });
+                                                })
                                             } else {
-                                                reject('上传失败');
+                                                reject('上传失败')
                                             }
-                                    }).catch(err => {                       
-                                        console.log(err);
-                                        reject(err);
-                                    });
-                                });
-                                
-                            });
+                                    }).catch(err => {
+                                        console.log(err)
+                                        reject(err)
+                                    })
+                                })
 
-                            /* 
+                            })
+
+                            /*
                             return await loader.file.then(f => {
                                 console.log("file:", f);
                                 const F = new FileReader();
-                                F.readAsArrayBuffer(f);                               
+                                F.readAsArrayBuffer(f);
                                 return new Promise(resolve => {
                                     F.onload = function () {
                                         resolve({bufAsArray: F.result, file: f});
@@ -115,11 +115,11 @@ export default {
                             });
                             */
                         }
-                    };
-                };
+                    }
+                }
         }
     }
-};
+}
 </script>
 <style>
 .document-editor {

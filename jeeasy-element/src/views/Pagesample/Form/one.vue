@@ -60,7 +60,7 @@
     </div>
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader';
+import PageHeader from '@/layout/components/PageHeader'
 export default {
     components: {
       PageHeader
@@ -101,22 +101,22 @@ export default {
             { required: true, message: '请填写活动形式', trigger: 'blur' }
           ]
         }
-      };
+      }
     },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            alert('submit!')
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        this.$refs[formName].resetFields()
       }
     }
-};
+}
 </script>

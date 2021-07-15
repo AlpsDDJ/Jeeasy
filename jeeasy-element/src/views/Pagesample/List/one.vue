@@ -20,7 +20,7 @@
                             <i slot="suffix" class="el-input__icon el-icon-search cursor-pointer"></i>
                         </el-input>
                     </el-col>
-                </el-row>              
+                </el-row>
             </div>
 
 
@@ -85,8 +85,8 @@
                     :total="1000">
                 </el-pagination>
             </div>
-           
-            
+
+
           </el-card>
     </div>
 </template>
@@ -104,7 +104,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-04',
                 name: '王小虎',
@@ -112,7 +112,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1517 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-01',
                 name: '王小虎',
@@ -120,7 +120,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1519 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-03',
                 name: '王小虎',
@@ -136,7 +136,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-04',
                 name: '王小虎',
@@ -144,7 +144,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1517 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-01',
                 name: '王小虎',
@@ -152,7 +152,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1519 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-03',
                 name: '王小虎',
@@ -168,7 +168,7 @@ export default {
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
-            }, 
+            },
             {
                 date: '2016-05-04',
                 name: '王小虎',
@@ -178,14 +178,14 @@ export default {
                 zip: 200333
             }
         ]
-      };
+      }
     },
     methods: {
       handleClick(row) {
-        console.log(row);
+        console.log(row)
       },
       tableEdit(row){
-        console.log(row);
+        console.log(row)
       },
       tableDel(row){
             this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
@@ -193,18 +193,18 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                console.log(row);
+                console.log(row)
                 this.$message({
                     type: 'success',
                     message: '删除成功!'
-                });
+                })
             }).catch(() => {
                 this.$message({
                     type: 'info',
                     message: '已取消删除'
-                });          
-            });
+                })
+            })
       }
     }
-};
+}
 </script>

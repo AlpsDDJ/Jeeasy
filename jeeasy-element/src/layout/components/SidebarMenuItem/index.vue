@@ -14,7 +14,7 @@
             </template>
             <sidebar-menu-item
                 v-for="child in routes.children"
-                :key="getResolvePathUrlRoutes + '/' + child.path" 
+                :key="getResolvePathUrlRoutes + '/' + child.path"
                 :routes="child"
                 :base-path="getBasePath"
                 :resolve-path="getResolvePathUrlRoutes"
@@ -25,12 +25,12 @@
     </div>
 </template>
 <script>
-import path from 'path';
-import { mapGetters } from 'vuex';
-import { isExternal } from '@/utlis/validate';
-import { getBelongTopMenuPath } from '@/utlis/permission';
-import MenuTitle from './MenuTitle';
-import AppLink from '@/components/Link';
+import path from 'path'
+import { mapGetters } from 'vuex'
+import { isExternal } from '@/utlis/validate'
+import { getBelongTopMenuPath } from '@/utlis/permission'
+import MenuTitle from './MenuTitle'
+import AppLink from '@/components/Link'
 export default {
     name: 'SidebarMenuItem',
     props: {
@@ -63,57 +63,57 @@ export default {
             'siteTopNavEnable'
         ]),
         getBasePath: function() {
-            return this.basePath;
+            return this.basePath
         },
         getActiveTopMenu: function () {
             if (this.activeTopMenu !== '') {
-                return this.activeTopMenu;
+                return this.activeTopMenu
             }
-            const route = this.$route;
-            /* 
+            const route = this.$route
+            /*
             const { meta, path } = route;
             if (meta.belongTopMenu) {
                 return meta.belongTopMenu;
             }
             return '/' + path.split('/')[1];
             */
-            return getBelongTopMenuPath(route);
+            return getBelongTopMenuPath(route)
         },
         getResolvePathUrlRoutes: function() {
-            return this.resolvePathUrl(this.routes.path);
+            return this.resolvePathUrl(this.routes.path)
         }
     },
     methods: {
         menuIsShow(route) {
             if (!this.siteTopNavEnable) {
-                return true;
+                return true
             }
-            let activeTopMenu = this.getBasePath;
-            const { meta } = route;            
+            let activeTopMenu = this.getBasePath
+            const { meta } = route
             if (meta.belongTopMenu) {
-                activeTopMenu = meta.belongTopMenu;
+                activeTopMenu = meta.belongTopMenu
             }
-            return activeTopMenu === this.getActiveTopMenu;
+            return activeTopMenu === this.getActiveTopMenu
         },
         hasChild(children = []) {
             const showChildren = children.filter(item => {
                 if (item.hidden) {
-                    return false;
+                    return false
                 } else {
-                    return true;
+                    return true
                 }
-            });
+            })
             if (showChildren.length > 0) {
-                return true;
+                return true
             }
-            return false;
+            return false
         },
         resolvePathUrl(routePath) {
             if (isExternal(routePath)) {
-                return routePath;
+                return routePath
             }
-            return path.resolve(this.resolvePath, routePath);
+            return path.resolve(this.resolvePath, routePath)
         }
     }
-};
+}
 </script>

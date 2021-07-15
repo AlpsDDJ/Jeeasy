@@ -3994,6 +3994,11 @@ escodegen@^1.11.1:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-config-defaults@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/eslint-config-defaults/download/eslint-config-defaults-9.0.0.tgz#a090adc13b2935e3f43b3cd048a92701654e5ad5"
+  integrity sha1-oJCtwTspNeP0OzzQSKknAWVOWtU=
+
 eslint-loader@^2.2.1:
   version "2.2.1"
   resolved "https://registry.npm.taobao.org/eslint-loader/download/eslint-loader-2.2.1.tgz#28b9c12da54057af0845e2a6112701a2f6bf8337"

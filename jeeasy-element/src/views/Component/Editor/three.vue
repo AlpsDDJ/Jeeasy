@@ -1,5 +1,5 @@
 <template>
-    <div  class="main-conent main-conent-minheight">        
+    <div  class="main-conent main-conent-minheight">
         <el-card shadow="never" class="border-none">
             <div slot="header">
               <span>默认</span>
@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import MavonEditor from '@/components/MavonEditor';
+import MavonEditor from '@/components/MavonEditor'
 export default {
     components: {
         MavonEditor
@@ -47,19 +47,19 @@ export default {
         return {
             content: '# This is Test.',
             contentHtml: ''
-        };
+        }
     },
     methods: {
         change(v, html) {
-            console.log(v);
-            this.contentHtml = html;
+            console.log(v)
+            this.contentHtml = html
         },
         imgUpload(pos, $file , $vm) {
-           
-            var formdata = new FormData();
-            formdata.append('image', $file);
-            console.log(pos, $file, formdata);
-            /* 
+
+            var formdata = new FormData()
+            formdata.append('image', $file)
+            console.log(pos, $file, formdata)
+            /*
             // ajax 上传
             const _this = this;
             request({
@@ -67,16 +67,16 @@ export default {
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'multipart/form-data' }
-            }).then(res => {  
+            }).then(res => {
                 const { data } = res;
-                // data 就是img 的 url 地址   
+                // data 就是img 的 url 地址
                 $vm.$img2Url(pos, data);
-            }).catch(err => {                       
+            }).catch(err => {
                 console.log(err);
             }); */
 
-            $vm.$img2Url(pos, 'https://gitee.com/lqsong/public/raw/master/common/Alipay.png');
+            $vm.$img2Url(pos, 'https://gitee.com/lqsong/public/raw/master/common/Alipay.png')
         }
     }
-};
+}
 </script>

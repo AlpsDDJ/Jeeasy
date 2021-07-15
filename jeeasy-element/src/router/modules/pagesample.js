@@ -2,8 +2,8 @@
  * 页面示例-路由配置
  * @author LiQingSong
  */
-import LayoutIndex from '@/layout/Index';
-import AppMainLayout from '@/layout/components/AppMain';
+import LayoutIndex from '@/layout/Index'
+import AppMainLayout from '@/layout/components/AppMain'
 
 const pagesampleRouter = {
     path: '/pagesample',
@@ -21,7 +21,7 @@ const pagesampleRouter = {
             component: AppMainLayout,
             redirect: '/pagesample/list/one',
             name: 'pagesample-list',
-            meta: { 
+            meta: {
                 title: '列表页面',
                 icon: 'pagelist',
                 roles: ['pagesample-list']
@@ -45,7 +45,7 @@ const pagesampleRouter = {
                     name: 'pagesample-list-three',
                     meta: { title: '高度自适应列表', roles: ['pagesample-list-three'] }
                 }
-                
+
             ]
         },
         {
@@ -53,7 +53,7 @@ const pagesampleRouter = {
             component: AppMainLayout,
             redirect: '/pagesample/form/one',
             name: 'pagesample-form',
-            meta: { 
+            meta: {
                 title: '表单页面',
                 icon: 'pageform',
                 roles: ['pagesample-form']
@@ -71,7 +71,7 @@ const pagesampleRouter = {
                     name: 'pagesample-form-two',
                     meta: { title: '高级表单', roles: ['pagesample-form-two'] }
                 }
-                
+
             ]
         },
         {
@@ -79,7 +79,7 @@ const pagesampleRouter = {
             component: AppMainLayout,
             redirect: '/pagesample/detail/one',
             name: 'pagesample-detail',
-            meta: { 
+            meta: {
                 title: '详情页面',
                 icon: 'pagedetails',
                 roles: ['pagesample-detail']
@@ -103,13 +103,13 @@ const pagesampleRouter = {
                     name: 'pagesample-detail-three',
                     meta: { title: '表格详情', roles: ['pagesample-detail-three'] }
                 }
-                
+
             ]
         }
-        
-        
-        
-    ]
-};
 
-export default pagesampleRouter;
+
+
+    ]
+}
+
+export default pagesampleRouter

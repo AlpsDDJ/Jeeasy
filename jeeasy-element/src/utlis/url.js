@@ -1,4 +1,4 @@
-/** 
+/**
  * URL工具
  * @author LiQingSong
  */
@@ -12,13 +12,13 @@
  */
 export function getQueryValue(url, queryName) {
     if (url.indexOf("?") === -1) {
-        return null;
+        return null
     }
-    let reg = new RegExp("(^|&)" + queryName + "=([^&]*)(&|$)", "i");
-    let r = url.split("?")[1].match(reg);
+    let reg = new RegExp("(^|&)" + queryName + "=([^&]*)(&|$)", "i")
+    let r = url.split("?")[1].match(reg)
     if ( r != null ){
-       return decodeURI(r[2]);
+       return decodeURI(r[2])
     }else{
-       return null;
+       return null
     }
 }

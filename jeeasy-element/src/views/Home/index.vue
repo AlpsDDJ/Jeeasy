@@ -109,7 +109,7 @@
 
           </el-col>
         </el-row>
-        
+
       </div>
       <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
@@ -167,8 +167,8 @@
               </el-col>
               <el-col :span="12" class="traffic-li text-right">888,888</el-col>
             </el-row>
-            
-            
+
+
 
           </el-col>
       </el-row>
@@ -177,10 +177,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import echarts from 'echarts';
-require('echarts/theme/macarons'); // echarts theme
-import { debounce } from '@/utlis';
+import { mapGetters } from 'vuex'
+import echarts from 'echarts'
+require('echarts/theme/macarons') // echarts theme
+import { debounce } from '@/utlis'
 export default {
   name: 'Home',
   data() {
@@ -189,7 +189,7 @@ export default {
       resizeHandler: null,
       radio1: '今日',
       datevalue1: ''
-    };
+    }
   },
   computed: {
     ...mapGetters([
@@ -198,12 +198,12 @@ export default {
   },
   watch: {
     sidebarOpened() {
-      this.resizeHandler();
+      this.resizeHandler()
     }
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById('home-traffic-chart'),'macarons');
+      this.chart = echarts.init(document.getElementById('home-traffic-chart'),'macarons')
       this.chart.setOption({
             grid: {
               left: '50px',
@@ -220,24 +220,24 @@ export default {
                 type: 'bar',
                 data: [5888, 3838, 15880, 12888, 18888, 16888,5888, 3838, 15880, 12888, 18888, 16888]
             }]
-      });
+      })
 
     },
     initResizeEvent() {
-      window.addEventListener('resize', this.resizeHandler);
+      window.addEventListener('resize', this.resizeHandler)
     }
   },
   mounted() {
-    const _this = this;
+    const _this = this
     _this.resizeHandler = debounce(() => {
       if (_this.chart) {
-        _this.chart.resize();
+        _this.chart.resize()
       }
-    }, 100);
-    _this.initChart();
-    _this.initResizeEvent();
+    }, 100)
+    _this.initChart()
+    _this.initResizeEvent()
   }
-};
+}
 </script>
 <style lang="scss">
 .box-card {

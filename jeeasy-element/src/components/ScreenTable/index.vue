@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-import { debounce } from '@/utlis';
+import { debounce } from '@/utlis'
 export default {
     name: 'ScreenTable',
     props: {
@@ -85,51 +85,51 @@ export default {
         return {
             tableHeight: 200,
             resizeHandler: null
-        };
+        }
     },
     methods: {
         initResizeEvent() {
-            window.addEventListener('resize', this.resizeHandler);
+            window.addEventListener('resize', this.resizeHandler)
         },
         clearSelection() {
-            this.$refs.screentElTable.clearSelection();
+            this.$refs.screentElTable.clearSelection()
         },
         toggleRowSelection(row, selected) {
-            this.$refs.screentElTable.toggleRowSelection(row, selected);
+            this.$refs.screentElTable.toggleRowSelection(row, selected)
         },
         toggleAllSelection() {
-            this.$refs.screentElTable.toggleAllSelection();
+            this.$refs.screentElTable.toggleAllSelection()
         },
         setCurrentRow(row) {
-            this.$refs.screentElTable.setCurrentRow(row);
+            this.$refs.screentElTable.setCurrentRow(row)
         },
         handleSelect(selection, row) {
-            this.$emit('select', selection, row);
+            this.$emit('select', selection, row)
         },
         handleSelectAll(selection) {
-            this.$emit('select-all', selection);
+            this.$emit('select-all', selection)
         },
         handleSelectionChange(val) {
-            this.$emit('selection-change', val);
+            this.$emit('selection-change', val)
         },
         handleHeaderDragend(newWidth, oldWidth, column, event) {
-            this.$emit('header-dragend', newWidth, oldWidth, column, event);
+            this.$emit('header-dragend', newWidth, oldWidth, column, event)
         }
     },
     mounted() {
-        const _this = this;
+        const _this = this
         _this.resizeHandler = debounce(() => {
             if (!_this.$refs.screentable || !_this.$refs.screentable.offsetHeight) {
-                return false;
+                return false
             }
-            let heightStyle = _this.$refs.screentable.offsetHeight;
-            _this.tableHeight = heightStyle;
-        }, 100);
-        _this.resizeHandler();
-        _this.initResizeEvent();
-        
+            let heightStyle = _this.$refs.screentable.offsetHeight
+            _this.tableHeight = heightStyle
+        }, 100)
+        _this.resizeHandler()
+        _this.initResizeEvent()
+
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .screentable {

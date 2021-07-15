@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'LayoutIndexRightFooter'
-};
+}
 </script>
 <style lang="scss" scoped>
 .indexlayout-right-footer {

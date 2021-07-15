@@ -2,8 +2,8 @@
  * 图表统计-路由配置
  * @author LiQingSong
  */
-import LayoutIndex from '@/layout/Index';
-import AppMainLayout from '@/layout/components/AppMain';
+import LayoutIndex from '@/layout/Index'
+import AppMainLayout from '@/layout/components/AppMain'
 
 const chartstatisticRouter = {
     path: '/chartstatistic',
@@ -21,7 +21,7 @@ const chartstatisticRouter = {
             component: AppMainLayout,
             redirect: '/chartstatistic/echarts/one',
             name: 'chartstatistic-echarts',
-            meta: { 
+            meta: {
                 title: 'ECharts',
                 icon: 'chart',
                 roles: ['chartstatistic-echarts']
@@ -41,9 +41,9 @@ const chartstatisticRouter = {
                 }
             ]
         }
-        
-        
-    ]
-};
 
-export default chartstatisticRouter;
+
+    ]
+}
+
+export default chartstatisticRouter

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { isExternal } from '@/utlis/validate';
+import { isExternal } from '@/utlis/validate'
 
 export default {
   props: {
@@ -28,14 +28,14 @@ export default {
           href: url,
           target: '_blank',
           rel: 'noopener'
-        };
+        }
       }
       return {
         is: 'router-link',
         to: url,
         tag: this.tag
-      };
+      }
     }
   }
-};
+}
 </script>

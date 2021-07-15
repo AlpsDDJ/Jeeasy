@@ -15,11 +15,11 @@ export default {
     data() {
       return {
         loading: false
-      };
+      }
     },
     methods: {
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 .login {

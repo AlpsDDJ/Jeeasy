@@ -14,8 +14,8 @@
                             </app-link>
                           </template>
 
-                      </template> 
-                      <breadcrumb v-else class="breadcrumb" />   
+                      </template>
+                      <breadcrumb v-else class="breadcrumb" />
                   </el-scrollbar>
                </div>
                <div class="indexlayout-top-menu-right">
@@ -40,15 +40,15 @@
                 <div class="indexlayout-right-top-bot-home">
                   <i class="el-icon-location-outline" />
                 </div>
-                <breadcrumb class="breadcrumb" />               
+                <breadcrumb class="breadcrumb" />
             </div>
         </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import Breadcrumb from '@/components/Breadcrumb';
-import AppLink from '@/components/Link';
-import { getBelongTopMenuPath } from '@/utlis/permission';
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import AppLink from '@/components/Link'
+import { getBelongTopMenuPath } from '@/utlis/permission'
 export default {
   name: 'LayoutIndexRightTop',
   components: {
@@ -64,30 +64,30 @@ export default {
       'msgtotal'
     ]),
     isCollapse() {
-      return !this.sidebarOpened;
+      return !this.sidebarOpened
     },
     getTopMenuActive() {
-      let route = this.$route;
-      return getBelongTopMenuPath(route);
+      let route = this.$route
+      return getBelongTopMenuPath(route)
     }
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar');
+      this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
       try {
-          const { isExternal, siteLoginRouter } = await this.$store.dispatch('user/logout');
+          const { isExternal, siteLoginRouter } = await this.$store.dispatch('user/logout')
           if (!isExternal){
-            this.$router.push(siteLoginRouter + "?redirect=" + this.$route.fullPath);
+            this.$router.push(siteLoginRouter + "?redirect=" + this.$route.fullPath)
           }
       } catch (error) {
-          this.$message.error(error || 'Has Error');
+          this.$message.error(error || 'Has Error')
       }
-      
+
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/css/variables.scss";
@@ -210,7 +210,7 @@ export default {
               background-color: $mainBgColor;
               color: $BreadcrumbFontColor;
             }
-            
+
           }
 
       }

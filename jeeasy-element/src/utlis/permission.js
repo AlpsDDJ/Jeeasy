@@ -1,4 +1,4 @@
-/** 
+/**
  * 权限、显示工具
  * @author LiQingSong
  */
@@ -11,11 +11,11 @@
  */
 export function getBelongTopMenuPath(route) {
     // const route = this.$route;
-    const { meta, path } = route;
+    const { meta, path } = route
     if (meta.belongTopMenu) {
-      return meta.belongTopMenu;
+      return meta.belongTopMenu
     }
-    return '/' + path.split('/')[1];
+    return '/' + path.split('/')[1]
 }
 
 /**
@@ -26,9 +26,9 @@ export function getBelongTopMenuPath(route) {
  */
 export function getActiveSidebarMenuPath(route) {
   // const route = this.$route;
-  const { meta, path } = route;
+  const { meta, path } = route
   if (meta.activeMenu) {
-    return meta.activeMenu;
+    return meta.activeMenu
   }
-  return path;
+  return path
 }

@@ -2,10 +2,10 @@
      <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
 </template>
 <script>
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import defaultOptions from './default-options';
-import '@ckeditor/ckeditor5-build-classic/build/translations/zh-cn';
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import defaultOptions from './default-options'
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh-cn'
 export default {
     name: 'CKEditor',
     components: {
@@ -19,7 +19,7 @@ export default {
         options: {
             type: Object,
             default() {
-                return defaultOptions;
+                return defaultOptions
             }
         },
         toolbar: {
@@ -29,7 +29,7 @@ export default {
                     "heading",
                     "|",
                     "bold",
-                    "italic", 
+                    "italic",
                     "link",
                     "bulletedList",
                     "numberedList",
@@ -38,12 +38,12 @@ export default {
                     "outdent",
                     "|",
                     /* "imageUpload", */
-                    "blockQuote", 
+                    "blockQuote",
                     "insertTable",
                     "mediaEmbed",
                     "undo",
                     "redo"
-                ];
+                ]
             }
         },
         language: {
@@ -54,29 +54,29 @@ export default {
     computed: {
         editorData: {
             get() {
-                return this.value;
+                return this.value
             },
             set(val) {
-                this.$emit('input', val);
+                this.$emit('input', val)
             }
         },
         editorConfig: function() {
-            const options = Object.assign({}, defaultOptions, this.options);
-            options.toolbar = this.toolbar;
-            options.language = this.language;
-            return options;
+            const options = Object.assign({}, defaultOptions, this.options)
+            options.toolbar = this.toolbar
+            options.language = this.language
+            return options
         }
     },
     data() {
         return {
             editor: ClassicEditor
-        };
+        }
     },
     methods: {
     },
     mounted() {
     }
-};
+}
 </script>
 <style>
 .ck-editor__editable { min-height: 200px; }

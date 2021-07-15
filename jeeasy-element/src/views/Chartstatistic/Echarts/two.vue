@@ -7,16 +7,16 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import echarts from 'echarts';
-require('echarts/theme/macarons'); // echarts theme
-import { debounce } from '@/utlis';
+import { mapGetters } from 'vuex'
+import echarts from 'echarts'
+require('echarts/theme/macarons') // echarts theme
+import { debounce } from '@/utlis'
 export default {
   data() {
     return {
       chart: null,
       resizeHandler: null
-    };
+    }
   },
   computed: {
     ...mapGetters([
@@ -25,12 +25,12 @@ export default {
   },
   watch: {
     sidebarOpened() {
-      this.resizeHandler();
+      this.resizeHandler()
     }
   },
   methods: {
     initChart() {
-        this.chart = echarts.init(document.getElementById('chartdemo'),'macarons');
+        this.chart = echarts.init(document.getElementById('chartdemo'),'macarons')
         let option = {
             title: {
                 text: '堆叠区域图'
@@ -113,23 +113,23 @@ export default {
                     data: [820, 932, 901, 934, 1290, 1330, 1320]
                 }
             ]
-        };
-        this.chart.setOption(option);
+        }
+        this.chart.setOption(option)
 
     },
     initResizeEvent() {
-      window.addEventListener('resize', this.resizeHandler);
+      window.addEventListener('resize', this.resizeHandler)
     }
   },
   mounted() {
-    const _this = this;
+    const _this = this
     _this.resizeHandler = debounce(() => {
       if (_this.chart) {
-        _this.chart.resize();
+        _this.chart.resize()
       }
-    }, 100);
-    _this.initChart();
-    _this.initResizeEvent();
+    }, 100)
+    _this.initChart()
+    _this.initResizeEvent()
   }
-};
+}
 </script>

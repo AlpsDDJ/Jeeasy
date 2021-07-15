@@ -1,4 +1,4 @@
-/** 
+/**
  * 路由 主入口
  * @author LiQingSong
  * 路由参数说明：
@@ -15,23 +15,23 @@
             meta: { title: '标题' },   必填
             linkpath: '/demo',         链接 -  /demo 内部路由 /^(https?:|mailto:|tel:)/.test(path)外链 , 可不写
           }
-    ],            
+    ],
     activeMenu: '/example/list'  侧栏选中，如果设置路径，侧栏将突出显示你设置的路径，默认 router.path
     belongTopMenu: '/news'       所属顶级菜单,用于选中顶部菜单，与菜单切换，默认不设置 path.split('/') 第1个；
                                             三级此参数的作用是选中顶级菜单 ，二级此参数的作用是所属某个顶级菜单的下面，两个层级的必须同时填写一致
   }
  */
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
 // 引入Index框架
-import LayoutIndex from '@/layout/Index';
+import LayoutIndex from '@/layout/Index'
 
 // 引入对应模块路由
-import componentRouter from '@/router/modules/component'; // 组件
-import pagesampleRouter from '@/router/modules/pagesample'; // 页面示例
-import chartstatisticRouter from '@/router/modules/chartstatistic'; // 图表统计
+import componentRouter from '@/router/modules/component' // 组件
+import pagesampleRouter from '@/router/modules/pagesample' // 页面示例
+import chartstatisticRouter from '@/router/modules/chartstatistic' // 图表统计
 
 /**
  * 固定路由
@@ -67,13 +67,13 @@ export const constantRoutes = [
         path: 'home',
         component: () => import('@/views/Home'),
         name: 'home',
-        meta: { title: '主控台', icon: 'control', belongTopMenu: '/' }
-      },
-      {
+        meta: { title: '主控台', icon: 'control', belongTopMenu: '/', showOne: true }
+      }
+      /*{
         path: 'monitor',
         component: () => import('@/views/Home'),
         name: 'monitor',
-        meta: { 
+        meta: {
             title: '自定义面包屑',
             icon: 'monitoring',
             belongTopMenu: '/',
@@ -99,28 +99,28 @@ export const constantRoutes = [
         path: 'http://admin-element-vue.liqingsong.cc',
         name: 'document',
         meta: { title: '使用文档', icon: 'pagedetails' }
-      }
+      }*/
     ]
   }
 
- 
-];
+
+]
 
 /**
  * 异步路由
  * 需要根据用户角色动态加载的路由
  */
 export const asyncRoutes = [
-  
+
   // 引入其他模块路由
   componentRouter,
   pagesampleRouter,
   chartstatisticRouter,
 
   { path: '*', redirect: '/404', hidden: true }
-];
+]
 
-/* 
+/*
 // 打印对应链接的权限
 const consoleLogRouteRoles = (routes, level) => {
    let obj = {};
@@ -147,14 +147,14 @@ const createRouter = () => new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
   base: process.env.BASE_URL,
   routes: constantRoutes
-});
+})
 
-const router = createRouter();
+const router = createRouter()
 
 // 细节见: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter();
-  router.matcher = newRouter.matcher; // 重置路由
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // 重置路由
 }
 
-export default router;
+export default router

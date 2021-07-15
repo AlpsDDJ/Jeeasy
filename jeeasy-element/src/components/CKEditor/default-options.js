@@ -3,7 +3,7 @@ export default {
         "heading",
         "|",
         "bold",
-        "italic", 
+        "italic",
         "link",
         "bulletedList",
         "numberedList",
@@ -12,11 +12,11 @@ export default {
         "outdent",
         "|",
         /* "imageUpload", */
-        "blockQuote", 
+        "blockQuote",
         "insertTable",
         "mediaEmbed",
         "undo",
         "redo"
     ],
     language: 'zh-cn'
-};
+}

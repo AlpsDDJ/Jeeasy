@@ -2,8 +2,8 @@
  * 组件-路由配置
  * @author LiQingSong
  */
-import LayoutIndex from '@/layout/Index';
-import AppMainLayout from '@/layout/components/AppMain';
+import LayoutIndex from '@/layout/Index'
+import AppMainLayout from '@/layout/components/AppMain'
 
 const componentsRouter = {
     path: '/component',
@@ -21,7 +21,7 @@ const componentsRouter = {
             component: AppMainLayout,
             redirect: '/component/editor/one',
             name: 'component-editor',
-            meta: { 
+            meta: {
                 title: '编辑器',
                 icon: 'editor',
                 roles: ['component-editor']
@@ -52,7 +52,7 @@ const componentsRouter = {
             component: AppMainLayout,
             redirect: '/component/tree/one',
             name: 'component-tree',
-            meta: { 
+            meta: {
                 title: '树形表格',
                 icon: 'tree',
                 roles: ['component-tree']
@@ -77,7 +77,7 @@ const componentsRouter = {
             component: AppMainLayout,
             redirect: '/component/other/one',
             name: 'component-other',
-            meta: { 
+            meta: {
                 title: '其他',
                 icon: 'other',
                 roles: ['component-other']
@@ -97,9 +97,9 @@ const componentsRouter = {
                 }
             ]
         }
-        
-        
-    ]
-};
 
-export default componentsRouter;
+
+    ]
+}
+
+export default componentsRouter

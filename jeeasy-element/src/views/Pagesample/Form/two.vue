@@ -148,11 +148,11 @@
 
 
     </div>
-  
+
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader';
-import FormFooterToolbar from '@/layout/components/FormFooterToolbar';
+import PageHeader from '@/layout/components/PageHeader'
+import FormFooterToolbar from '@/layout/components/FormFooterToolbar'
 export default {
     components: {
       PageHeader,
@@ -163,7 +163,7 @@ export default {
         ruleForm: {
           name: '',
           region: '',
-          date1: ''         
+          date1: ''
         },
         rules: {
           name: [
@@ -177,21 +177,21 @@ export default {
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ]
         }
-      };
+      }
     },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            alert('submit!')
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
       }
     }
-};
+}
 </script>
 <style lang="scss">
 

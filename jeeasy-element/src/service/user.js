@@ -1,4 +1,4 @@
-import request from '@/service/lib/request';
+import request from '@/service/lib/request'
 
 /**
  * 用户 - 登录
@@ -11,7 +11,7 @@ export function login(url, data) {
       url: url,
       method: 'post',
       data
-    });
+    })
 }
 
 /**
@@ -23,7 +23,7 @@ export function getInfo(token) {
       url: '/user/info',
       method: 'get',
       params: { token: token }
-    });
+    })
 }
 
 /**
@@ -34,5 +34,5 @@ export function logout(url) {
     return request({
       url: url,
       method: 'post'
-    });
+    })
 }

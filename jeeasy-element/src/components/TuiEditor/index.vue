@@ -7,14 +7,14 @@
  * 1、插件扩展文档 https://github.com/nhn/tui.editor/blob/master/apps/editor/docs/plugins.md
  * 2、自定义上传图片 imgUpload 可删除此 props , 自己写死在本组件内部
  */
-import 'codemirror/lib/codemirror.css'; // Editor's Dependency Style
-import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
+import 'codemirror/lib/codemirror.css' // Editor's Dependency Style
+import '@toast-ui/editor/dist/toastui-editor.css' // Editor's Style
 
-import Editor from '@toast-ui/editor';
-import defaultOptions from './default-options';
+import Editor from '@toast-ui/editor'
+import defaultOptions from './default-options'
 // import '@toast-ui/editor/dist/i18n/zh-cn.js';
 
-import request from '@/service/lib/request';
+import request from '@/service/lib/request'
 export default {
     name: 'TuiEditor',
     props: {
@@ -25,13 +25,13 @@ export default {
         id: {
             type: String,
             default() {
-                return 'tui-editor-' + +new Date() + Math.floor(Math.random() * 1000);
+                return 'tui-editor-' + +new Date() + Math.floor(Math.random() * 1000)
             }
         },
         options: {
             type: Object,
             default() {
-                return defaultOptions;
+                return defaultOptions
             }
         },
         mode: {
@@ -64,43 +64,43 @@ export default {
     watch: {
         value(newValue, preValue) {
             if (newValue !== preValue && newValue !== this.getValue()) {
-                this.setValue(newValue);
+                this.setValue(newValue)
             }
         },
         language() {
-            this.destroyEditor();
-            this.initEditor();
+            this.destroyEditor()
+            this.initEditor()
         },
         height(newValue) {
-            this.editor.height(newValue);
+            this.editor.height(newValue)
         },
         mode(newValue) {
-            this.editor.changeMode(newValue);
+            this.editor.changeMode(newValue)
         }
     },
     data(){
         return {
             editor: null
-        };
+        }
     },
     computed: {
         editorOptions() {
-            const _this = this;
-            const options = Object.assign({}, defaultOptions, this.options);
-            options.hooks = {};
-            options.initialEditType = _this.mode;
-            options.height = _this.height;
-            options.language = _this.language;
-            options.placeholder = _this.placeholder;            
-            
+            const _this = this
+            const options = Object.assign({}, defaultOptions, this.options)
+            options.hooks = {}
+            options.initialEditType = _this.mode
+            options.height = _this.height
+            options.language = _this.language
+            options.placeholder = _this.placeholder
+
             if (['string', 'function'].includes(_this.typeofImgUpload)) {
-                options.hooks.addImageBlobHook = _this.$imgUpload;
+                options.hooks.addImageBlobHook = _this.$imgUpload
             }
 
-            return options;
+            return options
         },
         typeofImgUpload() {
-            return typeof this.imgUpload;
+            return typeof this.imgUpload
         }
     },
     methods: {
@@ -108,21 +108,21 @@ export default {
             this.editor = new Editor({
                 el: document.getElementById(this.id),
                 ...this.editorOptions
-            });
+            })
             if (this.value) {
-                this.setValue(this.value);
+                this.setValue(this.value)
             }
             this.editor.on('change', () => {
-                this.$emit('input', this.getValue());
-            });
+                this.$emit('input', this.getValue())
+            })
         },
         destroyEditor() {
-            if (!this.editor) return;
-            this.editor.off('change');
-            this.editor.remove();
+            if (!this.editor) return
+            this.editor.off('change')
+            this.editor.remove()
         },
         setLanguage(name, Obj) {
-            Editor.setLanguage(name, Obj);
+            Editor.setLanguage(name, Obj)
         },
         setLanguageZhCN(){
             this.setLanguage('zh-CN',{
@@ -170,55 +170,55 @@ export default {
                 'Auto scroll enabled': '自动滚动已启用',
                 'Auto scroll disabled': '自动滚动已禁用',
                 'Choose language': '选择语言'
-            });
+            })
         },
         setValue(value) {
-            this.editor.setMarkdown(value);
+            this.editor.setMarkdown(value)
         },
         getValue() {
-            return this.editor.getMarkdown();
+            return this.editor.getMarkdown()
         },
         setHtml(value) {
-            this.editor.setHtml(value);
+            this.editor.setHtml(value)
         },
         getHtml() {
-            return this.editor.getHtml();
+            return this.editor.getHtml()
         },
         $imgUpload(fileOrBlob, callback){
-            const _this = this;
+            const _this = this
             switch (_this.typeofImgUpload) {
                case 'string': // 表示是上传地址
-                    var formdata = new FormData();
-                    formdata.append('image', fileOrBlob);
+                    var formdata = new FormData()
+                    formdata.append('image', fileOrBlob)
                     request({
                         url: _this.imgUpload,
                         method: 'post',
                         data: formdata,
                         headers: { 'Content-Type': 'multipart/form-data' }
-                    }).then(res => {  
-                        const { data } = res;
-                        const { url, name } = data;
-                        callback(url, name);
-                    }).catch(err => {                       
-                        console.log(err);
-                    });
-                   break;
+                    }).then(res => {
+                        const { data } = res
+                        const { url, name } = data
+                        callback(url, name)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                   break
                case 'function': // 表示自定义上传
-                   _this.imgUpload(fileOrBlob, callback);
-                   break;           
+                   _this.imgUpload(fileOrBlob, callback)
+                   break
                default:
-                   break;
+                   break
             }
         }
     },
     mounted() {
-        this.setLanguageZhCN();
-        this.initEditor();
+        this.setLanguageZhCN()
+        this.initEditor()
     },
     destroyed() {
-        this.destroyEditor();
+        this.destroyEditor()
     }
-};
+}
 </script>
 <style>
 /**

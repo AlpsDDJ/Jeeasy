@@ -2,7 +2,7 @@
     <div class="main-conent main-conent-minheight">
 
         <page-header><strong>基础详情页</strong></page-header>
-        
+
         <el-card shadow="never" class="border-none margin-t24">
             <div class="main-conent-detail">
                 <div class="main-conent-detail-title">基本信息</div>
@@ -87,7 +87,7 @@
                         min-width="300">
                     </el-table-column>
                 </el-table>
-                
+
             </div>
             <el-divider></el-divider>
 
@@ -112,15 +112,15 @@
                         min-width="300">
                     </el-table-column>
                 </el-table>
-                
+
             </div>
-            
+
 
         </el-card>
     </div>
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader';
+import PageHeader from '@/layout/components/PageHeader'
 export default {
     components: {
       PageHeader
@@ -144,9 +144,9 @@ export default {
             name: '王小虎',
             address: '上海市普陀区金沙江路 1516 弄'
           }]
-        };
+        }
       }
-};
+}
 </script>
 <style lang="scss" scoped>
 .main-conent-detail {
@@ -163,7 +163,7 @@ export default {
         padding-bottom: 16px;
         line-height: 20px;
         font-size: 14px;
-        
+
     }
     .main-conent-detail-lable {
         white-space: nowrap;

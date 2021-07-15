@@ -8,10 +8,10 @@
                 {{ item.meta.title }}
             </template>
         </el-breadcrumb-item>
-    </el-breadcrumb>                
+    </el-breadcrumb>
 </template>
 <script>
-import AppLink from '@/components/Link';
+import AppLink from '@/components/Link'
 export default {
     name: 'Breadcrumb',
     components: {
@@ -20,31 +20,31 @@ export default {
     data() {
         return {
             levelList: null
-        };
+        }
     },
     watch: {
         $route() {
-            this.getBreadcrumb();
+            this.getBreadcrumb()
         }
     },
     methods: {
         getBreadcrumb() {
-            
-            const route = this.$route; 
+
+            const route = this.$route
             if(route.meta && route.meta.breadcrumb) {
-               this.levelList = route.meta.breadcrumb;
-               return false;
+               this.levelList = route.meta.breadcrumb
+               return false
             }
 
             // only show routes with meta.title
-            let matched = route.matched.filter(item => item.meta && item.meta.title);
-            this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false);
+            let matched = route.matched.filter(item => item.meta && item.meta.title)
+            this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
         }
     },
     created() {
-        this.getBreadcrumb();
+        this.getBreadcrumb()
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/css/variables.scss";
@@ -66,6 +66,6 @@ export default {
                 color: $BreadcrumbFontColor;
             }
         }
-    } 
+    }
 }
 </style>

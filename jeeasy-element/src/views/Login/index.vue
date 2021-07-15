@@ -8,7 +8,7 @@
           <el-form-item label="" prop="username">
             <el-input v-model.trim="ruleForm.username" autocomplete="off" placeholder="请输入账号" @keyup.enter.native="submitForm('ruleForm')">
               <i slot="prefix" class="el-input__icon el-icon-user"></i>
-            </el-input>            
+            </el-input>
           </el-form-item>
           <el-form-item label="" prop="password">
             <el-input type="password" v-model.trim="ruleForm.password" autocomplete="off" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm')">
@@ -44,15 +44,15 @@ export default {
         },
         redirect: undefined,
         otherQuery: {}
-      };
+      }
     },
     watch: {
       $route: {
         handler: function(route) {
-          const query = route.query;
+          const query = route.query
           if (query) {
-            this.redirect = query.redirect;
-            this.otherQuery = this.getOtherQuery(query);
+            this.redirect = query.redirect
+            this.otherQuery = this.getOtherQuery(query)
           }
         },
         immediate: true
@@ -60,37 +60,37 @@ export default {
     },
     methods: {
       submitForm(formName) {
-        const _this = this;
+        const _this = this
         _this.$refs[formName].validate((valid) => {
           if (valid) {
-              _this.loading = true;
+              _this.loading = true
               const paramData = {
                   username: _this.ruleForm.username,
                   password: _this.ruleForm.password
-              };
+              }
               _this.$store.dispatch('user/login', paramData).then(() => {
-                  _this.loading = false;
-                  _this.$router.push({ path: _this.redirect || '/', query: _this.otherQuery },() => {});
+                  _this.loading = false
+                  _this.$router.push({ path: _this.redirect || '/', query: _this.otherQuery },() => {})
                 }).catch(error => {
-                  _this.$message.error(error.msg || 'Has Error');
-                  _this.loading = false;
-              });
+                  _this.$message.error(error.msg || 'Has Error')
+                  _this.loading = false
+              })
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
       },
       getOtherQuery(query) {
         return Object.keys(query).reduce((acc, cur) => {
           if (cur !== 'redirect') {
-            acc[cur] = query[cur];
+            acc[cur] = query[cur]
           }
-          return acc;
-        }, {});
+          return acc
+        }, {})
       }
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 .login {

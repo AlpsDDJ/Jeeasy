@@ -14,13 +14,13 @@ export default {
     },
     data() {
         return {
-        };
+        }
     },
     methods: {
     },
     mounted() {
     }
-};
+}
 </script>
 <style lang="scss" scoped>
 .divheight {
