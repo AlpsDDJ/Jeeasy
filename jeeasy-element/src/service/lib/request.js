@@ -46,7 +46,6 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
-
   /**
    * 通过自定义代码确定请求状态
    * 这只是一个例子
@@ -59,41 +58,41 @@ service.interceptors.response.use(
     // 如果自定义代码不是200，则判断为错误。
     if (code !== 200) {
       // 获取替换后的字符串
-      const reqUrl = response.config.url.split("?")[0].replace(response.config.baseURL, '')
+      const reqUrl = response.config.url.split('?')[0].replace(response.config.baseURL, '')
       const noVerifyBool = ajaxResponseNoVerifyUrl.includes(reqUrl)
 
       switch (code) {
         case 401: // 未登陆
 
-            if (!noVerifyBool) {
-              MessageBox({
-                title: '提示',
-                showClose: false,
-                closeOnClickModal: false,
-                closeOnPressEscape: false,
-                message: '当前用户登入信息已失效，请重新登入再操作',
-                beforeClose: (action, instance, done) => {
-                  if (isExternal(serverLoginUrl)) {
-                      window.location.href = serverLoginUrl
-                  } else {
-                      window.location.reload()
-                  }
-                  console.log(action, instance, done)
+          if (!noVerifyBool) {
+            MessageBox({
+              title: '提示',
+              showClose: false,
+              closeOnClickModal: false,
+              closeOnPressEscape: false,
+              message: '当前用户登入信息已失效，请重新登入再操作',
+              beforeClose: (action, instance, done) => {
+                if (isExternal(serverLoginUrl)) {
+                  window.location.href = serverLoginUrl
+                } else {
+                  window.location.reload()
                 }
-              })
-            }
+                console.log(action, instance, done)
+              }
+            })
+          }
 
-            break
+          break
 
         default:
-            if (!noVerifyBool) {
-              Message({
-                message: res.msg || 'Error',
-                type: 'error',
-                duration: 5 * 1000
-              })
-            }
-            break
+          if (!noVerifyBool) {
+            Message({
+              message: res.msg || 'Error',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+          break
       }
 
       // 返回错误 走 catch

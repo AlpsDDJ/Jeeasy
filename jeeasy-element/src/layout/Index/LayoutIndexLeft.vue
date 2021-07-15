@@ -42,7 +42,7 @@
 import { mapGetters } from 'vuex'
 import variables from '@/assets/css/variables.scss'
 import SidebarMenuItem from '@/layout/components/SidebarMenuItem'
-import { getBelongTopMenuPath, getActiveSidebarMenuPath } from '@/utlis/permission'
+import { getBelongTopMenuPath, getActiveSidebarMenuPath, getMenus } from '@/utlis/permission'
 
 export default {
   name: 'LayoutIndexLeft',
@@ -51,25 +51,24 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'permission_routes',
       'siteTopNavEnable',
       'siteSidebarLogo',
       'sidebarOpened'
     ]),
     menus() {
-      const menus = []
-      this.$store.state.permission.routes.forEach(item => {
-        if (item.children && item.children.length > 0) {
-          const oneChild = this.showOneChild(item.children)
-          if (oneChild) {
-            menus.push({ ...oneChild, path: `${item.path}/${oneChild.path}`.replace('//', '/') })
-            item.hidden = true
-          }
-        }
-        menus.push(item)
-      })
-      return menus
-
+      return getMenus()
+      // const menus = []
+      // this.$store.state.permission.routes.forEach(item => {
+      //   if (item.children && item.children.length > 0) {
+      //     const oneChild = this.showOneChild(item.children)
+      //     if (oneChild) {
+      //       menus.push({ ...oneChild, path: `${item.path}/${oneChild.path}`.replace('//', '/') })
+      //       item.hidden = true
+      //     }
+      //   }
+      //   menus.push(item)
+      // })
+      // return menus
     },
     variables() {
       return variables
@@ -86,28 +85,25 @@ export default {
       return getBelongTopMenuPath(route)
     }
   },
-  mounted() {
-    // console.log(this.permission_routes);
-  },
   methods: {
-    showOneChild(children = []) {
-      let oneChild = {}
-      const showChildren = children.filter(item => {
-        if (item.hidden) {
-          return false
-        } else {
-          if (item.meta.showOne) {
-            oneChild = { ...item }
-            return true
-          }
-          return false
-        }
-      })
-      if (showChildren.length === 1) {
-        return oneChild
-      }
-      return false
-    }
+    // showOneChild(children = []) {
+    //   let oneChild = {}
+    //   const showChildren = children.filter(item => {
+    //     if (item.hidden) {
+    //       return false
+    //     } else {
+    //       if (item.meta.showOne) {
+    //         oneChild = { ...item }
+    //         return true
+    //       }
+    //       return false
+    //     }
+    //   })
+    //   if (showChildren.length === 1) {
+    //     return oneChild
+    //   }
+    //   return false
+    // }
   }
 }
 </script>
