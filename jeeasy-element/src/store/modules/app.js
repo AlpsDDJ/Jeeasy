@@ -7,7 +7,8 @@ const state = {
     siteFiexdHeader: siteFiexdHeader,// 是否固定右侧头部
     siteTopNavEnable: siteTopNavEnable, // 是否启用顶部导航
     siteSidebarLogo: siteSidebarLogo, // 是否显示侧边栏LOGO
-    sidebarOpened: true // 侧边栏是否展开
+    sidebarOpened: true, // 侧边栏是否展开
+    theme: 'default'
 }
 const mutations = {
     // 设置是否固定右侧头部 Bval(true|false)
@@ -21,6 +22,10 @@ const mutations = {
     // 设置是否显示侧边栏LOGO Bval(true|false)
     SET_SITE_SIDEBAR_LOGO: (state, Bval) => {
         state.siteSidebarLogo = Bval
+    },
+    // 设置是否显示侧边栏LOGO Bval(true|false)
+    SET_THEME: (state, Bval) => {
+        state.theme = Bval
     },
     // 侧边栏开关
     TOGGLE_SIDEBAR: state => {

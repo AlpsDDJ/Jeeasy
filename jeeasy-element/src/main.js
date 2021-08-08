@@ -9,10 +9,11 @@ import 'normalize.css/normalize.css'
 
 // 引入 ElementUI
 import ElementUI from 'element-ui'
-import '@/assets/css/element-variables.scss'
+import '@/assets/css/index.scss'
+// import '@/assets/css/element-variables.scss'
 
 // 全局样式
-import '@/assets/css/global.scss'
+// import '@/assets/css/global.scss'
 
 import App from './App.vue'
 import router from './router'

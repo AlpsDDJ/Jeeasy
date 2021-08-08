@@ -6,10 +6,16 @@
     <el-drawer
         custom-class="custom-drawer"
         :visible.sync="drawer"
-        size="280px"
+        size="380px"
         append-to-body
         title="系统布局配置">
         <el-form label-width="200px" label-position="left" size="mini">
+            <el-form-item label="启用顶部导航">
+              <el-radio-group v-model="setTheme">
+                <el-radio-button  label="default">默认</el-radio-button >
+                <el-radio-button  label="bg-img">bgImg</el-radio-button >
+              </el-radio-group>
+            </el-form-item>
             <el-form-item label="启用顶部导航">
                <el-switch v-model="topNavEnable"></el-switch>
             </el-form-item>
@@ -59,6 +65,39 @@ export default {
             },
             set(val) {
                 this.$store.commit('app/SET_SITE_SIDEBAR_LOGO',val)
+            }
+        },
+        setTheme: {
+            get() {
+              return this.$store.state.app.theme
+            },
+            set(val) {
+              this.$store.commit('app/SET_THEME',val)
+              import(`@/assets/theme/${val}/index.scss`)
+              // const themeNode = document.querySelector('#element-theme')
+              // if(val !== 'default') {
+              //   import(`@/assets/theme/${val}/index.scss`)
+              //   this.$nextTick(() => {
+              //     const styles = document.querySelectorAll('head style')
+              //     styles.item(styles.length - 1).id = 'element-theme'
+              //     console.log('styles ===>>>> ', styles)
+              //   })
+              //   // const len = styles.length
+              //   // console.log('length ===> ', len)
+              //   // console.log(styles.item(len - 2))
+              //   // const theme = require(`@/assets/theme/${val}/index.scss`)
+              //   // themeNode.append(theme)
+              //   // import(`@/assets/theme/${val}/index.scss`).then(module => {
+              //   //   themeNade.append(module)
+              //   //   // module.loadPageInto()
+              //   //   // console.log(module)
+              //   //   // module.value
+              //   //   // module.attribute.id = 'theme'
+              //   //   // console.log(module.attribute)
+              //   // })
+              // } else {
+              //   console.log(document.querySelector('#element-theme:after'))
+              // }
             }
         },
         // =================
