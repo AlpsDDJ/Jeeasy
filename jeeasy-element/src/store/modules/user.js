@@ -71,8 +71,9 @@ const actions = {
                 }
 
                 // roles.map(role => `ROLE:${role}`)
+                data.roles = [...roles.map(role => `ROLE:${role}`), ...permissions]
 
-                commit('SET_ROLES', [...roles.map(role => `ROLE:${role}`), ...permissions])
+                commit('SET_ROLES', data.roles)
                 commit('SET_NAME', realName)
                 commit('SET_USERNAME', username)
                 commit('SET_AVATAR', avatar)
