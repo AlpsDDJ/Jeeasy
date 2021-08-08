@@ -10,6 +10,7 @@ import { serverLoginUrl, serverLogoutUrl, siteLoginRouter } from '@/settings'
 
 const state = {
     token: getToken(),
+    username: '',
     name: '',
     avatar: '',
     msgtotal: 0,
@@ -21,6 +22,9 @@ const mutations = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_USERNAME: (state, username) => {
+      state.username = username
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -38,11 +42,11 @@ const actions = {
         const { username, password } = userInfo
         return new Promise((resolve, reject) => {
           login(serverLoginUrl, { username: username, password: password }).then(response => {
-            const { data } = response
-            const { token } = data
+            const { result } = response
+            const { token } = result
             commit('SET_TOKEN', token)
             setToken(token)
-            resolve(data)
+            resolve(result)
           }).catch(error => {
             reject(error)
           })
@@ -53,21 +57,24 @@ const actions = {
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
             getInfo(state.token).then(response => {
-                const { data } = response
+                const { result: data } = response
 
                 if (!data) {
                   reject('当前用户登入信息已失效，请重新登入再操作.')
                 }
 
-                const { roles, name, avatar, msgtotal } = data
+                const { roles = [], username, realName, permissions = [], avatar, msgtotal } = data
 
                 // roles must be a non-empty array
                 if (!roles || roles.length <= 0) {
                     reject('用户没有角色权限!')
                 }
 
-                commit('SET_ROLES', roles)
-                commit('SET_NAME', name)
+                // roles.map(role => `ROLE:${role}`)
+
+                commit('SET_ROLES', [...roles.map(role => `ROLE:${role}`), ...permissions])
+                commit('SET_NAME', realName)
+                commit('SET_USERNAME', username)
                 commit('SET_AVATAR', avatar)
                 commit('SET_MSGTOTAL', msgtotal)
                 resolve(data)

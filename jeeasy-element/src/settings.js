@@ -32,7 +32,7 @@ export const siteSidebarLogo = true
 /**
  * Ajax请求头TokenKey
  */
-export const ajaxHeadersTokenKey = "X-Token"
+export const ajaxHeadersTokenKey = "JEEASY-ACCESS-TOKEN"
 
 /**
  * 站点登录路由地址
@@ -53,11 +53,11 @@ export const ajaxResponseNoVerifyUrl = [
  * 外链如单点登录：serverLoginUrl = process.env.VUE_APP_APIHOST + '/cas';
  * 内部：serverLoginUrl = '/login';
  */
-export const serverLoginUrl = '/user/login'
+export const serverLoginUrl = '/auth/login'
 
 /**
  * 服务端退出,请求ajax地址/跳转地址
  * 若是单点登录：serverLogoutUrl = process.env.VUE_APP_APIHOST + '/logout'; 退出方法函数直接 window.location.href = serverLogoutUrl;
  * 若是内部ajax：serverLoginUrl = '/logout';
  */
-export const serverLogoutUrl = '/user/logout'
+export const serverLogoutUrl = '/auth/logout'

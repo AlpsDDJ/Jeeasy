@@ -11,6 +11,7 @@ const getters = {
   avatar: state => state.user.avatar,
   msgtotal: state => state.user.msgtotal,
   name: state => state.user.name,
+  username: state => state.user.username,
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes
 }
