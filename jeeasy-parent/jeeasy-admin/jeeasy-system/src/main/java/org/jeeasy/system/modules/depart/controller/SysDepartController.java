@@ -69,7 +69,7 @@ public class SysDepartController extends SimpleBaseController<SysDepartService, 
     @PostMapping
     @ApiOperation(value = "添加组织机构", notes = "添加组织机构")
     public R<?> add(@RequestBody SysDepart entity) {
-        baseService.saveDepartData(entity);
+        service.saveDepartData(entity);
         return R.ok().setResult("添加成功");
     }
 

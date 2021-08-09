@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.model.QueryPageModel;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -29,19 +30,10 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
-    public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "current", defaultValue = "1") Integer current, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-//        log.info(entity.getStatus().toString());
-//        IAuthUser currentAuthUser = SecurityUtil.getCurrentAuthUser();
-        return super.query(entity, current, pageSize, req);
+//    public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "current", defaultValue = "1") Integer current, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public R<IPage<SysUser>> list(QueryPageModel<SysUser> queryPageModel, HttpServletRequest req) {
+        return super.query(queryPageModel.getQuery(), queryPageModel.getCurrent(), queryPageModel.getSize(), req);
     }
-
-//    @GetMapping("/page")
-//    @ApiOperation(value = "用户列表", notes = "用户列表")
-//    public R<IPage<SysUser>> page(PageQuery<SysUser, SysUser> pageQuery, HttpServletRequest req) {
-////        log.info(entity.getStatus().toString());
-//        R<IPage<SysUser>> query = super.page(pageQuery.getModel(), pageQuery, req);
-//        return query;
-//    }
 
     @GetMapping("/{id}")
     @DictTranslation
@@ -54,14 +46,14 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @ApiOperation(value = "添加用户", notes = "添加用户")
     public R<?> add(@RequestBody UserInfoModel model) {
         SysUser sysUser = SysUserUtil.create(model.getUser()).initSaltAndPassword();
-        baseService.addUserWithRole(sysUser, model.getRoles());
+        service.addUserWithRole(sysUser, model.getRoles());
         return R.ok().setMessage("添加成功");
     }
 
     @PutMapping
     @ApiOperation(value = "修改用户", notes = "修改用户")
     public R<?> edit(@RequestBody UserInfoModel model) {
-        baseService.editUserWithRole(model.getUser(), model.getRoles());
+        service.editUserWithRole(model.getUser(), model.getRoles());
         return R.ok().setMessage("修改成功");
     }
 
@@ -86,11 +78,11 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @PutMapping("/changePasswordByOldPassword")
     @ApiOperation(value = "修改用户密码", notes = "通过旧密码验证修改新密码")
     public R<?> changePasswordByOldPassword(@RequestBody ChangePasswordByOldPasswordModel model) {
-        SysUser sysUser = this.baseService.getById(model.getId());
+        SysUser sysUser = this.service.getById(model.getId());
         SysUserUtil sysUserUtil = SysUserUtil.create(sysUser);
         if (sysUserUtil.checkPassword(model.getOldPassword())) {
             sysUserUtil.changePassword(model.getNewPassword());
-            this.baseService.updateById(sysUser);
+            this.service.updateById(sysUser);
             return R.ok("密码修改成功");
         } else {
             return R.error("密码错误");
@@ -108,7 +100,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置用户密码", notes = "重置用户密码为初始密码")
     public R<?> resetPassword(@RequestBody String id) {
-        SysUser sysUser = this.baseService.getById(id);
+        SysUser sysUser = this.service.getById(id);
         return this.update(SysUserUtil.create(sysUser).initSaltAndPassword());
     }
 

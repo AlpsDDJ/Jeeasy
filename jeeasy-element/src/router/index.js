@@ -29,6 +29,7 @@ Vue.use(VueRouter)
 import LayoutIndex from '@/layout/Index'
 
 // 引入对应模块路由
+import jeeasyAdmin from '@/router/modules/jeeasyAdmin' // 系统管理
 import componentRouter from '@/router/modules/component' // 组件
 import pagesampleRouter from '@/router/modules/pagesample' // 页面示例
 import chartstatisticRouter from '@/router/modules/chartstatistic' // 图表统计
@@ -113,6 +114,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
 
   // 引入其他模块路由
+  jeeasyAdmin,
   componentRouter,
   pagesampleRouter,
   chartstatisticRouter,

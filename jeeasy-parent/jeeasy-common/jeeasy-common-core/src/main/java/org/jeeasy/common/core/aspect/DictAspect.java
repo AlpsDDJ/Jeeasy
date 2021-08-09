@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,10 +22,10 @@ import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +41,13 @@ import java.util.Map;
 @EnableConfigurationProperties({DictEnumProperty.class})
 public class DictAspect {
 
-    @Autowired
+    @Resource
     private DictEnumProperty dictEnumProperty;
 
-    @Autowired
+    @Resource
     DictTranslationService dictTranslationService;
 
-    @Autowired
+    @Resource
     ObjectMapper mapper;
 
     /**
@@ -104,6 +105,9 @@ public class DictAspect {
             e.printStackTrace();
         }
         String dictTextSuffix = dictEnumProperty.getDictTextSuffix();
+        if(ObjectUtil.isNull(record)){
+            return objectNode;
+        }
         for (Field field : ClassUtil.getDeclaredFields(record.getClass())) {
             //update-end--Author:scott  -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
             JsonIgnore ignoreAnnotation = field.getAnnotation(JsonIgnore.class);

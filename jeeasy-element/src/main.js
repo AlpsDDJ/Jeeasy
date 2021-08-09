@@ -27,6 +27,9 @@ import '@/router/permission'
 
 // 引入扩展内容
 import '@/main.ext'
+import { ajax } from '@/service/lib/request'
+
+Vue.prototype.$ajax = ajax
 
 // 设置 ElementUI
 Vue.use(ElementUI, { size: 'small' })

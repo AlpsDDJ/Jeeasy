@@ -137,3 +137,60 @@ service.interceptors.response.use(
  * ......
  */
 export default service
+
+
+export const apiType = {
+  query: 'GET',
+  add: 'POST',
+  del: 'DELETE',
+  edit: 'PUT'
+}
+
+export const parseApi = api => {
+  if(typeof api === 'string'){
+    return {
+      list: `${api} ${apiType.query}`,
+      info: `${api}/{id} ${apiType.query}`,
+      del: `${api}/{id} ${apiType.del}`,
+      delAll: `${api} ${apiType.del}`,
+      edit: `${api} ${apiType.edit}`
+    }
+  } else {
+    const { base, ...others } = api
+    return {
+      ...others,
+      ...parseApi(base)
+    }
+  }
+}
+
+export function urlRender(tpl, dataObj){
+  return tpl.replace(/{\s*(.*?)\s*}/g, (context, objKey) => {
+    console.log('objKey ===>>> ', objKey)
+    const val = dataObj[objKey] || ''
+    // 删除URL中匹配的参数
+    delete dataObj[objKey]
+    return val
+  })
+}
+
+export const ajax = (url, params, config = {}) => {
+  if(url.indexOf(' ') !== -1){
+    const [_url, method = apiType.query] = url.split(' ')
+    const realUrl = urlRender(_url, params)
+    if(method === apiType.query){
+      return service(realUrl, {
+        params,
+        method,
+        ...config
+      })
+    } else {
+      return service(realUrl, {
+        data: params,
+        method,
+        ...config
+      })
+    }
+  }
+
+}

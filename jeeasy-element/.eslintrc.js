@@ -31,7 +31,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'error',
     'eqeqeq': ["error", "always", {"null": "ignore"}], // 要求使用 === 和 !==
     'no-redeclare': 'error', // 禁止多次声明同一变量
-    'no-label-var': 'error', // 禁用与变量同名的标签
+    // 'no-label-var': 'off', // 禁用与变量同名的标签
     'no-unused-vars': 'error', // 禁止出现未使用过的变量
     'no-use-before-define': 'error', // 禁止在变量定义之前使用它们
 

@@ -13,7 +13,7 @@ module.exports = {
   outputDir: 'dist',
   productionSourceMap: false,
   devServer: {
-    port: 3000,
+    port: 4396,
     // 配置反向代理
     proxy: {
       '/api': {

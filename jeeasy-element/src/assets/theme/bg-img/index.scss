@@ -2,9 +2,9 @@
  bg - img变量定义 - 重置
  * @author LiQingSong
  */
-
 .bg-img{
   @import "./variables.scss";
+  $borderColorLighter: #515a6e;
   #indexlayout {
     background-image: url(../../images/bg-smooth.jpg);
     background-repeat: no-repeat;
@@ -144,6 +144,7 @@
      background-attachment: fixed;
      background-size: 1913px 1076px;
      background-position: 0px -356px; */
+    border: 1px solid $borderColorLighter;
     background-color: rgba(0,0,0,.3);
     opacity: .9;
     color: #ffffff;

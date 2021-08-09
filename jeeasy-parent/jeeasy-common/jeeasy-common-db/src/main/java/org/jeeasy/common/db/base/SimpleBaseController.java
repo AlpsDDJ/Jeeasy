@@ -22,7 +22,7 @@ import java.util.List;
 public class SimpleBaseController<S extends IService<T>, T> {
 
     @Autowired
-    protected S baseService;
+    protected S service;
 
     /**
      * 列表分页查询
@@ -36,7 +36,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      */
     protected R<IPage<T>> page(T entity, IPage<T> page, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        return R.ok(baseService.page(page, queryWrapper));
+        return R.ok(service.page(page, queryWrapper));
     }
 
     /**
@@ -52,7 +52,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      */
     protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        return R.ok(baseService.page(new Page<T>(pageNo, pageSize), queryWrapper));
+        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
     }
 
     /**
@@ -64,7 +64,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:22
      */
     protected R<T> getById(Serializable id) {
-        return R.ok(baseService.getById(id));
+        return R.ok(service.getById(id));
     }
 
     /**
@@ -76,7 +76,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:23
      */
     protected R<?> insert(T entity) {
-        if (baseService.save(entity)) {
+        if (service.save(entity)) {
             return R.ok("新增成功");
         } else {
             return R.error("新增失败");
@@ -92,7 +92,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:24
      */
     protected R<?> update(T entity) {
-        if (baseService.updateById(entity)) {
+        if (service.updateById(entity)) {
             return R.ok("编辑成功");
         } else {
             return R.error("编辑失败");
@@ -108,7 +108,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:24
      */
     protected R<?> deleteById(Serializable id) {
-        if (baseService.removeById(id)) {
+        if (service.removeById(id)) {
             return R.ok("删除成功");
         } else {
             return R.error("删除失败");
@@ -129,7 +129,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
             result.faild("未选中数据");
         } else {
             List<String> ls = Arrays.asList(ids.split(","));
-            baseService.removeByIds(ls);
+            service.removeByIds(ls);
             result.success("批量删除成功");
         }
         return result;
