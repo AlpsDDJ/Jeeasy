@@ -1,6 +1,5 @@
-package org.jeeasy.common.core.model;
+package org.jeeasy.common.db.model;
 
-import cn.hutool.json.JSONUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +15,12 @@ public class QueryPageModel implements QueryModel {
     private int size = 10;
     private int current = 1;
     private String[] orders;
-    private String query;
+//    private String query;
+//    private Map<String, Object> params;
 
-    public <T> T getQueryObj(Class<T> c){
-        return JSONUtil.toBean(this.query, c, true);
-    }
+//    public <T> T getQueryObj(Class<T> c){
+//        return BeanUtil.mapToBean(this.params, c, true);
+//    }
 
 //    public void setQuery(Map<String, Object> query) {
 //        this.query = query;

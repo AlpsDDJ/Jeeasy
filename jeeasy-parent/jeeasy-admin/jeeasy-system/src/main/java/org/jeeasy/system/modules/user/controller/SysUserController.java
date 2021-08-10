@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.model.QueryPageModel;
+import org.jeeasy.common.db.model.QueryPageModel;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.entity.SysUser;
@@ -34,7 +34,8 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     public R<IPage<SysUser>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
 //        SysUser user = queryPageModel.getQueryObj(SysUser.class);
 //        SysUser queryObj = queryPageModel.getQueryObj(SysUser.class);
-        return super.query(new SysUser(), queryPageModel.getCurrent(), queryPageModel.getSize(), req);
+//        SysUser sysUser = queryPageModel.getQueryObj(SysUser.class);
+        return super.query(queryPageModel, req, SysUser.class);
     }
 
     @GetMapping("/{id}")

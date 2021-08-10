@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.db.model.QueryPageModel;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.tools.QueryGenerator;
@@ -53,6 +54,21 @@ public class SimpleBaseController<S extends IService<T>, T> {
     protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
         return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
+    }
+
+    /**
+     * 列表分页查询
+     *
+     * @param query
+     * @param clazz
+     * @param req
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> query(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
+        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(clazz, req.getParameterMap());
+        return R.ok(service.page(new Page<T>(query.getCurrent(), query.getSize()), queryWrapper));
     }
 
     /**

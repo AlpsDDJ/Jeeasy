@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.model;
+package org.jeeasy.common.db.model;
 
 /**
  * @author AlpsDDJ

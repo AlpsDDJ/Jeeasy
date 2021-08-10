@@ -1,7 +1,7 @@
 <template>
   <div class="main-conent main-conent-minheight">
     <je-search-form v-model="query.form" :search-params="searchParams" @submit="loadData"/>
-    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page"/>
+    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData"/>
   </div>
 </template>
 
