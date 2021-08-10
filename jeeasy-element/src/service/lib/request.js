@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl } from '@/settings'
 import { isExternal } from '@/utlis/validate'
+// import Qs from 'qs'
 
 // 创建一个axios实例
 const service = axios.create({
@@ -53,10 +54,10 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    const { code } = res
+    const { code, success } = res
 
     // 如果自定义代码不是200，则判断为错误。
-    if (code !== 200) {
+    if (!success) {
       // 获取替换后的字符串
       const reqUrl = response.config.url.split('?')[0].replace(response.config.baseURL, '')
       const noVerifyBool = ajaxResponseNoVerifyUrl.includes(reqUrl)
@@ -82,6 +83,23 @@ service.interceptors.response.use(
             })
           }
 
+          break
+        case 600:
+          MessageBox({
+            title: '提示',
+            showClose: false,
+            closeOnClickModal: false,
+            closeOnPressEscape: false,
+            message: '当前用户登入信息已失效，请重新登入再操作',
+            beforeClose: (action, instance, done) => {
+              if (isExternal(serverLoginUrl)) {
+                window.location.href = serverLoginUrl
+              } else {
+                window.location.reload()
+              }
+              console.log(action, instance, done)
+            }
+          })
           break
 
         default:
@@ -147,7 +165,7 @@ export const apiType = {
 }
 
 export const parseApi = api => {
-  if(typeof api === 'string'){
+  if (typeof api === 'string') {
     return {
       list: `${api} ${apiType.query}`,
       info: `${api}/{id} ${apiType.query}`,
@@ -164,7 +182,7 @@ export const parseApi = api => {
   }
 }
 
-export function urlRender(tpl, dataObj){
+export function urlRender(tpl, dataObj) {
   return tpl.replace(/{\s*(.*?)\s*}/g, (context, objKey) => {
     console.log('objKey ===>>> ', objKey)
     const val = dataObj[objKey] || ''
@@ -175,12 +193,15 @@ export function urlRender(tpl, dataObj){
 }
 
 export const ajax = (url, params, config = {}) => {
-  if(url.indexOf(' ') !== -1){
+  if (url.indexOf(' ') !== -1) {
     const [_url, method = apiType.query] = url.split(' ')
     const realUrl = urlRender(_url, params)
-    if(method === apiType.query){
+    if (method === apiType.query) {
       return service(realUrl, {
         params,
+        // paramsSerializer: p => {
+        //   return Qs.stringify(p, { arrayFormat: 'indices' })
+        // },
         method,
         ...config
       })

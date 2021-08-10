@@ -25,18 +25,6 @@ module.exports = {
         changeOrigin: true
       }
     }
-    /*
-     proxy: {
-     '/api': {
-     target: '<url>',
-     ws: true,
-     changeOrigin: true
-     },
-     '/foo': {
-     target: '<other_url>'
-     }
-     }
-     */
   },
   // 修改webpack的配置
   configureWebpack: {
@@ -48,7 +36,9 @@ module.exports = {
     }
   },
   chainWebpack(config) {
-
+    config.resolve.alias
+      .set('vue$', 'vue/dist/vue.esm.js')
+      .set('@', path.resolve(__dirname, './src'))
     // set svg-sprite-loader
     config.module
     .rule('svg')

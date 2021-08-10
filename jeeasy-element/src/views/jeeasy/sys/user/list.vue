@@ -1,46 +1,40 @@
 <template>
   <div class="main-conent main-conent-minheight">
-    <el-card shadow="never" class="border-none">
-      <div slot="header">
-        <el-row>
-          <el-col :span="6">
-            <i class="el-icon-tickets"></i>
-            <span>用户列表</span>
-          </el-col>
-          <el-col :span="18" style="text-align: right">
-            <el-popover
-              placement="left-start"
-              width="150">
-              <div v-for="(col) in columns" :key="col.key">
-                <el-checkbox @change="val => colFilterChange(val, col)"  :value="!col.hidden">{{ col.label }}</el-checkbox>
-              </div>
-              <i slot="reference" style="font-size: 18px; line-height: 18px; margin-bottom: -10px" class="el-icon-setting"/>
-            </el-popover>
-          </el-col>
-        </el-row>
-      </div>
-      <je-table :columns="columns" :data="list" tableTitle="用户列表"></je-table>
-    </el-card>
+    <je-search-form v-model="query.form" :search-params="searchParams" @submit="loadData"/>
+    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page"/>
   </div>
 </template>
 
-<script>
+<script type="text/jsx">
 import JeTable from '@/components/jeeasy/JeTable'
+import JeSearchForm from '@/components/jeeasy/JeSearthForm'
 import { parseApi } from '@/service/lib/request'
 
 export default {
   name: 'SysUserList',
   data() {
     return {
+      // :xs="24" :sm="24" :md="12" :lg="8" :xl="8"
+      /*searchLayout: {
+        xs: 24,
+        sm: 24,
+        md: 12,
+        lg: 6,
+        xl: 6
+      },
+      searchOpen: false,*/
       list: [],
       columns: [
         {
           label: '用户名',
-          key: 'username'
+          key: 'username',
+          slot: 'username',
+          search: true
         },
         {
           label: '姓名',
-          key: 'realName'
+          key: 'realName',
+          search: true
         },
         {
           label: '性别',
@@ -48,44 +42,57 @@ export default {
         },
         {
           label: '电话',
-          key: 'phone'
+          key: 'phone',
+          search: true
         },
         {
           label: '状态',
-          key: 'status'
+          key: 'status',
+          search: (opt) => {
+            console.log(opt)
+            return <el-select/>
+          }
         }
       ],
       query: {
         page: {
-          pageNo: 1,
-          pageSize: 10
-        }
+          current: 1,
+          size: 3
+        },
+        form: {}
       },
       api: parseApi('/sys/user')
     }
   },
   components: {
+    JeSearchForm,
     JeTable
   },
   mounted() {
     this.loadData()
   },
+  computed: {
+    searchParams(){
+      return this.columns.filter(({ search = false }) => search)
+    }
+  },
   methods: {
-    loadData(){
-      this.$ajax(this.api.list, {id: '123', id2: 2, id3: 3, name: 'name'}).then(({result}) => {
-        const { records, ...page} = result
+    loadData() {
+      const { current, size } = this.query.page
+      const params = {
+        current,
+        size,
+        ...this.query.form
+      }
+      this.$ajax(this.api.list, params).then(({ result }) => {
+        const { records, ...page } = result
         this.query.page = page
         this.list = records
       })
-    },
-    colFilterChange(val, col) {
-      col.hidden = !val
-      this.$forceUpdate()
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
 </style>

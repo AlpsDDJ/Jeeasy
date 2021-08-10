@@ -3,12 +3,23 @@
  * @author LiQingSong
  */
 import { siteFiexdHeader, siteTopNavEnable,siteSidebarLogo } from '@/settings'
+import Cookies from 'js-cookie'
+
+function getLocalTheme(){
+    const theme = Cookies.get('jeeasy:theme')
+    if(theme && theme !== 'default'){
+        import(`@/assets/theme/${theme}/index.scss`)
+        return theme
+    }
+    return 'default'
+}
+
 const state = {
     siteFiexdHeader: siteFiexdHeader,// 是否固定右侧头部
     siteTopNavEnable: siteTopNavEnable, // 是否启用顶部导航
     siteSidebarLogo: siteSidebarLogo, // 是否显示侧边栏LOGO
     sidebarOpened: true, // 侧边栏是否展开
-    theme: 'default'
+    theme: getLocalTheme()
 }
 const mutations = {
     // 设置是否固定右侧头部 Bval(true|false)
@@ -35,6 +46,11 @@ const mutations = {
 const actions = {
     toggleSideBar({ commit }) {
         commit('TOGGLE_SIDEBAR')
+    },
+    setTheme({commit}, theme){
+        commit('SET_THEME', theme)
+        Cookies.set('jeeasy:theme', theme)
+        window.location.reload()
     }
 }
 

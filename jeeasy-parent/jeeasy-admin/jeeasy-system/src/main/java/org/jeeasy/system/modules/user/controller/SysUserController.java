@@ -31,8 +31,10 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
 //    public R<IPage<SysUser>> list(SysUser entity, @RequestParam(name = "current", defaultValue = "1") Integer current, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-    public R<IPage<SysUser>> list(QueryPageModel<SysUser> queryPageModel, HttpServletRequest req) {
-        return super.query(queryPageModel.getQuery(), queryPageModel.getCurrent(), queryPageModel.getSize(), req);
+    public R<IPage<SysUser>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+//        SysUser user = queryPageModel.getQueryObj(SysUser.class);
+//        SysUser queryObj = queryPageModel.getQueryObj(SysUser.class);
+        return super.query(new SysUser(), queryPageModel.getCurrent(), queryPageModel.getSize(), req);
     }
 
     @GetMapping("/{id}")

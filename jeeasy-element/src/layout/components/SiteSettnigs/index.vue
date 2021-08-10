@@ -72,8 +72,7 @@ export default {
               return this.$store.state.app.theme
             },
             set(val) {
-              this.$store.commit('app/SET_THEME',val)
-              import(`@/assets/theme/${val}/index.scss`)
+              this.$store.dispatch('app/setTheme',val)
               // const themeNode = document.querySelector('#element-theme')
               // if(val !== 'default') {
               //   import(`@/assets/theme/${val}/index.scss`)
