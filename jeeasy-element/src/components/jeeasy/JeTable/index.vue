@@ -12,10 +12,7 @@
               placement="left-start"
               width="150">
               <div v-for="(col) in columns" :key="col.key">
-                <el-checkbox @change="val => colFilterChange(val, col)" :value="!col.hidden">{{
-                    col.label
-                  }}
-                </el-checkbox>
+                <el-checkbox @change="val => colFilterChange(val, col)" :value="!col.hidden" :label="col.label" />
               </div>
               <i slot="reference" style="font-size: 18px; line-height: 18px; margin-bottom: -10px"
                  class="el-icon-setting" />

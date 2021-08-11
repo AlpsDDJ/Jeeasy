@@ -3,6 +3,7 @@
     <layout-index-left />
     <div id="indexlayout-right" :class="{'fiexd-header': siteFiexdHeader}">
         <layout-index-right-top />
+        <nav-tabs />
         <div class="indexlayout-right-main" >
           <app-main>
             <slot></slot>
@@ -24,6 +25,8 @@ import LayoutIndexLeft from './LayoutIndexLeft'
 import LayoutIndexRightTop from './LayoutIndexRightTop'
 import LayoutIndexRightFooter from './LayoutIndexRightFooter'
 import SiteSettings from '../components/SiteSettnigs'
+import NavTabs from '../components/NavTabs'
+
 export default {
   name: 'LayoutIndex',
   components: {
@@ -31,6 +34,7 @@ export default {
     LayoutIndexLeft,
     LayoutIndexRightTop,
     LayoutIndexRightFooter,
+    NavTabs,
     SiteSettings
   },
   computed: {

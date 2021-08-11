@@ -1,5 +1,6 @@
 const state = {
-  loading: {}
+  loading: {},
+  navTabs: {}
 }
 
 const mutations = {

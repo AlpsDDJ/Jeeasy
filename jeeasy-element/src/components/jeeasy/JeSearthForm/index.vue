@@ -7,7 +7,7 @@
           <el-col :key="item.key" v-bind="searchLayout" v-if="index < 3 || searchOpen">
             <el-form-item :label="item.label" :prop="item.key">
               <slot v-if="slot && $slots[slot]" :name="slot"></slot>
-              <ex-slot v-else-if="item.search && typeof item.search === 'function'" :render="item.search" :index="index" :column="item"></ex-slot>
+              <ex-slot v-else-if="item.search && typeof item.search === 'function'" :customRender="item.search" :index="index" :column="item"></ex-slot>
               <el-input v-else v-model="formData[item.key]"/>
             </el-form-item>
           </el-col>

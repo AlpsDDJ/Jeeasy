@@ -5,6 +5,9 @@
 .bg-img{
   @import "./variables.scss";
   $borderColorLighter: #515a6e;
+  $NavTabsBorderTopColor: #515a6e;
+  $NavTabsBgColor: rgba(0, 0, 0, 0.5);
+
   #indexlayout {
     background-image: url(../../images/bg-smooth.jpg);
     background-repeat: no-repeat;
@@ -84,8 +87,32 @@
 
         }
       }
+
+      .nav-tabs {
+        background: $NavTabsBgColor;
+        border-top: 1px solid $NavTabsBorderTopColor;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+        .el-tag{
+          background: rgba(255, 255, 255, .05);
+          color: #F5F7FA;
+          border-color: $borderColorLighter;
+          i{
+            color: #F5F7FA;
+          }
+          &.active-tab{
+            background: rgba(255, 255, 200, .15);
+            color: #3fc9bd;
+            i{
+              color: #3fc9bd;
+            }
+          }
+        }
+      }
+
       .indexlayout-right-main {
         background-color: rgba(0,0,0,.05);
+
+
         .indexlayout-right-footer {
           opacity: .9;
           color: #FFF;
