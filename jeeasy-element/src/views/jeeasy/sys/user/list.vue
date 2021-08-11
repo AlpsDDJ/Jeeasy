@@ -41,6 +41,7 @@ export default {
           label: '状态',
           key: 'status',
           search: () => {
+            // console.log(attrs)
             return <el-select/>
           }
         },

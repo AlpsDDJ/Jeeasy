@@ -16,7 +16,8 @@ export default {
   render: (h, data) => {
     const params = {
       record: data.props.row,
-      index: data.props.index
+      index: data.props.index,
+      attrs: data.props.$attrs
     }
 
     if (data.props.column) params.column = data.props.column
