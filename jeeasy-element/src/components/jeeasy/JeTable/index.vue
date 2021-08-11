@@ -9,8 +9,8 @@
           </el-col>
           <el-col :span="18" style="text-align: right">
             <el-popover
-                placement="left-start"
-                width="150">
+              placement="left-start"
+              width="150">
               <div v-for="(col) in columns" :key="col.key">
                 <el-checkbox @change="val => colFilterChange(val, col)" :value="!col.hidden">{{
                     col.label
@@ -18,13 +18,22 @@
                 </el-checkbox>
               </div>
               <i slot="reference" style="font-size: 18px; line-height: 18px; margin-bottom: -10px"
-                 class="el-icon-setting"/>
+                 class="el-icon-setting" />
             </el-popover>
           </el-col>
         </el-row>
       </div>
-      <el-table v-bind="$attrs" :data="$attrs.data" :key="tableIndex">
-        <el-table-column v-if="showIndex" width="50" align="center" type="index" :index="indexMethod"></el-table-column>
+      <el-table
+        v-bind="$attrs"
+        :data="$attrs.data"
+        :key="tableIndex"
+        v-loading="loading"
+        @selection-change="handleSelectionChange"
+        @current-change="handleCurrentChange"
+        highlight-current-row
+        element-loading-background="rgba(0, 0, 0, 0.2)">
+        <el-table-column type="selection" width="50" v-if="showSelection" align="center"/>
+        <el-table-column label="#" v-if="showIndex" width="50" align="center" type="index" :index="indexMethod"></el-table-column>
         <template v-for="({slot, ...item}) in columns">
           <el-table-column :key="item.key" v-if="!item.hidden" :align="item.align || 'center'" v-bind="item">
             <template slot-scope="scope">
@@ -43,14 +52,14 @@
       <el-row class="list-foot" v-if="showPage">
         <el-col :span="12" :offset="12" class="text-right">
           <el-pagination
-              background small
-              layout="total, sizes, prev, pager, next"
-              @size-change="pageChange"
-              @current-change="pageChange"
-              :page-sizes="pageSizes"
-              :current-page.sync="page.current"
-              :page-size.sync="page.size"
-              :total="page.total"/>
+            background small
+            layout="total, sizes, prev, pager, next"
+            @size-change="pageChange"
+            @current-change="pageChange"
+            :page-sizes="pageSizes"
+            :current-page.sync="page.current"
+            :page-size.sync="page.size"
+            :total="page.total" />
         </el-col>
       </el-row>
     </el-card>
@@ -67,37 +76,47 @@ export default {
   components: {
     'ex-slot': ExSlot
   },
-  data () {
+  data() {
     return {
       defaultColumnTextAlign: 'center',
       tableIndex: 0,
+      selection: [],
+      currentRow: {},
       page: {}
     }
   },
   methods: {
-    pageChange(){
+    pageChange() {
       this.$emit('pageChange')
     },
-    indexMethod (index) {
+    indexMethod(index) {
       return index + 1
     },
-    colFilterChange (val, col) {
+    colFilterChange(val, col) {
       col.hidden = !val
       this.tableIndex++
       this.$forceUpdate()
     },
-    showDefaultText (key, record) {
+    showDefaultText(key, record) {
       const dictText = record[`${key}_dict`]
       if (dictText) {
         return dictText
       }
       return record[key]
+    },
+    handleSelectionChange(val) {
+      console.log('handleSelectionChange ---> ', val)
+      this.selection = val
+    },
+    handleCurrentChange(val) {
+      console.log('handleCurrentChange ---> ', val)
+      this.currentRow = val
     }
   },
   computed: {
-    pageSizes(){
+    pageSizes() {
       const sizes = [10, 20, 50, 100]
-      if(sizes.includes(this.value.size)) {
+      if (sizes.includes(this.value.size)) {
         return sizes
       } else {
         return [this.value.size, ...sizes]
@@ -106,14 +125,14 @@ export default {
   },
   watch: {
     value: {
-      handler (val) {
+      handler(val) {
         console.log('page ------- >', val)
         this.page = val
       },
       immediate: true
     },
     page: {
-      handler (val) {
+      handler(val) {
         this.$emit('input', val)
       },
       deep: true
@@ -137,6 +156,14 @@ export default {
     value: {
       type: Object,
       default: () => ({})
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    showSelection: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -150,11 +177,13 @@ export default {
 
   .list-foot {
     margin: 10px;
-    .el-input__inner{
+
+    .el-input__inner {
       height: 22px;
       line-height: 22px;
     }
-    .el-input__icon{
+
+    .el-input__icon {
       height: 22px;
       line-height: 22px;
     }

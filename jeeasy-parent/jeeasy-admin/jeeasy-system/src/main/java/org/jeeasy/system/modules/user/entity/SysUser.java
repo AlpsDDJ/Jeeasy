@@ -93,4 +93,16 @@ public class SysUser extends Model<SysUser> implements Serializable {
 //    @Dict(dictEnum = DelFlagEnum.class)
     private Integer delFlag;
 
+
+
+//    public static void main(String[] args) {
+//        SysUser user = new SysUser();
+//        user.setId("111");
+//
+//        Field username = ReflectUtil.getField(user.getClass(), "username1");
+//        ReflectUtil.hasField()
+//        System.out.println(username);
+//
+//    }
+
 }

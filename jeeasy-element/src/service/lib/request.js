@@ -28,7 +28,6 @@ service.interceptors.request.use(
       config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
     }
 
-
     // 请根据实际情况修改
     if (store.getters.token) {
       // store.getters.token 加载时已在 [store/user] 用 getToken()获取Token
@@ -196,22 +195,38 @@ export const ajax = (url, params, config = {}) => {
   if (url.indexOf(' ') !== -1) {
     const [_url, method = apiType.query] = url.split(' ')
     const realUrl = urlRender(_url, params)
+
+
+
+
+    store.dispatch('global/setLoading', { [url]: true })
+
+    let finalConfig = {}
+
     if (method === apiType.query) {
-      return service(realUrl, {
+      finalConfig = {
         params,
-        // paramsSerializer: p => {
-        //   return Qs.stringify(p, { arrayFormat: 'indices' })
-        // },
         method,
         ...config
-      })
+      }
     } else {
-      return service(realUrl, {
+      finalConfig = {
         data: params,
         method,
         ...config
-      })
+      }
     }
+
+    return new Promise((resolve, reject) => {
+      service(realUrl, finalConfig).then(res => {
+        resolve(res)
+        store.dispatch('global/setLoading', { [url]: false })
+      }).catch(err => {
+        reject(err)
+        store.dispatch('global/setLoading', { [url]: false })
+      })
+    })
+
   }
 
 }

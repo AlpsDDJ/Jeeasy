@@ -1,9 +1,12 @@
 package org.jeeasy.common.db.tools;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -14,12 +17,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class QueryGenerator {
 
-    private static final String BEGIN = "_begin";
-    private static final String END = "_end";
     /**
      * 数字类型字段，拼接此后缀 接受多值参数
      */
-    private static final String MULTI = "_MultiString";
     private static final String STAR = "*";
     private static final char COMMA = ',';
 
@@ -36,68 +36,102 @@ public class QueryGenerator {
 
         params.forEach((key, value) -> {
             if (ReflectUtil.hasField(clazz, key)) {
-                wrapper.set(putParam(clazz, key, value));
+                wrapper.set(parseQueryParameters(clazz, key, value));
             }
         });
 
         return wrapper.get();
     }
 
-    private static <T> QueryWrapper<T> putParam(Class<T> clazz, String field, String ...params){
+    /**
+     * 解析查询参数
+     * @param clazz 实体类Class
+     * @param fieldName 实体类属性名称
+     * @param params 前端传来的原始参数
+     * @param <T>
+     * @return
+     */
+    private static <T> QueryWrapper<T> parseQueryParameters(Class<T> clazz, String fieldName, String ...params){
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         for (String param : params) {
-            String fieldName = StrUtil.toUnderlineCase(field);
+            String columnName = getColumnName(fieldName, clazz);
             String val = getParamValue(param);
             if(StrUtil.isEmpty(val)){
                 break;
             }
             if(param.contains(STAR)){
-                putLike(wrapper, field, param);
-            } else if(param.startsWith("!")){
-                wrapper.ne(fieldName, val);
+                putLike(wrapper, columnName, param, val);
+            } else if(param.startsWith("! ")){
+                wrapper.ne(columnName, val);
             } else if(param.startsWith("> ")){
-                wrapper.gt(fieldName, val);
+                wrapper.gt(columnName, val);
             } else if(param.startsWith(">= ")){
-                wrapper.ge(fieldName, val);
+                wrapper.ge(columnName, val);
             } else if(param.startsWith("< ")){
-                wrapper.lt(fieldName, val);
+                wrapper.lt(columnName, val);
             } else if(param.startsWith("<= ")){
-                wrapper.le(fieldName, val);
+                wrapper.le(columnName, val);
             } else if(param.startsWith("in ")){
                 List<String> values = StrUtil.split(val, COMMA, true, true);
-                wrapper.in(fieldName, values);
+                wrapper.in(columnName, values);
             } else {
-                wrapper.eq(fieldName, val);
+                wrapper.eq(columnName, val);
             }
         }
         return wrapper;
     }
 
-    private static <T> void putLike(QueryWrapper<T> wrapper, String field, String value){
-        String val = value.replaceAll("\\" + STAR, "");
-        String fieldName = StrUtil.toUnderlineCase(field);
-        if(value.startsWith(STAR) && value.endsWith(STAR)){
-            wrapper.like(fieldName, val);
+    /**
+     * 获取数据库表字段名称
+     * @param fieldName 实体类属性名称
+     * @param clazz 实体类Class
+     * @param <T>
+     * @return
+     */
+    private static <T> String getColumnName(String fieldName, Class<T> clazz){
+        String colName = StrUtil.toUnderlineCase(fieldName);
+        Field field = ReflectUtil.getField(clazz, fieldName);
+        TableField annotation = field.getAnnotation(TableField.class);
+        if(BeanUtil.isNotEmpty(annotation)){
+            colName = annotation.value();
+        }
+        return colName;
+    }
+
+    /**
+     * 模糊查询
+     * @param wrapper
+     * @param columnName 数据库表字段名称
+     * @param param 前端传来的原始参数
+     * @param value 格式化后的查询参数
+     */
+    private static void putLike(QueryWrapper<?> wrapper, String columnName, String param, String value){
+        if(param.startsWith(STAR) && param.endsWith(STAR)){
+            wrapper.like(columnName, value);
         } else {
-            if(value.startsWith(STAR)){
-                wrapper.likeLeft(fieldName, val);
+            if(param.startsWith(STAR)){
+                wrapper.likeLeft(columnName, value);
             }
-            if(value.endsWith(STAR)){
-                wrapper.likeRight(fieldName, val);
+            if(param.endsWith(STAR)){
+                wrapper.likeRight(columnName, value);
             }
         }
     }
 
+    /**
+     * 格式化查询参数
+     * @param param 前端传来的原始参数
+     * @return 格式化后的查询参数
+     */
     private static String getParamValue(String param){
-        String p = param.replaceAll("(\\*)|(^>= )|(^<= )|(^> )|(^< )|(^in )", "");
-        return StrUtil.trimStart(StrUtil.trimEnd(p));
+        String p = param.replaceAll("(\\*)|(^>= )|(^<= )|(^> )|(^< )|(^in )|(^! )", "");
+        return StrUtil.trim(p);
 
     }
 
     public static void main(String[] args) {
-        String paramValue = getParamValue(">= 11");
-        System.out.println(StrUtil.isNotEmpty(""));
+        String str = " aaa , ";
+        System.out.println(StrUtil.split(str, COMMA, true, true));
     }
-
 
 }

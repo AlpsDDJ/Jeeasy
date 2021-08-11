@@ -14,8 +14,8 @@
         </template>
         <el-col v-bind="searchLayout" :offset="offset" class="search-btns text-right">
           <el-form-item label-width="0">
-            <el-button type="primary" @click="$emit('submit')">查询</el-button>
-            <el-button @click="() => {formData = {}}">重置</el-button>
+            <el-button type="primary" @click="submit">查询</el-button>
+            <el-button @click="reset">重置</el-button>
             <slot name="ex-operate"/>
             <el-button type="text" v-if="!searchOpen" @click="toggleSearch">展开<i class="el-icon-arrow-down el-icon--right"></i></el-button>
             <el-button type="text" v-else @click="toggleSearch">收起<i class="el-icon-arrow-up el-icon--right"></i></el-button>
@@ -77,6 +77,12 @@ export default {
     }
   },
   methods: {
+    submit(){
+      this.$emit('submit')
+    },
+    reset(){
+      this.formData = {}
+    },
     toggleSearch(){
       this.searchOpen = !this.searchOpen
     }

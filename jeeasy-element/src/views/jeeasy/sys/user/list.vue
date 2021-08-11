@@ -1,7 +1,7 @@
 <template>
   <div class="main-conent main-conent-minheight">
     <je-search-form v-model="query.form" :search-params="searchParams" @submit="loadData"/>
-    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData"/>
+    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]"/>
   </div>
 </template>
 
@@ -9,20 +9,12 @@
 import JeTable from '@/components/jeeasy/JeTable'
 import JeSearchForm from '@/components/jeeasy/JeSearthForm'
 import { parseApi } from '@/service/lib/request'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'SysUserList',
   data() {
     return {
-      // :xs="24" :sm="24" :md="12" :lg="8" :xl="8"
-      /*searchLayout: {
-        xs: 24,
-        sm: 24,
-        md: 12,
-        lg: 6,
-        xl: 6
-      },
-      searchOpen: false,*/
       list: [],
       columns: [
         {
@@ -48,8 +40,7 @@ export default {
         {
           label: '状态',
           key: 'status',
-          search: (opt) => {
-            console.log(opt)
+          search: () => {
             return <el-select/>
           }
         }
@@ -72,6 +63,9 @@ export default {
     this.loadData()
   },
   computed: {
+    ...mapGetters([
+      'loading'
+    ]),
     searchParams(){
       return this.columns.filter(({ search = false }) => search)
     }
