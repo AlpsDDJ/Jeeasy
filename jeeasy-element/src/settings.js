@@ -39,21 +39,26 @@ export const ajaxHeadersTokenKey = "JEEASY-ACCESS-TOKEN"
  */
  export const siteLoginRouter = "/login"
 
-
-/**
- * ajax请求 - 返回数据 - 不添加前置验证的 URL
- */
-export const ajaxResponseNoVerifyUrl = [
-    '/user/login', // 用户登录
-    '/user/info' // 获取用户信息
-]
-
 /**
  * 服务端登录,请求ajax地址/跳转地址
  * 外链如单点登录：serverLoginUrl = process.env.VUE_APP_APIHOST + '/cas';
  * 内部：serverLoginUrl = '/login';
  */
 export const serverLoginUrl = '/auth/login'
+
+/**
+ * 获取用户信息
+ * @type {string}
+ */
+export const getCurrentUserUrl = '/currentUser'
+
+/**
+ * ajax请求 - 返回数据 - 不添加前置验证的 URL
+ */
+export const ajaxResponseNoVerifyUrl = [
+    serverLoginUrl, // 用户登录
+    getCurrentUserUrl // 获取用户信息
+]
 
 /**
  * 服务端退出,请求ajax地址/跳转地址

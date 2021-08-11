@@ -109,7 +109,7 @@ service.interceptors.response.use(
         default:
           if (!noVerifyBool) {
             Message({
-              message: res.msg || 'Error',
+              message: res.message || 'Error',
               type: 'error',
               duration: 5 * 1000
             })

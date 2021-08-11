@@ -6,7 +6,7 @@ import { login, logout, getInfo } from '@/service/user'
 import { getToken, setToken, removeToken } from '@/service/lib/localToken'
 import { resetRouter } from '@/router'
 import { isExternal } from '@/utlis/validate'
-import { serverLoginUrl, serverLogoutUrl, siteLoginRouter } from '@/settings'
+import { getCurrentUserUrl, serverLoginUrl, serverLogoutUrl, siteLoginRouter } from '@/settings'
 
 const state = {
     token: getToken(),
@@ -54,9 +54,9 @@ const actions = {
     },
 
     // 获取用户信息
-    getInfo({ commit, state }) {
+    getInfo({ commit }) {
         return new Promise((resolve, reject) => {
-            getInfo(state.token).then(response => {
+            getInfo(getCurrentUserUrl).then(response => {
                 const { result: data } = response
 
                 if (!data) {
@@ -80,7 +80,7 @@ const actions = {
                 commit('SET_MSGTOTAL', msgtotal)
                 resolve(data)
             }).catch(error => {
-                reject(error.msg || 'Error')
+                reject(error.message || 'Error')
                 // console.log(error);
             })
         })

@@ -18,11 +18,10 @@ export function login(url, data) {
  * 用户 - 获取用户信息和权限
  * @author LiQingSong
  */
-export function getInfo(token) {
+export function getInfo(url) {
     return request({
-      url: '/currentUser',
-      method: 'get',
-      params: { token: token }
+      url,
+      method: 'get'
     })
 }
 
