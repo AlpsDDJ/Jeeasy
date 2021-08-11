@@ -43,6 +43,15 @@ export default {
           search: () => {
             return <el-select/>
           }
+        },
+        {
+          label: '操作',
+          key: 'operate',
+          customRender: ({record}) => {
+            return (
+              <el-button type="text" onClick={() => { record }}>编辑</el-button>
+            )
+          }
         }
       ],
       query: {

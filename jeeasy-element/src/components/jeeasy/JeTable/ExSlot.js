@@ -5,7 +5,7 @@ export default {
   name: 'ExSlot',
   props: {
     row: Object,
-    render: Function,
+    customRender: Function,
     index: Number,
     column: {
       type: Object,
@@ -20,9 +20,9 @@ export default {
     }
 
     if (data.props.column) params.column = data.props.column
-    const content = data.props.render(params, h)
+    const content = data.props.customRender(params, h)
     if (typeof content === 'object') {
-      return data.props.render(params, h)
+      return data.props.customRender(params, h)
     }
     return h('span', content)
   }

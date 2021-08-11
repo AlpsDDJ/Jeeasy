@@ -32,19 +32,18 @@
         @current-change="handleCurrentChange"
         highlight-current-row
         element-loading-background="rgba(0, 0, 0, 0.2)">
-        <el-table-column type="selection" width="50" v-if="showSelection" align="center"/>
+        <el-table-column type="selection" width="50" v-if="showSelection" align="center" />
         <el-table-column label="#" v-if="showIndex" width="50" align="center" type="index" :index="indexMethod"></el-table-column>
         <template v-for="({slot, ...item}) in columns">
           <el-table-column :key="item.key" v-if="!item.hidden" :align="item.align || 'center'" v-bind="item">
             <template slot-scope="scope">
               <!--              <slot :col="item"></slot>-->
               <!-- 插槽 -->
-              <slot v-if="slot && $slots[slot]" :name="slot" :row="scope.row">1</slot>
+              <slot v-if="slot && $slots[slot]" :name="slot" :row="scope.row" />
               <!-- 自定义渲染方法 -->
-              <ex-slot v-else-if="item.customRender" :render="item.customRender" :row="scope.row" :index="scope.$index"
-                       :column="item"></ex-slot>
+              <ex-slot v-else-if="item.customRender" :custom-render="item.customRender" :row="scope.row" :index="scope.$index" :column="item" />
               <!-- 默认文本渲染 -->
-              <span v-else v-html="showDefaultText(item.key, scope.row)"></span>
+              <span v-else v-html="showDefaultText(item.key, scope.row)" />
             </template>
           </el-table-column>
         </template>
@@ -105,11 +104,9 @@ export default {
       return record[key]
     },
     handleSelectionChange(val) {
-      console.log('handleSelectionChange ---> ', val)
       this.selection = val
     },
     handleCurrentChange(val) {
-      console.log('handleCurrentChange ---> ', val)
       this.currentRow = val
     }
   },
@@ -126,7 +123,6 @@ export default {
   watch: {
     value: {
       handler(val) {
-        console.log('page ------- >', val)
         this.page = val
       },
       immediate: true
