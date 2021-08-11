@@ -93,7 +93,11 @@ public class QueryGenerator {
         Field field = ReflectUtil.getField(clazz, fieldName);
         TableField annotation = field.getAnnotation(TableField.class);
         if(BeanUtil.isNotEmpty(annotation)){
-            colName = annotation.value();
+            String value = annotation.value();
+            boolean exist = annotation.exist();
+            if(StrUtil.isNotEmpty(value) && !exist){
+                colName = value;
+            }
         }
         return colName;
     }

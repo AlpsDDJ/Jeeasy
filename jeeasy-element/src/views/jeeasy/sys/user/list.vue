@@ -20,7 +20,6 @@ export default {
         {
           label: '用户名',
           key: 'username',
-          slot: 'username',
           search: true
         },
         {
@@ -40,10 +39,13 @@ export default {
         {
           label: '状态',
           key: 'status',
-          search: () => {
-            // console.log(attrs)
-            return <el-select/>
-          }
+          search: () => (
+            <el-select v-model={this.query.form.status}>
+              <el-option label="全部" value=""/>
+              <el-option label="正常" value="1"/>
+              <el-option label="冻结" value="0"/>
+            </el-select>
+          )
         },
         {
           label: '操作',
