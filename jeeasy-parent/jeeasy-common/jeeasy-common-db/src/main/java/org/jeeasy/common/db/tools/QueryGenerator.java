@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 条件查询构造器
+ *
  * @author mobie
  */
 public class QueryGenerator {
@@ -45,35 +46,38 @@ public class QueryGenerator {
 
     /**
      * 解析查询参数
-     * @param clazz 实体类Class
+     *
+     * @param clazz     实体类Class
      * @param fieldName 实体类属性名称
-     * @param params 前端传来的原始参数
+     * @param params    前端传来的原始参数
      * @param <T>
      * @return
      */
-    private static <T> QueryWrapper<T> parseQueryParameters(Class<T> clazz, String fieldName, String ...params){
+    private static <T> QueryWrapper<T> parseQueryParameters(Class<T> clazz, String fieldName, String... params) {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         for (String param : params) {
             String columnName = getColumnName(fieldName, clazz);
             String val = getParamValue(param);
-            if(StrUtil.isEmpty(val)){
+            if (StrUtil.isEmpty(val)) {
                 break;
             }
-            if(param.contains(STAR)){
-                putLike(wrapper, columnName, param, val);
-            } else if(param.startsWith("! ")){
+            if (param.startsWith("! ")) {
                 wrapper.ne(columnName, val);
-            } else if(param.startsWith("> ")){
+            } else if (param.startsWith("> ")) {
                 wrapper.gt(columnName, val);
-            } else if(param.startsWith(">= ")){
+            } else if (param.startsWith(">= ")) {
                 wrapper.ge(columnName, val);
-            } else if(param.startsWith("< ")){
+            } else if (param.startsWith("< ")) {
                 wrapper.lt(columnName, val);
-            } else if(param.startsWith("<= ")){
+            } else if (param.startsWith("<= ")) {
                 wrapper.le(columnName, val);
-            } else if(param.startsWith("in ")){
+            } else if (param.startsWith("in ")) {
                 List<String> values = StrUtil.split(val, COMMA, true, true);
                 wrapper.in(columnName, values);
+            } else if (param.startsWith("!* ")) {
+                wrapper.notLike(columnName, val);
+            } else if (param.contains(STAR)) {
+                putLike(wrapper, columnName, param, val);
             } else {
                 wrapper.eq(columnName, val);
             }
@@ -83,19 +87,20 @@ public class QueryGenerator {
 
     /**
      * 获取数据库表字段名称
+     *
      * @param fieldName 实体类属性名称
-     * @param clazz 实体类Class
+     * @param clazz     实体类Class
      * @param <T>
      * @return
      */
-    private static <T> String getColumnName(String fieldName, Class<T> clazz){
+    private static <T> String getColumnName(String fieldName, Class<T> clazz) {
         String colName = StrUtil.toUnderlineCase(fieldName);
         Field field = ReflectUtil.getField(clazz, fieldName);
         TableField annotation = field.getAnnotation(TableField.class);
-        if(BeanUtil.isNotEmpty(annotation)){
+        if (BeanUtil.isNotEmpty(annotation)) {
             String value = annotation.value();
             boolean exist = annotation.exist();
-            if(StrUtil.isNotEmpty(value) && !exist){
+            if (StrUtil.isNotEmpty(value) && !exist) {
                 colName = value;
             }
         }
@@ -104,19 +109,20 @@ public class QueryGenerator {
 
     /**
      * 模糊查询
+     *
      * @param wrapper
      * @param columnName 数据库表字段名称
-     * @param param 前端传来的原始参数
-     * @param value 格式化后的查询参数
+     * @param param      前端传来的原始参数
+     * @param value      格式化后的查询参数
      */
-    private static void putLike(QueryWrapper<?> wrapper, String columnName, String param, String value){
-        if(param.startsWith(STAR) && param.endsWith(STAR)){
+    private static void putLike(QueryWrapper<?> wrapper, String columnName, String param, String value) {
+        if (param.startsWith(STAR) && param.endsWith(STAR)) {
             wrapper.like(columnName, value);
         } else {
-            if(param.startsWith(STAR)){
+            if (param.startsWith(STAR)) {
                 wrapper.likeLeft(columnName, value);
             }
-            if(param.endsWith(STAR)){
+            if (param.endsWith(STAR)) {
                 wrapper.likeRight(columnName, value);
             }
         }
@@ -124,11 +130,12 @@ public class QueryGenerator {
 
     /**
      * 格式化查询参数
+     *
      * @param param 前端传来的原始参数
      * @return 格式化后的查询参数
      */
-    private static String getParamValue(String param){
-        String p = param.replaceAll("(\\*)|(^>= )|(^<= )|(^> )|(^< )|(^in )|(^! )", "");
+    private static String getParamValue(String param) {
+        String p = param.replaceAll("(^>= )|(^<= )|(^> )|(^< )|(^in )|(^!\\* )|(^! )|(\\*)", "");
         return StrUtil.trim(p);
 
     }

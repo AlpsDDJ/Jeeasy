@@ -1,4 +1,4 @@
-<script type="text/jsx">
+<script>
 export default {
   name: 'JeSearchForm',
   data () {
@@ -87,7 +87,7 @@ export default {
   render () {
     return (
         <el-card shadow="never" class="list-search border-none">
-          <el-form v-model={this.formData} label-width="100px">
+          <el-form v-model={this.formData} label-width="100px" nativeOnKeyup={({code}) => { if (code === 'Enter') this.submit() }}>
             <el-row justify={this.justify} type="flex" class="flex-wrap-wrap">
               <slot/>
               {
