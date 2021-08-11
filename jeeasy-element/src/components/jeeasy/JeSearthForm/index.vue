@@ -56,6 +56,9 @@ export default {
     },
     reset () {
       this.formData = {}
+      this.$nextTick(() => {
+        this.submit()
+      })
     },
     toggleSearch () {
       this.searchOpen = !this.searchOpen

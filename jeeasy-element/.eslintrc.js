@@ -42,7 +42,11 @@ module.exports = {
     'comma-dangle': ["error", "never"] // 要求或禁止末尾逗号 [never,禁止]
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
+    ecmaFeatures:{
+      // 支持装饰器
+      legacyDecorators: true
+    }
   },
   overrides: [
     {

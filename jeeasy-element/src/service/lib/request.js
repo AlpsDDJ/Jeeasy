@@ -3,9 +3,10 @@
  * @author LiQingSong
  */
 import store from '@/store'
+import router from '@/router'
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl } from '@/settings'
+import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl, siteLoginRouter } from '@/settings'
 import { isExternal } from '@/utlis/validate'
 // import Qs from 'qs'
 
@@ -61,6 +62,8 @@ service.interceptors.response.use(
       const reqUrl = response.config.url.split('?')[0].replace(response.config.baseURL, '')
       const noVerifyBool = ajaxResponseNoVerifyUrl.includes(reqUrl)
 
+      const path = router.currentRoute.path
+
       switch (code) {
         case 401: // 未登陆
 
@@ -84,21 +87,23 @@ service.interceptors.response.use(
 
           break
         case 600:
-          MessageBox({
-            title: '提示',
-            showClose: false,
-            closeOnClickModal: false,
-            closeOnPressEscape: false,
-            message: '当前用户登入信息已失效，请重新登入再操作',
-            beforeClose: (action, instance, done) => {
-              if (isExternal(serverLoginUrl)) {
-                window.location.href = serverLoginUrl
-              } else {
-                window.location.reload()
+          if(siteLoginRouter.indexOf(path) === -1) {
+            MessageBox({
+              title: '提示',
+              showClose: false,
+              closeOnClickModal: false,
+              closeOnPressEscape: false,
+              message: '当前用户登入信息已失效，请重新登入再操作',
+              beforeClose: (action, instance, done) => {
+                if (isExternal(serverLoginUrl)) {
+                  window.location.href = serverLoginUrl
+                } else {
+                  window.location.reload()
+                }
+                console.log(action, instance, done)
               }
-              console.log(action, instance, done)
-            }
-          })
+            })
+          }
           break
 
         default:

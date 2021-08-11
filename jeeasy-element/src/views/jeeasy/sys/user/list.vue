@@ -6,16 +6,14 @@
 </template>
 
 <script type="text/jsx">
-import JeTable from '@/components/jeeasy/JeTable'
-import JeSearchForm from '@/components/jeeasy/JeSearthForm'
-import { parseApi } from '@/service/lib/request'
-import { mapGetters } from 'vuex'
+import ListViewMixin from '@/mixin/ListViewMixin'
 
 export default {
   name: 'SysUserList',
+  mixins: [ListViewMixin],
   data() {
     return {
-      list: [],
+      baseApi: '/sys/user',
       columns: [
         {
           label: '用户名',
@@ -56,46 +54,13 @@ export default {
             )
           }
         }
-      ],
-      query: {
-        page: {
-          current: 1,
-          size: 3
-        },
-        form: {}
-      },
-      api: parseApi('/sys/user')
+      ]
     }
-  },
-  components: {
-    JeSearchForm,
-    JeTable
   },
   mounted() {
     this.loadData()
   },
-  computed: {
-    ...mapGetters([
-      'loading'
-    ]),
-    searchParams(){
-      return this.columns.filter(({ search = false }) => search)
-    }
-  },
   methods: {
-    loadData() {
-      const { current, size } = this.query.page
-      const params = {
-        current,
-        size,
-        ...this.query.form
-      }
-      this.$ajax(this.api.list, params).then(({ result }) => {
-        const { records, ...page } = result
-        this.query.page = page
-        this.list = records
-      })
-    }
   }
 }
 </script>
