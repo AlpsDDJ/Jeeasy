@@ -71,10 +71,10 @@ export default {
                 <el-form-item label={item.label} prop={item.key}>
                   {
                     () => {
-                      if (slot && this.$slots[slot]) {
-                        return <slot name={slot}/>
+                      if (slot && this.$scopedSlots[slot]) {
+                        return this.$scopedSlots[slot]()
                       } else if (item.search && typeof item.search === 'function') {
-                        return item.search()
+                        return Object.assign({ props: {'value': this.formData[item.key]}, on: {'input': val => this.formData[item.key] = val}}, item.search())
                       } else {
                         return <el-input v-model={this.formData[item.key]}/>
                       }

@@ -40,6 +40,9 @@ export default {
     },
     searchParams(){
       return this.columns.filter(({ search = false }) => search)
+    },
+    formFields(){
+      return this.columns.filter(({ form = {} }) => form)
     }
   },
   methods: {

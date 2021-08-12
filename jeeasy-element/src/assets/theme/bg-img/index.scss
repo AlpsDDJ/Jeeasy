@@ -7,6 +7,9 @@
   $borderColorLighter: #515a6e;
   $NavTabsBorderTopColor: #515a6e;
   $NavTabsBgColor: rgba(0, 0, 0, 0.5);
+  $FontColor: rgb(200, 203, 208);
+
+  color: $FontColor;
 
   #indexlayout {
     background-image: url(../../images/bg-smooth.jpg);
@@ -30,7 +33,7 @@
             .indexlayout-flexible {
               &:hover{
                 background-color: #000C17;
-                color: #FFF;
+                color: $FontColor;
               }
             }
             .el-breadcrumb-cus {
@@ -39,7 +42,7 @@
                 a {
                   color: #C0C4CC;
                   &:hover {
-                    color: #fff;
+                    color: $FontColor;
                   }
                 }
                 &:last-child {
@@ -52,7 +55,7 @@
             .indexlayout-top-menu-right {
               .index-layout-message,
               .el-dropdown-link{
-                color: #FFF;
+                color: $FontColor;
               }
             }
           }
@@ -74,7 +77,7 @@
               a {
                 color: #C0C4CC;
                 &:hover {
-                  color: #fff;
+                  color: $FontColor;
                 }
               }
               &:last-child {
@@ -115,9 +118,9 @@
 
         .indexlayout-right-footer {
           opacity: .9;
-          color: #FFF;
+          color: $FontColor;
           a {
-            color: #FFF;
+            color: $FontColor;
             &:hover {
               color: #209e91;
             }
@@ -141,7 +144,7 @@
     transition: none;
   }
   .custom-table-header {
-    color: #FFF;
+    color: $FontColor;
   }
   .custom-table {
     .el-table__fixed-right-patch {
@@ -150,14 +153,14 @@
 
     .custom-td-header-one,
     .el-table__body tr:hover .custom-td-header-one {
-      color: #FFF;
+      color: $FontColor;
       background-color: rgba(0, 0, 0,0.38);
     }
   }
   .custom-drawer {
     background-image: url(../../images/bg-smooth.jpg);
     .el-drawer__header {
-      color: #FFF;
+      color: $FontColor;
       border-bottom: 1px solid rgba(0,0,0,.12);
       box-shadow: 0 1px 0 0 rgba(255,255,255,.12)
     }
@@ -198,7 +201,7 @@
       background-image: url(../../images/bg-smooth.jpg);
     }
     .svg-icon{
-      color: #fff;
+      color: $FontColor;
     }
   }
   /* el表单 */
@@ -207,7 +210,7 @@
   .el-radio,
   .el-input__prefix,
   .el-input__suffix {
-    color: #FFF;
+    color: $FontColor;
   }
   .el-input__inner,
   .el-textarea__inner,
@@ -218,17 +221,17 @@
   .el-button--default,
   .el-radio-button__inner {
     background-color: rgba(0,0,0,.15);
-    color: #FFF;
+    color: $FontColor;
   }
   /* el表格 */
   .el-table {
     background:none;
-    color: #FFF;
+    color: $FontColor;
     &::before{
       background-color: rgba(255,255,255,.2);
     }
     thead {
-      color: #FFF;
+      color: $FontColor;
     }
     th {
       background: none;
@@ -277,14 +280,14 @@
   /* el分页 */
   .el-pagination {
     .el-pagination__total {
-      color: #FFF;
+      color: $FontColor;
     }
     &.is-background {
       .el-pager {
         li {
           border: 1px solid #515a6e;
           background-color: rgba(0,0,0,.15);
-          color: #FFF;
+          color: $FontColor;
           &.active {
             border: none;
           }
@@ -294,7 +297,7 @@
       .btn-next {
         border: 1px solid #515a6e;
         background-color: rgba(0,0,0,.15);
-        color: #FFF;
+        color: $FontColor;
       }
     }
   }
@@ -302,7 +305,7 @@
   /* 自定义页面样式 */
   .main-conent-detail {
     .main-conent-detail-title {
-      color: #FFF !important;
+      color: $FontColor !important;
     }
   }
 

@@ -107,10 +107,9 @@ export default {
           <div slot="header">
             <el-row>
               <el-col span={6}>
-                <slot name="tools" data={this.toolsParams}>
-                  <i class="el-icon-tickets" />
-                  <span>{this.tableTitle}</span>
-                </slot>
+                {
+                  this.$scopedSlots['top-tools'] && this.$scopedSlots['top-tools'](this.toolsParams)
+                }
               </el-col>
               <el-col span={18} style="text-align: right">
                 <el-popover placement="left-start" width="150">
@@ -155,8 +154,9 @@ export default {
                     props={item}
                     scopedSlots={{
                       default: scope => {
-                        if (slot && this.$slots[slot]) { // 插槽
-                          return <slot name={slot} row={scope.row} />
+                        if (slot && this.$scopedSlots[slot]) { // 插槽
+                          return this.$scopedSlots[slot] && this.$scopedSlots[slot](scope.row)
+                          // return <slot name={slot} row={scope.row} />
                         } else if (item.customRender) { // 自定义渲染方法
                           return item.customRender({
                             record: scope.row,
@@ -169,6 +169,20 @@ export default {
                     }}>
                   </el-table-column>
                 ))
+              }
+              {
+                this.$scopedSlots.operate
+                &&
+                <el-table-column
+                  key={'operate'}
+                  align={'center'}
+                  label={'操作'}
+                  scopedSlots={{
+                    default: scope => {
+                      return this.$scopedSlots.operate(scope.row)
+                    }
+                  }}>
+                </el-table-column>
               }
             </el-table>
           {
