@@ -8,6 +8,8 @@ export default {
   data () {
     return {
       list: [],
+      fields: [],
+      labels: [],
       columns: [],
       query: {
         page: {
@@ -38,11 +40,19 @@ export default {
         ...this.query.form
       }
     },
+    column() {
+      return Object.values(this.fields).filter(field => field !== 'id').map(field => {
+        return {
+          key: field,
+          label: this.labels[field]
+        }
+      })
+    },
     searchParams(){
       return this.columns.filter(({ search = false }) => search)
     },
     formFields(){
-      return this.columns.filter(({ form = {} }) => form)
+      return this.column.filter(({ form = {} }) => form)
     }
   },
   methods: {

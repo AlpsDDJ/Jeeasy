@@ -1,8 +1,8 @@
 <template>
   <div class="main-conent main-conent-minheight">
     <je-search-form v-model="query.form" :search-params="searchParams" @submit="loadData"/>
-    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]" selection>
-      <template slot="username" slot-scope="{username}">{{username}}</template>
+    <je-table :columns="column" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]" selection>
+      <template slot="username" slot-scope="{username}">{{ username }}</template>
       <template slot="operate" slot-scope="record">
         <el-button type="text" @click="() => { handleEdit(record) }">编辑</el-button>
       </template>
@@ -19,21 +19,24 @@
 <script type="text/jsx">
 import ListViewMixin from '@/mixin/ListViewMixin'
 import JeForm from '@/components/jeeasy/JeForm/index'
+import fields, { labels } from './form/fields'
 
 export default {
   name: 'SysUserList',
-  components: { JeForm },
+  components: {JeForm},
   mixins: [ListViewMixin],
-  data() {
+  data () {
     return {
       baseApi: '/sys/user',
       formVisible: false,
       formData: {},
+      fields,
+      labels,
       columns: [
         {
-          label: '用户名',
-          key: 'username',
-          slot: 'username',
+          label: labels[fields.username],
+          key: fields.username,
+          slot: fields.username,
           search: true
         },
         {
@@ -48,13 +51,7 @@ export default {
         {
           label: '电话',
           key: 'phone',
-          search: () => (
-            <el-select v-model={this.query.form.status}>
-              <el-option label="全部" value=""/>
-              <el-option label="正常" value="1"/>
-              <el-option label="冻结" value="0"/>
-            </el-select>
-          )
+          search: true
         },
         {
           label: '状态',
@@ -64,33 +61,36 @@ export default {
             }
           },
           search: () => (
-            <el-select>
-              <el-option label="全部" value=""/>
-              <el-option label="正常" value="1"/>
-              <el-option label="冻结" value="0"/>
-            </el-select>
+              <el-select v-model={this.query.form.status}>
+                <el-option label="全部" value=""/>
+                <el-option label="正常" value="1"/>
+                <el-option label="冻结" value="0"/>
+              </el-select>
           )
         }
         /*{
-          label: '操作',
-          key: 'operate',
-          customRender: ({record}) => {
-            return (
-              <el-button type="text" onClick={() => { record }}>编辑</el-button>
-            )
-          }
-        }*/
+         label: '操作',
+         key: 'operate',
+         customRender: ({record}) => {
+         return (
+         <el-button type="text" onClick={() => { record }}>编辑</el-button>
+         )
+         }
+         }*/
       ]
     }
   },
-  mounted() {
+  computed: {
+  },
+  mounted () {
     this.loadData()
   },
   methods: {
-    handleAdd() {
+    handleAdd () {
+      this.formData = {}
       this.formVisible = true
     },
-    handleEdit(record) {
+    handleEdit (record) {
       console.log(record)
       this.formData = {...record}
       this.formVisible = true

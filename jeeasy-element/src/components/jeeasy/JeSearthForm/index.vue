@@ -52,16 +52,7 @@ export default {
     component() {
       return (component, key) => {
         console.log(key, component)
-        const tag = component.componentOptions.tag
-        const _this = this
-        // component.data.model = { value: this.formData[key] }
-        // component.componentInstance.$listeners = val => {
-        //   _this.formData[key] = val
-        // }
-        component.$attrs.value = this.formData[key]
-        component.$listeners.input = value => {_this.formData[key] = value}
-        return key !== 'status1' ? component : <tag v-model={this.formData[key]} {...component.child}/>
-        // return [<tag v-model={this.formData[key]} {...component.child}/>]
+        return component
       }
     }
   },
@@ -92,17 +83,7 @@ export default {
                       if (slot && this.$scopedSlots[slot]) {
                         return this.$scopedSlots[slot]()
                       } else if (item.search && typeof item.search === 'function') {
-                        const formItem = item.search()
-                        return this.component(formItem, item.key)
-                        /*return Object.assign(
-                          {
-                            props: {
-                              value: this.formData[item.key]
-                            },
-                            on: {
-                              'input': this.handleInput
-                            }
-                          }, formItem)*/
+                        return this.component(item.search(), item.key)
                       } else {
                         return <el-input v-model={this.formData[item.key]} />
                       }
@@ -117,7 +98,7 @@ export default {
   },
   render() {
     return (
-      <el-card shadow="never" class="list-search border-none">
+      this.searchParams && this.searchParams.length !== 0 &&<el-card shadow="never" class="list-search border-none">
           <el-form v-model={this.formData} label-width="100px" nativeOnKeyup={({ code }) => {
             if (code === 'Enter') this.submit()
           }}>

@@ -94,7 +94,7 @@ export default {
 
 <style lang="scss">
 .el-dialog{
-  background: rgba(54, 53, 53, .9);
+  background: rgb(60, 60, 60);
 }
 .el-dialog__wrapper{
   background: rgba(255, 255, 255, .25);

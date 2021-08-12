@@ -2,7 +2,7 @@
   <div class="login">
       <div class="form">
         <h1 class="title">
-          Sign in to Admin
+          Sign in to Jeeasy
         </h1>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" size="medium">
           <el-form-item label="" prop="username">
