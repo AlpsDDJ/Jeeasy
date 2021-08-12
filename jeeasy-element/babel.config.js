@@ -6,5 +6,5 @@ module.exports = {
     }]
   ],
   // plugins: ['@babel/plugin-syntax-jsx']
-  plugins: ['@babel/plugin-syntax-jsx', 'transform-vue-jsx']
+  plugins: ['@babel/plugin-syntax-jsx']
 }
