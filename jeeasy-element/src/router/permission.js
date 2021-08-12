@@ -33,21 +33,24 @@ router.beforeEach(async(to, from, next) => {
             next()
         } else {
             try {
+                const token = store.getters.token
+                if(token){
+                    // 获取用户角色权限
+                    // 注意:角色必须是一个对象数组! 例如: ['admin'] or ,['test','edit']
+                    const { roles } = await store.dispatch('user/getInfo')
+                    // console.log(roles);
 
-                // 获取用户角色权限
-                // 注意:角色必须是一个对象数组! 例如: ['admin'] or ,['test','edit']
-                const { roles } = await store.dispatch('user/getInfo')
-                // console.log(roles);
+                    // 根据角色生成可访问路由映射
+                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
-                // 根据角色生成可访问路由映射
-                const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+                    // 动态添加可访问路由
+                    router.addRoutes(accessRoutes)
 
-                // 动态添加可访问路由
-                router.addRoutes(accessRoutes)
-
-                // 设置replace: true，这样导航就不会留下历史记录
-                next({ ...to, replace: true })
-
+                    // 设置replace: true，这样导航就不会留下历史记录
+                    next({ ...to, replace: true })
+                } else {
+                    next(siteLoginRouter + "?redirect=" + to.fullPath)
+                }
             } catch (error) {
                 // 删除Token
                 await store.dispatch('user/resetToken')
