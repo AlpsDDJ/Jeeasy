@@ -1,7 +1,7 @@
 <script type="text/jsx">
 export default {
   name: 'JeSearchForm',
-  data () {
+  data() {
     return {
       searchOpen: false,
       formData: {}
@@ -19,20 +19,20 @@ export default {
   },
   watch: {
     value: {
-      handler (val) {
+      handler(val) {
         this.formData = val
       },
       immediate: true
     },
     formData: {
-      handler (val) {
+      handler(val) {
         this.$emit('input', val)
       },
       deep: true
     }
   },
   computed: {
-    searchColLayout () {
+    searchColLayout() {
       return {
         props: {
           xs: 24,
@@ -43,40 +43,68 @@ export default {
         }
       }
     },
-    justify () {
+    justify() {
       return this.searchOpen ? 'end' : 'start'
     },
-    offset () {
+    offset() {
       return (4 - this.searchParams.length) * 6
+    },
+    component() {
+      return (component, key) => {
+        console.log(key, component)
+        const tag = component.componentOptions.tag
+        const _this = this
+        // component.data.model = { value: this.formData[key] }
+        // component.componentInstance.$listeners = val => {
+        //   _this.formData[key] = val
+        // }
+        component.$attrs.value = this.formData[key]
+        component.$listeners.input = value => {_this.formData[key] = value}
+        return key !== 'status1' ? component : <tag v-model={this.formData[key]} {...component.child}/>
+        // return [<tag v-model={this.formData[key]} {...component.child}/>]
+      }
     }
   },
   methods: {
-    submit () {
+    submit() {
       this.$emit('submit')
     },
-    reset () {
+    reset() {
       this.formData = {}
       this.$nextTick(() => {
         this.submit()
       })
     },
-    toggleSearch () {
+    toggleSearch() {
       this.searchOpen = !this.searchOpen
     },
-    renderItem () {
-      return this.searchParams.map(({slot, ...item}, index) => {
+    handleInput(value) {
+      console.log('value ---> ', value)
+    },
+    renderItem() {
+      return this.searchParams.map(({ slot, ...item }, index) => {
         if (index < 3 || this.searchOpen) {
           return (
-              <el-col key={item.key}  {...this.searchColLayout}>
+            <el-col key={item.key}  {...this.searchColLayout}>
                 <el-form-item label={item.label} prop={item.key}>
                   {
                     () => {
                       if (slot && this.$scopedSlots[slot]) {
                         return this.$scopedSlots[slot]()
                       } else if (item.search && typeof item.search === 'function') {
-                        return Object.assign({ props: {'value': this.formData[item.key]}, on: {'input': val => this.formData[item.key] = val}}, item.search())
+                        const formItem = item.search()
+                        return this.component(formItem, item.key)
+                        /*return Object.assign(
+                          {
+                            props: {
+                              value: this.formData[item.key]
+                            },
+                            on: {
+                              'input': this.handleInput
+                            }
+                          }, formItem)*/
                       } else {
-                        return <el-input v-model={this.formData[item.key]}/>
+                        return <el-input v-model={this.formData[item.key]} />
                       }
                     }
                   }
@@ -87,12 +115,14 @@ export default {
       })
     }
   },
-  render () {
+  render() {
     return (
-        <el-card shadow="never" class="list-search border-none">
-          <el-form v-model={this.formData} label-width="100px" nativeOnKeyup={({code}) => { if (code === 'Enter') this.submit() }}>
+      <el-card shadow="never" class="list-search border-none">
+          <el-form v-model={this.formData} label-width="100px" nativeOnKeyup={({ code }) => {
+            if (code === 'Enter') this.submit()
+          }}>
             <el-row justify={this.justify} type="flex" class="flex-wrap-wrap">
-              <slot/>
+              <slot />
               {
                 this.renderItem(this)
               }
@@ -102,9 +132,9 @@ export default {
                   <el-button onClick={this.reset}>重置</el-button>
                   {
                     this.searchOpen ?
-                        (<el-button type="text" onClick={this.toggleSearch}>展开<i class="el-icon-arrow-down el-icon--right"/></el-button>)
-                        :
-                        (<el-button type="text" onClick={this.toggleSearch}>收起<i class="el-icon-arrow-up el-icon--right"/></el-button>)
+                      (<el-button type="text" onClick={this.toggleSearch}>展开<i class="el-icon-arrow-down el-icon--right" /></el-button>)
+                      :
+                      (<el-button type="text" onClick={this.toggleSearch}>收起<i class="el-icon-arrow-up el-icon--right" /></el-button>)
                   }
                 </el-form-item>
               </el-col>

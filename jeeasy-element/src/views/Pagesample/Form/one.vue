@@ -10,7 +10,7 @@
                         <el-form-item label="活动名称" prop="name">
                             <el-input v-model="ruleForm.name"></el-input>
                         </el-form-item>
-                        <el-form-item label="活动区域" prop="region">
+                        <el-form-item label="活动区域" prop="region" ref="select">
                             <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:100%">
                               <el-option label="区域一" value="shanghai"></el-option>
                               <el-option label="区域二" value="beijing"></el-option>
@@ -65,7 +65,10 @@ export default {
     components: {
       PageHeader
     },
-    data() {
+  mounted() {
+    console.log('this.$refs.select --> ', this.$refs.select)
+  },
+  data() {
       return {
         ruleForm: {
           name: '',

@@ -48,7 +48,13 @@ export default {
         {
           label: '电话',
           key: 'phone',
-          search: true
+          search: () => (
+            <el-select v-model={this.query.form.status}>
+              <el-option label="全部" value=""/>
+              <el-option label="正常" value="1"/>
+              <el-option label="冻结" value="0"/>
+            </el-select>
+          )
         },
         {
           label: '状态',
