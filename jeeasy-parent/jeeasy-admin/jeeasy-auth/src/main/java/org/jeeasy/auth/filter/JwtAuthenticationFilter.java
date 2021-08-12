@@ -98,7 +98,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //                ResponseUtils.renderJson(request, response, e, applicationConfig.getOrigins());
             }
         } else {
-            R.noAuth("token 无效.").responseWrite(response);
+            R.noUser().responseWrite(response);
 //            ResponseUtils.renderJson(request, response, ResultCode.UNAUTHORIZED, null, applicationConfig.getOrigins());
         }
 

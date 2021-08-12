@@ -1,7 +1,11 @@
 <template>
   <div class="main-conent main-conent-minheight">
     <je-search-form v-model="query.form" :search-params="searchParams" @submit="loadData"/>
-    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]"/>
+    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]">
+      <template slot="tools" slot-scope="{currentRow, selection}">
+        <el-button @click="() => { console.log(currentRow, selection) }" title="111">222</el-button>
+      </template>
+    </je-table>
   </div>
 </template>
 

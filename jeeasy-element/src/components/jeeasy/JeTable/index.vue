@@ -1,77 +1,6 @@
-<template>
-  <div class="list-panel">
-    <el-card shadow="never" class="list-table border-none">
-      <div slot="header">
-        <el-row>
-          <el-col :span="6">
-            <i class="el-icon-tickets"></i>
-            <span>用户列表</span>
-          </el-col>
-          <el-col :span="18" style="text-align: right">
-            <el-popover
-              placement="left-start"
-              width="150">
-              <div v-for="(col) in columns" :key="col.key">
-                <el-checkbox @change="val => colFilterChange(val, col)" :value="!col.hidden" :label="col.label" />
-              </div>
-              <i slot="reference" style="font-size: 18px; line-height: 18px; margin-bottom: -10px"
-                 class="el-icon-setting" />
-            </el-popover>
-          </el-col>
-        </el-row>
-      </div>
-      <el-table
-        v-bind="$attrs"
-        :data="$attrs.data"
-        :key="tableIndex"
-        v-loading="loading"
-        @selection-change="handleSelectionChange"
-        @current-change="handleCurrentChange"
-        highlight-current-row
-        element-loading-background="rgba(0, 0, 0, 0.2)">
-        <el-table-column type="selection" width="50" v-if="showSelection" align="center" />
-        <el-table-column label="#" v-if="showIndex" width="50" align="center" type="index" :index="indexMethod"></el-table-column>
-        <template v-for="({slot, ...item}) in columns">
-          <el-table-column :key="item.key" v-if="!item.hidden" :align="item.align || 'center'" v-bind="item">
-            <template slot-scope="scope">
-              <!--              <slot :col="item"></slot>-->
-              <!-- 插槽 -->
-              <slot v-if="slot && $slots[slot]" :name="slot" :row="scope.row" />
-              <!-- 自定义渲染方法 -->
-              <ex-slot v-else-if="item.customRender" :custom-render="item.customRender" :row="scope.row" :index="scope.$index" :column="item" />
-              <!-- 默认文本渲染 -->
-              <span v-else v-html="showDefaultText(item.key, scope.row)" />
-            </template>
-          </el-table-column>
-        </template>
-      </el-table>
-      <el-row class="list-foot" v-if="showPage">
-        <el-col :span="12" :offset="12" class="text-right">
-          <el-pagination
-            background small
-            layout="total, sizes, prev, pager, next"
-            @size-change="pageChange"
-            @current-change="pageChange"
-            :page-sizes="pageSizes"
-            :current-page.sync="page.current"
-            :page-size.sync="page.size"
-            :total="page.total" />
-        </el-col>
-      </el-row>
-    </el-card>
-
-
-  </div>
-</template>
-
-<script lang="text/jsx">
-import ExSlot from './ExSlot'
-
+<script>
 export default {
   name: 'JeTable',
-  components: {
-    'ex-slot': ExSlot
-  },
   data() {
     return {
       defaultColumnTextAlign: 'center',
@@ -82,7 +11,13 @@ export default {
     }
   },
   methods: {
-    pageChange() {
+    pageChange(current, size) {
+      if (current) {
+        this.page.current = current
+      }
+      if (size) {
+        this.page.size = size
+      }
       this.$emit('pageChange')
     },
     indexMethod(index) {
@@ -114,6 +49,12 @@ export default {
         return sizes
       } else {
         return [this.value.size, ...sizes]
+      }
+    },
+    toolsParams(){
+      return {
+        currentRow: this.currentRow,
+        selection: this.selection
       }
     }
   },
@@ -158,6 +99,100 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  render() {
+    return (
+      <div class="list-panel">
+        <el-card shadow="never" class="list-table border-none">
+          <div slot="header">
+            <el-row>
+              <el-col span={6}>
+                <slot name="tools" data={this.toolsParams}>
+                  <i class="el-icon-tickets" />
+                  <span>{this.tableTitle}</span>
+                </slot>
+              </el-col>
+              <el-col span={18} style="text-align: right">
+                <el-popover placement="left-start" width="150">
+                  {
+                    this.columns.map(col => (
+                      <div key={col.key}>
+                        <el-checkbox on-change={val => this.colFilterChange(val, col)} value={!col.hidden} label={col.label} />
+                      </div>
+                    ))
+                  }
+                  <i slot="reference" style="font-size: 18px; line-height: 18px; margin-bottom: -10px" class="el-icon-setting" />
+                </el-popover>
+              </el-col>
+            </el-row>
+            </div>
+            <el-table {...{ props: this.$attrs }}
+                      data={this.$attrs.data}
+                      key={this.tableIndex}
+                      v-loading={this.loading}
+                      on-selection-change={this.handleSelectionChange}
+                      on-current-change={this.handleCurrentChange}
+                      highlight-current-row={true}
+                      element-loading-background="rgba(0, 0, 0, 0.2)">
+              {
+                this.showSelection
+                &&
+                <el-table-column type="selection" width="50" align="center" />
+              }
+              {
+                this.showIndex
+                &&
+                <el-table-column label="#" width="50" align="center" type="index" index={this.indexMethod} />
+              }
+
+              {
+                this.columns.map(({ slot, ...item }) => (
+                  !item.hidden
+                  &&
+                  <el-table-column
+                    key={item.key}
+                    align={item.align || 'center'}
+                    props={item}
+                    scopedSlots={{
+                      default: scope => {
+                        if (slot && this.$slots[slot]) { // 插槽
+                          return <slot name={slot} row={scope.row} />
+                        } else if (item.customRender) { // 自定义渲染方法
+                          return item.customRender({
+                            record: scope.row,
+                            index: scope.$index
+                          })
+                        } else { // 默认文本渲染
+                          return <span>{this.showDefaultText(item.key, scope.row)}</span>
+                        }
+                      }
+                    }}>
+                  </el-table-column>
+                ))
+              }
+            </el-table>
+          {
+            this.showPage
+            &&
+            <el-row class="list-foot">
+              <el-col span={12} offset={12} class="text-right">
+                <el-pagination background={true} small={true} layout="total, sizes, prev, pager, next"
+                               on-size-change={size => {
+                                 this.pageChange(null, size)
+                               }}
+                               on-current-change={current => {
+                                 this.pageChange(current)
+                               }}
+                               page-sizes={this.pageSizes}
+                               current-page={this.page.current}
+                               total={this.page.total} />
+              </el-col>
+            </el-row>
+          }
+
+        </el-card>
+      </div>
+    )
   }
 }
 </script>
