@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum BooleanEnum implements DictEnum<Integer> {
+public enum BooleanEnum implements IDictEnum<Integer> {
 
     // 已删除
     YES(1, "是"),

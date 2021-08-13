@@ -7,6 +7,7 @@ import Vue from 'vue'
 // CSS 重置 初始化
 import 'normalize.css/normalize.css'
 
+import '@/components/jeeasy'
 // 引入 ElementUI
 import ElementUI from 'element-ui'
 import '@/assets/css/index.scss'

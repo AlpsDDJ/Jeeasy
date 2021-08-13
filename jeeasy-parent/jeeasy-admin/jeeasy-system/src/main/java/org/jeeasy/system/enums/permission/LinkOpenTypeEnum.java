@@ -2,7 +2,7 @@ package org.jeeasy.system.enums.permission;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * 菜单外链发开方式
@@ -13,7 +13,7 @@ import org.jeeasy.common.core.enums.DictEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum LinkOpenTypeEnum implements DictEnum<Integer> {
+public enum LinkOpenTypeEnum implements IDictEnum<Integer> {
     // 菜单外链发开方式
     INTERNAL(0, "内部打开"),
     EXTERNAL(1, "外部打开"),

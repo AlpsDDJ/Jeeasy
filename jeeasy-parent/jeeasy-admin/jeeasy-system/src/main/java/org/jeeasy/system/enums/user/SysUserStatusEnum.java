@@ -2,7 +2,7 @@ package org.jeeasy.system.enums.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * SysUserStatusEnum: 系统用户状态
@@ -12,8 +12,9 @@ import org.jeeasy.common.core.enums.DictEnum;
  * @date 2020/11/22 2:10
  */
 @Getter
+
 @AllArgsConstructor
-public enum SysUserStatusEnum implements DictEnum<Integer> {
+public enum SysUserStatusEnum implements IDictEnum<Integer> {
 
     // 正常状态
     NORMAL(1, "正常"),
@@ -23,5 +24,4 @@ public enum SysUserStatusEnum implements DictEnum<Integer> {
 
     private final Integer value;
     private final String text;
-
 }

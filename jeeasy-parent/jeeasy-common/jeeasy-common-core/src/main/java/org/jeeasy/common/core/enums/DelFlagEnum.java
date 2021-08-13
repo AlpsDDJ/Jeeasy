@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum DelFlagEnum implements DictEnum<Integer> {
+public enum DelFlagEnum implements IDictEnum<Integer> {
 
     // 已删除
     YES(1, "已删除"),

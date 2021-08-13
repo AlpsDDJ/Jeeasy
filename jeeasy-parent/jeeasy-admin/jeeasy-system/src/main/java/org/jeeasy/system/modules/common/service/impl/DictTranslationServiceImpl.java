@@ -1,4 +1,4 @@
-package org.jeeasy.system.common.service.impl;
+package org.jeeasy.system.modules.common.service.impl;
 
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package org.jeeasy.generate.emuns;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * @author AlpsDDJ
@@ -10,7 +10,7 @@ import org.jeeasy.common.core.enums.DictEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum IdTypeEnum implements DictEnum<Integer> {
+public enum IdTypeEnum implements IDictEnum<Integer> {
     AUTO(0, "自动"),
     NONE(1, ""),
     INPUT(2, ""),

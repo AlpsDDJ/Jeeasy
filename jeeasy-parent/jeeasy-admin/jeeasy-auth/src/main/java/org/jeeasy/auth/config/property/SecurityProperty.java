@@ -39,7 +39,7 @@ public class SecurityProperty {
     /**
      * logoutUrl
      */
-    private Long expiration = 3600L;
+    private Long expiration = 12 * 3600L;
 
     /**
      * 最大登录设备数 = 0 无限制

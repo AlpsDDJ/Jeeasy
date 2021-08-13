@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum SexEnum implements DictEnum<Integer> {
+public enum SexEnum implements IDictEnum<Integer> {
 
     // 性别选项
     MAN(1, "男"),

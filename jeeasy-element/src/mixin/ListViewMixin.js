@@ -52,7 +52,7 @@ export default {
       return this.columns.filter(({ search = false }) => search)
     },
     formFields(){
-      return this.column.filter(({ form = {} }) => form)
+      return this.columns.filter(({ form = {} }) => form)
     }
   },
   methods: {

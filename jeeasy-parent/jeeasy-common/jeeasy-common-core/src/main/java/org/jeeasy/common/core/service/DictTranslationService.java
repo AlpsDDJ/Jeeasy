@@ -1,7 +1,7 @@
 package org.jeeasy.common.core.service;
 
 import cn.hutool.core.util.EnumUtil;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 import org.jeeasy.common.core.tools.Tools;
 
 /**
@@ -28,7 +28,7 @@ public interface DictTranslationService {
     default <T> String translateDictFromEnum(Class<? extends Enum> enumClass, T key) {
         if (EnumUtil.isEnum(enumClass)) {
             Enum enableFlagEnum = EnumUtil.likeValueOf(enumClass, key);
-            DictEnum<T> dictEnum = (DictEnum<T>) enableFlagEnum;
+            IDictEnum<T> dictEnum = (IDictEnum<T>) enableFlagEnum;
             if (Tools.isNotEmpty(dictEnum)) {
                 return dictEnum.getText();
             }

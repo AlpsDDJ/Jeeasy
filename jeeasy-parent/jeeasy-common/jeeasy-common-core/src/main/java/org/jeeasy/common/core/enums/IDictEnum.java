@@ -4,7 +4,7 @@ package org.jeeasy.common.core.enums;
  * @author AlpsDDJ
  * @date 2020/11/23 10:58
  */
-public interface DictEnum<T> {
+public interface IDictEnum<T> {
 
     /**
      * 获取字典项文本
@@ -17,5 +17,11 @@ public interface DictEnum<T> {
      * @return
      */
     String getText();
+
+//    default String getDictCode(){
+//        String className = this.getClass().getSimpleName();
+//
+//        return StrUtil.toCamelCase(className.replace("Enum", ""));
+//    }
 
 }

@@ -2,7 +2,7 @@ package org.jeeasy.generate.emuns;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * @author AlpsDDJ
@@ -10,7 +10,7 @@ import org.jeeasy.common.core.enums.DictEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum TableTypeEnum implements DictEnum<String> {
+public enum TableTypeEnum implements IDictEnum<String> {
     SINGLE("single", "单表"),
     MAIN("main", "主表"),
     SLAVE("slave", "附表"),

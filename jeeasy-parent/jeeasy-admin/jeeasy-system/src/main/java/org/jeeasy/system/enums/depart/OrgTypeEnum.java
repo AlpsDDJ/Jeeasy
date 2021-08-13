@@ -2,7 +2,7 @@ package org.jeeasy.system.enums.depart;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * 机构类型
@@ -13,7 +13,7 @@ import org.jeeasy.common.core.enums.DictEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum OrgTypeEnum implements DictEnum<Integer> {
+public enum OrgTypeEnum implements IDictEnum<Integer> {
     // 机构类型
     TOP(1, "一级部门"),
     SUB(2, "子部门"),

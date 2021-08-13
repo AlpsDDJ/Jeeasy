@@ -87,7 +87,7 @@ service.interceptors.response.use(
 
           break
         case 600:
-          if(siteLoginRouter.indexOf(path) === -1) {
+          if (siteLoginRouter.indexOf(path) === -1) {
             MessageBox({
               title: '提示',
               showClose: false,
@@ -175,6 +175,7 @@ export const parseApi = api => {
       info: `${api}/{id} ${apiType.query}`,
       del: `${api}/{id} ${apiType.del}`,
       delAll: `${api} ${apiType.del}`,
+      add: `${api} ${apiType.add}`,
       edit: `${api} ${apiType.edit}`
     }
   } else {
@@ -197,41 +198,35 @@ export function urlRender(tpl, dataObj) {
 }
 
 export const ajax = (url, params, config = {}) => {
-  if (url.indexOf(' ') !== -1) {
-    const [_url, method = apiType.query] = url.split(' ')
-    const realUrl = urlRender(_url, params)
+  const [_url, method = apiType.query] = url.split(' ')
+  const realUrl = urlRender(_url, params)
+  store.dispatch('global/setLoading', { [url]: true })
 
+  let finalConfig = {}
 
-
-
-    store.dispatch('global/setLoading', { [url]: true })
-
-    let finalConfig = {}
-
-    if (method === apiType.query) {
-      finalConfig = {
-        params,
-        method,
-        ...config
-      }
-    } else {
-      finalConfig = {
-        data: params,
-        method,
-        ...config
-      }
+  if (method === apiType.query) {
+    finalConfig = {
+      params,
+      method,
+      ...config
     }
-
-    return new Promise((resolve, reject) => {
-      service(realUrl, finalConfig).then(({result}) => {
-        resolve(result)
-        store.dispatch('global/setLoading', { [url]: false })
-      }).catch(err => {
-        reject(err)
-        store.dispatch('global/setLoading', { [url]: false })
-      })
-    })
-
+  } else {
+    finalConfig = {
+      data: params,
+      method,
+      ...config
+    }
   }
+
+  return new Promise((resolve, reject) => {
+    service(realUrl, finalConfig).then(({ result, ...data }) => {
+      resolve(result || data)
+      store.dispatch('global/setLoading', { [url]: false })
+    }).catch(err => {
+      reject(err)
+      store.dispatch('global/setLoading', { [url]: false })
+    })
+  })
+
 
 }

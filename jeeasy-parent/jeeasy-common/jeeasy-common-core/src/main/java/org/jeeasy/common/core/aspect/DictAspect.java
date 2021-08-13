@@ -74,6 +74,13 @@ public class DictAspect {
                     items.add(translate(record));
                 }
                 page.setRecords(items);
+            } else if(dataResult.getResult() instanceof List) {
+                List<?> list = (List<?>) dataResult.getResult();
+                List<Map<String, Object>> listTemp = new ArrayList<>();
+                list.forEach(record -> {
+                    listTemp.add(translate(record));
+                });
+                dataResult.setResult(listTemp);
             } else {
                 dataResult.setResult(translate(dataResult.getResult()));
             }

@@ -34,6 +34,7 @@ jeeasy:
   dict:
     dict-table-flag: ["@", "#"]
     dict-text-suffix: _dict
+    # 根据属性名称自动翻译字典，无需注释 @Dict
     auto-translate-enum-class:
       enableFlag: org.jeeasy.common.core.enums.EnableFlagEnum
       delFlag: org.jeeasy.common.core.enums.DelFlagEnum

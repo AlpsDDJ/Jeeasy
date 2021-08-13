@@ -19,6 +19,9 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "jeeasy.dict")
 public class DictEnumProperty {
 
+    /**
+     * 根据属性名称自动翻译字典，无需注释@Dict
+     */
     private Map<String, Class<? extends Enum>> autoTranslateEnumClass = new HashMap<>();
 
     private String[] dictTableFlag = new String[] {"#"};

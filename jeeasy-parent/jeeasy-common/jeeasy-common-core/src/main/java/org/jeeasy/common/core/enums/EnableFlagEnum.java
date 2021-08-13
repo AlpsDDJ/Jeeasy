@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum EnableFlagEnum implements DictEnum<Integer>{
+public enum EnableFlagEnum implements IDictEnum<Integer> {
     // 启用
     YES(1, "启用"),
     // 未启用
@@ -22,7 +22,7 @@ public enum EnableFlagEnum implements DictEnum<Integer>{
 
     public static void main(String[] args) {
         Enum enableFlagEnum = EnumUtil.likeValueOf(EnableFlagEnum.class, "1");
-        DictEnum dictEnum = (DictEnum) enableFlagEnum;
+        IDictEnum dictEnum = (IDictEnum) enableFlagEnum;
         System.out.println(dictEnum.getText());
     }
 

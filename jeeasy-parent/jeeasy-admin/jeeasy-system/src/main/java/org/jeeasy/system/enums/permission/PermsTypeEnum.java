@@ -2,7 +2,7 @@ package org.jeeasy.system.enums.permission;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jeeasy.common.core.enums.DictEnum;
+import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
  * 权限策略
@@ -13,7 +13,7 @@ import org.jeeasy.common.core.enums.DictEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum PermsTypeEnum implements DictEnum<Integer> {
+public enum PermsTypeEnum implements IDictEnum<Integer> {
     // 权限策略
     DISABLE(0, "禁用"),
     DISPLAY(1, "显示"),
