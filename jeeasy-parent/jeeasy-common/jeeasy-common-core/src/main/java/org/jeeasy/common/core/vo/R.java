@@ -40,6 +40,10 @@ public class R<T> implements Serializable {
      * 请求方法不支持 405
      */
     public static final Integer SC_JEEASY_NOT_SUPPORTED = 405;
+    /**
+     * token错误 600
+     */
+//    public static final Integer SC_JEEASY_JWT_TOKEN_ERROR = 600;
 
     /**
      * 成功标志
@@ -122,63 +126,54 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    /**
-     * 无权限访问返回结果
-     */
-    public static R<Object> noAuth(String msg) {
-        return error(SC_JEEASY_NO_AUTH, msg);
+    public static R<Object> error(RestCode restCode) {
+        return R.error(restCode.getCode(), restCode.getMessage());
     }
 
-    /**
-     * 无权限访问返回结果
-     */
-    public static R<Object> noAuth() {
-        return error(SC_JEEASY_NO_AUTH, "权限不足");
-    }
+//    /**
+//     * 无权限访问返回结果
+//     */
+//    public static R<Object> noAuth(String msg) {
+//        return error(SC_JEEASY_NO_AUTH, msg);
+//    }
+//
+//    /**
+//     * 无权限访问返回结果
+//     */
+//    public static R<Object> noAuth() {
+//        return error(SC_JEEASY_NO_AUTH, "权限不足");
+//    }
 
-    /**
-     * 未登录用户
-     */
-    public static R<Object> noUser() {
-        return error(SC_JEEASY_NO_USER, "未登录");
-    }
+//    /**
+//     * notFound
+//     */
+//    public static R<Object> notFound(String msg) {
+//        return error(SC_JEEASY_NOT_FOUND, msg);
+//    }
 
-    /**
-     * 未登录用户
-     */
-    public static R<Object> noUser(String msg) {
-        return error(SC_JEEASY_NO_USER, msg);
-    }
-
-    /**
-     * notFound
-     */
-    public static R<Object> notFound(String msg) {
-        return error(SC_JEEASY_NOT_FOUND, msg);
-    }
-
-    /**
-     * NotSupported
-     */
-    public static R<Object> notSupported(String msg) {
-        return error(SC_JEEASY_NOT_SUPPORTED, msg);
-    }
+//    /**
+//     * NotSupported
+//     */
+//    public static R<Object> notSupported(String msg) {
+//        return error(SC_JEEASY_NOT_SUPPORTED, msg);
+//    }
 
     public void responseWrite(HttpServletResponse httpServletResponse) throws IOException {
         httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(this));
+        if (this.isSuccess()) {
+            httpServletResponse.getWriter().write(JSONUtil.toJsonStr(this));
+        } else {
+            httpServletResponse.setStatus(this.code);
+            httpServletResponse.getWriter().write(JSONUtil.toJsonStr(this));
+        }
     }
 
     public static void responseWriteSuccess(Object obj, HttpServletResponse httpServletResponse) throws IOException {
-        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(R.ok(obj)));
+        R.ok(obj).responseWrite(httpServletResponse);
     }
 
-    public static void responseWriteError(String message, HttpServletResponse httpServletResponse) throws IOException {
-        httpServletResponse.setHeader("Content-type", "application/json;charset=UTF-8");
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.getWriter().write(JSONUtil.toJsonStr(R.error(message)));
+    public static void responseWriteError(int status, String message, HttpServletResponse httpServletResponse) throws IOException {
+        R.error(status, message).responseWrite(httpServletResponse);
     }
 }

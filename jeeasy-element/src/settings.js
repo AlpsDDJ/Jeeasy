@@ -6,38 +6,38 @@
 /**
  * 站点名称
  */
- export const siteTitle = 'Jeeasy-Element'
+export const siteTitle = 'Jeeasy-Element'
 
- /**
+/**
  * 是否固定右侧头部(默认配置)
  */
 export const siteFiexdHeader = true
 
- /**
+/**
  * 是否启用顶部导航(默认配置)
  */
 export const siteTopNavEnable = false
 
 
- /**
+/**
  * 是否显示侧边栏LOGO(默认配置)
  */
 export const siteSidebarLogo = true
 
- /**
+/**
  * 站点本地存储TokenKey
  */
- export const siteTokenKey = "jeeasy_token"
+export const siteTokenKey = 'jeeasy_token'
 
 /**
  * Ajax请求头TokenKey
  */
-export const ajaxHeadersTokenKey = "JEEASY-ACCESS-TOKEN"
+export const ajaxHeadersTokenKey = 'JEEASY-ACCESS-TOKEN'
 
 /**
  * 站点登录路由地址
  */
- export const siteLoginRouter = "/login"
+export const siteLoginRouter = '/login'
 
 /**
  * 服务端登录,请求ajax地址/跳转地址
@@ -45,6 +45,11 @@ export const ajaxHeadersTokenKey = "JEEASY-ACCESS-TOKEN"
  * 内部：serverLoginUrl = '/login';
  */
 export const serverLoginUrl = '/auth/login'
+
+/**
+ * 当前token失效后可用refreshToken刷新token
+ */
+export const refreshTokenUrl = '/auth/refresh'
 
 /**
  * 获取用户信息
@@ -56,8 +61,9 @@ export const getCurrentUserUrl = '/currentUser'
  * ajax请求 - 返回数据 - 不添加前置验证的 URL
  */
 export const ajaxResponseNoVerifyUrl = [
-    serverLoginUrl, // 用户登录
-    getCurrentUserUrl // 获取用户信息
+  refreshTokenUrl, // 刷新token
+  serverLoginUrl, // 用户登录
+  getCurrentUserUrl // 获取用户信息
 ]
 
 /**

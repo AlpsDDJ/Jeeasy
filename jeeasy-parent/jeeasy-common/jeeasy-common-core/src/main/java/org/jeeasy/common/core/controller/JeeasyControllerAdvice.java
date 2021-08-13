@@ -3,13 +3,21 @@ package org.jeeasy.common.core.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.vo.RestCode;
+import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
  * @author AlpsDDJ
@@ -17,7 +25,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  */
 @Slf4j
 @RestControllerAdvice
-public class JeeasyControllerAdvice {
+public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(Exception.class)
     public R<?> handleException(Exception e){
@@ -34,7 +42,8 @@ public class JeeasyControllerAdvice {
     @ExceptionHandler(NoHandlerFoundException.class)
     public R<?> handlerNoFoundException(NoHandlerFoundException e) {
         log.error(e.getMessage(), e);
-        return R.notFound("路径不存在，请检查路径是否正确");
+        throw new JeeasyException(RestCode.NOT_FOUND);
+//        return R.notFound("路径不存在，请检查路径是否正确");
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
@@ -64,7 +73,8 @@ public class JeeasyControllerAdvice {
             }
         }
         log.error(sb.toString(), e);
-        return R.notSupported(sb.toString());
+        throw new JeeasyException(RestCode.NOT_SUPPORTED, sb.toString());
+//        return R.notSupported(sb.toString());
     }
 
     /**
@@ -80,6 +90,31 @@ public class JeeasyControllerAdvice {
     public R<?> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
         log.error(e.getMessage(), e);
         return R.error("字段太长,超出数据库字段的长度");
+    }
+
+    @Override
+    public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
+        log.info("MethodParameter:" + methodParameter);
+        log.info("converterType:" + aClass);
+        return true;
+    }
+
+    @Override
+    public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        log.info(serverHttpRequest.getURI().getPath());
+        if(o instanceof R){
+            R<?> result = (R<?>) o;
+            if (!result.isSuccess()) {
+                try {
+                    HttpStatus httpStatus = HttpStatus.valueOf(result.getCode());
+                    serverHttpResponse.setStatusCode(httpStatus);
+                    return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return o;
     }
 
 //    @ExceptionHandler(PoolException.class)

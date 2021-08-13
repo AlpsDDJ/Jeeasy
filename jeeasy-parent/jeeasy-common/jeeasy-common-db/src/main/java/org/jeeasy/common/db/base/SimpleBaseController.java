@@ -140,15 +140,13 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:24
      */
     public R<?> deleteBatch(String ids) {
-        R<?> result = new R<>();
         if (Tools.isEmpty(ids)) {
-            result.faild("未选中数据");
+            return R.error("未选中数据");
         } else {
             List<String> ls = Arrays.asList(ids.split(","));
             service.removeByIds(ls);
-            result.success("批量删除成功");
+            return R.ok("未选中数据");
         }
-        return result;
     }
 
 }

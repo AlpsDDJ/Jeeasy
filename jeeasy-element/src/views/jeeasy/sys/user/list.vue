@@ -55,7 +55,7 @@ export default {
         {
           label: '性别',
           key: 'sex',
-          form: () => (<DictSelect v-model={this.formData.sex} dict-code={'sex'} type="radio-button"/>)
+          form: () => (<dict-select v-model={this.formData.sex} dict-code={'sex'} type="radio-button"/>)
         },
         {
           label: '电话',
@@ -65,8 +65,8 @@ export default {
         {
           label: '状态',
           key: 'status',
-          form: () => <dict-select v-model={this.formData.status} dict-code={'sys_user_status'} type="radio-button"/>,
-          search: () => <dict-select v-model={this.formData.status} dict-code={'sys_user_status'} />
+          form: () => <dict-select v-model={this.formData.status} dict-code={'sys_user_status'}/>,
+          search: () => <dict-select v-model={this.query.form.status} dict-code={'sys_user_status'} />
         }
         /*{
          label: '操作',

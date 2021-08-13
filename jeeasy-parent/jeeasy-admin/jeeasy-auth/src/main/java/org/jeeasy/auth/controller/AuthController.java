@@ -3,6 +3,8 @@ package org.jeeasy.auth.controller;
 import org.jeeasy.auth.tools.JwtUtil;
 import org.jeeasy.auth.tools.SecurityUtil;
 import org.jeeasy.auth.vo.AuthUserFormModel;
+import org.jeeasy.auth.vo.RefreshTokenVo;
+import org.jeeasy.common.core.constant.CommonConstant;
 import org.jeeasy.common.core.entity.IAuthUser;
 import org.jeeasy.common.core.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +65,10 @@ public class AuthController {
      * @param refreshToken
      * @return
      */
-    @PostMapping("/auth/refresh/token")
-    public R<?> refreshToken(String refreshToken) {
-        return R.ok(jwtUtil.refreshJwt(refreshToken)).setMessage("token刷新成功");
+    @PostMapping("/auth/refresh")
+    public R<?> refreshToken(@RequestBody RefreshTokenVo refreshToken) {
+        String token = refreshToken.getRefreshToken().replace(CommonConstant.TOKEN_PREFIX, "");
+        return R.ok(jwtUtil.refreshJwt(token)).setMessage("token刷新成功");
     }
 
 }

@@ -3,10 +3,9 @@
  * @author LiQingSong
  */
 import store from '@/store'
-import router from '@/router'
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl, siteLoginRouter } from '@/settings'
+import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl } from '@/settings'
 import { isExternal } from '@/utlis/validate'
 // import Qs from 'qs'
 
@@ -54,57 +53,66 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    const { code, success } = res
+    const {code, success} = res
+    console.log('response ====================> ', response)
 
     // 如果自定义代码不是200，则判断为错误。
     if (!success) {
+
+      const respConfig = response.config
       // 获取替换后的字符串
-      const reqUrl = response.config.url.split('?')[0].replace(response.config.baseURL, '')
+      const reqUrl = respConfig.url.split('?')[0].replace(respConfig.baseURL, '')
       const noVerifyBool = ajaxResponseNoVerifyUrl.includes(reqUrl)
 
-      const path = router.currentRoute.path
+      // const path = router.currentRoute.path
 
       switch (code) {
         case 401: // 未登陆
-
-          if (!noVerifyBool) {
-            MessageBox({
-              title: '提示',
-              showClose: false,
-              closeOnClickModal: false,
-              closeOnPressEscape: false,
-              message: '当前用户登入信息已失效，请重新登入再操作',
-              beforeClose: (action, instance, done) => {
-                if (isExternal(serverLoginUrl)) {
-                  window.location.href = serverLoginUrl
-                } else {
-                  window.location.reload()
-                }
-                console.log(action, instance, done)
-              }
-            })
-          }
+                  // if (!noVerifyBool) {
+                  //   store.dispatch('user/refreshToken').then(tokens => {
+                  //     if (tokens) {
+                  //       return service(respConfig)
+                  //     }
+                  //     // response.
+                  //   })
+                  // } else {
+                  //   console.error(message)
+                  //   MessageBox.alert('当前用户登入信息已失效，请重新登入再操作', {
+                  //     showClose: false,
+                  //     beforeClose: () => {
+                  //       if (isExternal(serverLoginUrl)) {
+                  //         window.location.href = serverLoginUrl
+                  //       } else {
+                  //         window.location.reload()
+                  //       }
+                  //     }
+                  //   })
+                  // }
 
           break
-        case 600:
-          if (siteLoginRouter.indexOf(path) === -1) {
-            MessageBox({
-              title: '提示',
-              showClose: false,
-              closeOnClickModal: false,
-              closeOnPressEscape: false,
-              message: '当前用户登入信息已失效，请重新登入再操作',
-              beforeClose: (action, instance, done) => {
-                if (isExternal(serverLoginUrl)) {
-                  window.location.href = serverLoginUrl
-                } else {
-                  window.location.reload()
-                }
-                console.log(action, instance, done)
-              }
-            })
-          }
-          break
+        // case 600:
+        //   if(!noVerifyBool) {
+        //     store.dispatch('user/refreshToken').then(tokens => {
+        //       if(tokens){
+        //         return service(respConfig)
+        //       }
+        //       // response.
+        //     })
+        //   } else {
+        //     console.error(message)
+        //     MessageBox.alert('当前用户登入信息已失效，请重新登入再操作', {
+        //       showClose: false,
+        //       beforeClose: () => {
+        //         if (isExternal(serverLoginUrl)) {
+        //           window.location.href = serverLoginUrl
+        //         } else {
+        //           window.location.reload()
+        //         }
+        //       }
+        //     })
+        //   }
+        //
+        //   break
 
         default:
           if (!noVerifyBool) {
@@ -125,16 +133,45 @@ service.interceptors.response.use(
       return res
     }
   },
-  error => {
-    console.log('err' + error) // for debug
-    //console.log('err' + error.response.headers); // for debug
-    //console.log('err' + error.response.data); // for debug
-    //console.log('err' + error.response.status); // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+  (error) => {
+    const {message, response: {data, status, config}} = error
+
+    // console.log('err', error) // for debug
+    // console.error('headers ---------->  ', response.headers) // for debug
+    console.error('data ---------->  ', data) // for debug
+    console.error('config ---------->  ', config) // for debug
+    console.error('status ---------->  ', status) // for debug
+
+    const reqUrl = config.url.split('?')[0].replace(config.baseURL, '')
+    const noVerifyBool = ajaxResponseNoVerifyUrl.includes(reqUrl)
+
+    if (status === 401) {
+      if (!noVerifyBool) {
+        store.dispatch('user/refreshToken').then(tokens => {
+          if (tokens) {
+            return service(config)
+          }
+          // response.
+        })
+      } else {
+        console.error(message)
+        MessageBox.alert('当前用户登入信息已失效，请重新登入再操作', {
+          showClose: false,
+          beforeClose: () => {
+            if (isExternal(serverLoginUrl)) {
+              window.location.href = serverLoginUrl
+            } else {
+              window.location.reload()
+            }
+          }
+        })
+      }
+    } else {
+      Message.error({
+        message: message,
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )
@@ -179,7 +216,7 @@ export const parseApi = api => {
       edit: `${api} ${apiType.edit}`
     }
   } else {
-    const { base, ...others } = api
+    const {base, ...others} = api
     return {
       ...others,
       ...parseApi(base)
@@ -187,7 +224,7 @@ export const parseApi = api => {
   }
 }
 
-export function urlRender(tpl, dataObj) {
+export function urlRender (tpl, dataObj) {
   return tpl.replace(/{\s*(.*?)\s*}/g, (context, objKey) => {
     console.log('objKey ===>>> ', objKey)
     const val = dataObj[objKey] || ''
@@ -200,7 +237,7 @@ export function urlRender(tpl, dataObj) {
 export const ajax = (url, params, config = {}) => {
   const [_url, method = apiType.query] = url.split(' ')
   const realUrl = urlRender(_url, params)
-  store.dispatch('global/setLoading', { [url]: true })
+  store.dispatch('global/setLoading', {[url]: true})
 
   let finalConfig = {}
 
@@ -219,12 +256,12 @@ export const ajax = (url, params, config = {}) => {
   }
 
   return new Promise((resolve, reject) => {
-    service(realUrl, finalConfig).then(({ result, ...data }) => {
+    service(realUrl, finalConfig).then(({result, ...data}) => {
       resolve(result || data)
-      store.dispatch('global/setLoading', { [url]: false })
+      store.dispatch('global/setLoading', {[url]: false})
     }).catch(err => {
       reject(err)
-      store.dispatch('global/setLoading', { [url]: false })
+      store.dispatch('global/setLoading', {[url]: false})
     })
   })
 

@@ -138,32 +138,32 @@ public class JwtUtil {
             // 校验redis中的JWT是否存在
             Long expire = redisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
-                throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 已过期");
+                throw new JeeasyException(RestCode.NO_USER, "token: 已过期");
             }
 
             // 校验redis中的JWT是否与当前的一致，不一致则代表用户已注销/用户在不同设备登录，均代表JWT已过期
             String redisToken = (String) redisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
-                throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 当前用户已在别处登录");
+                throw new JeeasyException(RestCode.NO_USER, "token: 当前用户已在别处登录");
 //                throw new JeeasyException("当前用户已在别处登录");
             }
             return claims;
         } catch (ExpiredJwtException e) {
             e.printStackTrace();
             log.error("Token 已过期");
-            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 刷新令牌过期");
+            throw new JeeasyException(RestCode.NO_USER, "token: 刷新令牌过期");
 //            throw new JeeasyException("用户 刷新令牌过期");
         } catch (UnsupportedJwtException e) {
             log.error("不支持的 Token");
-            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 不支持");
+            throw new JeeasyException(RestCode.NO_USER, "token: 解析失败 - 不支持");
 //            throw new JeeasyException("token 解析失败: 不支持");
         } catch (MalformedJwtException e) {
             log.error("Token 无效");
-            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 无效");
+            throw new JeeasyException(RestCode.NO_USER, "token: 解析失败 - 无效");
 //            throw new JeeasyException("token 解析失败: 无效");
         } catch (IllegalArgumentException e) {
             log.error("Token 参数不存在");
-            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token: 解析失败 - 参数不存在");
+            throw new JeeasyException(RestCode.NO_USER, "token: 解析失败 - 参数不存在");
 //            throw new JeeasyException("token 解析失败: 参数不存在");
         }
     }
@@ -213,7 +213,7 @@ public class JwtUtil {
         Date lastTime = claims.getExpiration();
         // 1. 判断refreshToken是否过期
         if (!new Date().before(lastTime)) {
-            throw new JeeasyException(RestCode.JWT_TOKEN_ERROR, "token 已过期");
+            throw new JeeasyException(RestCode.NO_USER, "token 已过期");
         }
         // 2. 在redis中删除之前的token和refreshToken
         String username = claims.getSubject();

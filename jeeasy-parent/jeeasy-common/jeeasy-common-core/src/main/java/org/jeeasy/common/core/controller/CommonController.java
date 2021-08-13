@@ -1,8 +1,10 @@
 package org.jeeasy.common.core.controller;
 
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.CaptchaVo;
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.vo.RestCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +21,8 @@ public class CommonController {
      */
     @GetMapping("/nouser")
     public R<?> noUser() throws Exception {
-        return R.noUser("未登录");
+        throw new JeeasyException(RestCode.NO_USER);
+//        return R.noUser("未登录");
     }
 
     /**

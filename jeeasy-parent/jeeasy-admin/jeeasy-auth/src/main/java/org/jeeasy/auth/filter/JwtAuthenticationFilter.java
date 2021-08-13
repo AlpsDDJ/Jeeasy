@@ -14,6 +14,7 @@ import org.jeeasy.auth.tools.JwtUtil;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.vo.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -94,12 +95,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 chain.doFilter(request, response);
             } catch (JeeasyException e) {
+                // 全局异常处理无法捕获此处抛出的异常，所以用 responseWrite 返回错误信息
                 R.error(e.getCode(), e.getMessage()).responseWrite(response);
-//                ResponseUtils.renderJson(request, response, e, applicationConfig.getOrigins());
             }
         } else {
-            R.noUser().responseWrite(response);
-//            ResponseUtils.renderJson(request, response, ResultCode.UNAUTHORIZED, null, applicationConfig.getOrigins());
+            R.error(RestCode.NO_USER).responseWrite(response);
         }
 
     }

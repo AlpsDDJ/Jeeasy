@@ -2,6 +2,8 @@
 import { siteTokenKey } from '@/settings'
 import Cookies, { setCookie, getCookie } from '@/utlis/cookieUtil'
 
+const refreshSiteTokenKey = `refresh_${siteTokenKey}`
+
 /**
  * 获取本地Token
  * @author LiQingSong
@@ -11,11 +13,27 @@ export function getToken() {
 }
 
 /**
+ * 获取本地Token
+ * @author LiQingSong
+ */
+export function getRefreshToken() {
+  return getCookie(refreshSiteTokenKey)
+}
+
+/**
  * 设置存储Token
  * @author LiQingSong
  */
 export function setToken(token) {
-  return setCookie(siteTokenKey, token, 1)
+  setCookie(siteTokenKey, token)
+}
+
+/**
+ * 设置存储Token
+ * @author LiQingSong
+ */
+export function setRefreshToken(refreshToken) {
+  setCookie(refreshSiteTokenKey, refreshToken, 1)
 }
 
 /**
@@ -23,5 +41,6 @@ export function setToken(token) {
  * @author LiQingSong
  */
 export function removeToken() {
-  return Cookies.remove(siteTokenKey)
+  Cookies.remove(refreshSiteTokenKey)
+  Cookies.remove(siteTokenKey)
 }

@@ -7,9 +7,10 @@ import org.jeeasy.auth.config.property.SecurityProperty;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.filter.JwtAuthenticationFilter;
 import org.jeeasy.auth.provider.AuthServiceProvider;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.SpringUtil;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.vo.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -103,7 +104,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .access("@rbacAuthorityService.hasPermission(request,authentication)")
                 //认证过的用户访问无权限资源时的处理
                 .and().exceptionHandling().accessDeniedHandler((HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) -> {
-                    R.noAuth().responseWrite(response);
+                    throw new JeeasyException(RestCode.NO_AUTH);
+//                    R.noAuth().responseWrite(response);
                 });
 
         List<Permission> allAuthorities = authServiceProvider.getAllAuthorities();
