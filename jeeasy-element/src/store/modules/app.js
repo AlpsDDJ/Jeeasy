@@ -3,10 +3,10 @@
  * @author LiQingSong
  */
 import { siteFiexdHeader, siteTopNavEnable,siteSidebarLogo } from '@/settings'
-import Cookies from 'js-cookie'
+import { setCookie, getCookie } from '@/utlis/cookieUtil'
 
 function getLocalTheme(){
-    const theme = Cookies.get('jeeasy:theme')
+    const theme = getCookie('jeeasy:theme')
     if(theme && theme !== 'default'){
         import(`@/assets/theme/${theme}/index.scss`)
         return theme
@@ -49,8 +49,8 @@ const actions = {
     },
     setTheme({commit}, theme){
         commit('SET_THEME', theme)
-        Cookies.set('jeeasy:theme', theme)
-        window.location.reload()
+        setCookie('jeeasy:theme', theme, 30)
+        // window.location.reload()
     }
 }
 

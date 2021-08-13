@@ -1,12 +1,13 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { siteTokenKey } from '@/settings'
+import Cookies, { setCookie, getCookie } from '@/utlis/cookieUtil'
 
 /**
  * 获取本地Token
  * @author LiQingSong
  */
 export function getToken() {
-  return Cookies.get(siteTokenKey)
+  return getCookie(siteTokenKey)
 }
 
 /**
@@ -14,7 +15,7 @@ export function getToken() {
  * @author LiQingSong
  */
 export function setToken(token) {
-  return Cookies.set(siteTokenKey, token)
+  return setCookie(siteTokenKey, token, 1)
 }
 
 /**
