@@ -2,7 +2,7 @@
     <div id="indexlayout-left" :class="{'narrow': isCollapse}">
       <div class="indexlayout-left-logo" v-if="siteSidebarLogo">
         <router-link to="/" class="logo-url">
-          <h3 v-if="!isCollapse" class="logo-title">AdminElementVue</h3>
+          <h3 v-if="!isCollapse" class="logo-title">Jeeasy Admin</h3>
           <img v-else alt="Vue logo" src="../../assets/images/logo.png" width="30">
         </router-link>
       </div>

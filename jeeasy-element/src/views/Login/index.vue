@@ -1,9 +1,9 @@
 <template>
   <div class="login">
       <div class="form">
-        <h1 class="title">
-          Sign in to Jeeasy
-        </h1>
+        <div class="title">
+          <img :src="Logo" width="200">
+        </div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" size="medium">
           <el-form-item label="" prop="username">
             <el-input v-model.trim="ruleForm.username" autocomplete="off" placeholder="请输入账号" @keyup.enter.native="submitForm('ruleForm')">
@@ -24,10 +24,12 @@
   </div>
 </template>
 <script>
+import Logo from '@/assets/images/logo.png'
 export default {
   name: 'Login',
   data() {
       return {
+        Logo,
         loading: false,
         ruleForm: {
           username: 'admin',
@@ -115,7 +117,7 @@ export default {
       .title{
         font-weight: 300;
         margin-top: 0;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
         text-align: center;
         color: #FFFFFF;
       }

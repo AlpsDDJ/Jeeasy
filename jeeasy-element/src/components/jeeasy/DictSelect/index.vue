@@ -5,7 +5,7 @@ export default {
   name: 'DictSelect',
   data() {
     return {
-      val: {},
+      val: '',
       options: [],
       url: '/common/dicts/{dictCode}'
     }
@@ -21,8 +21,12 @@ export default {
     }
   },
   props: {
-    value: {},
-    dictCode: {},
+    value: {
+      type: [String, Number, Array]
+    },
+    dictCode: {
+      type: String
+    },
     type: {
       type: String,
       default: 'select'
@@ -33,7 +37,7 @@ export default {
       handler(val) {
         this.val = val
       },
-      immediate: false
+      immediate: true
     },
     val: {
       handler(val) {
@@ -55,7 +59,7 @@ export default {
     switch (type) {
       case 'select':
         return (
-            <el-select v-model={this.val} props={this.attrs}>
+            <el-select v-model={this.val} props={this.attrs} v-cloak>
           {
             this.options.map(option => <el-option value={option.dictCode} label={option.dictName} />)
           }
@@ -64,7 +68,7 @@ export default {
       case 'radio':
       case 'radio-button':
         return (
-            <el-radio-group v-model={this.val} props={this.attrs}>
+            <el-radio-group v-model={this.val} props={this.attrs} v-cloak>
               {
                 this.options.map(option => (
                     type === 'radio-button'
