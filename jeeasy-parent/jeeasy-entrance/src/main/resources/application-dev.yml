@@ -75,32 +75,38 @@ jeeasy:
       - /webjars/**
       - /swagger-resources/**
       - /v2/**
+      - /v3/**
 #    login-url: /nouser
 #    login-processing-url: /login
 #    logout-url: /logout
-  swagger:
-    # 是否启用swagger文档
-    enable: true
-    # 为不同模块单独配置swagger分组
-    module:
-      jeeasy-system:
+  doc:
+    # 是否启用swagger文档 -- 无效
+#    enable: true
+    # 为不同模块单独配置swagger分组 -- 无效
+#    default-module: jeeasy-system
+    modules:
+      -
+        group-key: jeeasy-system
         group-name: Jeeasy 系统管理
         title: Jeeasy 系统管理接口 API文档
         version: 1.0
         base-package: org.jeeasy.system.modules
-      jeeasy-common:
+      -
+        group-key: jeeasy-common
         group-name: Jeeasy 公共接口
         title: Jeeasy 公共接口 API文档
         version: 1.0
         base-package: org.jeeasy.common
         annotation: org.springframework.web.bind.annotation.RequestMapping
-      jeeasy-auth:
+      -
+        group-key: jeeasy-auth
         group-name: Jeeasy 认证接口
         title: Jeeasy 认证接口 API文档
         version: 1.0
         base-package: org.jeeasy.auth
         annotation: org.springframework.web.bind.annotation.RequestMapping
-      jeeasy-gen:
+      -
+        group-key: jeeasy-gen
         group-name: Jeeasy 代码生成接口
         title: Jeeasy 代码生成接口 API文档
         version: 1.0

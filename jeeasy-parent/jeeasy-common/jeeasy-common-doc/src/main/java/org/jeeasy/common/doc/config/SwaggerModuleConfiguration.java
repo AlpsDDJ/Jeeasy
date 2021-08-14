@@ -5,8 +5,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author AlpsDDJ
@@ -15,8 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "jeeasy.swagger")
+@ConfigurationProperties(prefix = "jeeasy.doc")
 public class SwaggerModuleConfiguration {
-    private boolean enable = false;
-    private Map<String, SwaggerModule> module = new HashMap<>();
+    private List<SwaggerModule> modules = new ArrayList<>();
 }

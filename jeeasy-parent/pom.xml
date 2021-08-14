@@ -79,6 +79,8 @@
         <velocity.version>1.7</velocity.version>
         <!-- hutool 工 具 箱 版 本 -->
         <hutool.version>5.3.8</hutool.version>
+        <!-- knife4j 接口文档 -->
+        <knife4j.version>3.0.3</knife4j.version>
     </properties>
 
     <dependencyManagement>
