@@ -17,6 +17,17 @@ const jeeasyAdminRouter = {
   },
   children: [
     {
+      path: 'doc',
+      component: () => import('@/views/jeeasy/sys/doc'),
+      // redirect: '/component/editor/one',
+      name: 'sys-doc',
+      meta: {
+        title: '接口文档',
+        icon: 'editor',
+        roles: ['sys-doc']
+      }
+    },
+    {
       path: 'user',
       component: () => import('@/views/jeeasy/sys/user/list'),
       // redirect: '/component/editor/one',

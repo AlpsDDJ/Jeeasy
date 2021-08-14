@@ -61,7 +61,7 @@ export default {
     },
     async loadData() {
       await this.beforeLoad(this.queryRequestParams).then(params => {
-        console.log('loadData')
+        // console.log('loadData')
         this.$ajax(this.api.list, params).then(({ records, ...page }) => {
           this.query.page = page
           this.list = records
