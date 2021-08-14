@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     loadOptions() {
-      this.$ajax(this.url, { dictCode: this.dictCode }).then((result) => {
+      this.load().then((result) => {
         this.options = result
       })
     }
@@ -30,6 +30,12 @@ export default {
     type: {
       type: String,
       default: 'select'
+    },
+    load: {
+      type: Function,
+      default: function () {
+        return this.$ajax(this.url, { dictCode: this.dictCode })
+      }
     }
   },
   watch: {
@@ -59,7 +65,7 @@ export default {
     switch (type) {
       case 'select':
         return (
-            <el-select v-model={this.val} props={this.attrs} v-cloak>
+            <el-select v-model={this.val} props={this.attrs}>
           {
             this.options.map(option => <el-option value={option.dictCode} label={option.dictName} />)
           }
@@ -68,7 +74,7 @@ export default {
       case 'radio':
       case 'radio-button':
         return (
-            <el-radio-group v-model={this.val} props={this.attrs} v-cloak>
+            <el-radio-group v-model={this.val} props={this.attrs}>
               {
                 this.options.map(option => (
                     type === 'radio-button'
@@ -86,6 +92,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style type="text/css">
 </style>

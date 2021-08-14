@@ -75,7 +75,7 @@
  * @author LiQingSong
  */
 import scrollbarWidth from 'element-ui/src/utils/scrollbar-width'
-import { debounce } from '@/utlis'
+import { debounce } from '@/common/utlis'
 export default {
     name: 'TreeTable',
     props: {

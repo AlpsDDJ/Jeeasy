@@ -1,6 +1,6 @@
 // import Cookies from 'js-cookie'
 import { siteTokenKey } from '@/settings'
-import Cookies, { setCookie, getCookie } from '@/utlis/cookieUtil'
+import Cookies, { setCookie, getCookie } from '@/common/utlis/cookieUtil'
 
 const refreshSiteTokenKey = `refresh_${siteTokenKey}`
 

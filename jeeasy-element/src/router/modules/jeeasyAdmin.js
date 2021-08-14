@@ -2,8 +2,7 @@
  * Jeeasy Admin 路由
  * @author AlpsDDJ
  */
-import LayoutIndex from '@/layout/Index'
-// import AppMainLayout from '@/layout/components/AppMain'
+import LayoutIndex from '@/components/layout/Index'
 
 const jeeasyAdminRouter = {
   path: '/sys',

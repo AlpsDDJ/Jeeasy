@@ -180,7 +180,7 @@
 import { mapGetters } from 'vuex'
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
-import { debounce } from '@/utlis'
+import { debounce } from '@/common/utlis'
 export default {
   name: 'Home',
   data() {

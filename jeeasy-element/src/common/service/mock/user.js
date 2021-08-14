@@ -2,7 +2,7 @@
  * 用户 Mock 数据
  * @author LiQingSong
  */
-import { getQueryValue } from '@/utlis/url'
+import { getQueryValue } from '@/common/utlis/url'
 
 const tokens = {
     admin: {

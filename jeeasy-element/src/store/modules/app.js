@@ -3,7 +3,7 @@
  * @author LiQingSong
  */
 import { siteFiexdHeader, siteTopNavEnable,siteSidebarLogo } from '@/settings'
-import { setCookie, getCookie } from '@/utlis/cookieUtil'
+import { setCookie, getCookie } from '@/common/utlis/cookieUtil'
 
 function getLocalTheme(){
     const theme = getCookie('jeeasy:theme')

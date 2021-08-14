@@ -12,7 +12,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 import defaultOptions from './default-options'
 import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn'
-import request from '@/service/lib/request'
+import request from '@/common/service/lib/request'
 export default {
     name: 'CKEditor',
     components: {

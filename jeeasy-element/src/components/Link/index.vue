@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { isExternal } from '@/utlis/validate'
+import { isExternal } from '@/common/utlis/validate'
 
 export default {
   props: {

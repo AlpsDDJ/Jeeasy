@@ -48,7 +48,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import AppLink from '@/components/Link'
-import { getBelongTopMenuPath } from '@/utlis/permission'
+import { getBelongTopMenuPath } from '@/common/utlis/permission'
 export default {
   name: 'LayoutIndexRightTop',
   components: {

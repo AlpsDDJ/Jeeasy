@@ -73,7 +73,7 @@ export default {
   },
   render() {
     return (
-        <div class="je-form">
+      <div class="je-form">
         <el-form v-model={this.formData} props={this.formOption}>
           <el-row type="flex" class="flex-wrap-wrap">
             {

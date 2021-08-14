@@ -156,7 +156,7 @@
     </div>
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader'
+import PageHeader from '@/components/layout/components/PageHeader'
 export default {
     components: {
       PageHeader

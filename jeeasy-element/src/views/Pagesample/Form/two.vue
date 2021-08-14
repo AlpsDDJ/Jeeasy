@@ -151,8 +151,8 @@
 
 </template>
 <script>
-import PageHeader from '@/layout/components/PageHeader'
-import FormFooterToolbar from '@/layout/components/FormFooterToolbar'
+import PageHeader from '@/components/layout/components/PageHeader'
+import FormFooterToolbar from '@/components/layout/components/FormFooterToolbar'
 export default {
     components: {
       PageHeader,

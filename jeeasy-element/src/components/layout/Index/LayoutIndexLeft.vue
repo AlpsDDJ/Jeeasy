@@ -1,53 +1,59 @@
 <template>
-    <div id="indexlayout-left" :class="{'narrow': isCollapse}">
-      <div class="indexlayout-left-logo" v-if="siteSidebarLogo">
-        <router-link to="/" class="logo-url">
-          <h3 v-if="!isCollapse" class="logo-title">Jeeasy Admin</h3>
-          <img v-else alt="Vue logo" src="../../assets/images/logo.png" width="30">
-        </router-link>
-      </div>
-      <div class="indexlayout-left-menu">
-          <el-scrollbar class="flex-scrollbar" wrap-class="default-scrollbar__wrap">
-              <el-menu
-                :background-color="variables.menuBg"
-                :text-color="variables.menuText"
-                :default-active="getSidebarMenuActive"
-                :collapse="isCollapse"
-                :collapse-transition="false">
-
-                  <template v-if="!siteTopNavEnable">
-                    <sidebar-menu-item v-for="route in menus" :key="route.path" :routes="route"
-                                       :base-path="route.path" :resolve-path="route.path"
-                                       :active-top-menu="getTopMenuActive" />
-                  </template>
-                  <template v-else>
-                    <template v-for="route in menus">
-                      <template v-if="!route.hidden">
-
-                        <sidebar-menu-item v-for="route2 in route.children" :key="route.path + '/' + route2.path"
-                                           :routes="route2" :base-path="route.path" :resolve-path="route.path"
-                                           :active-top-menu="getTopMenuActive" />
-
-                      </template>
-                    </template>
-                  </template>
-
-              </el-menu>
-
-          </el-scrollbar>
-      </div>
+  <div id="indexlayout-left" :class="{'narrow': isCollapse}">
+    <div class="indexlayout-left-logo" v-if="siteSidebarLogo">
+      <router-link to="/" class="logo-url">
+<!--        <h3 v-if="!isCollapse" class="logo-title">Jeeasy Admin</h3>-->
+        <img alt="Vue logo" :src="Logo" :width="isCollapse ? 30: 100">
+      </router-link>
     </div>
+    <div class="indexlayout-left-menu">
+      <el-scrollbar class="flex-scrollbar" wrap-class="default-scrollbar__wrap">
+        <el-menu
+            :background-color="variables.menuBg"
+            :text-color="variables.menuText"
+            :default-active="getSidebarMenuActive"
+            :collapse="isCollapse"
+            :collapse-transition="false">
+
+          <template v-if="!siteTopNavEnable">
+            <sidebar-menu-item v-for="route in menus" :key="route.path" :routes="route"
+                               :base-path="route.path" :resolve-path="route.path"
+                               :active-top-menu="getTopMenuActive"/>
+          </template>
+          <template v-else>
+            <template v-for="route in menus">
+              <template v-if="!route.hidden">
+
+                <sidebar-menu-item v-for="route2 in route.children" :key="route.path + '/' + route2.path"
+                                   :routes="route2" :base-path="route.path" :resolve-path="route.path"
+                                   :active-top-menu="getTopMenuActive"/>
+
+              </template>
+            </template>
+          </template>
+
+        </el-menu>
+
+      </el-scrollbar>
+    </div>
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import variables from '@/assets/css/variables.scss'
-import SidebarMenuItem from '@/layout/components/SidebarMenuItem'
-import { getBelongTopMenuPath, getActiveSidebarMenuPath, getMenus } from '@/utlis/permission'
+import SidebarMenuItem from '@/components/layout/components/SidebarMenuItem'
+import { getBelongTopMenuPath, getActiveSidebarMenuPath, getMenus } from '@/common/utlis/permission'
+import Logo from '@/assets/images/logo.png'
 
 export default {
   name: 'LayoutIndexLeft',
   components: {
     SidebarMenuItem
+  },
+  data () {
+    return {
+      Logo
+    }
   },
   computed: {
     ...mapGetters([
@@ -55,7 +61,7 @@ export default {
       'siteSidebarLogo',
       'sidebarOpened'
     ]),
-    menus() {
+    menus () {
       return getMenus()
       // const menus = []
       // this.$store.state.permission.routes.forEach(item => {
@@ -70,17 +76,17 @@ export default {
       // })
       // return menus
     },
-    variables() {
+    variables () {
       return variables
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebarOpened
     },
     getSidebarMenuActive: function () {
       const route = this.$route
       return getActiveSidebarMenuPath(route)
     },
-    getTopMenuActive() {
+    getTopMenuActive () {
       let route = this.$route
       return getBelongTopMenuPath(route)
     }

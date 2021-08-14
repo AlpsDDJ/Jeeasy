@@ -26,7 +26,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 // 引入Index框架
-import LayoutIndex from '@/layout/Index'
+import LayoutIndex from '@/components/layout/Index'
 
 // 引入对应模块路由
 import jeeasyAdmin from '@/router/modules/jeeasyAdmin' // 系统管理

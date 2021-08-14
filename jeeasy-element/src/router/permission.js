@@ -8,7 +8,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { siteTitle, siteLoginRouter, serverLoginUrl } from '@/settings'
-import { isExternal } from '@/utlis/validate'
+import { isExternal } from '@/common/utlis/validate'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 

@@ -6,7 +6,7 @@ import store from '@/store'
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import { ajaxHeadersTokenKey, serverLoginUrl, ajaxResponseNoVerifyUrl } from '@/settings'
-import { isExternal } from '@/utlis/validate'
+import { isExternal } from '@/common/utlis/validate'
 // import Qs from 'qs'
 
 // 创建一个axios实例

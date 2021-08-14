@@ -1,4 +1,4 @@
-import { parseApi } from '@/service/lib/request'
+import { parseApi } from '@/common/service/lib/request'
 import JeSearchForm from '@/components/jeeasy/JeSearthForm'
 import JeTable from '@/components/jeeasy/JeTable'
 import { mapGetters } from 'vuex'
