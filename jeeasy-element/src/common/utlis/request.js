@@ -256,8 +256,8 @@ export const ajax = (url, params, config = {}) => {
   }
 
   return new Promise((resolve, reject) => {
-    service(realUrl, finalConfig).then(({result, ...data}) => {
-      resolve(result || data)
+    service(realUrl, finalConfig).then(data => {
+      resolve(data)
       store.dispatch('global/setLoading', {[url]: false})
     }).catch(err => {
       reject(err)

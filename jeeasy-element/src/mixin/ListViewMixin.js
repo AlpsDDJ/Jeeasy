@@ -1,4 +1,4 @@
-import { parseApi } from '@/common/service/lib/request'
+import { parseApi } from '@/common/utlis/request'
 import JeSearchForm from '@/components/jeeasy/JeSearthForm'
 import JeTable from '@/components/jeeasy/JeTable'
 import { mapGetters } from 'vuex'
@@ -62,7 +62,7 @@ export default {
     async loadData() {
       await this.beforeLoad(this.queryRequestParams).then(params => {
         // console.log('loadData')
-        this.$ajax(this.api.list, params).then(({ records, ...page }) => {
+        this.$ajax(this.api.list, params).then(({result: { records, ...page }}) => {
           this.query.page = page
           this.list = records
         })

@@ -6,6 +6,8 @@ import org.jeeasy.system.modules.dict.mapper.SysDictMapper;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author AlpsDDJ
  * @date 2020/11/9
@@ -13,4 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements SysDictService {
 
+    @Override
+    public List<SysDict> queryByParentCode(String parentCode) {
+        return baseMapper.queryByParentCode(parentCode);
+    }
 }

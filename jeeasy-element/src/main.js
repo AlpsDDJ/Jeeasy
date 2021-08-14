@@ -28,7 +28,7 @@ import '@/router/permission'
 
 // 引入扩展内容
 import '@/main.ext'
-import { ajax } from '@/common/service/lib/request'
+import { ajax } from '@/common/utlis/request'
 
 Vue.prototype.$ajax = ajax
 

@@ -1,4 +1,4 @@
-import request from '@/common/service/lib/request'
+import request from '@/common/utlis/request'
 
 /**
  * 用户 - 登录

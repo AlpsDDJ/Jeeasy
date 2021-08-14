@@ -2,12 +2,12 @@
  * 用户 Store
  * @author LiQingSong
  */
-import { login, logout, getInfo } from '@/common/service/user'
-import { getToken, setToken, removeToken, setRefreshToken, getRefreshToken } from '@/common/service/lib/localToken'
+import { login, logout, getInfo } from '@/common/service/api/user'
+import { getToken, setToken, removeToken, setRefreshToken, getRefreshToken } from '@/common/utlis/localToken'
 import { resetRouter } from '@/router'
 import { isExternal } from '@/common/utlis/validate'
 import { getCurrentUserUrl, serverLoginUrl, serverLogoutUrl, siteLoginRouter, refreshTokenUrl } from '@/settings'
-import { ajax } from '@/common/service/lib/request'
+import { ajax } from '@/common/utlis/request'
 
 const state = {
   token: getToken(),

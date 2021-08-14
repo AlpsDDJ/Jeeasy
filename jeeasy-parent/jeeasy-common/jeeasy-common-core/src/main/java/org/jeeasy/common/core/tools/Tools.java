@@ -5,6 +5,7 @@ import cn.hutool.cache.CacheUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
@@ -15,6 +16,7 @@ import org.jeeasy.common.core.vo.CaptchaVo;
 import org.jeeasy.common.core.vo.R;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 
 /**
  * 常用工具类
@@ -30,15 +32,14 @@ public class Tools {
     private static Cache<String, LineCaptcha> captchaCache = CacheUtil.newFIFOCache(10000);
 
     public static boolean isEmpty(Object obj) {
-        if(obj instanceof String){
-            return StrUtil.isEmpty((String)obj);
-        }
-        return BeanUtil.isEmpty(obj);
+        return !isNotEmpty(obj);
     }
 
     public static boolean isNotEmpty(Object obj) {
         if(obj instanceof String){
             return StrUtil.isNotEmpty((String)obj);
+        } else if(obj instanceof Collection){
+            return CollectionUtil.isNotEmpty((Collection)obj);
         }
         return BeanUtil.isNotEmpty(obj);
     }

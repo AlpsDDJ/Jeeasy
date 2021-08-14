@@ -107,7 +107,7 @@ export default {
           departs: ''
         }
 
-        this.$ajax(api, params).then(({message}) => {
+        this.$ajax(api, params).then(({result: {message}}) => {
           this.$message.success(message)
           this.formVisible = false
           this.loadData()

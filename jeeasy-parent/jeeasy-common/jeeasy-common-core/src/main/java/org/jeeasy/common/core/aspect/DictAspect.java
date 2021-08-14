@@ -165,7 +165,6 @@ public class DictAspect {
                 if (k.trim().length() == 0) {
                     continue; //跳过循环
                 }
-//                tmpValue = translate(code, dictType, enumClass, k.trim());
                 tmpValue = translate(code, enumClass, k.trim());
                 if (tmpValue != null) {
                     if (!"".equals(textValue.toString())) {
@@ -175,7 +174,6 @@ public class DictAspect {
                 }
             }
         } else {
-//            textValue.append(translate(code, dictType, enumClass, key));
             textValue.append(translate(code, enumClass, key));
         }
 
@@ -199,8 +197,7 @@ public class DictAspect {
             tmpValue = dictTranslationService.translateDictFromEnum(enumClass, key);
         }
         if (Tools.isNotEmpty(code)) {
-            String codeFlag = String.valueOf(code.charAt(0));
-            if (ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), codeFlag)) {
+            if (ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), code.charAt(0))) {
                 tmpValue = dictTranslationService.translateDictFromTable(code, key);
             } else {
                 tmpValue = dictTranslationService.translateDict(code, key);

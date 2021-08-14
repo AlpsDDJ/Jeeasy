@@ -14,7 +14,7 @@ import Editor from '@toast-ui/editor'
 import defaultOptions from './default-options'
 // import '@toast-ui/editor/dist/i18n/zh-cn.js';
 
-import request from '@/common/service/lib/request'
+import request from '@/common/utlis/request'
 export default {
     name: 'TuiEditor',
     props: {

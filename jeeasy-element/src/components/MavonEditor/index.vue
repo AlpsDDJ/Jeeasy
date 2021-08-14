@@ -38,7 +38,7 @@
  */
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-import request from '@/common/service/lib/request'
+import request from '@/common/utlis/request'
 export default {
     name: 'MavonEditor',
     props: {

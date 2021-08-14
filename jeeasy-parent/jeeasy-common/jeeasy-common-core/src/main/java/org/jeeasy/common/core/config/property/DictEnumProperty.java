@@ -22,9 +22,9 @@ public class DictEnumProperty {
     /**
      * 根据属性名称自动翻译字典，无需注释@Dict
      */
-    private Map<String, Class<? extends Enum>> autoTranslateEnumClass = new HashMap<>();
+    private Map<String, Class<? extends Enum<?>>> autoTranslateEnumClass = new HashMap<>();
 
-    private String[] dictTableFlag = new String[] {"#"};
+    private char[] dictTableFlag = new char[] {'@'};
 
     private String dictTextSuffix = "_dictText";
 }

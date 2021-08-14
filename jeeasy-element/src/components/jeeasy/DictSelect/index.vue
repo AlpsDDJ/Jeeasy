@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     loadOptions() {
-      this.load().then((result) => {
+      this.load().then(({result}) => {
         this.options = result
       })
     }
