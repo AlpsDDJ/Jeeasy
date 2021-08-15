@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.annotation;
+package org.jeeasy.common.db.annotation;
 
 import java.lang.annotation.*;
 

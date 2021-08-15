@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.db.annotation.DictTranslation;
 import org.jeeasy.common.db.model.QueryPageModel;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;

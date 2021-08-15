@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.aspect;
+package org.jeeasy.common.db.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
@@ -16,12 +16,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.jeeasy.common.core.annotation.Dict;
-import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.config.property.DictEnumProperty;
-import org.jeeasy.common.core.service.DictTranslationService;
+import org.jeeasy.common.db.annotation.Dict;
+import org.jeeasy.common.db.annotation.DictTranslation;
+import org.jeeasy.common.db.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.db.config.property.DictEnumProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +53,7 @@ public class DictAspect {
     /**
      * 定义切点Pointcut拦截所有对服务器的请求
      */
-    @Pointcut(value = "@annotation(org.jeeasy.common.core.annotation.DictTranslation)")
+    @Pointcut(value = "@annotation(org.jeeasy.common.db.annotation.DictTranslation)")
     public void dictTranslation() {
     }
 

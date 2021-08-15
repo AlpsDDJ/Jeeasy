@@ -3,7 +3,7 @@ package org.jeeasy.generate.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.db.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.generate.entity.GenTable;

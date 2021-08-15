@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.db.annotation.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.system.enums.permission.LinkOpenTypeEnum;
 import org.jeeasy.system.enums.permission.MenuTypeEnum;

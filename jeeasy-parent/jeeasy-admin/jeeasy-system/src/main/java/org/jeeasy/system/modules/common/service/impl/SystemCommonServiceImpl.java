@@ -1,12 +1,12 @@
 package org.jeeasy.system.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.enums.IDictEnum;
+import org.jeeasy.common.core.service.CommonService;
 import org.jeeasy.common.core.tools.DictUtil;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.system.modules.common.service.SystemCommonService;
-import org.jeeasy.system.modules.common.vo.DictVo;
+import org.jeeasy.common.core.vo.DictVo;
+import org.jeeasy.common.db.config.property.DictEnumProperty;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author mobie
  */
 @Service
-public class SystemCommonServiceImpl implements SystemCommonService {
+public class SystemCommonServiceImpl implements CommonService {
 
 
     @Resource

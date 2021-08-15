@@ -1,6 +1,7 @@
-package org.jeeasy.system.modules.common.service;
+package org.jeeasy.common.core.service;
 
-import org.jeeasy.system.modules.common.vo.DictVo;
+
+import org.jeeasy.common.core.vo.DictVo;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @author mobie
  */
-public interface SystemCommonService {
+public interface CommonService {
 
     /**
      * 根据dictCode获取字典列表

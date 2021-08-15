@@ -3,10 +3,10 @@ package org.jeeasy.system.modules.common.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.service.CommonService;
+import org.jeeasy.common.core.vo.DictVo;
 import org.jeeasy.common.core.vo.R;
-import org.jeeasy.system.modules.common.service.SystemCommonService;
-import org.jeeasy.system.modules.common.vo.DictVo;
+import org.jeeasy.common.db.annotation.DictTranslation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ import java.util.List;
 public class SystemCommonController {
 
     @Resource
-    private SystemCommonService commonService;
+    private CommonService commonService;
 
     /**
      * @param code

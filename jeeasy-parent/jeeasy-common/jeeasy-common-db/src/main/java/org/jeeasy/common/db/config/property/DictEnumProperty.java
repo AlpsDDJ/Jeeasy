@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.config.property;
+package org.jeeasy.common.db.config.property;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -36,6 +36,7 @@
     "mavon-editor": "^2.8.3",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "portfinder": "^1.0.28",
     "qs": "^6.10.1",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",

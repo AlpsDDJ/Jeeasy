@@ -1,6 +1,5 @@
-package org.jeeasy.system.modules.common.vo;
+package org.jeeasy.common.core.vo;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -19,9 +18,9 @@ public class DictVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "dictCode", notes = "字典值")
+//    @ApiModelProperty(value = "dictCode", notes = "字典值")
     private Object dictCode;
-    @ApiModelProperty(value = "dictName", notes = "字典名称")
+//    @ApiModelProperty(value = "dictName", notes = "字典名称")
     private String dictName;
 
     public DictVo(IDictEnum<?> dictEnum){

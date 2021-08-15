@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.service;
+package org.jeeasy.common.db.service;
 
 import cn.hutool.core.util.EnumUtil;
 import org.jeeasy.common.core.enums.IDictEnum;

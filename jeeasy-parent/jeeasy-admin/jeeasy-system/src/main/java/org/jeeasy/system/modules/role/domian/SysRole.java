@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.db.annotation.Dict;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
 
 import java.time.LocalDateTime;
