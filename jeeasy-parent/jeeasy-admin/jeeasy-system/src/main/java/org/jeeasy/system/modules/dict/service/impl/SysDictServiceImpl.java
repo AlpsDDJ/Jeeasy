@@ -1,7 +1,9 @@
 package org.jeeasy.system.modules.dict.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeeasy.system.modules.dict.domain.SysDict;
+import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import org.jeeasy.system.modules.dict.mapper.SysDictMapper;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.stereotype.Service;
@@ -18,5 +20,14 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     @Override
     public List<SysDict> queryByParentCode(String parentCode) {
         return baseMapper.queryByParentCode(parentCode);
+    }
+
+    @Override
+    public List<SysDict> queryByTableDict(SysTableDict tableDict) {
+        String tableName = tableDict.getTableName();
+        if(StrUtil.contains(tableName, "select")){
+            tableDict.setTableName(StrUtil.concat(true, "(", tableName, ")"));
+        }
+        return baseMapper.queryByTableDict(tableDict);
     }
 }

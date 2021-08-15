@@ -9,14 +9,6 @@ import org.jeeasy.common.core.tools.Tools;
  * @date 2020/11/23 9:43
  */
 public interface DictTranslationService {
-    /**
-     * 根据table翻译字典
-     *
-     * @param code
-     * @param key
-     * @return
-     */
-    String translateDictFromTable(String code, Object key);
 
     /**
      * 根据enum翻译字典
@@ -35,6 +27,15 @@ public interface DictTranslationService {
         }
         return null;
     }
+
+    /**
+     * 根据table翻译字典
+     *
+     * @param code
+     * @param key
+     * @return
+     */
+    String translateDictFromTable(String code, Object key);
 
     /**
      * 普通字典的翻译

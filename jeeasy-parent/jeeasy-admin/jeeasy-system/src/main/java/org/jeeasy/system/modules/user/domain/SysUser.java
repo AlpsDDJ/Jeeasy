@@ -94,6 +94,14 @@ public class SysUser extends Model<SysUser> implements Serializable {
     private Integer delFlag;
 
 
+//    @TableField(exist = false)
+//    @Dict("@sys_user")
+//    private Collection<SysRole> roles;
+//    @TableField(exist = false)
+//    @Dict("@sys_depart")
+//    private Collection<SysDepart> departs;
+
+
 
 //    public static void main(String[] args) {
 //        SysUser user = new SysUser();

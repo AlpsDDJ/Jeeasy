@@ -121,7 +121,9 @@ public class DictAspect {
             Dict dictAnnotation = field.getAnnotation(Dict.class);
             String fieldName = field.getName();
             Object fieldValue = BeanUtil.getFieldValue(record, fieldName);
+            // 排除有 @JsonIgnore 注解的字段
             if (Tools.isEmpty(ignoreAnnotation)) {
+                // 对有 @Dict 注解的字段进行翻译
                 if (Tools.isNotEmpty(dictAnnotation)) {
                     //翻译字典值对应的txt
                     String textValue = translateDictValue(dictAnnotation, fieldValue);
@@ -143,38 +145,36 @@ public class DictAspect {
     }
 
     /**
-     * 根据Dict注释参数 翻译字典文本
+     * 根据 @Dict 注释参数 翻译字典文本
      *
-     * @param key
-     * @return
+     * @param value 数据库查询出的值
+     * @return 翻译后的值
      */
-    private String translateDictValue(Dict dictAnnotation, Object key) {
+    private String translateDictValue(Dict dictAnnotation, Object value) {
         String code = dictAnnotation.dictCode();
-//        Dict.DictType dictType = dictAnnotation.dictType();
         Class<? extends Enum> enumClass = dictAnnotation.dictEnum();
-        if (Tools.isEmpty(key)) {
-            return null;
+        if (Tools.isEmpty(value)) {
+            return StrUtil.EMPTY;
         }
         StringBuilder textValue = new StringBuilder();
+        String fieldValue = value.toString();
         // 含有 "," 则按拼接值处理
-        if (StrUtil.contains(key.toString(), ",")) {
-            String[] keys = key.toString().split(",");
-            for (String k : keys) {
-                String tmpValue = null;
-                log.debug(" 字典 key : " + k);
-                if (k.trim().length() == 0) {
-                    continue; //跳过循环
-                }
-                tmpValue = translate(code, enumClass, k.trim());
-                if (tmpValue != null) {
-                    if (!"".equals(textValue.toString())) {
-                        textValue.append(",");
+        if (StrUtil.contains(fieldValue, StrUtil.C_COMMA)) {
+            List<String> values = StrUtil.split(fieldValue, StrUtil.C_COMMA, true, true);
+            values.forEach(val -> {
+                log.debug(" 字典 value : " + val);
+                if(Tools.isNotEmpty(val)){
+                    String tmpValue = translate(code, enumClass, val);
+                    if (tmpValue != null) {
+                        if (Tools.isNotEmpty(textValue.toString())) {
+                            textValue.append(StrUtil.C_COMMA);
+                        }
+                        textValue.append(tmpValue);
                     }
-                    textValue.append(tmpValue);
                 }
-            }
+            });
         } else {
-            textValue.append(translate(code, enumClass, key));
+            textValue.append(translate(code, enumClass, value));
         }
 
         return textValue.toString();

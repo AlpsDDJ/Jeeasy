@@ -5,24 +5,34 @@
 <mapper namespace="org.jeeasy.system.modules.dict.mapper.SysTableDictMapper">
 
     <resultMap id="BaseResultMap" type="org.jeeasy.system.modules.dict.domain.SysTableDict">
-            <id property="id" column="id" jdbcType="VARCHAR"/>
-            <result property="queryName" column="query_name" jdbcType="VARCHAR"/>
-            <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
-            <result property="databaseName" column="database_name" jdbcType="VARCHAR"/>
-            <result property="valueColumn" column="value_column" jdbcType="VARCHAR"/>
-            <result property="nameColumn" column="name_column" jdbcType="VARCHAR"/>
-            <result property="enableFlag" column="enable_flag" jdbcType="BOOLEAN"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="delFlag" column="del_flag" jdbcType="BOOLEAN"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="dictCode" column="dict_code" jdbcType="VARCHAR"/>
+        <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
+        <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
+        <result property="databaseName" column="database_name" jdbcType="VARCHAR"/>
+        <result property="valueColumn" column="value_column" jdbcType="VARCHAR"/>
+        <result property="nameColumn" column="name_column" jdbcType="VARCHAR"/>
+        <result property="enableFlag" column="enable_flag" jdbcType="BOOLEAN"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="BOOLEAN"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,query_name,table_name,
+        id,dict_code,dict_name,table_name,
         database_name,value_column,name_column,
         enable_flag,create_by,create_time,
         update_by,update_time,del_flag
     </sql>
+
+
+
+    <select id="getByDictCode" resultType="org.jeeasy.system.modules.dict.domain.SysTableDict">
+        SELECT a.id, a.table_name, a.name_column, a.value_column, a.database_name
+        FROM sys_table_dict a
+        WHERE a.del_flag != 1 and a.enable_flag != 0 and a.dict_code = #{dictCode}
+    </select>
+
 </mapper>

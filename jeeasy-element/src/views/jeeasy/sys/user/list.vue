@@ -100,11 +100,12 @@ export default {
           api = this.api.edit
       }
       if (api) {
+        const { roles, departs, ...user} = this.formData
 
         const params = {
-          user: this.formData,
-          roles: '',
-          departs: ''
+          user,
+          roles,
+          departs
         }
 
         this.$ajax(api, params).then(({result: {message}}) => {

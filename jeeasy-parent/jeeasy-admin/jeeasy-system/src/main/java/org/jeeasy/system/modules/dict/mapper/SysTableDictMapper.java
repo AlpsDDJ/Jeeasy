@@ -1,7 +1,8 @@
 package org.jeeasy.system.modules.dict.mapper;
 
-import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.jeeasy.system.modules.dict.domain.SysTableDict;
 
 /**
  * @author mobie
@@ -9,6 +10,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysTableDictMapper extends BaseMapper<SysTableDict> {
 
+    /**
+     * queryByDictCode
+     * @param dictCode
+     * @return
+     */
+    SysTableDict getByDictCode(@Param("dictCode") String dictCode);
 }
 
 

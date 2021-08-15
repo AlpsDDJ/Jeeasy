@@ -31,6 +31,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+        R<IPage<SysUser>> query = super.query(queryPageModel, req, SysUser.class);
         return super.query(queryPageModel, req, SysUser.class);
     }
 

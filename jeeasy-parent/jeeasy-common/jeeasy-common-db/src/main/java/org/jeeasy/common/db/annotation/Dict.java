@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dict {
+
+    String value() default "";
     /**
      * 方法描述：这是返回后Put到josn中的文本key值
      *

@@ -10,4 +10,18 @@
         WHERE b.dict_code = #{code}
     </select>
 
+
+    <select id="queryByTableDict" resultType="org.jeeasy.system.modules.dict.domain.SysDict" parameterType="org.jeeasy.system.modules.dict.domain.SysTableDict">
+        select t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name
+        from ${tableDict.tableName} t
+    </select>
+    <select id="getOneByParentCodeAndDictCode" resultType="org.jeeasy.system.modules.dict.domain.SysDict">
+        SELECT a.dict_code AS dict_code,
+               a.dict_name AS dict_name
+        FROM sys_dict a
+                 LEFT JOIN sys_dict b ON a.parent_id = b.id
+        WHERE b.dict_code = #{parentCode}
+          AND a.dict_code = #{code}
+    </select>
+
 </mapper>

@@ -34,10 +34,10 @@ public class SystemCommonController {
      * @author Alps
      * @date 2020/11/21 16:05
      */
-    @GetMapping("/dicts/{parentCode}")
+    @GetMapping("/dicts/{code}")
     @DictTranslation
     @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
-    public R<List<DictVo>> getDicts(@PathVariable("parentCode") String code) {
+    public R<List<DictVo>> getDicts(@PathVariable("code") String code) {
         return R.ok(commonService.getDictsByCode(code));
     }
 }

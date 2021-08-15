@@ -2,6 +2,7 @@ package org.jeeasy.system.modules.dict.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeeasy.system.modules.dict.domain.SysDict;
+import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,16 @@ import java.util.List;
 public interface SysDictService  extends IService<SysDict> {
 
     /**
-     * 根据上级code获取字典列表
+     * 根据上级 code 获取字典列表
      * @param parentCode
      * @return
      */
     List<SysDict> queryByParentCode(String parentCode);
+
+    /**
+     * 根据 TableDict 获取字典列表
+     * @param parentCode
+     * @return
+     */
+    List<SysDict> queryByTableDict(SysTableDict tableDict);
 }
