@@ -2,9 +2,9 @@ package org.jeeasy.common.core.controller;
 
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.vo.CaptchaVo;
-import org.jeeasy.common.core.vo.R;
-import org.jeeasy.common.core.vo.RestCode;
+import org.jeeasy.common.core.domain.vo.CaptchaVo;
+import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.enums.RestCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

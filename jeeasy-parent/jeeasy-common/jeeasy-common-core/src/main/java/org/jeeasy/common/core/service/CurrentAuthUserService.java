@@ -1,6 +1,6 @@
 package org.jeeasy.common.core.service;
 
-import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.domain.IAuthUser;
 
 /**
  * @author AlpsDDJ

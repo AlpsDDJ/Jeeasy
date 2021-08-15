@@ -142,11 +142,6 @@
             </dependency>
             <dependency>
                 <groupId>mobie.alps</groupId>
-                <artifactId>jeeasy-common-db</artifactId>
-                <version>${jeeasy.common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>mobie.alps</groupId>
                 <artifactId>jeeasy-common-cache</artifactId>
                 <version>${jeeasy.common.version}</version>
             </dependency>

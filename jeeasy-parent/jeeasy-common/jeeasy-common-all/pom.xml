@@ -21,10 +21,6 @@
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-common-doc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-db</artifactId>
-        </dependency>
     </dependencies>
 
 

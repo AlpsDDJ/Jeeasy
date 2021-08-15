@@ -1,7 +1,7 @@
 package org.jeeasy.auth.service.impl;
 
 import org.jeeasy.auth.tools.SecurityUtil;
-import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.service.CurrentAuthUserService;
 import org.springframework.stereotype.Component;
 

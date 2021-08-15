@@ -5,9 +5,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.db.annotation.DictTranslation;
-import org.jeeasy.common.core.vo.R;
-import org.jeeasy.common.db.base.SimpleBaseController;
+import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +78,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @author AlpsDDJ
      * @date 2020/11/21 22:11
      * @param id
-     * @return {@link org.jeeasy.common.core.vo.R<?>}
+     * @return {@link org.jeeasy.common.core.domain.vo.R<?>}
      */
     @DeleteMapping("/{id}")
     @ApiOperation(value = "根据ID删除权限", notes = "根据ID删除权限")

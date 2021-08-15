@@ -10,7 +10,7 @@ import org.jeeasy.auth.provider.AuthServiceProvider;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.SpringUtil;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.vo.RestCode;
+import org.jeeasy.common.core.enums.RestCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

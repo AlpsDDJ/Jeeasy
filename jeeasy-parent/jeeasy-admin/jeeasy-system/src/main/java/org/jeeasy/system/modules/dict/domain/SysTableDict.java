@@ -13,17 +13,17 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 
  * @author mobie
  * @TableName sys_table_dict
  */
 @Data
 @Accessors(chain = true)
 @ApiModel("表类型字典")
-@TableName(value ="sys_table_dict")
+@TableName(value = "sys_table_dict")
 public class SysTableDict implements Serializable {
+
     /**
-     *
+     * ID
      */
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "id", notes = "ID")

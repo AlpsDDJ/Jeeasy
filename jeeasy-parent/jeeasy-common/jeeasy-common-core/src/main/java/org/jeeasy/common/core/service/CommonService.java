@@ -1,7 +1,7 @@
 package org.jeeasy.common.core.service;
 
 
-import org.jeeasy.common.core.vo.DictVo;
+import org.jeeasy.common.core.domain.vo.DictVo;
 
 import java.util.List;
 

@@ -16,25 +16,34 @@ const jeeasyAdminRouter = {
   },
   children: [
     {
+      path: 'user',
+      component: () => import('@/views/jeeasy/sys/user/list'),
+      name: 'sys-user',
+      meta: {
+        keepAlive: true,
+        title: '用户管理',
+        icon: 'editor',
+        roles: ['sys-user']
+      }
+    },
+    {
+      path: 'role',
+      component: () => import('@/views/jeeasy/sys/role/list'),
+      name: 'sys-role',
+      meta: {
+        title: '角色管理',
+        icon: 'editor',
+        roles: ['sys-role']
+      }
+    },
+    {
       path: 'doc',
       component: () => import('@/views/jeeasy/sys/doc'),
-      // redirect: '/component/editor/one',
       name: 'sys-doc',
       meta: {
         title: '接口文档',
         icon: 'editor',
         roles: ['sys-doc']
-      }
-    },
-    {
-      path: 'user',
-      component: () => import('@/views/jeeasy/sys/user/list'),
-      // redirect: '/component/editor/one',
-      name: 'sys-user',
-      meta: {
-        title: '用户管理',
-        icon: 'editor',
-        roles: ['sys-user']
       }
     }
   ]

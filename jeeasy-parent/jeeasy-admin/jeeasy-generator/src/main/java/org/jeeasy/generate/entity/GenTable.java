@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.db.annotation.Dict;
+import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.generate.emuns.IdTypeEnum;
 import org.jeeasy.generate.emuns.RelationTypeEnum;

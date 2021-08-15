@@ -3,9 +3,10 @@ package org.jeeasy.system.modules.role.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.jeeasy.common.db.annotation.DictTranslation;
-import org.jeeasy.common.core.vo.R;
-import org.jeeasy.common.db.base.SimpleBaseController;
+import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.role.domian.SysRole;
 import org.jeeasy.system.modules.role.service.SysRoleService;
 import org.springframework.security.core.context.SecurityContext;
@@ -26,10 +27,10 @@ public class SysRoleController extends SimpleBaseController<SysRoleService, SysR
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "角色列表", notes = "角色列表")
-    public R<IPage<SysRole>> list(SysRole entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public R<IPage<SysRole>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
-        return super.query(entity, pageNo, pageSize, req);
+        return super.query(queryPageModel, req, SysRole.class);
     }
 
     @GetMapping("/{id}")

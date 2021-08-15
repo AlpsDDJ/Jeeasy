@@ -2,10 +2,10 @@ package org.jeeasy.system.modules.user.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.auth.annotation.AuthMethod;
-import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
-import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.ServletUtil;
 import org.jeeasy.common.core.tools.Tools;

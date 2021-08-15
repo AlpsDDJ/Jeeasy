@@ -12,8 +12,8 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.exception.JeeasyException;
-import org.jeeasy.common.core.vo.CaptchaVo;
-import org.jeeasy.common.core.vo.R;
+import org.jeeasy.common.core.domain.vo.CaptchaVo;
+import org.jeeasy.common.core.domain.vo.R;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;

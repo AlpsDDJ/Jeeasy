@@ -2,6 +2,7 @@ package org.jeeasy.system.modules.dict.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.jeeasy.common.core.domain.TableDictVo;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 
@@ -35,4 +36,13 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @return
      */
     SysDict getOneByParentCodeAndDictCode(@Param("parentCode") String parentCode, @Param("code") String code);
+
+
+    /**
+     *
+     * @param tableDict SysTableDict
+     * @param code 待查询的 dictCode
+     * @return
+     */
+    SysDict getOneByTableDictAndCode(@Param("tableDict") TableDictVo tableDict, @Param("code") String code);
 }

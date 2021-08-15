@@ -1,6 +1,6 @@
 package org.jeeasy.common.doc.tools;
 
-import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.doc.config.SwaggerModule;
 import org.jeeasy.common.core.tools.Tools;
 import springfox.documentation.builders.ApiInfoBuilder;

@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.db.annotation.DictTranslation;
-import org.jeeasy.common.db.model.QueryPageModel;
-import org.jeeasy.common.core.vo.R;
-import org.jeeasy.common.db.base.SimpleBaseController;
+import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.model.ChangePasswordByOldPasswordModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
@@ -31,7 +31,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        R<IPage<SysUser>> query = super.query(queryPageModel, req, SysUser.class);
+//        R<IPage<SysUser>> query = super.query(queryPageModel, req, SysUser.class);
         return super.query(queryPageModel, req, SysUser.class);
     }
 

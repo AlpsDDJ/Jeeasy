@@ -1,7 +1,7 @@
 package org.jeeasy.auth.service;
 
 import org.jeeasy.auth.annotation.AuthMethod;
-import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.auth.domain.Permission;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.core.Authentication;

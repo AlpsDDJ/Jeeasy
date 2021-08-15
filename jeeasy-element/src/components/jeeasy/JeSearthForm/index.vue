@@ -34,24 +34,21 @@ export default {
   computed: {
     searchColLayout() {
       return {
-        props: {
-          xs: 24,
-          sm: 24,
-          md: 12,
-          lg: 6,
-          xl: 6
-        }
+        xs: 24,
+        sm: 24,
+        md: 12,
+        lg: 6,
+        xl: 6
       }
     },
     justify() {
       return this.searchOpen ? 'end' : 'start'
     },
     offset() {
-      return (4 - this.searchParams.length) * 6
+      return (3 - this.searchParams.length) * 6
     },
     component() {
-      return (component, key) => {
-        console.log(key, component)
+      return (component) => {
         return component
       }
     }
@@ -69,21 +66,18 @@ export default {
     toggleSearch() {
       this.searchOpen = !this.searchOpen
     },
-    handleInput(value) {
-      console.log('value ---> ', value)
-    },
     renderItem() {
       return this.searchParams.map(({ slot, ...item }, index) => {
         if (index < 3 || this.searchOpen) {
           return (
-            <el-col key={item.key}  {...this.searchColLayout}>
+            <el-col key={item.key}  props={this.searchColLayout}>
                 <el-form-item label={item.label} prop={item.key}>
                   {
                     () => {
                       if (slot && this.$scopedSlots[slot]) {
                         return this.$scopedSlots[slot]()
                       } else if (item.search && typeof item.search === 'function') {
-                        return this.component(item.search(), item.key)
+                        return this.component(item.search())
                       } else {
                         return <el-input v-model={this.formData[item.key]} />
                       }
@@ -107,7 +101,7 @@ export default {
               {
                 this.renderItem(this)
               }
-              <el-col {...this.searchColLayout} offset={this.offset} class="search-btns text-right">
+              <el-col props={this.searchColLayout} offset={this.offset} class="search-btns text-right">
                 <el-form-item label-width="0">
                   <el-button type="primary" onClick={this.submit}>查询</el-button>
                   <el-button onClick={this.reset}>重置</el-button>

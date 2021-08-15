@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.db.annotation.Dict;
+import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
 

@@ -1,10 +1,10 @@
 package org.jeeasy.auth.tools;
 
 import org.jeeasy.auth.domain.SecurityUserDetails;
-import org.jeeasy.common.core.entity.IAuthUser;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.vo.RestCode;
+import org.jeeasy.common.core.enums.RestCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

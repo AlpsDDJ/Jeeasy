@@ -1,7 +1,7 @@
 package org.jeeasy.auth.config.property;
 
 import lombok.Data;
-import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

@@ -18,10 +18,6 @@
             <artifactId>jeeasy-common-doc</artifactId>
         </dependency>
         <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-db</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>

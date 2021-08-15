@@ -3,14 +3,23 @@ import JeSearchForm from '@/components/jeeasy/JeSearthForm'
 import JeTable from '@/components/jeeasy/JeTable'
 import { mapGetters } from 'vuex'
 
+const formTypes = {
+  ADD: '新增',
+  EDIT: '编辑',
+  VIEW: '查看'
+}
 
 export default {
   data () {
     return {
       list: [],
+      formVisible: false,
+      formData: {},
+      formType: '',
       fields: [],
       labels: [],
-      columns: [],
+      columnOptions: {},
+      formTypes,
       query: {
         page: {
           current: 1,
@@ -29,44 +38,82 @@ export default {
     ...mapGetters([
       'loading'
     ]),
-    api() {
+    api () {
       return parseApi(this.baseApi)
     },
-    queryRequestParams() {
-      const { current, size } = this.query.page
-      return  {
+    queryRequestParams () {
+      const {current, size} = this.query.page
+      return {
         current,
         size,
         ...this.query.form
       }
     },
-    column() {
-      return Object.values(this.fields).filter(field => field !== 'id').map(field => {
-        return {
-          key: field,
-          label: this.labels[field]
-        }
+    columns () {
+      return this.fields.columns().map(field => {
+        const key = field.key
+        return Object.assign(field, this.columnOptions[key] || {})
       })
     },
-    searchParams(){
-      return this.columns.filter(({ search = false }) => search)
+    searchFields () {
+      return this.columns.filter(({search = false}) => search)
     },
-    formFields(){
-      return this.columns.filter(({ form = {} }) => form)
+    formFields () {
+      return this.columns.filter(({form = {}}) => form)
+    },
+    formTitle () {
+      const title = this.$router.currentRoute.meta['title']
+      return `${this.formType}${title.replace(/(管理)|(列表)/g, '')}`
     }
   },
   methods: {
     beforeLoad (params) {
       return Promise.resolve(params)
     },
-    async loadData() {
+    beforeSubmit (params, api) {
+      return Promise.resolve({params, api})
+    },
+    async loadData () {
       await this.beforeLoad(this.queryRequestParams).then(params => {
         // console.log('loadData')
-        this.$ajax(this.api.list, params).then(({result: { records, ...page }}) => {
+        this.$ajax(this.api.list, params).then(({result: {records, ...page}}) => {
           this.query.page = page
           this.list = records
         })
       })
+    },
+    async handleFormSubmit () {
+      let submitApi = ''
+      switch (this.formType) {
+        case formTypes.ADD:
+          submitApi = this.api.add
+          break
+        case formTypes.EDIT:
+          submitApi = this.api.edit
+      }
+      if (submitApi) {
+        await this.beforeSubmit(this.formData, submitApi).then(({params, api}) => {
+          this.$ajax(api, params).then(({message}) => {
+            this.$message.success(message)
+            this.formVisible = false
+            this.loadData()
+          })
+        })
+      }
+    },
+    handleFormCancel () {
+      this.formVisible = false
+    },
+    handleAdd () {
+      this.formData = {}
+      this.formType = formTypes.ADD
+      this.formVisible = true
+    },
+    handleEdit (record) {
+      console.log(record)
+      this.formType = formTypes.EDIT
+      this.formData = {...record}
+      this.formVisible = true
     }
   }
 }

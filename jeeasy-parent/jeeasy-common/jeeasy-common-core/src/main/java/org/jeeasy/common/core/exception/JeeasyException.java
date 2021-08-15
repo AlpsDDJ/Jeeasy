@@ -1,8 +1,8 @@
 package org.jeeasy.common.core.exception;
 
 import lombok.Getter;
-import org.jeeasy.common.core.vo.R;
-import org.jeeasy.common.core.vo.RestCode;
+import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.enums.RestCode;
 
 /**
  * Jeeasy 自定义异常

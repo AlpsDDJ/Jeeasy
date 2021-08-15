@@ -2,9 +2,9 @@ package org.jeeasy.system.modules.user.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeeasy.common.core.constant.CommonConstant;
+import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.db.tools.QueryGenerator;
+import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.SysUserRole;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;

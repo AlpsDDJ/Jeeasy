@@ -11,7 +11,7 @@ export default {
       type: Object,
       required: true
     },
-    fields: {
+    role: {
       type: Array,
       required: true
     },
@@ -77,7 +77,7 @@ export default {
         <el-form v-model={this.formData} props={this.formOption}>
           <el-row type="flex" class="flex-wrap-wrap">
             {
-              this.fields.map(({ slot, form = {}, ...item }, index) => (
+              this.role.map(({ slot, form = {}, ...item }, index) => (
                   form && <el-col key={item.key || index} props={this.formColLayout(form.colLayout)}>
                   <el-form-item label={item.label} prop={item.key}>
                     {
