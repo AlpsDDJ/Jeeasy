@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.user.entity.SysUserDepart;
+import org.jeeasy.system.modules.user.domain.SysUserDepart;
 
 /**
  * SysUserRoleService: 用户部门表 服务类

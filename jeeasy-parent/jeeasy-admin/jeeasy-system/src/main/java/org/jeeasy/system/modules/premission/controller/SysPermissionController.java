@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
-import org.jeeasy.system.modules.premission.entity.SysPermission;
+import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.web.bind.annotation.*;
 

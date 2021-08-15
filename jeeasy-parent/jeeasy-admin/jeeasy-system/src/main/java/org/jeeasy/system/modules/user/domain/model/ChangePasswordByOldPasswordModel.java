@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.user.model;
+package org.jeeasy.system.modules.user.domain.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

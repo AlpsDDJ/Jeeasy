@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.domain.SysUser;
 
 /**
  * @author AlpsDDJ

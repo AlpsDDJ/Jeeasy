@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.user.entity.SysUserRole;
+import org.jeeasy.system.modules.user.domain.SysUserRole;
 
 /**
  * SysUserRoleMapper: 用户角色表 Mapper 接口

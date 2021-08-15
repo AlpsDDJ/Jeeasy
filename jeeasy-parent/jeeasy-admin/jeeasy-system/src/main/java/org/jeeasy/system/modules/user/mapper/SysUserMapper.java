@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.domain.SysUser;
 
 /**
  * @author AlpsDDJ

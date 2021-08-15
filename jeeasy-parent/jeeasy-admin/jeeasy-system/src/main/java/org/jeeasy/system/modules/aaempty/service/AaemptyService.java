@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.aaempty.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.aaempty.entity.Aaempty;
+import org.jeeasy.system.modules.aaempty.domain.Aaempty;
 
 /**
  * @author AlpsDDJ

@@ -9,7 +9,7 @@ import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
 import org.jeeasy.common.db.model.QueryPageModel;
-import org.jeeasy.system.modules.dict.entity.SysDict;
+import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.web.bind.annotation.*;
 

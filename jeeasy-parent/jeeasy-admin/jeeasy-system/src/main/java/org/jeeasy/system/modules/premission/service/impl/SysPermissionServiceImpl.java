@@ -3,7 +3,7 @@ package org.jeeasy.system.modules.premission.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.system.modules.premission.entity.SysPermission;
+import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.mapper.SysPermissionMapper;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.stereotype.Service;

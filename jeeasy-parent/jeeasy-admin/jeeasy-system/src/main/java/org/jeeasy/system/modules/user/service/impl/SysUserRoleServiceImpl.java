@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeeasy.system.modules.user.entity.SysUserRole;
+import org.jeeasy.system.modules.user.domain.SysUserRole;
 import org.jeeasy.system.modules.user.mapper.SysUserRoleMapper;
 import org.jeeasy.system.modules.user.service.SysUserRoleService;
 

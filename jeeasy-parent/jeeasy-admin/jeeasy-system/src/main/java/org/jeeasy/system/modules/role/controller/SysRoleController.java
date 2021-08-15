@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.vo.R;
 import org.jeeasy.common.db.base.SimpleBaseController;
-import org.jeeasy.system.modules.role.entity.SysRole;
+import org.jeeasy.system.modules.role.domian.SysRole;
 import org.jeeasy.system.modules.role.service.SysRoleService;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

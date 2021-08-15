@@ -2,7 +2,7 @@ package org.jeeasy.system.modules.premission.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.jeeasy.system.modules.premission.entity.SysPermission;
+import org.jeeasy.system.modules.premission.domain.SysPermission;
 
 /**
  * 菜单权限表(sys_permission)数据Mapper

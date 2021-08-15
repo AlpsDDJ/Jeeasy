@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeeasy.system.modules.dict.mapper.SysDictMapper">
 
-    <select id="queryByParentCode" parameterType="string" resultType="org.jeeasy.system.modules.dict.entity.SysDict">
+    <select id="queryByParentCode" parameterType="string" resultType="org.jeeasy.system.modules.dict.domain.SysDict">
         SELECT a.dict_name,
                a.dict_code
         FROM sys_dict a

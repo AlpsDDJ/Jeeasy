@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jeeasy.common.core.tools.PwdUtil;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.domain.SysUser;
 
 /**
  * @author AlpsDDJ

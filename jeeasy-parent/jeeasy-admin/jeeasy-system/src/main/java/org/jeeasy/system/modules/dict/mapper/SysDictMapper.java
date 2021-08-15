@@ -2,7 +2,7 @@ package org.jeeasy.system.modules.dict.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeeasy.system.modules.dict.entity.SysDict;
+import org.jeeasy.system.modules.dict.domain.SysDict;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.depart.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.depart.entity.SysDepart;
+import org.jeeasy.system.modules.depart.domain.SysDepart;
 
 /**
  * @author AlpsDDJ

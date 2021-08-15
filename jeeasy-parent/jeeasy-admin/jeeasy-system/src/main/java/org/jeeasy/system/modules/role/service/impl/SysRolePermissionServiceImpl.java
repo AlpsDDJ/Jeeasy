@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.role.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeeasy.system.modules.role.entity.SysRolePermission;
+import org.jeeasy.system.modules.role.domian.SysRolePermission;
 import org.jeeasy.system.modules.role.mapper.SysRolePermissionMapper;
 import org.jeeasy.system.modules.role.service.SysRolePermissionService;
 import org.springframework.stereotype.Service;

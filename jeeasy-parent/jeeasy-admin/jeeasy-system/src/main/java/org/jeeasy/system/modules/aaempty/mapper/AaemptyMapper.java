@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.aaempty.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.aaempty.entity.Aaempty;
+import org.jeeasy.system.modules.aaempty.domain.Aaempty;
 
 /**
  * @author AlpsDDJ

@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.role.entity;
+package org.jeeasy.system.modules.user.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,24 +11,35 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
+ * 用户角色表
+ *
  * @author AlpsDDJ
- * @date 2020/11/24 13:48
+ * @version v1.0
+ * @description SysUserRole
+ * @date 2020-11-21
  */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SysRolePermission extends Model<SysRolePermission> implements Serializable {
+public class SysUserRole extends Model<SysUserRole> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
+    /**
+     * 用户ID
+     */
+    private String userId;
+
+    /**
+     * 角色ID
+     */
     private String roleId;
 
-    private String permissionId;
-
-    public SysRolePermission(String roleId, String permissionId) {
+    public SysUserRole(String userId, String roleId) {
+        this.userId = userId;
         this.roleId = roleId;
-        this.permissionId = permissionId;
     }
 }

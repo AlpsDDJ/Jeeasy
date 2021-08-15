@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.premission.entity;
+package org.jeeasy.system.modules.premission.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

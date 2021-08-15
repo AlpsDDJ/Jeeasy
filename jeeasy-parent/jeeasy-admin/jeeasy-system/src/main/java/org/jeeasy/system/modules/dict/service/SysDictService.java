@@ -1,7 +1,8 @@
 package org.jeeasy.system.modules.dict.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.dict.entity.SysDict;
+import org.jeeasy.system.modules.dict.domain.SysDict;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @author AlpsDDJ
  * @date 2021/8/13 10:01
  */
+@Service
 public interface SysDictService  extends IService<SysDict> {
 
     /**

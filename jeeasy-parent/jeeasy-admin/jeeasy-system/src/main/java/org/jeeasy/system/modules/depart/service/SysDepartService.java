@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.depart.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.depart.entity.SysDepart;
+import org.jeeasy.system.modules.depart.domain.SysDepart;
 
 /**
  * @author AlpsDDJ

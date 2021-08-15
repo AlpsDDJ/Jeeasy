@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.netty.util.internal.StringUtil;
 import org.jeeasy.common.core.tools.YouBianCodeUtil;
 import org.jeeasy.system.enums.depart.OrgTypeEnum;
-import org.jeeasy.system.modules.depart.entity.SysDepart;
+import org.jeeasy.system.modules.depart.domain.SysDepart;
 import org.jeeasy.system.modules.depart.mapper.SysDepartMapper;
 import org.jeeasy.system.modules.depart.service.SysDepartService;
 import org.springframework.stereotype.Service;

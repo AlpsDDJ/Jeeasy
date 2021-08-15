@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.role.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.role.entity.SysRolePermission;
+import org.jeeasy.system.modules.role.domian.SysRolePermission;
 
 /**
  * @author AlpsDDJ

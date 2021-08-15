@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeeasy.system.modules.user.entity.SysUserDepart;
+import org.jeeasy.system.modules.user.domain.SysUserDepart;
 import org.jeeasy.system.modules.user.mapper.SysUserDepartMapper;
 import org.jeeasy.system.modules.user.service.SysUserDepartService;
 

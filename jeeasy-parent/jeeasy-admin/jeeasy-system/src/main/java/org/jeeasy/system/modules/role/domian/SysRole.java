@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.role.entity;
+package org.jeeasy.system.modules.role.domian;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

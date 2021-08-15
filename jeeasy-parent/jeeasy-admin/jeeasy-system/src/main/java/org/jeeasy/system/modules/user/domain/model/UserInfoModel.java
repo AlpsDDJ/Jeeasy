@@ -1,9 +1,9 @@
-package org.jeeasy.system.modules.user.model;
+package org.jeeasy.system.modules.user.domain.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.jeeasy.system.modules.user.entity.SysUser;
+import org.jeeasy.system.modules.user.domain.SysUser;
 
 /**
  * UserInfoModel: 保存用户 数据模型

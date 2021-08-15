@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.dict.entity;
+package org.jeeasy.system.modules.dict.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;

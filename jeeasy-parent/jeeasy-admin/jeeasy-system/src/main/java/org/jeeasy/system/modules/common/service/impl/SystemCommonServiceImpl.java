@@ -8,11 +8,16 @@ import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.common.service.SystemCommonService;
 import org.jeeasy.system.modules.common.vo.DictVo;
 import org.jeeasy.system.modules.dict.service.SysDictService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author mobie
+ */
+@Service
 public class SystemCommonServiceImpl implements SystemCommonService {
 
 

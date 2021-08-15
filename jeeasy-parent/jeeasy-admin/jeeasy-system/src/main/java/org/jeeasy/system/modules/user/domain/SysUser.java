@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.user.entity;
+package org.jeeasy.system.modules.user.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
