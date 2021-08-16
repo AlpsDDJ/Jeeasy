@@ -25,36 +25,37 @@ public class SimpleBaseController<S extends IService<T>, T> {
     @Autowired
     protected S service;
 
-    /**
-     * 列表分页查询
-     *
-     * @param entity
-     * @param page
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> page(T entity, IPage<T> page, HttpServletRequest req) {
-        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        return R.ok(service.page(page, queryWrapper));
-    }
+//
+//    /**
+//     * 列表分页查询
+//     *
+//     * @param entity
+//     * @param page
+//     * @param req
+//     * @return {@link R< IPage<T>>}
+//     * @author mobie
+//     * @date 2020/11/21 16:24
+//     */
+//    protected R<IPage<T>> page(T entity, IPage<T> page, HttpServletRequest req) {
+//        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
+//        return R.ok(service.page(page, queryWrapper));
+//    }
 
-    /**
-     * 列表分页查询
-     *
-     * @param entity
-     * @param pageNo
-     * @param pageSize
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
-        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
-    }
+//    /**
+//     * 列表分页查询
+//     *
+//     * @param entity
+//     * @param pageNo
+//     * @param pageSize
+//     * @param req
+//     * @return {@link R< IPage<T>>}
+//     * @author mobie
+//     * @date 2020/11/21 16:24
+//     */
+//    protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
+//        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
+//        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
+//    }
 
     /**
      * 列表分页查询

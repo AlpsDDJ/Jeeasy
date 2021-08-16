@@ -24,9 +24,9 @@ public class QueryGenerator {
     private static final String STAR = "*";
     private static final char COMMA = ',';
 
-    public static <T> QueryWrapper<T> createWrapper(T entity, Map<String, String[]> params) {
-        return new QueryWrapper<T>();
-    }
+//    public static <T> QueryWrapper<T> createWrapper(T entity, Map<String, String[]> params) {
+//        return new QueryWrapper<T>();
+//    }
 
     public static <T> QueryWrapper<T> createWrapper(Class<T> clazz) {
         return new QueryWrapper<T>();

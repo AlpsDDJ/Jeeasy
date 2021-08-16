@@ -6,8 +6,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.depart.domain.SysDepart;
 import org.jeeasy.system.modules.depart.service.SysDepartService;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,8 @@ public class SysDepartController extends SimpleBaseController<SysDepartService, 
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "组织机构列表", notes = "组织机构列表")
-    public R<IPage<SysDepart>> list(SysDepart entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        return super.query(entity, pageNo, pageSize, req);
+    public R<IPage<SysDepart>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+        return super.query(queryPageModel, req, SysDepart.class);
     }
 
     /**

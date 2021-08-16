@@ -6,8 +6,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "权限列表", notes = "权限列表")
-    public R<IPage<SysPermission>> list(SysPermission entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        return super.query(entity, pageNo, pageSize, req);
+    public R<IPage<SysPermission>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+        return super.query(queryPageModel, req, SysPermission.class);
     }
 
     /**

@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.entity.GenTable;
 import org.jeeasy.generate.service.GenTableService;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "表信息列表", notes = "表信息列表")
-    public R<IPage<GenTable>> list(GenTable entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        return super.query(entity, pageNo, pageSize, req);
+    public R<IPage<GenTable>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+        return super.query(queryPageModel, req, GenTable.class);
     }
 
     @GetMapping("/{id}")
