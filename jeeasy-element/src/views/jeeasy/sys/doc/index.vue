@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { apiDocUrl } from '@/settings'
+
 export default {
   name: 'index',
 
@@ -21,7 +23,7 @@ export default {
 
   computed: {
     src () {
-      return `http://192.168.1.3:8888/doc.html`
+      return apiDocUrl
       // return `${process.env.VUE_APP_APIHOST}/doc.html`
     }
   }

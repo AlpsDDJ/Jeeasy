@@ -72,3 +72,9 @@ export const ajaxResponseNoVerifyUrl = [
  * 若是内部ajax：serverLoginUrl = '/logout';
  */
 export const serverLogoutUrl = '/auth/logout'
+
+/**
+ * api文档地址
+ * @type {string}
+ */
+export const apiDocUrl = 'http://localhost:8888/doc.html'
