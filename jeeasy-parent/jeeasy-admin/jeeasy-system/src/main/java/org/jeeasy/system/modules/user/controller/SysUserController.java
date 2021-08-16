@@ -1,15 +1,18 @@
 package org.jeeasy.system.modules.user.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.domain.model.QueryPageModel;
-import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.tools.QueryGenerator;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.model.ChangePasswordByOldPasswordModel;
+import org.jeeasy.system.modules.user.domain.model.SysUserQueryPageModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
 import org.jeeasy.system.modules.user.service.SysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
@@ -30,9 +33,18 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "用户列表", notes = "用户列表")
-    public R<IPage<SysUser>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-//        R<IPage<SysUser>> query = super.query(queryPageModel, req, SysUser.class);
-        return super.query(queryPageModel, req, SysUser.class);
+    public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
+        QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
+        String departId = queryPageModel.getDepartId();
+        String roleId = queryPageModel.getRoleId();
+        if(Tools.isNotEmpty(departId)){
+            wrapper.eq("depart_id", departId);
+        }
+        if(Tools.isNotEmpty(roleId)){
+            wrapper.eq("role_id", roleId);
+        }
+        IPage<SysUser> sysUserVoList = service.querySysUserVoPage(wrapper, queryPageModel);
+        return R.ok(sysUserVoList);
     }
 
     @GetMapping("/{id}")
@@ -45,15 +57,14 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @PostMapping
     @ApiOperation(value = "添加用户", notes = "添加用户")
     public R<?> add(@RequestBody UserInfoModel model) {
-        SysUser sysUser = SysUserUtil.create(model.getUser()).initSaltAndPassword();
-        service.addUserWithRole(sysUser, model.getRoles());
+        service.addUserWithUserInfoModel(model);
         return R.ok().setMessage("添加成功");
     }
 
     @PutMapping
     @ApiOperation(value = "修改用户", notes = "修改用户")
     public R<?> edit(@RequestBody UserInfoModel model) {
-        service.editUserWithRole(model.getUser(), model.getRoles());
+        service.editUserWithUserInfoModel(model);
         return R.ok().setMessage("修改成功");
     }
 

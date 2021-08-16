@@ -27,6 +27,7 @@ const options = {
   listHidden: [fields.id],
   formHidden: [fields.id],
   showQuery: [fields.username, fields.realName, fields.phone, fields.status]
+  // showQuery: []
 }
 
 export default {

@@ -87,28 +87,28 @@ const actions = {
   getInfo ({commit}) {
     return new Promise((resolve, reject) => {
       getInfo(getCurrentUserUrl).then(response => {
-        const {result: data} = response
-
-        if (!data) {
+        const {result} = response
+        if (!result) {
           reject('当前用户登入信息已失效，请重新登入再操作.')
         }
 
-        const {roles = [], username, realName, permissions = [], avatar, msgtotal} = data
+        const {roleSet = [], permissionSet = [], username, realName, avatar, msgtotal} = result
 
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
+        if (!roleSet || roleSet.length <= 0) {
           reject('用户没有角色权限!')
         }
 
         // roles.map(role => `ROLE:${role}`)
-        data.roles = [...roles.map(role => `ROLE:${role}`), ...permissions]
+        result.roleSet = [...roleSet.map(role => `ROLE:${role}`), ...permissionSet]
 
-        commit('SET_ROLES', data.roles)
+        commit('SET_ROLES', result.roleSet)
         commit('SET_NAME', realName)
         commit('SET_USERNAME', username)
         commit('SET_AVATAR', avatar)
         commit('SET_MSGTOTAL', msgtotal)
-        resolve(data)
+
+        resolve(result)
       }).catch(error => {
         reject(error.message || 'Error')
         // console.log(error);

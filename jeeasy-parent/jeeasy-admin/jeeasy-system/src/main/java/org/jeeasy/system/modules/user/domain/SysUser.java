@@ -10,10 +10,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.system.enums.user.SysUserStatusEnum;
+import org.jeeasy.system.modules.depart.domain.SysDepart;
+import org.jeeasy.system.modules.role.domian.SysRole;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 系统用户
@@ -92,6 +95,12 @@ public class SysUser extends Model<SysUser> implements Serializable {
     @TableField(fill = FieldFill.UPDATE)
 //    @Dict(dictEnum = DelFlagEnum.class)
     private Integer delFlag;
+
+
+    @TableField(exist = false)
+    private List<SysRole> roles;
+    @TableField(exist = false)
+    private List<SysDepart> departs;
 
 
 //    @TableField(exist = false)

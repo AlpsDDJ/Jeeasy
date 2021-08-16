@@ -1,5 +1,6 @@
 package org.jeeasy.common.core.domain.model;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,10 @@ public class QueryPageModel implements QueryModel {
     private int size = 10;
     private int current = 1;
     private String[] orders;
+
+    public Page<?> getPage(){
+        return new Page<>(this.current, this.size);
+    }
 //    private String query;
 //    private Map<String, Object> params;
 

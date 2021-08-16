@@ -42,11 +42,12 @@ export default {
       }
     },
     justify() {
-      return this.searchOpen ? 'end' : 'start'
+      return !this.searchOpen ? 'start' : 'start'
+      // return 'space-between'
     },
-    offset() {
-      return (3 - this.searchParams.length) * 6
-    },
+    // offset() {
+    //   return (3 - this.searchParams.length) * 6
+    // },
     component() {
       return (component) => {
         return component
@@ -96,12 +97,12 @@ export default {
           <el-form v-model={this.formData} label-width="100px" nativeOnKeyup={({ code }) => {
             if (code === 'Enter') this.submit()
           }}>
-            <el-row justify={this.justify} type="flex" class="flex-wrap-wrap">
+            <el-row justify={this.justify} >
               <slot />
               {
                 this.renderItem(this)
               }
-              <el-col props={this.searchColLayout} offset={this.offset} class="search-btns text-right">
+              <el-col props={this.searchColLayout} class="search-btns text-right">
                 <el-form-item label-width="0">
                   <el-button type="primary" onClick={this.submit}>查询</el-button>
                   <el-button onClick={this.reset}>重置</el-button>
@@ -136,6 +137,7 @@ export default {
 
   .search-btns {
     //padding-left: 50px;
+    float: right;
   }
 
   .el-select {

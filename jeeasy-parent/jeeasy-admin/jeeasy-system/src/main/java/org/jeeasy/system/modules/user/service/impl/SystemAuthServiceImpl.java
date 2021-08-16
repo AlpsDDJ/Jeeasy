@@ -49,7 +49,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         SysUser sysUser = sysUserService.getByUserName(username);
         if (Tools.isNotEmpty(sysUser)) {
             SystemAuthUser authUser = IAuthUser.create(sysUser, SystemAuthUser.class);
-            authUser.setPermissions(this.getPermissionSetByUsername(username)).setRoles(this.getRoleSetByUsername(username));
+            authUser.setPermissionSet(this.getPermissionSetByUsername(username)).setRoleSet(this.getRoleSetByUsername(username));
             return authUser;
 //            return IAuthUser.create(sysUser, SystemAuthUser.class);
         }

@@ -17,8 +17,8 @@ import java.util.Collection;
 @Accessors(chain = true)
 public class SystemAuthUser extends SysUser implements IAuthUser {
 
-    private Collection<String> roles;
-    private Collection<String> permissions;
+    private Collection<String> roleSet;
+    private Collection<String> permissionSet;
 
     @Override
     public String id() {

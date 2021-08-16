@@ -33,7 +33,7 @@ public class QueryGenerator {
     }
 
     public static <T> QueryWrapper<T> createWrapper(Class<T> clazz, Map<String, String[]> params) {
-        AtomicReference<QueryWrapper<T>> wrapper = new AtomicReference<>();
+        AtomicReference<QueryWrapper<T>> wrapper = new AtomicReference<>(new QueryWrapper<>());
 
         params.forEach((key, value) -> {
             if (ReflectUtil.hasField(clazz, key)) {

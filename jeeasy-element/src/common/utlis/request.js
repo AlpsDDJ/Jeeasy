@@ -74,7 +74,7 @@ service.interceptors.response.use(
           }
         }).catch(error => {
           MessageBox.alert(error.message || '当前用户登入信息已失效，请重新登入再操作', {
-            showClose: false,
+            // showClose: false,
             beforeClose: () => {
               if (isExternal(serverLoginUrl)) {
                 window.location.href = serverLoginUrl

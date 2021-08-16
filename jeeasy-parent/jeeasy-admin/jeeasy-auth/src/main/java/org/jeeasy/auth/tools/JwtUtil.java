@@ -55,7 +55,7 @@ public class JwtUtil {
     public String createJwt(Authentication authentication, Boolean rememberMe, Boolean isRefresh) {
         SecurityUserDetails<?> user = (SecurityUserDetails<?>) authentication.getPrincipal();
         AuthUserFormModel authUserFormModel = (AuthUserFormModel)authentication.getDetails();
-        return createJwt(isRefresh, rememberMe, user.getId(), user.getUsername(), authUserFormModel.getAuthMethod(), user.getRoles(), user.getPermissions());
+        return createJwt(isRefresh, rememberMe, user.getId(), user.getUsername(), authUserFormModel.getAuthMethod(), user.getRoleSet(), user.getPermissionSet());
     }
 
     /**

@@ -2,4 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeeasy.system.modules.user.mapper.SysUserMapper">
 
+    <resultMap id="SysUserVoResultMap" type="org.jeeasy.system.modules.user.domain.SysUser" autoMapping="true">
+        <id column="id" property="id"/>
+        <collection property="roles" column="id" select="queryUserRole"/>
+        <collection property="departs" column="id" select="queryUserDepart"/>
+    </resultMap>
+
+    <sql id="base_colunms">
+        id, username, user_no, password, salt, status, real_name, email, avatar, sex, birthday, phone, create_time, create_by, update_time, update_by, remark, del_flag
+    </sql>
+
+    <select id="querySysUserVoPage" resultMap="SysUserVoResultMap">
+        SELECT DISTINCT <include refid="base_colunms"/> FROM (
+        SELECT sys_user.*, sys_user_role.role_id, sys_user_depart.depart_id FROM sys_user
+        LEFT JOIN sys_user_role ON sys_user.id = sys_user_role.user_id
+        LEFT JOIN sys_user_depart on sys_user.id = sys_user_depart.user_id
+        ) t ${ew.customSqlSegment}
+        <!--<choose>
+            <when test="ew.customSqlSegment != null and ew.customSqlSegment != ''">
+                ${ew.customSqlSegment}
+                <if test="model.roleId != null and model.roleId != ''">
+                    and sys_user_role.role_id = #{model.roleId}
+                </if>
+                <if test="model.departId != null and model.departId != ''">
+                    and sys_user_depart.depart_id = #{model.departId}
+                </if>
+            </when>
+            <otherwise>
+                <where>
+                    <if test="model.roleId != null and model.roleId != ''">
+                        sys_user_role.role_id = #{model.roleId}
+                    </if>
+                    <if test="model.departId != null and model.departId != ''">
+                        sys_user_depart.depart_id = #{model.departId}
+                    </if>
+                </where>
+            </otherwise>
+        </choose>-->
+    </select>
+
+    <select id="queryUserRole" resultType="org.jeeasy.system.modules.role.domian.SysRole">
+        select b.role_code, b.role_name, b.id
+        from sys_user_role a
+                 left join sys_role b on a.role_id = b.id
+        where a.user_id = #{id}
+    </select>
+
+    <select id="queryUserDepart" resultType="org.jeeasy.system.modules.depart.domain.SysDepart">
+        select b.depart_name, b.depart_name_en, b.depart_name_abbr, b.id
+        from sys_user_depart a
+                 left join sys_depart b on a.depart_id = b.id
+        where a.user_id = #{id}
+    </select>
+
 </mapper>

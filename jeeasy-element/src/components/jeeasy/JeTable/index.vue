@@ -159,6 +159,7 @@ export default {
                           // return <slot name={slot} row={scope.row} />
                         } else if (item.customRender) { // 自定义渲染方法
                           return item.customRender({
+                            text: scope.row[item.key],
                             record: scope.row,
                             index: scope.$index
                           })

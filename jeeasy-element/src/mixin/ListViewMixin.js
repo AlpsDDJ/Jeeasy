@@ -27,6 +27,7 @@ export default {
         },
         form: {}
       },
+      queryForm: {},
       baseApi: ''
     }
   },
@@ -46,7 +47,7 @@ export default {
       return {
         current,
         size,
-        ...this.query.form
+        ...this.queryForm
       }
     },
     columns () {
@@ -70,17 +71,25 @@ export default {
     beforeLoad (params) {
       return Promise.resolve(params)
     },
+    beforeEdit (params) {
+      return Promise.resolve(params)
+    },
     beforeSubmit (params, api) {
       return Promise.resolve({params, api})
     },
-    async loadData () {
-      await this.beforeLoad(this.queryRequestParams).then(params => {
+    loadData () {
+      this.beforeLoad(this.queryRequestParams).then(params => {
         // console.log('loadData')
         this.$ajax(this.api.list, params).then(({result: {records, ...page}}) => {
-          this.query.page = page
-          this.list = records
+          // this.query.page = page
+          // this.list = records
+          this.afterLoad(records, page)
         })
       })
+    },
+    afterLoad(list, page){
+      this.query.page = page
+      this.list = list
     },
     async handleFormSubmit () {
       let submitApi = ''
@@ -110,10 +119,11 @@ export default {
       this.formVisible = true
     },
     handleEdit (record) {
-      console.log(record)
-      this.formType = formTypes.EDIT
-      this.formData = {...record}
-      this.formVisible = true
+      this.beforeEdit(record).then(params => {
+        this.formType = formTypes.EDIT
+        this.formData = params
+        this.formVisible = true
+      })
     }
   }
 }

@@ -17,8 +17,8 @@ public interface IAuthUser extends Serializable {
         return BeanUtil.copyProperties(user, clazz);
     }
 
-    Collection<String> getRoles();
-    Collection<String> getPermissions();
+    Collection<String> getRoleSet();
+    Collection<String> getPermissionSet();
 
     String id();
 

@@ -11,13 +11,13 @@ export default {
       type: Object,
       required: true
     },
-    role: {
+    fileds: {
       type: Array,
       required: true
     },
     colspan: {
       type: Number,
-      default: null
+      default: 24
     }
   },
   computed: {
@@ -44,8 +44,8 @@ export default {
       }
     },
     component() {
-      return (component, key) => {
-        console.log(key, component)
+      return (component) => {
+        // console.log(key, component)
         return component
       }
     }
@@ -64,20 +64,20 @@ export default {
     }
   },
   methods: {
-    handleSubmit(){
+    handleSubmit() {
       this.$emit('submit')
     },
-    handleCancel(){
+    handleCancel() {
       this.$emit('cancel')
     }
   },
   render() {
     return (
-      <div class="je-form">
+        <div class="je-form">
         <el-form v-model={this.formData} props={this.formOption}>
           <el-row type="flex" class="flex-wrap-wrap">
             {
-              this.role.map(({ slot, form = {}, ...item }, index) => (
+              this.fileds.map(({ slot, form = {}, ...item }, index) => (
                   form && <el-col key={item.key || index} props={this.formColLayout(form.colLayout)}>
                   <el-form-item label={item.label} prop={item.key}>
                     {
@@ -110,4 +110,12 @@ export default {
 </script>
 
 <style lang="scss">
+.je-form {
+  //.el-select, .el-input, .el-radio-group{
+  //  width: 100%;
+  //}
+  .el-form-item__content > * {
+    width: 90%;
+  }
+}
 </style>

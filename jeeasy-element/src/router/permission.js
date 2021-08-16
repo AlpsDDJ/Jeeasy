@@ -37,11 +37,11 @@ router.beforeEach(async(to, from, next) => {
                 if(token){
                     // 获取用户角色权限
                     // 注意:角色必须是一个对象数组! 例如: ['admin'] or ,['test','edit']
-                    const { roles } = await store.dispatch('user/getInfo')
+                    const { roleSet } = await store.dispatch('user/getInfo')
                     // console.log(roles);
 
                     // 根据角色生成可访问路由映射
-                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+                    const accessRoutes = await store.dispatch('permission/generateRoutes', roleSet)
 
                     // 动态添加可访问路由
                     router.addRoutes(accessRoutes)

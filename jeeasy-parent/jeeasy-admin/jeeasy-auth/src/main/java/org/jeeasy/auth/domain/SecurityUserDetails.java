@@ -28,13 +28,13 @@ public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
         if (Tools.isNotEmpty(authUser)) {
             return simpleGrantedAuthoritySet;
         }
-        Collection<String> roles = authUser.getRoles();
+        Collection<String> roles = authUser.getRoleSet();
         if (Tools.isNotEmpty(roles)) {
             roles.forEach(role -> {
                 simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority("ROLE_" + role));
             });
         }
-        Collection<String> permissions = authUser.getPermissions();
+        Collection<String> permissions = authUser.getPermissionSet();
         if (Tools.isNotEmpty(permissions)) {
             permissions.forEach(p -> {
                 simpleGrantedAuthoritySet.add(new SimpleGrantedAuthority(p));
@@ -43,18 +43,18 @@ public class SecurityUserDetails<U extends IAuthUser> implements UserDetails {
         return simpleGrantedAuthoritySet;
     }
 
-    public Collection<String> getRoles() {
+    public Collection<String> getRoleSet() {
         if (Tools.isEmpty(authUser)) {
             return new HashSet<>();
         }
-        return this.authUser.getRoles();
+        return this.authUser.getRoleSet();
     }
 
-    public Collection<String> getPermissions() {
+    public Collection<String> getPermissionSet() {
         if (Tools.isEmpty(authUser)) {
             return new HashSet<>();
         }
-        return this.authUser.getPermissions();
+        return this.authUser.getPermissionSet();
     }
 
     public String getId() {

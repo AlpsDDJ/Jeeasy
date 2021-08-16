@@ -20,7 +20,7 @@ const jeeasyAdminRouter = {
       component: () => import('@/views/jeeasy/sys/user/list'),
       name: 'sys-user',
       meta: {
-        keepAlive: true,
+        // keepAlive: true,
         title: '用户管理',
         icon: 'editor',
         roles: ['sys-user']
