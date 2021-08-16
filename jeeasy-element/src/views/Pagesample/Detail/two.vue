@@ -1,5 +1,5 @@
 <template>
-    <div class="main-conent main-conent-minheight">
+    <div class="main-content main-content-minheight">
             <page-header><strong>模块详情页</strong></page-header>
 
             <el-card shadow="never" class="border-none margin-t24">
@@ -8,28 +8,28 @@
                 </div>
                 <el-row :gutter="24">
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">姓名：</span>
-                        <span class="main-conent-detail-content">王小二</span>
+                        <span class="main-content-detail-lable">姓名：</span>
+                        <span class="main-content-detail-content">王小二</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">联系电话：</span>
-                        <span class="main-conent-detail-content">18888888888</span>
+                        <span class="main-content-detail-lable">联系电话：</span>
+                        <span class="main-content-detail-content">18888888888</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">性别：</span>
-                        <span class="main-conent-detail-content">男</span>
+                        <span class="main-content-detail-lable">性别：</span>
+                        <span class="main-content-detail-content">男</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">国家：</span>
-                        <span class="main-conent-detail-content">中国</span>
+                        <span class="main-content-detail-lable">国家：</span>
+                        <span class="main-content-detail-content">中国</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">城市：</span>
-                        <span class="main-conent-detail-content">某某地</span>
+                        <span class="main-content-detail-lable">城市：</span>
+                        <span class="main-content-detail-content">某某地</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">地址：</span>
-                        <span class="main-conent-detail-content">某某村</span>
+                        <span class="main-content-detail-lable">地址：</span>
+                        <span class="main-content-detail-content">某某村</span>
                     </el-col>
                 </el-row>
             </el-card>
@@ -41,28 +41,28 @@
 
                 <el-row :gutter="24">
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">订单号：</span>
-                        <span class="main-conent-detail-content">dd123456789</span>
+                        <span class="main-content-detail-lable">订单号：</span>
+                        <span class="main-content-detail-content">dd123456789</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">状态：</span>
-                        <span class="main-conent-detail-content">已取货</span>
+                        <span class="main-content-detail-lable">状态：</span>
+                        <span class="main-content-detail-content">已取货</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">取货单号：</span>
-                        <span class="main-conent-detail-content">123456789</span>
+                        <span class="main-content-detail-lable">取货单号：</span>
+                        <span class="main-content-detail-content">123456789</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">金额：</span>
-                        <span class="main-conent-detail-content">￥ 888,888</span>
+                        <span class="main-content-detail-lable">金额：</span>
+                        <span class="main-content-detail-content">￥ 888,888</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">城市：</span>
-                        <span class="main-conent-detail-content">某某地</span>
+                        <span class="main-content-detail-lable">城市：</span>
+                        <span class="main-content-detail-content">某某地</span>
                     </el-col>
                     <el-col :sm="24" :md="12" :lg="8">
-                        <span class="main-conent-detail-lable">地址：</span>
-                        <span class="main-conent-detail-content">某某村</span>
+                        <span class="main-content-detail-lable">地址：</span>
+                        <span class="main-content-detail-content">某某村</span>
                     </el-col>
                 </el-row>
 
@@ -155,18 +155,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-    .main-conent-detail-lable,
-    .main-conent-detail-content {
+    .main-content-detail-lable,
+    .main-content-detail-content {
         display: table-cell;
         padding-bottom: 16px;
         line-height: 20px;
         font-size: 14px;
 
     }
-    .main-conent-detail-lable {
+    .main-content-detail-lable {
         white-space: nowrap;
     }
-    .main-conent-detail-content {
+    .main-content-detail-content {
         width: 100%;
         word-wrap:break-word;
         word-break: break-all;

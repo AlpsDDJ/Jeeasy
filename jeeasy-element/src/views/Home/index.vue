@@ -1,5 +1,5 @@
 <template>
-  <div class="main-conent main-conent-minheight">
+  <div class="main-content main-content-minheight">
 
     <el-row :gutter="24">
         <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">

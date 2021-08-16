@@ -1,5 +1,5 @@
 <template>
-    <div class="main-conent main-conent-screen main-conent-bgFFF main-conent-borderradius">
+    <div class="main-content main-content-screen main-content-bgFFF main-content-borderradius">
             <div class="screen-header">
                 <el-row>
                     <el-col>

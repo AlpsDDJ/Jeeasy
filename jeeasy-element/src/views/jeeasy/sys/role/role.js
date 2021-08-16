@@ -4,9 +4,9 @@ const fields = {
   id: 'id',
   roleName: 'roleName',
   roleCode: 'roleCode',
-  sortNo: 'sortNo',
   remark: 'remark',
   description: 'description',
+  sortNo: 'sortNo',
   enableFlag: 'enableFlag'
   // createTime: 'createTime',
   // createBy: 'createBy',
@@ -31,7 +31,7 @@ export const labels = {
 }
 
 const options = {
-  listHidden: [fields.id, fields.remark, fields.sortNo],
+  listHidden: [fields.id, fields.remark],
   formHidden: [fields.id],
   showQuery: [fields.roleName, fields.roleCode, fields.enableFlag]
 }

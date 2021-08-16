@@ -18,7 +18,6 @@ export default {
       formType: '',
       fields: [],
       labels: [],
-      columnOptions: {},
       formTypes,
       query: {
         page: {
@@ -39,6 +38,9 @@ export default {
     ...mapGetters([
       'loading'
     ]),
+    columnOptions() {
+      return {}
+    },
     api () {
       return parseApi(this.baseApi)
     },

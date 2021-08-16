@@ -1,5 +1,5 @@
 <template>
-  <div class="main-conent main-conent-minheight">
+  <div class="main-content main-content-minheight">
     <je-search-form v-model="queryForm" :search-params="searchFields" @submit="loadData" />
     <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]" show-selection>
       <template slot="username" slot-scope="{username}">{{ username }}</template>
@@ -32,8 +32,15 @@ export default {
       formData: {},
       formType: '',
       fields,
-      labels,
-      columnOptions: {
+      labels
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  computed: {
+    columnOptions() {
+      return {
         [fields.roles]: {
           customRender: ({ record }) => record.roles?.map(roles => roles?.roleName).join(),
           form: () => <dict-select v-model={this.formData.roles} dict-code={'@sys_role'} multiple />,
@@ -52,10 +59,8 @@ export default {
           form: () => (<dict-select v-model={this.formData.sex} dict-code={'sex'} type="radio-button" />)
         }
       }
+
     }
-  },
-  mounted() {
-    this.loadData()
   },
   methods: {
     beforeSubmit({ roles = [], departs = [], ...user }, api) {
@@ -68,8 +73,8 @@ export default {
     },
     beforeEdit({ departs = [], roles = [], ...params }) {
       return Promise.resolve({
-        roles: roles.map(({ roleName }) => roleName),
-        departs: departs.map(({ departName }) => departName),
+        roles: roles.map(({ id }) => id),
+        departs: departs.map(({ id }) => id),
         ...params
       })
     }

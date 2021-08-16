@@ -37,6 +37,16 @@ const jeeasyAdminRouter = {
       }
     },
     {
+      path: 'depart',
+      component: () => import('@/views/jeeasy/sys/depart/list'),
+      name: 'sys-depart',
+      meta: {
+        title: '部门管理',
+        icon: 'editor',
+        roles: ['sys-depart']
+      }
+    },
+    {
       path: 'doc',
       component: () => import('@/views/jeeasy/sys/doc'),
       name: 'sys-doc',

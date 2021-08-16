@@ -1,5 +1,5 @@
 <template>
-    <div class="main-conent main-conent-minheight form-footer">
+    <div class="main-content main-content-minheight form-footer">
 
       <page-header into="高级表单常见于一次性输入和提交大批量数据的场景。"><strong>高级表单</strong></page-header>
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="main-conent main-conent-minheight">
-    <je-search-form v-model="queryForm" :search-params="searchFields" @submit="loadData" />
+  <div class="main-content main-content-minheight">
+    <je-search-form v-model="queryForm" :search-params="searchFields" @submit="loadData"/>
     <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]" selection>
       <template slot="operate" slot-scope="record">
         <el-button type="text" @click="() => { handleEdit(record) }">编辑</el-button>
@@ -22,26 +22,30 @@ import fields, { labels } from './role'
 
 export default {
   name: 'SysRoleList',
-  components: { JeForm },
+  components: {JeForm},
   mixins: [ListViewMixin],
-  data() {
+  data () {
     return {
       baseApi: '/sys/role',
       fields,
-      labels,
-      columnOptions: {
+      labels
+    }
+  },
+  mounted () {
+    this.loadData()
+  },
+  computed: {
+
+    columnOptions () {
+      return {
         [fields.enableFlag]: {
           form: () => <dict-select v-model={this.formData.enableFlag} dict-code={'enable_flag'}/>,
-          search: () => <dict-select v-model={this.queryForm.enableFlag} dict-code={'enable_flag'} />
+          search: () => <dict-select v-model={this.queryForm.enableFlag} dict-code={'enable_flag'}/>
         }
       }
     }
   },
-  mounted() {
-    this.loadData()
-  },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 

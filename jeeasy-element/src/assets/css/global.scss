@@ -119,7 +119,7 @@ body {
     }
 }
 /* 初始样式 */
-.main-conent {
+.main-content {
     margin: 24px;
     &.form-footer {
         & + .indexlayout-right-footer  {
@@ -127,16 +127,16 @@ body {
         }
     }
 }
-.main-conent-minheight{
+.main-content-minheight{
     min-height: calc(100% - 48px - 122px);
 }
-.main-conent-bgFFF{
+.main-content-bgFFF{
     background-color: #FFFFFF;
 }
-.main-conent-borderradius{
+.main-content-borderradius{
     border-radius: 4px;
 }
-.main-conent-screen{
+.main-content-screen{
     display: flex;
     flex-direction: column;    
     height: calc(100% - 48px - 122px);

@@ -1,5 +1,5 @@
 <template>
-    <div class="main-conent main-conent-minheight">
+    <div class="main-content main-content-minheight">
 
             <page-header><strong>表格详情页</strong></page-header>
 

@@ -1,6 +1,8 @@
 <script>
+import DictSelect from '@/components/jeeasy/DictSelect'
 export default {
   name: 'JeForm',
+  components: {DictSelect},
   data() {
     return {
       formData: {}
@@ -69,6 +71,17 @@ export default {
     },
     handleCancel() {
       this.$emit('cancel')
+    },
+    createItemByType(_type, key) {
+      const [type, param = ''] = _type.split(':')
+      switch (type){
+        case 'dict':
+          return <dict-select v-model={this.formData[key]} dict-code={param} />
+        case 'text':
+          return <span>{this.formData[key]}</span>
+        default:
+          return ''
+      }
     }
   },
   render() {
@@ -78,11 +91,13 @@ export default {
           <el-row type="flex" class="flex-wrap-wrap">
             {
               this.fileds.map(({ slot, form = {}, ...item }, index) => (
-                  form && <el-col key={item.key || index} props={this.formColLayout(form.colLayout)}>
+                  (form && !item.formHidden) && <el-col key={item.key || index} props={this.formColLayout(form.colLayout)}>
                   <el-form-item label={item.label} prop={item.key}>
                     {
                       () => {
-                        if (slot && this.$scopedSlots[slot]) {
+                        if(item.type) {
+                          return this.createItemByType(item.type, item.key)
+                        } else if (slot && this.$scopedSlots[slot]) {
                           return this.$scopedSlots[slot]()
                         } else if (typeof form === 'function') {
                           return this.component(form(), item.key)

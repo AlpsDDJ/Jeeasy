@@ -75,7 +75,9 @@ export default {
                 <el-form-item label={item.label} prop={item.key}>
                   {
                     () => {
-                      if (slot && this.$scopedSlots[slot]) {
+                      if(item.type) {
+                        return this.createItemByType(item.type, item.key)
+                      } else if (slot && this.$scopedSlots[slot]) {
                         return this.$scopedSlots[slot]()
                       } else if (item.search && typeof item.search === 'function') {
                         return this.component(item.search())
@@ -89,6 +91,17 @@ export default {
           )
         }
       })
+    },
+    createItemByType(_type, key) {
+      const [type, param = ''] = _type.split(':')
+      switch (type){
+        case 'dict':
+          return <dict-select v-model={this.formData[key]} dict-code={param} />
+        case 'text':
+          return <span>{this.formData[key]}</span>
+        default:
+          return ''
+      }
     }
   },
   render() {

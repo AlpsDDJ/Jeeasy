@@ -1,5 +1,5 @@
 <template>
-    <div class="main-conent main-conent-minheight">
+    <div class="main-content main-content-minheight">
         <page-header into="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。"><strong>基础表单</strong></page-header>
 
         <el-card shadow="never" class="border-none margin-t24">
