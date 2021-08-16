@@ -42,7 +42,7 @@ public class SysDepart extends Model<SysDepart> {
     private String departNameAbbr;
 
     @ApiModelProperty(value = "排序")
-    private Double departOrder;
+    private Double sortNo;
 
     @ApiModelProperty(value = "描述")
     private String description;

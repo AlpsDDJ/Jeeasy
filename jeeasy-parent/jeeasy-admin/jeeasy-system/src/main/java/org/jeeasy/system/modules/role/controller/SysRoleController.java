@@ -9,8 +9,6 @@ import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.role.domian.SysRole;
 import org.jeeasy.system.modules.role.service.SysRoleService;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +26,6 @@ public class SysRoleController extends SimpleBaseController<SysRoleService, SysR
     @DictTranslation
     @ApiOperation(value = "角色列表", notes = "角色列表")
     public R<IPage<SysRole>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Object principal = context.getAuthentication().getPrincipal();
         return super.query(queryPageModel, req, SysRole.class);
     }
 
