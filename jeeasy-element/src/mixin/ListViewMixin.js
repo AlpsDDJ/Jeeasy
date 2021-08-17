@@ -30,7 +30,8 @@ export default {
       isTree: false,
       rowKey: 'id',
       childrenKey: 'children',
-      hasChildrenKey: 'hasChildren'
+      hasChildrenKey: 'hasChildren',
+      tableChildMap: new Map()
     }
   },
   components: {
@@ -124,15 +125,23 @@ export default {
         })
       })
     },
-    loadTreeData(param = 0, treeNode, resolve) {
-      if (typeof param === 'object') {
-        const { id } = param
+    loadTreeData(tree = 0, treeNode, resolve) {
+      if (typeof tree === 'object') {
+        this.tableChildMap.set(tree.id, {tree, treeNode, resolve})
+        const { id } = tree
         this.loadData({ parentId: id }).then(({ result }) => {
           console.log(result)
           resolve(result.records)
         })
       } else {
-        this.init({ parentId: param })
+        this.init({ parentId: tree })
+      }
+    },
+    refreshChild(parentId){
+      const {tree, treeNode, resplve} = this.tableChildMap.get(parentId)
+      this.$set(this.$refs['main-table'].store.states.lazyTreeNodeMap, parentId, [])
+      if(tree){
+        this.loadData(tree, treeNode, resplve)
       }
     },
     afterLoad(data){
@@ -168,7 +177,11 @@ export default {
           this.$ajax(api, params).then(({message}) => {
             this.$message.success(message)
             this.formVisible = false
-            this.loadData()
+            if(params.parentId === 0){
+              this.loadData()
+            }else {
+              this.refreshChild(params.parentId)
+            }
           })
         })
       }

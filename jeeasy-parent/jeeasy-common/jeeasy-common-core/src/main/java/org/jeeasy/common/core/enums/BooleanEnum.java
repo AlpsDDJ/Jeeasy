@@ -19,4 +19,8 @@ public enum BooleanEnum implements IDictEnum<Integer> {
 
     private final Integer value;
     private final String text;
+
+    public static boolean yes(Integer val){
+        return YES.getValue().equals(val);
+    }
 }
