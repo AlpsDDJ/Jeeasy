@@ -2,7 +2,8 @@ package org.jeeasy.system.modules.dict.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeeasy.common.core.domain.TableDictVo;
+import org.jeeasy.common.core.domain.vo.DictVo;
+import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 
@@ -26,7 +27,7 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param tableDict
      * @return
      */
-    List<SysDict> queryByTableDict(@Param("tableDict") SysTableDict tableDict);
+    List<DictVo> queryByTableDict(@Param("tableDict") SysTableDict tableDict);
 
 
     /**

@@ -7,10 +7,7 @@ import org.jeeasy.common.core.service.CommonService;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,7 +34,7 @@ public class SystemCommonController {
     @GetMapping("/dicts/{code}")
     @DictTranslation
     @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
-    public R<List<DictVo>> getDicts(@PathVariable("code") String code) {
-        return R.ok(commonService.getDictsByCode(code));
+    public R<List<DictVo>> getDicts(@PathVariable("code") String code, @RequestParam(required = false) String parentId) {
+        return R.ok(commonService.getDictsByCode(code, parentId));
     }
 }

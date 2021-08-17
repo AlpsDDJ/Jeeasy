@@ -1,7 +1,10 @@
 <template>
   <div class="main-content main-content-minheight">
     <je-search-form v-model="queryForm" :search-params="searchFields" @submit="loadData"/>
-    <je-table :columns="columns" :data="list" tableTitle="用户列表" v-model="query.page" @pageChange="loadData" :loading="loading[api.list]" selection>
+    <je-table
+        v-model="queryPage"
+        @pageChange="loadData"
+        v-bind="tableConfig">
       <template slot="operate" slot-scope="record">
         <el-button type="text" @click="() => { handleEdit(record) }">编辑</el-button>
       </template>
@@ -32,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.loadData()
+    this.init()
   },
   computed: {
 

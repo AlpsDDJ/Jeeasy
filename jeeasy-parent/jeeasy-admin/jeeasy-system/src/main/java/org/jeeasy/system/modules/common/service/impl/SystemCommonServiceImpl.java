@@ -32,26 +32,31 @@ public class SystemCommonServiceImpl implements CommonService {
     private SysTableDictService tableDictService;
 
     @Override
-    public List<DictVo> getDictsByCode(String code) {
+    public List<DictVo> getDictsByCode(String code, String parentId) {
         List<DictVo> dicts = new ArrayList<>();
+        // 自定义表查询字典数据
         if (StrUtil.containsAny(code, dictEnumProperty.getDictTableFlag())) {
             String dictCode = StrUtil.replaceChars(code, dictEnumProperty.getDictTableFlag(), StrUtil.EMPTY);
             SysTableDict sysTableDict = tableDictService.getByDictCode(dictCode);
             if(Tools.isNotEmpty(sysTableDict)){
-                List<SysDict> sysDicts = dictService.queryByTableDict(sysTableDict);
-                sysDicts.forEach(dict -> {
-                    dicts.add(new DictVo().setDictCode(dict.getDictCode()).setDictName(dict.getDictName()));
-                });
+                if(Tools.isNotEmpty(parentId)){
+                    sysTableDict.setParentValue(parentId);
+                }
+                List<DictVo> sysDicts = dictService.queryByTableDict(sysTableDict);
+                dicts.addAll(sysDicts);
+//                sysDicts.forEach(dict -> {
+//                    dicts.add(new DictVo().setDictCode(dict.getDictCode()).setDictName(dict.getDictName()));
+//                });
             }
-
         } else {
+            // 枚举类型字典数据
             List<IDictEnum<?>> dictEnum = DictUtil.getDictEnum(code);
             if(Tools.isNotEmpty(dictEnum)){
                 dictEnum.forEach(de -> {
                     dicts.add(new DictVo(de));
                 });
             } else {
-                List<SysDict> sysDicts = dictService.queryByParentCode(code);
+                List<SysDict> sysDicts = dictService.queryByParentCode(Tools.isEmpty(parentId) ? code : parentId);
                 sysDicts.forEach(dict -> {
                     dicts.add(new DictVo().setDictCode(dict.getDictCode()).setDictName(dict.getDictName()));
                 });

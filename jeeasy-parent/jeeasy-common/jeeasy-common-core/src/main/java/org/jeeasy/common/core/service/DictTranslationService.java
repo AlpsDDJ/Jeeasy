@@ -1,7 +1,7 @@
 package org.jeeasy.common.core.service;
 
 import cn.hutool.core.util.EnumUtil;
-import org.jeeasy.common.core.domain.TableDictVo;
+import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.enums.IDictEnum;
 import org.jeeasy.common.core.tools.Tools;
 

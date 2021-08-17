@@ -2,6 +2,7 @@ package org.jeeasy.system.modules.depart.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -76,6 +77,7 @@ public class SysDepart extends Model<SysDepart> {
 
     @ApiModelProperty(value = "删除状态", notes = "0: 正常 1: 已删除")
     @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private Integer delFlag;
 
     @ApiModelProperty(value = "创建人")
@@ -93,5 +95,11 @@ public class SysDepart extends Model<SysDepart> {
     @ApiModelProperty(value = "更新日期")
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+
+    @JsonGetter
+    public boolean hasChildren() {
+        Integer orgType = this.getOrgType();
+        return OrgTypeEnum.TOP.getValue().equals(orgType);
+    }
 
 }

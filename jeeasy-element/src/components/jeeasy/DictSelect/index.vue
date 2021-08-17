@@ -11,13 +11,27 @@ export default {
     }
   },
   mounted() {
-    this.loadOptions()
+    if(this.type !== 'tree') {
+      this.loadOptions()
+    }
   },
   methods: {
-    loadOptions() {
-      this.load().then(({result}) => {
+    loadOptions(parentId = 0, resolve) {
+      const params = { dictCode: this.dictCode }
+      if (this.type === 'tree') {
+        params.parentId = parentId
+      }
+      console.log('========================== ', params)
+      this.$ajax(this.url, params).then(({ result }) => {
         this.options = result
+        if(this.type === 'tree') {
+          resolve(result)
+        }
       })
+      // this.load(params).then(({ result }) => {
+      //   this.options = result
+      //   resolve(result)
+      // })
     }
   },
   props: {
@@ -33,8 +47,8 @@ export default {
     },
     load: {
       type: Function,
-      default: function () {
-        return this.$ajax(this.url, { dictCode: this.dictCode })
+      default: function (params) {
+        return this.$ajax(this.url, params)
       }
     }
   },
@@ -58,6 +72,27 @@ export default {
         loading: this.$store.getters.loading[this.url]
       }
       return Object.assign(defaultArrts, this.$attrs)
+    },
+    treeAttrs() {
+      return {
+        lazy: true,
+        checkStrictly: true,
+        value: 'dictCode',
+        label: 'dictName',
+        lazyLoad: ({ value, level }, resolve) => {
+          const params = { dictCode: this.dictCode }
+          const parentId = level === 0 ? 0 : value
+          if (this.type === 'tree') {
+            params.parentId = parentId
+          }
+          console.log('========================== ', params)
+          this.$ajax(this.url, params).then(({ result }) => {
+            if(this.type === 'tree') {
+              resolve(result)
+            }
+          })
+        }
+      }
     }
   },
   render() {
@@ -84,6 +119,10 @@ export default {
                         <el-radio label={option.dictCode}>{option.dictName}</el-radio>))
               }
             </el-radio-group>
+        )
+      case 'tree':
+        return (
+            <el-cascader props={{ props: this.treeAttrs }} />
         )
       default:
         return <span />

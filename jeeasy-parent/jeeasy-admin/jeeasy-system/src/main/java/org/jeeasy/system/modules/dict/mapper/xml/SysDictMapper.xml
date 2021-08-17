@@ -11,9 +11,17 @@
     </select>
 
 
-    <select id="queryByTableDict" resultType="org.jeeasy.system.modules.dict.domain.SysDict" parameterType="org.jeeasy.system.modules.dict.domain.SysTableDict">
+    <select id="queryByTableDict" resultType="org.jeeasy.common.core.domain.vo.DictVo" parameterType="org.jeeasy.system.modules.dict.domain.SysTableDict">
         select t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name
+        <if test="tableDict.isTree = 1">
+            , ${tableDict.leafColumn} as leaf
+        </if>
         from ${tableDict.tableName} t
+        <if test="tableDict.isTree = 1">
+            <where>
+                t.${tableDict.parentId} = '${tableDict.parentValue}'
+            </where>
+        </if>
     </select>
 
     <select id="getOneByParentCodeAndDictCode" resultType="org.jeeasy.system.modules.dict.domain.SysDict">
@@ -27,7 +35,7 @@
 
     <select id="getOneByTableDictAndCode" resultType="org.jeeasy.system.modules.dict.domain.SysDict">
         select t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name
-        from ${tableDict.tableName} t and ${tableDict.valueColumn} = #{code}
+        from ${tableDict.tableName} t where ${tableDict.valueColumn} = #{code}
     </select>
 
 </mapper>

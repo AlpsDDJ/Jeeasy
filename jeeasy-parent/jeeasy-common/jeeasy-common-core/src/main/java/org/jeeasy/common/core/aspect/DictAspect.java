@@ -18,7 +18,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.annotation.DictTranslation;
-import org.jeeasy.common.core.domain.TableDictVo;
+import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.common.core.domain.vo.R;

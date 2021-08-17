@@ -1,19 +1,22 @@
 package org.jeeasy.system.modules.depart.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
-import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.system.modules.depart.domain.SysDepart;
 import org.jeeasy.system.modules.depart.service.SysDepartService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 组织机构表服务控制器
@@ -32,8 +35,13 @@ public class SysDepartController extends SimpleBaseController<SysDepartService, 
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "组织机构列表", notes = "组织机构列表")
-    public R<IPage<SysDepart>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        return super.query(queryPageModel, req, SysDepart.class);
+    public R<IPage<SysDepart>> list(HttpServletRequest req) {
+        QueryWrapper<SysDepart> wrapper = QueryGenerator.createWrapper(SysDepart.class, req.getParameterMap());
+        wrapper.lambda().orderByAsc(SysDepart::getSortNo);
+        List<SysDepart> list = service.list(wrapper);
+        IPage<SysDepart> page = new Page<>();
+        page.setRecords(list);
+        return R.ok(page);
     }
 
     /**

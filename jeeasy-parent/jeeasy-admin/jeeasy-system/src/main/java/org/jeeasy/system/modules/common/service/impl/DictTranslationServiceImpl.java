@@ -1,6 +1,6 @@
 package org.jeeasy.system.modules.common.service.impl;
 
-import org.jeeasy.common.core.domain.TableDictVo;
+import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.dict.domain.SysDict;

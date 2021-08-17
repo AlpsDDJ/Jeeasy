@@ -16,6 +16,6 @@ public interface CommonService {
      * @param code
      * @return
      */
-    List<DictVo> getDictsByCode(String code);
+    List<DictVo> getDictsByCode(String code, String parentId);
 
 }

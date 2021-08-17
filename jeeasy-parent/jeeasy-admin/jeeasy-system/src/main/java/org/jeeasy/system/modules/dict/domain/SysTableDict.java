@@ -4,10 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.enums.BooleanEnum;
+import org.jeeasy.common.core.enums.DelFlagEnum;
+import org.jeeasy.common.core.enums.EnableFlagEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -66,10 +71,37 @@ public class SysTableDict implements Serializable {
     private String nameColumn;
 
     /**
+     * 是否为树表
+     */
+    @ApiModelProperty(value = "isTree", notes = "是否为树表")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer isTree;
+
+    /**
+     * 父级字段名称
+     */
+    @ApiModelProperty(value = "parentId", notes = "父级字段名称")
+    private String parentId;
+
+    /**
+     * 是否为叶子节点
+     */
+    @ApiModelProperty(value = "leafColumn", notes = "叶子节点字段名称")
+    private String leafColumn;
+
+    /**
+     * 父级字段名称
+     */
+    @ApiModelProperty(hidden = true)
+    @JsonIgnore
+    private String parentValue;
+
+    /**
      * 启用标记 0: 未启用 1： 启用
      */
     @ApiModelProperty(value = "enableFlag", notes = "启用标记")
-    private Boolean enableFlag;
+    @Dict(dictEnum = EnableFlagEnum.class)
+    private Integer enableFlag;
 
     /**
      * 创建人
@@ -99,7 +131,8 @@ public class SysTableDict implements Serializable {
      * 删除标记 0: 未删除 1: 已删除
      */
     @ApiModelProperty(value = "delFlag", notes = "删除标记")
-    private Boolean delFlag;
+    @Dict(dictEnum = DelFlagEnum.class)
+    private Integer delFlag;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

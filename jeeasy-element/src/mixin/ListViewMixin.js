@@ -19,15 +19,18 @@ export default {
       fields: [],
       labels: [],
       formTypes,
-      query: {
-        page: {
-          current: 1,
-          size: 10
-        },
-        form: {}
+      showPage: true,
+      showSelection: true,
+      queryPage: {
+        current: 1,
+        size: 10
       },
       queryForm: {},
-      baseApi: ''
+      baseApi: '',
+      isTree: false,
+      rowKey: 'id',
+      childrenKey: 'children',
+      hasChildrenKey: 'hasChildren'
     }
   },
   components: {
@@ -38,19 +41,29 @@ export default {
     ...mapGetters([
       'loading'
     ]),
+    tableConfig(){
+      const defaultConfig = {
+        columns: this.columns,
+        data: this.list,
+        showPage: this.showPage,
+        loading: this.loading[this.api.list],
+        showSelection: this.showSelection
+      }
+      return this.isTree ? Object.assign(defaultConfig, {
+        columns: this.columns,
+        data: this.list,
+        loading: this.loading[this.api.list],
+        showSelection: this.showSelection,
+        rowKey: this.rowKey,
+        lazy: true,
+        load: this.loadTreeData
+      }) : defaultConfig
+    },
     columnOptions() {
       return {}
     },
     api () {
       return parseApi(this.baseApi)
-    },
-    queryRequestParams () {
-      const {current, size} = this.query.page
-      return {
-        current,
-        size,
-        ...this.queryForm
-      }
     },
     columns () {
       return this.fields.columns().map(field => {
@@ -79,19 +92,67 @@ export default {
     beforeSubmit (params, api) {
       return Promise.resolve({params, api})
     },
-    loadData () {
-      this.beforeLoad(this.queryRequestParams).then(params => {
-        // console.log('loadData')
-        this.$ajax(this.api.list, params).then(({result: {records, ...page}}) => {
-          // this.query.page = page
-          // this.list = records
-          this.afterLoad(records, page)
+    queryRequestParams (exParams = {}) {
+      const {current, size} = this.queryPage
+      if(this.showPage){
+        return {
+          current,
+          size,
+          ...this.queryForm,
+          ...exParams
+        }
+      } else {
+        return {
+          ...this.queryForm,
+          ...exParams
+        }
+      }
+    },
+    init(exParams){
+      this.loadData(exParams).then((data) => {
+        this.afterLoad(data)
+      })
+    },
+    loadData (exParams = {}) {
+      return new Promise((resolve, reject) => {
+        this.beforeLoad(this.queryRequestParams(exParams)).then(params => {
+          return this.$ajax(this.api.list, params).then(data => {
+            resolve(data)
+          }).catch(err => {
+            reject(err)
+          })
         })
       })
     },
-    afterLoad(list, page){
-      this.query.page = page
-      this.list = list
+    loadTreeData(param = 0, treeNode, resolve) {
+      if (typeof param === 'object') {
+        const { id } = param
+        this.loadData({ parentId: id }).then(({ result }) => {
+          console.log(result)
+          resolve(result.records)
+        })
+      } else {
+        this.init({ parentId: param })
+      }
+    },
+    afterLoad(data){
+      const {records, ...page} = data.result
+      this.queryPage = page
+      this.list = records
+      if(this.showPage){
+        this.queryPage = page
+      } else {
+        this.queryPage = {}
+      }
+      // this.$refs['main-table'].update()
+      // console.log(data)
+      // if(this.showPage){
+      //   const {records, ...page} = data.result
+      //   this.queryPage = page
+      //   this.list = records
+      // } else {
+      //   this.list = data.result
+      // }
     },
     async handleFormSubmit () {
       let submitApi = ''

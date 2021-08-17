@@ -77,6 +77,10 @@ export default {
       switch (type){
         case 'dict':
           return <dict-select v-model={this.formData[key]} dict-code={param} />
+        case 'tree':
+        case 'radio':
+        case 'ratio-button':
+          return <dict-select type={type} v-model={this.formData[key]} dict-code={param} />
         case 'text':
           return <span>{this.formData[key]}</span>
         default:

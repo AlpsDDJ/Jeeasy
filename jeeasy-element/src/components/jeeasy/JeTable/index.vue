@@ -40,6 +40,9 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentRow = val
+    },
+    update(){
+      this.$refs['main-table'].doLayout()
     }
   },
   computed: {
@@ -73,15 +76,16 @@ export default {
     }
   },
   props: {
-    tableTitle: {
-      default: '数据列表'
-    },
     columns: {
       required: true
     },
     showIndex: {
       type: Boolean,
       default: true
+    },
+    isTree: {
+      type: Boolean,
+      default: false
     },
     showPage: {
       type: Boolean,
@@ -125,7 +129,7 @@ export default {
               </el-col>
             </el-row>
             </div>
-            <el-table {...{ props: this.$attrs }}
+            <el-table ref="main-table" {...{ props: this.$attrs }}
                       data={this.$attrs.data}
                       key={this.tableIndex}
                       v-loading={this.loading}

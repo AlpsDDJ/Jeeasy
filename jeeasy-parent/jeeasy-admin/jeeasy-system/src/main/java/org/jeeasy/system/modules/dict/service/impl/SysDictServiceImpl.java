@@ -2,6 +2,7 @@ package org.jeeasy.system.modules.dict.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import org.jeeasy.system.modules.dict.mapper.SysDictMapper;
@@ -23,7 +24,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     @Override
-    public List<SysDict> queryByTableDict(SysTableDict tableDict) {
+    public List<DictVo> queryByTableDict(SysTableDict tableDict) {
         String tableName = tableDict.getTableName();
         if(StrUtil.contains(tableName, "select")){
             tableDict.setTableName(StrUtil.concat(true, "(", tableName, ")"));

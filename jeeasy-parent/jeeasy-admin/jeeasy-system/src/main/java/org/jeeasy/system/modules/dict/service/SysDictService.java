@@ -1,6 +1,7 @@
 package org.jeeasy.system.modules.dict.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,5 @@ public interface SysDictService  extends IService<SysDict> {
      * @param parentCode
      * @return
      */
-    List<SysDict> queryByTableDict(SysTableDict tableDict);
+    List<DictVo> queryByTableDict(SysTableDict tableDict);
 }

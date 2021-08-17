@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.domain;
+package org.jeeasy.common.core.domain.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
