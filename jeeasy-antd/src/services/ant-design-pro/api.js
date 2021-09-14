@@ -41,7 +41,7 @@ export async function getNotices(options) {
 /** 获取规则列表 GET /api/rule */
 
 export async function rule(params, options) {
-  return request('/api/rule', {
+  return request('/api/sys/user', {
     method: 'GET',
     params: { ...params },
     ...(options || {}),

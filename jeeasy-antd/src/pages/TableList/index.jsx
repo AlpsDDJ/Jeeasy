@@ -190,12 +190,14 @@ const TableList = () => {
       ],
     },
   ];
+
   return (
     <PageContainer>
       <ProTable
         headerTitle={'查询表格'}
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
+        postData={({ records }) => records}
         search={{
           labelWidth: 120,
         }}
