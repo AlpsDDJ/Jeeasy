@@ -71,7 +71,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
     @ApiOperation(value = "添加数据字典", notes = "添加数据字典")
     public R<?> add(@RequestBody SysDict entity) {
         super.insert(entity);
-        return R.ok().setResult("添加成功");
+        return R.ok().setData("添加成功");
     }
 
     /**

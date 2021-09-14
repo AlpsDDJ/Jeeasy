@@ -71,7 +71,7 @@ public class AaemptyController extends SimpleBaseController<AaemptyService, Aaem
     @ApiOperation(value = "添加空白模板", notes = "添加空白模板")
     public R<?> add(@RequestBody Aaempty entity) {
         super.insert(entity);
-        return R.ok().setResult("添加成功");
+        return R.ok().setData("添加成功");
     }
 
     /**

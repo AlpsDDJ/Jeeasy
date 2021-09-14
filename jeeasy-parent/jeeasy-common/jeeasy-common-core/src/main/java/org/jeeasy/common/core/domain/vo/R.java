@@ -68,7 +68,7 @@ public class R<T> implements Serializable {
      * 返回数据对象 data
      */
 //    @ApiModelProperty(value = "返回数据对象")
-    private T result;
+    private T data;
 
     private long timestamp = System.currentTimeMillis();
 
@@ -102,7 +102,7 @@ public class R<T> implements Serializable {
         R<T> r = new R<T>();
         r.setSuccess(true);
         r.setCode(SC_OK_200);
-        r.setResult(data);
+        r.setData(data);
         return r;
     }
 
@@ -111,7 +111,7 @@ public class R<T> implements Serializable {
         r.setSuccess(true);
         r.setCode(SC_OK_200);
         r.setMessage(msg);
-        r.setResult(data);
+        r.setData(data);
         return r;
     }
 

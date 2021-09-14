@@ -33,7 +33,7 @@ import java.util.Set;
  */
 @Slf4j
 @Component("systemAuthService")
-@AuthType(value = "system", izDefault = true)
+@AuthType(value = "account", izDefault = true)
 @EnableConfigurationProperties(SystemConfigProperties.class)
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
