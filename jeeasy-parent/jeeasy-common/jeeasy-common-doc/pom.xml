@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jeeasy-common</artifactId>
+        <groupId>mobie.alps</groupId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jeeasy-common-doc</artifactId>
+    <name>接口文档</name>
+
+    <properties>
+        <!-- Swagger 版 本 -->
+        <swagger.version>2.9.2</swagger.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common-core</artifactId>
+        </dependency>
+        <!-- 接口文档 -->
+        <!--<dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
+        <!-- Swagger 界面 -->
+       <!-- <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        &lt;!&ndash; swagger-bootstrap-ui 界面 &ndash;&gt;
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${swagger-bootstrap-ui.version}</version>
+        </dependency>
+        &lt;!&ndash;解决进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本&ndash;&gt;
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            &lt;!&ndash;在引用时请在maven中央仓库搜索3.X最新版本号&ndash;&gt;
+            <version>${knife4j.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>
