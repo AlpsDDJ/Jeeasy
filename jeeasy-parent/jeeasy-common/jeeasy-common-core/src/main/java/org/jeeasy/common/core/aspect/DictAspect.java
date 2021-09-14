@@ -70,22 +70,22 @@ public class DictAspect {
         long start = System.currentTimeMillis();
         if (result instanceof R) {
             R dataResult = (R) result;
-            if (dataResult.getResult() instanceof IPage) {
+            if (dataResult.getData() instanceof IPage) {
                 List<Map<String, Object>> items = new ArrayList<>();
-                IPage page = (IPage) dataResult.getResult();
+                IPage page = (IPage) dataResult.getData();
                 for (Object record : page.getRecords()) {
                     items.add(translate(record));
                 }
                 page.setRecords(items);
-            } else if(dataResult.getResult() instanceof List) {
-                List<?> list = (List<?>) dataResult.getResult();
+            } else if(dataResult.getData() instanceof List) {
+                List<?> list = (List<?>) dataResult.getData();
                 List<Map<String, Object>> listTemp = new ArrayList<>();
                 list.forEach(record -> {
                     listTemp.add(translate(record));
                 });
-                dataResult.setResult(listTemp);
+                dataResult.setData(listTemp);
             } else {
-                dataResult.setResult(translate(dataResult.getResult()));
+                dataResult.setData(translate(dataResult.getData()));
             }
         }
         long end = System.currentTimeMillis();
