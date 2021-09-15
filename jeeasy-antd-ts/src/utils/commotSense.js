@@ -1,4 +1,4 @@
-export const loginPath = '/user/login'
+export const loginPath = '/login'
 
 export const authHeaderKey = 'JEEASY-ACCESS-TOKEN'
 

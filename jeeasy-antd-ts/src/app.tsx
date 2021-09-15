@@ -5,14 +5,13 @@ import Footer from '@/components/Footer'
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api'
 import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/utils/tokenUtil'
-import { authHeaderKey } from '@/utils/commotSense'
+import { authHeaderKey, loginPath } from '@/utils/commotSense'
 
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 import type { RunTimeLayoutConfig, RequestConfig } from 'umi'
 import type { RequestOptionsInit } from 'umi-request'
 
 const isDev = process.env.NODE_ENV === 'development'
-const loginPath = '/user/login'
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -57,7 +56,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.name
+      content: initialState?.currentUser?.username
     },
     footerRender: () => <Footer />,
     onPageChange: () => {

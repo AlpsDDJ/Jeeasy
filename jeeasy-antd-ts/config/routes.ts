@@ -1,21 +1,19 @@
 export default [
   {
-    path: '/user',
+    path: '/login',
+    name: '登录',
     layout: false,
-    routes: [
-      { path: '/user', routes: [{ name: '登录', path: '/user/login', component: './user/Login' }] },
-      { component: './404' },
-    ],
+    component: './Login',
   },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   {
-    path: '/admin',
-    name: '管理页',
+    path: '/sys',
+    name: '系统管理',
     icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
+    access: 'ROLE:admin',
     routes: [
-      { path: '/admin/sub-page', name: '二级管理页', icon: 'smile', component: './Welcome' },
+      { path: '/sys/user', name: '用户管理', icon: 'smile', component: './sys/User' },
+      { path: '/sys/role', name: '角色管理', icon: 'smile', component: './TableList' },
       { component: './404' },
     ],
   },
