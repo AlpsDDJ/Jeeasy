@@ -11,7 +11,7 @@ const Settings: LayoutSettings & {
   // contentWidth: 'Fluid',
   // fixedHeader: false,
   // fixSiderbar: true,
-  navTheme: "realDark",
+  navTheme: "light",
   primaryColor: "#13C2C2",
   fixSiderbar: true,
   fixedHeader: true,
