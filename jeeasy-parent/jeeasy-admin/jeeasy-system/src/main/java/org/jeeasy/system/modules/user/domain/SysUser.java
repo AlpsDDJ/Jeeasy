@@ -36,7 +36,7 @@ public class SysUser extends Model<SysUser> implements Serializable {
     @ApiModelProperty("用户名")
     private String username;
 
-    @ApiModelProperty("用户名编号")
+    @ApiModelProperty("用户编号")
     private Long userNo;
 
     @ApiModelProperty("电话号码")

@@ -52,6 +52,7 @@
     "@ant-design/pro-form": "^1.18.3",
     "@ant-design/pro-layout": "^6.15.3",
     "@ant-design/pro-table": "^2.30.8",
+    "@types/react-cookies": "^0.1.0",
     "@umijs/route-utils": "^1.0.36",
     "antd": "^4.14.0",
     "classnames": "^2.2.6",
@@ -59,7 +60,6 @@
     "moment": "^2.25.3",
     "omit.js": "^2.0.2",
     "react": "^17.0.0",
-    "react-cookies": "^0.1.1",
     "react-dev-inspector": "^1.1.1",
     "react-dom": "^17.0.0",
     "react-helmet-async": "^1.0.4",
@@ -98,8 +98,7 @@
     "prettier": "^2.3.2",
     "puppeteer-core": "^8.0.0",
     "stylelint": "^13.0.0",
-    "typescript": "^4.2.2",
-    "umi-plugin-antd-theme": "^2.1.2"
+    "typescript": "^4.2.2"
   },
   "engines": {
     "node": ">=10.0.0"

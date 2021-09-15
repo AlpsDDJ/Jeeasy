@@ -2,19 +2,21 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { columnsExtend } from '@/utils/proTableUtil'
+import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
 /**
  * @en-US Add node
  * @zh-CN 添加节点
  * @param fields
  */
 
-const handleAdd = async (fields) => {
+const handleAdd = async (fields: API.RuleListItem) => {
   const hide = message.loading('正在添加');
 
   try {
@@ -35,7 +37,7 @@ const handleAdd = async (fields) => {
  * @param fields
  */
 
-const handleUpdate = async (fields) => {
+const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('Configuring');
 
   try {
@@ -60,7 +62,7 @@ const handleUpdate = async (fields) => {
  * @param selectedRows
  */
 
-const handleRemove = async (selectedRows) => {
+const handleRemove = async (selectedRows: API.RuleListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
 
@@ -78,32 +80,32 @@ const handleRemove = async (selectedRows) => {
   }
 };
 
-const TableList = () => {
+const TableList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
    * @zh-CN 新建窗口的弹窗
    *  */
-  const [createModalVisible, handleModalVisible] = useState(false);
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   /**
    * @en-US The pop-up window of the distribution update window
    * @zh-CN 分布更新窗口的弹窗
    * */
 
-  const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
-  const actionRef = useRef();
-  const [currentRow, setCurrentRow] = useState();
-  const [selectedRowsState, setSelectedRows] = useState([]);
+  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const actionRef = useRef<ActionType>();
+  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
+  const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
 
-  const columns = columnsExtend([
+  const columns: ProColumns<API.RuleListItem>[] = [
     {
-      title: '用户名',
-      dataIndex: 'username',
-      tip: '用户身份唯一标识',
+      title: '规则名称',
+      dataIndex: 'name',
+      tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
           <a
@@ -118,27 +120,58 @@ const TableList = () => {
       },
     },
     {
-      title: '姓名',
-      dataIndex: 'realName',
+      title: '描述',
+      dataIndex: 'desc',
+      valueType: 'textarea',
     },
     {
-      title: '性别',
-      dataIndex: 'sex',
-      dict: 'Sex'
-    },
-    {
-      title: '用户编号',
-      dataIndex: 'userNo',
-    },
-    {
-      title: '电话号码',
-      dataIndex: 'phone',
+      title: '服务调用次数',
+      dataIndex: 'callNo',
+      sorter: true,
+      hideInForm: true,
+      renderText: (val: string) => `${val}${'万'}`,
     },
     {
       title: '状态',
       dataIndex: 'status',
-      dict: 'SysUserStatus',
-      hideInForm: true
+      hideInForm: true,
+      valueEnum: {
+        0: {
+          text: '关闭',
+          status: 'Default',
+        },
+        1: {
+          text: '运行中',
+          status: 'Processing',
+        },
+        2: {
+          text: '已上线',
+          status: 'Success',
+        },
+        3: {
+          text: '异常',
+          status: 'Error',
+        },
+      },
+    },
+    {
+      title: '上次调度时间',
+      sorter: true,
+      dataIndex: 'updatedAt',
+      valueType: 'dateTime',
+      renderFormItem: (item, { defaultRender, ...rest }, form) => {
+        const status = form.getFieldValue('status');
+
+        if (`${status}` === '0') {
+          return false;
+        }
+
+        if (`${status}` === '3') {
+          return <Input {...rest} placeholder={'请输入异常原因！'} />;
+        }
+
+        return defaultRender(item);
+      },
     },
     {
       title: '操作',
@@ -159,15 +192,13 @@ const TableList = () => {
         </a>,
       ],
     },
-  ])
-
+  ];
   return (
     <PageContainer>
-      <ProTable
-        headerTitle={'查询表格1'}
+      <ProTable<API.RuleListItem, API.PageParams>
+        headerTitle={'查询表格'}
         actionRef={actionRef}
-        rowKey="id"
-        postData={({ records }) => records}
+        rowKey="key"
         search={{
           labelWidth: 120,
         }}
@@ -204,7 +235,7 @@ const TableList = () => {
               </a>{' '}
               项 &nbsp;&nbsp;
               <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
+                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo!, 0)} 万
               </span>
             </div>
           }
@@ -227,7 +258,7 @@ const TableList = () => {
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleAdd(value);
+          const success = await handleAdd(value as API.RuleListItem);
 
           if (success) {
             handleModalVisible(false);
@@ -284,7 +315,7 @@ const TableList = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions
+          <ProDescriptions<API.RuleListItem>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -293,7 +324,7 @@ const TableList = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns}
+            columns={columns as ProDescriptionsItemProps<API.RuleListItem>[]}
           />
         )}
       </Drawer>

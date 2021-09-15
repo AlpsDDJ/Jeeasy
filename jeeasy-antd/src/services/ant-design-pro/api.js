@@ -71,3 +71,10 @@ export async function removeRule(options) {
     ...(options || {}),
   });
 }
+
+export async function getDictItems(code, options) {
+  return request('/api/common/dicts/' + code, {
+    method: 'GET',
+    ...(options || {}),
+  })
+}
