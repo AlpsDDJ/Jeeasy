@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+import { Button, message, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -10,6 +10,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import { columnsExtend } from '@/utils/proTableUtil'
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -101,12 +102,12 @@ const TableList: React.FC = () => {
    * @zh-CN 国际化配置
    * */
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<API.RuleListItem>[] = columnsExtend([
     {
-      title: '规则名称',
-      dataIndex: 'name',
-      tip: 'The rule name is the unique key',
-      render: (dom, entity) => {
+      title: '用户名',
+      dataIndex: 'username',
+      tip: '用户身份唯一标识',
+      render: (dom: any, entity: any) => {
         return (
           <a
             onClick={() => {
@@ -120,64 +121,33 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
-      valueType: 'textarea',
+      title: '姓名',
+      dataIndex: 'realName',
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) => `${val}${'万'}`,
+      title: '性别',
+      dataIndex: 'sex',
+      dict: 'Sex'
+    },
+    {
+      title: '用户编号',
+      dataIndex: 'userNo',
+    },
+    {
+      title: '电话号码',
+      dataIndex: 'phone',
     },
     {
       title: '状态',
       dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Default',
-        },
-        1: {
-          text: '运行中',
-          status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
-          status: 'Error',
-        },
-      },
-    },
-    {
-      title: '上次调度时间',
-      sorter: true,
-      dataIndex: 'updatedAt',
-      valueType: 'dateTime',
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-
-        if (`${status}` === '0') {
-          return false;
-        }
-
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder={'请输入异常原因！'} />;
-        }
-
-        return defaultRender(item);
-      },
+      dict: 'SysUserStatus',
+      hideInForm: true
     },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => [
+      render: (_: any, record: any) => [
         <a
           key="config"
           onClick={() => {
@@ -192,13 +162,14 @@ const TableList: React.FC = () => {
         </a>,
       ],
     },
-  ];
+  ])
+
   return (
     <PageContainer>
       <ProTable<API.RuleListItem, API.PageParams>
         headerTitle={'查询表格'}
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
           labelWidth: 120,
         }}
@@ -213,6 +184,8 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
+        // @ts-ignore
+        postData={({ records }) => records}
         request={rule}
         columns={columns}
         rowSelection={{
