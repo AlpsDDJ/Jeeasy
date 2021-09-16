@@ -1,7 +1,9 @@
 import { request } from 'umi'
 import { RequestData } from '@ant-design/pro-table/lib/typing'
 
-export const apiType: Record<string, string> = {
+type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+export const apiType: Record<string, RequestMethod> = {
   query: 'GET',
   add: 'POST',
   del: 'DELETE',
@@ -38,20 +40,30 @@ export const parseApi = (api: Api): ApiPathMap => {
 
 }
 
-export function urlRender(tpl: string, dataObj: any) {
-  return tpl.replace(/{\s*(.*?)\s*}/g, (context, objKey) => {
-    const val = dataObj[objKey] || ''
-    // 删除URL中匹配的参数
-    // eslint-disable-next-line no-param-reassign
-    delete dataObj[objKey]
-    return val
-  })
+
+type SendOptions = {
+  url: string,
+  data: any,
+  method: RequestMethod
 }
 
-export const send = async (url: string, data?: any, options?: any) => {
-
+export function getSendOpt(url: string, dataObj: any): SendOptions {
   const [_url, method = apiType.query] = url.split(' ')
-  const realUrl = urlRender(_url, data)
+
+  const data = { ...dataObj }
+  const realUrl = _url.replace(/{\s*(.*?)\s*}/g, (context, objKey) => {
+    const val = dataObj[objKey] || ''
+    // 删除URL中匹配的参数
+    delete data[objKey]
+    return val
+  })
+  // @ts-ignore
+  return { url: realUrl, data, method }
+}
+
+export const send = async (url: string, params?: any, options?: any) => {
+
+  const { url: realUrl, data, method } = getSendOpt(url, params)
 
   // const finalOptions = {
   //   data,
@@ -100,7 +112,7 @@ export const useApis = <T>(api: Api): ApiMap<T> => {
         const { success, data: result, message } = resp
         return new Promise<Partial<RequestData<T>>>((resolve, reject) => {
           if (success) {
-            const {records, total, size: pageSize} = result
+            const { records, total, size: pageSize } = result
             resolve({
               data: records,
               success,
