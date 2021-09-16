@@ -1,19 +1,29 @@
 export default [
   {
-    path: '/login',
+    path: 'login',
     name: '登录',
     layout: false,
     component: './Login',
   },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  { path: 'welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  // {
+  //   path: '/admin',
+  //   name: 'Admin',
+  //   icon: 'crown',
+  //   access: 'admin',
+  //   component: './Admin',
+  //   routes: [
+  //     {path: '/admin/sub', component: './Welcome', name: 'Sub'}
+  //   ]
+  // },
   {
-    path: '/sys',
+    path: 'sys',
     name: '系统管理',
-    icon: 'crown',
     access: 'ROLE:admin',
+    icon: 'crown',
     routes: [
-      { path: '/sys/user', name: '用户管理', icon: 'smile', component: './sys/User' },
-      { path: '/sys/role', name: '角色管理', icon: 'smile', component: './TableList' },
+      { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'smile', component: './sys/User' },
+      { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'smile', component: './TableList' },
       { component: './404' },
     ],
   },

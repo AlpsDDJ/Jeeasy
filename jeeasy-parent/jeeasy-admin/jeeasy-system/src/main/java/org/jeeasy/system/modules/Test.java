@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.depart.domain.SysDepart;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.user.domain.SysUser;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -13,11 +14,12 @@ import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
-        Field[] declaredFields = ClassUtil.getDeclaredFields(SysPermission.class);
+        Field[] declaredFields = ClassUtil.getDeclaredFields(SysUser.class);
         Map<String, String> map = new HashMap<>();
         Map<String, String> map2 = new HashMap<>();
         for (Field field : declaredFields) {
             String fieldName = field.getName();
+            System.out.println(fieldName);
             map.put(fieldName, fieldName);
             String fieldText = "";
             ApiModelProperty annotation = field.getAnnotation(ApiModelProperty.class);
@@ -26,7 +28,7 @@ public class Test {
             }
             map2.put(fieldName, fieldText);
         }
-        System.out.println(JSONUtil.toJsonStr(map));
-        System.out.println(JSONUtil.toJsonStr(map2));
+//        System.out.println(JSONUtil.toJsonStr(map));
+//        System.out.println(JSONUtil.toJsonStr(map2));
     }
 }

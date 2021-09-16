@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import type { ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
@@ -10,7 +10,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
-import { columnsExtend } from '@/utils/proTableUtil'
+import { columnsExtend, ExtendProColumns } from '@/utils/proTableUtil'
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -102,7 +102,7 @@ const TableList: React.FC = () => {
    * @zh-CN 国际化配置
    * */
 
-  const columns: ProColumns<API.RuleListItem>[] = columnsExtend([
+  const columns: ExtendProColumns<API.RuleListItem>[] = [
     {
       title: '用户名',
       dataIndex: 'username',
@@ -162,7 +162,7 @@ const TableList: React.FC = () => {
         </a>,
       ],
     },
-  ])
+  ]
 
   return (
     <PageContainer>
@@ -187,7 +187,7 @@ const TableList: React.FC = () => {
         // @ts-ignore
         postData={({ records }) => records}
         request={rule}
-        columns={columns}
+        columns={columnsExtend(columns)}
         rowSelection={{
           onChange: (_, selectedRows) => {
             setSelectedRows(selectedRows);

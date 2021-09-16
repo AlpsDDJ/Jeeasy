@@ -2,26 +2,19 @@
 /* eslint-disable */
 
 declare namespace API {
+  import R = PUB.R
   type CurrentUser = {
     id?: string;
     username?: string;
     realName?: string;
+    userNo?: number;
     sex?: number;
     avatar?: string;
     email?: string;
-    country?: string;
     phone?: string;
     permissionSet?: string[],
     roleSet?: string[]
   };
-
-  type R = {
-    code?: number,
-    success?: boolean,
-    message?: string,
-    timestamp?: number,
-    data?: any
-  }
 
   type LoginResult = R & {
     data?: {

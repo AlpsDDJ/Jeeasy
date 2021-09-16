@@ -12,6 +12,7 @@ const Settings: LayoutSettings & {
   // fixedHeader: false,
   // fixSiderbar: true,
   navTheme: "light",
+  headerTheme: "light",
   primaryColor: "#13C2C2",
   fixSiderbar: true,
   fixedHeader: true,
