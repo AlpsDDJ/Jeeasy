@@ -18,6 +18,11 @@ const UserList: React.FC = () => {
     {
       title: '姓名',
       dataIndex: 'realName'
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      dict: 'sys_user_status'
     }
   ]
 
@@ -25,7 +30,6 @@ const UserList: React.FC = () => {
   const { list } = useApis<SYS.User>('/api/sys/user')
 
   const tableOpt: ProTableProps<SYS.User, PUB.PageParams> = {
-    headerTitle: '系统用户',
     actionRef,
     request: list,
     rowKey: 'id',
