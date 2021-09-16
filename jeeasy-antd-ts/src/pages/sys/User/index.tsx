@@ -3,42 +3,53 @@ import { PageContainer } from '@ant-design/pro-layout'
 import type { ActionType, ProTableProps } from '@ant-design/pro-table'
 import ProTable from '@ant-design/pro-table'
 import type { ExtendProColumns } from '@/utils/proTableUtil'
-import { columnsExtend } from '@/utils/proTableUtil'
+import { columnsExtend, useFl } from '@/utils/proTableUtil'
 import { useApis } from '@/services'
+import type { PageParams } from '@/utils/common'
+import type { User } from './fl';
+import { UserLabels } from './fl'
 
 const UserList: React.FC = () => {
 
-
   const actionRef = useRef<ActionType>()
-  const columns: ExtendProColumns<SYS.User>[] = [
+
+  const { fields, labels } = useFl<User>(UserLabels)
+
+  const columns: ExtendProColumns<User>[] = [
     {
-      title: '用户名',
-      dataIndex: 'username'
+      dataIndex: fields.username
     },
     {
-      title: '姓名',
-      dataIndex: 'realName'
+      dataIndex: fields.userNo
     },
     {
-      title: '状态',
-      dataIndex: 'status',
+      dataIndex: fields.realName
+    },
+    {
+      dataIndex: fields.phone
+    },
+    {
+      dataIndex: fields.sex
+    },
+    {
+      dataIndex: fields.status,
       dict: 'sys_user_status'
     }
   ]
 
   // const apis: ApiMap = parseApi('/sys/user')
-  const { list } = useApis<SYS.User>('/api/sys/user')
+  const { list } = useApis<User>('/api/sys/user')
 
-  const tableOpt: ProTableProps<SYS.User, PUB.PageParams> = {
+  const tableOpt: ProTableProps<User, PageParams> = {
     actionRef,
     request: list,
     rowKey: 'id',
-    columns: columnsExtend(columns)
+    columns: columnsExtend(columns, labels)
   }
 
   return (
     <PageContainer>
-      <ProTable<SYS.User, PUB.PageParams>
+      <ProTable<User, PageParams>
         { ...tableOpt }
       />
     </PageContainer>

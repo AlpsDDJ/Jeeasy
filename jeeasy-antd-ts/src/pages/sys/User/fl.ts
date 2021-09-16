@@ -1,0 +1,46 @@
+import { FL } from '@/utils/common'
+import { DelFalg, Sex } from '@/utils/common'
+
+export type User = {
+  id?: string,
+  username?: string,
+  userNo?: number,
+  phone?: string,
+  realName?: string,
+  sex?: Sex,
+  birthday?: string,
+  password?: string,
+  status?: 1 | 0,
+  email?: string,
+  avatar?: string,
+  createTime?: Date,
+  createBy?: string,
+  updateTime?: Date,
+  updateBy?: string,
+  remark?: string,
+  delFlag?: DelFalg,
+  roles?: any,
+  departs?: any,
+}
+
+export const UserLabels: FL<User> = {
+  id: 'ID',
+  username: '用户名',
+  userNo: '用户编号',
+  phone: '手机号',
+  realName: '姓名',
+  sex: '性别',
+  birthday: '出生日期',
+  password: '密码',
+  status: '状态',
+  email: 'email',
+  avatar: '头像',
+  createTime: '创建时间',
+  createBy: '创建人',
+  updateTime: '更新时间',
+  updateBy: '更新人',
+  remark: '备注',
+  delFlag: '删除标记',
+  roles: '角色',
+  departs: '部门',
+}
