@@ -7,7 +7,7 @@ import ProTable from '@ant-design/pro-table'
 import { columnsExtend, ExtendProColumns, useFl } from '@/utils/proTableUtil'
 import { useApis } from '@/services'
 import type { PageParams } from '@/utils/common'
-import type { User } from './fl';
+import type { SysUser } from './fl';
 import { UserLabels } from './fl'
 import { BetaSchemaForm } from '@ant-design/pro-form'
 
@@ -16,10 +16,10 @@ const UserList: React.FC = () => {
 
   const tableRef = useRef<ActionType>()
 
-  const { fields, labels } = useFl<User>(UserLabels)
-  const { list, del } = useApis<User>('/api/sys/user')
+  const { fields, labels } = useFl<SysUser>(UserLabels)
+  const { list, del } = useApis<SysUser>('/api/sys/user')
 
-  const columns: ExtendProColumns<User>[] = columnsExtend([
+  const columns: ExtendProColumns<SysUser>[] = columnsExtend([
     {
       dataIndex: fields.username,
     },
@@ -43,7 +43,7 @@ const UserList: React.FC = () => {
     },
     {
       option: [(user) => (
-        <BetaSchemaForm<User>
+        <BetaSchemaForm<SysUser>
           key={user.id}
           trigger={<Button  type="link">编辑</Button>}
           layoutType="ModalForm"
@@ -71,7 +71,7 @@ const UserList: React.FC = () => {
 
   // const apis: ApiMap = parseApi('/sys/user')
 
-  const tableOpt: ProTableProps<User, PageParams> = {
+  const tableOpt: ProTableProps<SysUser, PageParams> = {
     actionRef: tableRef,
     request: list,
     rowKey: 'id',
@@ -81,11 +81,11 @@ const UserList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<User, PageParams>
+      <ProTable<SysUser, PageParams>
         { ...tableOpt }
         toolbar={{
           actions: [
-            <BetaSchemaForm<User>
+            <BetaSchemaForm<SysUser>
               trigger={<Button type="primary">新增</Button>}
               layoutType="ModalForm"
               onFinish={async (values) => {

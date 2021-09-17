@@ -1,7 +1,6 @@
-import { FL } from '@/utils/common'
-import { DelFalg, Sex } from '@/utils/common'
+import type { DelFalg, Sex, FL } from '@/utils/common'
 
-export type User = {
+export type SysUser = {
   id?: string,
   username?: string,
   userNo?: number,
@@ -23,7 +22,7 @@ export type User = {
   departs?: any,
 }
 
-export const UserLabels: FL<User> = {
+export const UserLabels: FL<SysUser> = {
   id: 'ID',
   username: '用户名',
   userNo: '用户编号',
