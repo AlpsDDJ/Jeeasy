@@ -93,7 +93,7 @@ public class QueryGenerator {
      * @param <T>
      * @return
      */
-    private static <T> String getColumnName(String fieldName, Class<T> clazz) {
+    public static <T> String getColumnName(String fieldName, Class<T> clazz) {
         String colName = StrUtil.toUnderlineCase(fieldName);
         Field field = ReflectUtil.getField(clazz, fieldName);
         TableField annotation = field.getAnnotation(TableField.class);

@@ -7,6 +7,7 @@ import org.jeeasy.common.core.enums.RestCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -112,6 +113,14 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
                     return result;
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            } else {
+                HttpMethod method = serverHttpRequest.getMethod();
+                if(HttpMethod.DELETE.equals(method)){
+                    result.setMessage("删除成功");
+                }
+                if(HttpMethod.PUT.equals(method)){
+                    result.setMessage("修改成功");
                 }
             }
         }

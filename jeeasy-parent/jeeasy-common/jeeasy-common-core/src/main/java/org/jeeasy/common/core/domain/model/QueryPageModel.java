@@ -1,8 +1,17 @@
 package org.jeeasy.common.core.domain.model;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;
 import lombok.Setter;
+import org.jeeasy.common.core.tools.QueryGenerator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author AlpsDDJ
@@ -15,10 +24,24 @@ public class QueryPageModel implements QueryModel {
 
     private int size = 10;
     private int current = 1;
-    private String[] orders;
+    private String sort;
 
-    public Page<?> getPage(){
-        return new Page<>(this.current, this.size);
+    public <T> Page<T> getPage(Class<T> tClass){
+        Page<T> page = new Page<>(this.current, this.size);
+        Map<String, String> sortMap = new HashMap<>();
+        sortMap = JSONUtil.toBean(sort, sortMap.getClass());
+        if(MapUtil.isNotEmpty(sortMap)){
+            List<OrderItem> orderItems = new ArrayList<>();
+
+            sortMap.forEach((key, val) -> {
+                String columnName = QueryGenerator.getColumnName(key, tClass);
+                orderItems.add(new OrderItem(columnName, "ascend".equals(val)));
+            });
+
+            page.setOrders(orderItems);
+        }
+
+        return page;
     }
 //    private String query;
 //    private Map<String, Object> params;

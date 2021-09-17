@@ -1,5 +1,6 @@
 import { request } from 'umi'
-import { RequestData } from '@ant-design/pro-table/lib/typing'
+import type { RequestData } from '@ant-design/pro-table/lib/typing'
+import type { R } from '@/utils/common'
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
@@ -61,7 +62,7 @@ export function getSendOpt(url: string, dataObj: any): SendOptions {
   return { url: realUrl, data, method }
 }
 
-export const send = async (url: string, params?: any, options?: any) => {
+export const send = async <T = R>(url: string, params?: any, options?: any) => {
 
   const { url: realUrl, data, method } = getSendOpt(url, params)
 
@@ -87,28 +88,37 @@ export const send = async (url: string, params?: any, options?: any) => {
     }
   }
 
-  return await request(realUrl, finalOptions)
+  return await request<T>(realUrl, finalOptions)
 }
 
-type SendRequest<T> = () => Promise<T>
+type SendRequest<T> = (data?: any, options?: any) => Promise<T>
 
 export type ApiMap<T> = Record<string, SendRequest<T>> & {
-  list?: SendRequest<Partial<RequestData<T>>>,
-  info?: SendRequest<T>,
-  del?: SendRequest<any>,
-  delAll?: SendRequest<any>,
-  add?: SendRequest<any>,
-  edit?: SendRequest<any>,
+  list: SendRequest<Partial<RequestData<T>>>,
+  info: (id: string, data?: any) => Promise<T>,
+  del: (id: string, data?: any) => Promise<R>,
+  delAll: (ids: string[], data?: any) => Promise<R>,
+  add: (entity: T & any) => Promise<R>,
+  edit: (entity: T & any) => Promise<R>,
 }
 
 export const useApis = <T>(api: Api): ApiMap<T> => {
   const apiPathMap = parseApi(api)
-  const apiMap: ApiMap<T> = {}
+  const apiMap: any = {}
   Object.keys(apiPathMap).forEach(key => {
-    apiMap[key] = async (data?: any, options?: any) => {
-      const path = apiPathMap[key]
-      if (key === 'list') {
-        const resp = await send(path, data, options)
+    let _
+    const path = apiPathMap[key]
+
+
+    if (key === 'list') {
+      apiMap[key] = async (params: T & {pageSize: number, current: number}, sort: any, filter: any) => {
+        const data = {
+          ...params,
+          sort,
+          filter
+        }
+        console.log('data --------------------------------- ', data)
+        const resp = await send(path, data)
         const { success, data: result, message } = resp
         return new Promise<Partial<RequestData<T>>>((resolve, reject) => {
           if (success) {
@@ -124,8 +134,19 @@ export const useApis = <T>(api: Api): ApiMap<T> => {
           }
         })
       }
+    } else {
+      apiMap[key] = async (data?: any, options?: any) => {
 
-      return send(path, data, options)
+        _ = data
+
+        if (key === 'info' || key === 'del' && typeof data === 'string') {
+          _ = {id: data}
+        }
+        return send(path, _, options)
+    }
+
+
+
     }
   })
   return apiMap

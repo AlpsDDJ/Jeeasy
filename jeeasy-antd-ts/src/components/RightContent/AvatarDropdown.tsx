@@ -8,6 +8,7 @@ import styles from './index.less';
 import { outLogin } from '@/services/ant-design-pro/api';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { loginPath } from '@/utils/commotSense'
+import { removeToken } from '@/utils/tokenUtil'
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -18,6 +19,7 @@ export type GlobalHeaderRightProps = {
  */
 const loginOut = async () => {
   await outLogin();
+  removeToken()
   const { query = {}, pathname } = history.location;
   const { redirect } = query;
   // Note: There may be security issues, please note
@@ -95,7 +97,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
         <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentUser.username}</span>
+        <span className={`${styles.name} anticon`}>{currentUser.realName}</span>
       </span>
     </HeaderDropdown>
   );
