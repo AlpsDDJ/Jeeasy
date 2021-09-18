@@ -1,16 +1,18 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Drawer } from 'antd';
-import React, { useState, useRef } from 'react';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
-import type { ActionType } from '@ant-design/pro-table';
-import ProTable from '@ant-design/pro-table';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import type { FormValueType } from './components/UpdateForm';
-import UpdateForm from './components/UpdateForm';
-import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
-import { columnsExtend, ExtendProColumns } from '@/utils/proTableUtil'
+import { PlusOutlined } from '@ant-design/icons'
+import { Button, Drawer, message } from 'antd'
+import React, { useRef, useState } from 'react'
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout'
+import type { ActionType } from '@ant-design/pro-table'
+import ProTable from '@ant-design/pro-table'
+import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form'
+import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions'
+import ProDescriptions from '@ant-design/pro-descriptions'
+import type { FormValueType } from './components/UpdateForm'
+import UpdateForm from './components/UpdateForm'
+import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api'
+import type { ExtendProColumns } from '@/utils/EasyTable'
+import { columnsExtend } from '@/utils/EasyTable'
+
 /**
  * @en-US Add node
  * @zh-CN 添加节点

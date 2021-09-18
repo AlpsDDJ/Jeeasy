@@ -11,7 +11,7 @@ export const apiType: Record<string, RequestMethod> = {
   edit: 'PUT'
 }
 
-type Api = string | Record<string, string>
+export type BaseApi = string | Record<'base'|string, string>
 
 export type ApiPathMap = Record<string, string> & {
   list?: string,
@@ -22,7 +22,7 @@ export type ApiPathMap = Record<string, string> & {
   edit?: string,
 }
 
-export const parseApi = (api: Api): ApiPathMap => {
+export const parseApi = (api: BaseApi): ApiPathMap => {
   if (typeof api === 'string') {
     return {
       list: `${ api } ${ apiType.query }`,
@@ -102,7 +102,7 @@ export type ApiMap<T> = Record<string, SendRequest<T>> & {
   edit: (entity: T & any) => Promise<R>,
 }
 
-export const useApis = <T>(api: Api): ApiMap<T> => {
+export const useApis = <T>(api: BaseApi): ApiMap<T> => {
   const apiPathMap = parseApi(api)
   const apiMap: any = {}
   Object.keys(apiPathMap).forEach(key => {

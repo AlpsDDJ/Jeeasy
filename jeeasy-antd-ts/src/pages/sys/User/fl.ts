@@ -1,6 +1,6 @@
 import type { DelFalg, Sex, FL } from '@/utils/common'
 
-export type SysUser = {
+export interface SysUser extends Record<string, any>{
   id?: string,
   username?: string,
   userNo?: number,
