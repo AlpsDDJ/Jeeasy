@@ -150,12 +150,49 @@ type EasyTableState<T = any, ValueType = 'text'> = {
   setFormData?: (data: T) => void
 }
 
+// type Syr<T> = {
+//   formRef: React.MutableRefObject<ProFormInstance<T> | undefined>
+//   formType: '' | 'add' | 'edit' | 'view' | string
+//   tableRef: React.MutableRefObject<ActionType | undefined>
+//   formOptions: {
+//     initialValues: [({} | T), React.Dispatch<React.SetStateAction<{} | T>>][0]
+//     columns: any[]
+//     layoutType: string
+//     onVisibleChange: (visible) => void
+//   }
+//
+//   formVisible: boolean
+//   columns: ExtendProColumns < T, ValueType > []
+//   setFormData: (data) => Promise<void>
+//   tableOptions: {
+//     request: (data?: any, options?: any) => Promise<Partial<{ data: T[] | undefined; success?: boolean; total?: number } & Record<string, any>>>
+//     actionRef: React.MutableRefObject<ActionType | undefined> | undefined
+//     rowKey: string
+//     headerTitle: string | undefined
+//   }
+//
+//   formData: [({} | T), React.Dispatch<React.SetStateAction<{} | T>>][0]
+//   setFormVisible: (b) => void
+// }
+
 export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
-  const [formVisible, setFormVisible] = useState<boolean>(false)
-  const [formData, setFormData] = useState<T | {}>({})
-  const [formType] = useState<FormType>('')
+
+  const defaultState: any = {
+    formVisible: false,
+    formData: {},
+    formType: '',
+  }
+
+  const [state, setState] = useState(defaultState)
+  function setEasyTableState(data: any) {
+    setState({...state, ...data})
+  }
+
+  // const [formVisible, setFormVisible] = useState<boolean>(false)
+  // const [formData, setFormData] = useState<T | {}>({})
+  // const [formType] = useState<FormType>('')
 
   const { apis, columns, fl, title, tableRef, loadInfo = false } = config
   // let formVisible: boolean = false
@@ -176,6 +213,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
   // }
   return {
     // ...defaultState,
+    ...state,
     columns: cols,
     tableRef: tableRef || tref,
     tableOptions: {
@@ -184,26 +222,28 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
       actionRef: tableRef,
       headerTitle: title
     },
-    formData,
-    formType,
     formRef: fref,
     formOptions: {
       columns: [],
       layoutType: 'ModalForm',
       onVisibleChange: visible => {
-        setFormVisible(visible)
+        setEasyTableState({ formVisible: visible })
+        if(!visible){
+          fref.current?.resetFields()
+          setEasyTableState({})
+        }
       },
-      initialValues: formData,
+      initialValues: state.formData
     },
-    formVisible,
-    setFormVisible: b => {
-      setFormVisible(b)
+    setFormVisible: visible => {
+      setEasyTableState({ formVisible: visible })
     },
     setFormData: async (data) => {
       if (loadInfo) {
+        // @ts-ignore
         setFormData(await apis.info(data?.id))
       } else {
-        setFormData(data)
+        setEasyTableState({ formData: data })
       }
       fref.current?.setFieldsValue(data)
     }

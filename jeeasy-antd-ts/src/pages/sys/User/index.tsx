@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, message } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
@@ -13,9 +13,6 @@ import { BetaSchemaForm } from '@ant-design/pro-form'
 
 const UserList: React.FC = () => {
 
-
-  const [params , setParams]  = useState<number>(1)
-
   const apis = useApis<SysUser>('/api/sys/user')
   const { fields, labels } = useFl<SysUser>(UserLabels)
 
@@ -23,7 +20,6 @@ const UserList: React.FC = () => {
     title: '系统用户',
     fl: labels,
     apis,
-    loadInfo: true,
     columns: [
       {
         dataIndex: fields.username
@@ -51,7 +47,6 @@ const UserList: React.FC = () => {
           key: 'edit',
           name: '编辑',
           handle: async (record) => {
-            setParams(params + 1)
             setFormVisible?.(true)
             setFormData?.(record)
           }
