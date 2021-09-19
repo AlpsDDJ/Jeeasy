@@ -1,26 +1,68 @@
 import type { DelFalg, Sex, FL } from '@/utils/common'
 
-export interface SysUser extends Record<string, any>{
-  id?: string,
-  username?: string,
-  userNo?: number,
-  phone?: string,
-  realName?: string,
-  sex?: Sex,
-  birthday?: string,
-  password?: string,
-  status?: 1 | 0,
-  email?: string,
-  avatar?: string,
-  createTime?: Date,
-  createBy?: string,
-  updateTime?: Date,
-  updateBy?: string,
-  remark?: string,
-  delFlag?: DelFalg,
-  roles?: any,
-  departs?: any,
+
+class ModelField<T = undefined> implements Record<string, any>{
+  labels?: FL<T>
+  fields?: FL<T>
+  // constructor() {
+  //   this.labels = {}
+  //   this.fields = {}
+  // }
+  public setLabel(k: string, v: any){
+    if(!this.fields){
+      this.fields = {}
+    }
+    // @ts-ignore
+    this.fields[k] = v
+  }
+  public setField(k: string, v: any){
+    if(!this.fields){
+      this.fields = {}
+    }
+    // @ts-ignore
+    this.fields[k] = v
+  }
 }
+
+
+export class SysUser extends ModelField<SysUser> {
+  @Label('ID')
+  id?: string = ''
+  @Label('用户名')
+  username?: string
+  userNo?: number
+  phone?: string
+  realName?: string
+  sex?: Sex
+  birthday?: string
+  password?: string
+  status?: 1 | 0
+  email?: string
+  avatar?: string
+  createTime?: Date
+  createBy?: string
+  updateTime?: Date
+  updateBy?: string
+  remark?: string
+  delFlag?: DelFalg
+  roles?: any
+  departs?: any
+}
+
+// type Target = ModelField<any>
+
+function Label(label: string) {
+  return (target: ModelField, attr: string) => {
+    // let { labels, fields } = target
+    target.setLabel(attr, label)
+    target.setField(attr, attr)
+    // labels = {...labels, ...{[attr]: label}}
+    // // eslint-disable-next-line no-param-reassign,@typescript-eslint/no-unused-vars
+    // fields = {...fields, ...{[attr]: attr}}
+  }
+}
+
+console.log(new SysUser())
 
 export const UserLabels: FL<SysUser> = {
   id: 'ID',
@@ -41,5 +83,5 @@ export const UserLabels: FL<SysUser> = {
   remark: '备注',
   delFlag: '删除标记',
   roles: '角色',
-  departs: '部门',
+  departs: '部门'
 }

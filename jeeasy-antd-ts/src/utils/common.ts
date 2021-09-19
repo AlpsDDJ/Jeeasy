@@ -14,7 +14,7 @@ export declare type PageParams = {
  * 属性&名称
  */
 export declare type FL<T> = {
-  [P in keyof T]?: P | string
+  [P in keyof T | string]?: P | string
 }
 
 export declare type R<T = any> = {
