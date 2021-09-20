@@ -1,25 +1,29 @@
 import React from 'react'
-import { Button, message } from 'antd'
-import { PageContainer } from '@ant-design/pro-layout'
+import {message} from 'antd'
+import {PageContainer} from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 // import type { ExtendProColumns } from '@/utils/proTableUtil'
-import { useEasyTable, useFl } from '@/utils/EasyTable'
-import { useApis } from '@/services'
-import type { PageParams } from '@/utils/common'
-import type { SysUser } from './fl'
-import { UserLabels } from './fl'
-import { BetaSchemaForm } from '@ant-design/pro-form'
+import {useEasyTable, useFl} from '@/utils/EasyTable'
+import {useApis} from '@/services'
+import {SysUser, UserLabels} from './fl'
+import {BetaSchemaForm} from '@ant-design/pro-form'
 
 
 const UserList: React.FC = () => {
 
+  const user: SysUser = new SysUser()
+  user.userNo = 12
+  console.log('user -------------- ', user)
+
+
   const apis = useApis<SysUser>('/api/sys/user')
   const { fields, labels } = useFl<SysUser>(UserLabels)
 
-  const { columns, formOptions, tableOptions, formVisible, setFormVisible, setFormData, tableRef, formRef } = useEasyTable<SysUser>({
+  const { columns, formOptions, tableRef, tableOptions, showForm } = useEasyTable<SysUser>({
     title: '系统用户',
     fl: labels,
     apis,
+    // formLayout: 'ModalForm',
     columns: [
       {
         dataIndex: fields.username
@@ -47,8 +51,7 @@ const UserList: React.FC = () => {
           key: 'edit',
           name: '编辑',
           handle: async (record) => {
-            setFormVisible?.(true)
-            setFormData?.(record)
+            await showForm('edit', record)
           }
         }, {
           key: 'del',
@@ -58,7 +61,7 @@ const UserList: React.FC = () => {
               const resp = await apis.del(id)
               if (resp.success) {
                 message.success(resp.message)
-                tableRef?.current?.reload()
+                tableRef.current?.reload()
               }
             }
           }
@@ -129,26 +132,16 @@ const UserList: React.FC = () => {
 
   return (
     <PageContainer>
-      <ProTable<SysUser, PageParams>
+      <ProTable<SysUser>
         { ...tableOptions }
-        actionRef={ tableRef }
-        columns={ columns }
-        toolbar={ {
-          actions: [
-            <BetaSchemaForm<SysUser>
-              { ...formOptions }
-              visible={ formVisible }
-              formRef={formRef}
-              trigger={ <Button type="primary">新增</Button> }
-              onFinish={ async (values) => {
-                console.log(values)
-              } }
-              columns={ columns }
-            />
-          ]
-        } }
+        columns={columns}
       />
-
+      <BetaSchemaForm<SysUser>
+        { ...formOptions }
+        columns={columns}
+        onFinish={ async (values) => {
+          console.log(values)
+        } }/>
     </PageContainer>
   )
 }

@@ -77,7 +77,7 @@ const Login: React.FC = () => {
     setSubmitting(false);
   };
 
-  const { success } = userLoginState;
+  const { success, message: errorMessage } = userLoginState;
   const loginType = type
   return (
     <div className={styles.container}>
@@ -119,8 +119,8 @@ const Login: React.FC = () => {
               <Tabs.TabPane key="mobile" tab={'手机号登录'} />
             </Tabs>
 
-            {!success && loginType === 'account' && (
-              <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
+            {!success && errorMessage && loginType === 'account' && (
+              <LoginMessage content={errorMessage} />
             )}
             {type === 'account' && (
               <>
@@ -155,7 +155,7 @@ const Login: React.FC = () => {
               </>
             )}
 
-            {!success && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+            {!success && errorMessage && loginType === 'mobile' && <LoginMessage content={errorMessage} />}
             {type === 'mobile' && (
               <>
                 <ProFormText

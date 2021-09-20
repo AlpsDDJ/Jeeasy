@@ -2,29 +2,34 @@ import type { DelFalg, Sex, FL } from '@/utils/common'
 
 
 class ModelField<T = undefined> implements Record<string, any>{
-  labels?: FL<T>
-  fields?: FL<T>
-  // constructor() {
-  //   this.labels = {}
-  //   this.fields = {}
-  // }
-  public setLabel(k: string, v: any){
-    if(!this.fields){
-      this.fields = {}
-    }
-    // @ts-ignore
-    this.fields[k] = v
+  public labels?: FL<T> = {}
+  public fields?: FL<T> = {}
+  constructor() {
+    this.labels = {}
+    this.fields = {}
   }
-  public setField(k: string, v: any){
-    if(!this.fields){
-      this.fields = {}
-    }
+
+  public get getLabels(){
+    return this.labels
+  }
+
+  public setLabel?(k: string, v: any, _this: ModelField<T>){
+    // if(!_this.fields){
+    //   _this.fields = {}
+    // }
     // @ts-ignore
-    this.fields[k] = v
+    _this.labels[k] = v
+  }
+  public setField?(k: string, v: any, _this: ModelField<T>){
+    // if(!_this.fields){
+    //   _this.fields = {}
+    // }
+    // @ts-ignore
+    _this.fields[k] = v
   }
 }
 
-
+@Data
 export class SysUser extends ModelField<SysUser> {
   @Label('ID')
   id?: string = ''
@@ -49,20 +54,58 @@ export class SysUser extends ModelField<SysUser> {
   departs?: any
 }
 
+
+function Data(target: any) {
+  // save a reference to the original constructor
+  // const original = target;
+
+  // a utility function to generate instances of a class
+  // function construct(constructor: any, args: any[]) {
+  //   const c: any = function () {
+  //     return constructor.apply(this, args);
+  //   }
+  //   c.prototype = constructor.prototype;
+  //   return new c();
+  // }
+
+  // the new constructor behaviour
+  const f: any = function (...args: any[]) {
+    console.log("New: ", target.name);
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-invalid-this
+    const o = target.apply(this, args)
+    const d = Reflect.getOwnPropertyDescriptor(o, 'id')
+    console.log('=============>>> ', d)
+    return o;
+  }
+
+  // copy prototype so intanceof operator still works
+  f.prototype = target.prototype;
+
+  // return new constructor (will override original)
+  return f;
+}
+
 // type Target = ModelField<any>
 
-function Label(label: string) {
+export function Label(label: string) {
   return (target: ModelField, attr: string) => {
     // let { labels, fields } = target
-    target.setLabel(attr, label)
-    target.setField(attr, attr)
+    // Reflect.getOwnPropertyDescriptor("design:type", target, key);
+    const d = Reflect.getOwnPropertyDescriptor(target, attr)
+    console.log(d)
+
+    const {labels, fields} = target
+
+    console.log(labels, fields)
+
+    target.setLabel?.(attr, label, target)
+    target.setField?.(attr, attr, target)
     // labels = {...labels, ...{[attr]: label}}
     // // eslint-disable-next-line no-param-reassign,@typescript-eslint/no-unused-vars
     // fields = {...fields, ...{[attr]: attr}}
   }
 }
-
-console.log(new SysUser())
 
 export const UserLabels: FL<SysUser> = {
   id: 'ID',
