@@ -1,23 +1,23 @@
 import React from 'react'
-import {message} from 'antd'
-import {PageContainer} from '@ant-design/pro-layout'
+import { message } from 'antd'
+import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
-// import type { ExtendProColumns } from '@/utils/proTableUtil'
-import {useEasyTable, useFl} from '@/utils/EasyTable'
-import {useApis} from '@/services'
-import {SysUser, UserLabels} from './fl'
-import {BetaSchemaForm} from '@ant-design/pro-form'
+import { useEasyTable } from '@/utils/EasyTable'
+import { useApis } from '@/services'
+import type { SysUser } from './fl'
+import { fields, labels } from './fl'
+import { BetaSchemaForm } from '@ant-design/pro-form'
 
 
 const UserList: React.FC = () => {
 
-  const user: SysUser = new SysUser()
-  user.userNo = 12
-  console.log('user -------------- ', user)
+  // const user: SysUser = new SysUser()
+  // user.userNo = 12
+  // console.log('user -------------- ', user)
 
 
   const apis = useApis<SysUser>('/api/sys/user')
-  const { fields, labels } = useFl<SysUser>(UserLabels)
+  // const { fields, labels } = useFl<SysUser>(labels)
 
   const { columns, formOptions, tableRef, tableOptions, showForm } = useEasyTable<SysUser>({
     title: '系统用户',
