@@ -117,26 +117,26 @@ export function columnsExtend<T, ValueType = 'text'>(
   });
 }
 
-export function l2f<T>(labels: FL<T>): FL<T> {
-  const fields: FL<T> = {};
-  Object.keys(labels).forEach((label) => {
-    // @ts-ignore
-    fields[label] = label;
-  });
-  return fields;
-}
+// export function l2f<T>(labels: FL<T>): FL<T> {
+//   const fields: FL<T> = {};
+//   Object.keys(labels).forEach((label) => {
+//     // @ts-ignore
+//     fields[label] = label;
+//   });
+//   return fields;
+// }
 
-type FieldsAndLabels<T> = {
-  fields: FL<T>;
-  labels: FL<T>;
-};
+// type FieldsAndLabels<T> = {
+//   fields: FL<T>;
+//   labels: FL<T>;
+// };
 
-export function useFl<T>(labels: FL<T>): FieldsAndLabels<T> {
-  return {
-    labels,
-    fields: l2f<T>(labels),
-  };
-}
+// export function useFl<T>(labels: FL<T>): FieldsAndLabels<T> {
+//   return {
+//     labels,
+//     fields: l2f<T>(labels),
+//   };
+// }
 
 type EasyTableConfig<T> = {
   title?: string;
@@ -232,17 +232,17 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
     data = {},
     call = undefined,
   ) => {
-    const state_ = {
+    const sta = {
       ...state,
       formType: type,
       formVisible: true,
       formData: data,
     };
     if (loadInfo) {
-      state_.formData = await apis.info(data?.id);
+      sta.formData = await apis.info(data?.id);
     }
-    await setEasyTableState(state_);
-    fref.current?.setFieldsValue(state_.formData);
+    await setEasyTableState(sta);
+    fref.current?.setFieldsValue(sta.formData);
     if (call) {
       await call();
     }

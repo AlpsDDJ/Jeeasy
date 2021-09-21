@@ -1,9 +1,7 @@
 import type { DelFalg, Sex } from '@/utils/common'
 import { Label, ModelField } from '@/utils/common'
 
-
-// @Data
-export class SysUser extends ModelField {
+export class SysUser extends ModelField<SysUser> {
   @Label('ID') id?: string
   @Label('用户名') username?: string
   @Label('用户编号') userNo?: number
@@ -25,33 +23,5 @@ export class SysUser extends ModelField {
   @Label('部门') departs?: any
 }
 
-// export type SysUser = {
-//   [P in keyof SysUserModal]: typeof SysUserModal.prototype[P]
-// }
+export const { labels, fields } = SysUser.prototype
 
-
-// console.log(' new SysUser() ------- ', SysUserModal.prototype)
-// export const fl: ModelField<SysUserModal> = SysUserModal.prototype
-export const {labels, fields} = SysUser.prototype
-
-// export const UserLabels: FL<SysUserModal> = {
-//   id: 'ID',
-//   username: '用户名',
-//   userNo: '用户编号',
-//   phone: '手机号',
-//   realName: '姓名',
-//   sex: '性别',
-//   birthday: '出生日期',
-//   password: '密码',
-//   status: '状态',
-//   email: 'email',
-//   avatar: '头像',
-//   createTime: '创建时间',
-//   createBy: '创建人',
-//   updateTime: '更新时间',
-//   updateBy: '更新人',
-//   remark: '备注',
-//   delFlag: '删除标记',
-//   roles: '角色',
-//   departs: '部门'
-// }

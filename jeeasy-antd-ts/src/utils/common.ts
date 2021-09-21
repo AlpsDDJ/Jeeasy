@@ -27,8 +27,7 @@ export declare type R<T = any> = {
 
 
 export function Label(label: string) {
-  return function (target: ModelField, key: string) {
-
+  return function (target: any, key: string) {
     const {labels = {}, fields = {}} = target
     // eslint-disable-next-line no-param-reassign
     target.labels = {...labels, [key]: label}
@@ -40,31 +39,4 @@ export function Label(label: string) {
 export class ModelField<T = any> implements Record<string, any>{
   public labels: FL<T> = {}
   public fields: FL<T> = {}
-  // constructor() {
-  //   this.labels = {
-  //     id: 'ID'
-  //   }
-  //   this.fields = {
-  //     id: 'id'
-  //   }
-  // }
-
-  // public get getLabels(){
-  //   return this.labels
-  // }
-
-  // public setLabel?(k: string, v: any, _this: ModelField<T>){
-  //   // if(!_this.fields){
-  //   //   _this.fields = {}
-  //   // }
-  //   // @ts-ignore
-  //   _this.labels[k] = v
-  // }
-  // public setField?(k: string, v: any, _this: ModelField<T>){
-  //   // if(!_this.fields){
-  //   //   _this.fields = {}
-  //   // }
-  //   // @ts-ignore
-  //   _this.fields[k] = v
-  // }
 }
