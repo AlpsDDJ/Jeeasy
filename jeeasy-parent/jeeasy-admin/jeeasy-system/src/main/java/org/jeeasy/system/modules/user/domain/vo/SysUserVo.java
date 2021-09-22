@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeeasy.system.modules.depart.domain.SysDepart;
+import org.jeeasy.system.modules.dept.domain.SysDept;
 import org.jeeasy.system.modules.role.domian.SysRole;
 import org.jeeasy.system.modules.user.domain.SysUser;
 
@@ -19,5 +19,5 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class SysUserVo extends SysUser {
     private List<SysRole> roleList;
-    private List<SysDepart> departList;
+    private List<SysDept> deptList;
 }

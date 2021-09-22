@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.system.modules.user.domain.SysUserDepart;
+import org.jeeasy.system.modules.user.domain.SysUserDept;
 
 /**
  * SysUserRoleService: 用户部门表 服务类
@@ -10,5 +10,5 @@ import org.jeeasy.system.modules.user.domain.SysUserDepart;
  * @version v1.0
  * @date 2020/11/21 22:30
  */
-public interface SysUserDepartService extends IService<SysUserDepart> {
+public interface SysUserDeptService extends IService<SysUserDept> {
 }

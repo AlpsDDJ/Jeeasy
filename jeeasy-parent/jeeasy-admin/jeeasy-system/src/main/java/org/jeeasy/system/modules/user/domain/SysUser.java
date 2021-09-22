@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.system.enums.user.SysUserStatusEnum;
-import org.jeeasy.system.modules.depart.domain.SysDepart;
+import org.jeeasy.system.modules.dept.domain.SysDept;
 import org.jeeasy.system.modules.role.domian.SysRole;
 
 import java.io.Serializable;
@@ -100,26 +100,6 @@ public class SysUser extends Model<SysUser> implements Serializable {
     @TableField(exist = false)
     private List<SysRole> roles;
     @TableField(exist = false)
-    private List<SysDepart> departs;
-
-
-//    @TableField(exist = false)
-//    @Dict("@sys_user")
-//    private Collection<SysRole> roles;
-//    @TableField(exist = false)
-//    @Dict("@sys_depart")
-//    private Collection<SysDepart> departs;
-
-
-
-//    public static void main(String[] args) {
-//        SysUser user = new SysUser();
-//        user.setId("111");
-//
-//        Field username = ReflectUtil.getField(user.getClass(), "username1");
-//        ReflectUtil.hasField()
-//        System.out.println(username);
-//
-//    }
+    private List<SysDept> depts;
 
 }

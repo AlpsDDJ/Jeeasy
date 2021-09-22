@@ -36,10 +36,10 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
         QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
-        String departId = queryPageModel.getDepartId();
+        String deptId = queryPageModel.getDeptId();
         String roleId = queryPageModel.getRoleId();
-        if(Tools.isNotEmpty(departId)){
-            wrapper.eq("depart_id", departId);
+        if(Tools.isNotEmpty(deptId)){
+            wrapper.eq("dept_id", deptId);
         }
         if(Tools.isNotEmpty(roleId)){
             wrapper.eq("role_id", roleId);

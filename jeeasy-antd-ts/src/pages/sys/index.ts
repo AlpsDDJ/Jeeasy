@@ -1,7 +1,12 @@
-import type { DelFalg, Sex } from '@/utils/common'
-import { Label, ModelField } from '@/utils/common'
+// @ts-ignore
+/* eslint-disable */
 
-export class SysUser extends ModelField<SysUser> {
+
+import type { DelFalg, Sex } from '@/utils/common'
+import { Label, BaseModel, Data } from '@/utils/common'
+
+@Data('系统用户', '/api/sys/user', 'sys:user')
+export class SysUser extends BaseModel<SysUser> {
   @Label('ID') id?: string
   @Label('用户名') username?: string
   @Label('用户编号') userNo?: number
@@ -20,8 +25,8 @@ export class SysUser extends ModelField<SysUser> {
   @Label('备注') remark?: string
   @Label('删除标记') delFlag?: DelFalg
   @Label('角色') roles?: any
-  @Label('部门') departs?: any
+  @Label('部门') depts?: any
 }
 
-export const { labels, fields } = SysUser.prototype
-
+console.log('SysUser -----> ', SysUser)
+console.log('new SysUser() -----> ', new SysUser())

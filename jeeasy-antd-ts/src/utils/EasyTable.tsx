@@ -1,39 +1,39 @@
-import type { MutableRefObject } from 'react';
-import React, { useRef, useState } from 'react';
-import { getDictItems } from '@/services/ant-design-pro/api';
-import type { ProColumns, ProTableProps } from '@ant-design/pro-table';
-import type { FL, PageParams } from '@/utils/common';
-import { Button, Popconfirm } from 'antd';
-import type { ProFormColumnsType } from '@ant-design/pro-form';
-import type { ApiMap } from '@/services';
-import type { FormSchema } from '@ant-design/pro-form/lib/components/SchemaForm';
-import type { ActionType } from '@ant-design/pro-table/lib/typing';
-import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm';
-import { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm';
+import type { MutableRefObject } from 'react'
+import React, { useRef, useState } from 'react'
+import { getDictItems } from '@/services/ant-design-pro/api'
+import type { ProColumns, ProTableProps } from '@ant-design/pro-table'
+import type { FL, PageParams } from '@/utils/common'
+import { Button, message, Popconfirm } from 'antd'
+import type { ProFormColumnsType } from '@ant-design/pro-form'
+import type { ApiMap } from '@/services'
+import type { FormSchema } from '@ant-design/pro-form/lib/components/SchemaForm'
+import type { ActionType } from '@ant-design/pro-table/lib/typing'
+import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
+import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
+import { PlusOutlined } from '@ant-design/icons'
 
 async function formatDictItems(code: string) {
-  const resp = await getDictItems(code);
-  const dicts = resp?.data;
-  return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }));
+  const resp = await getDictItems(code)
+  const dicts = resp?.data
+  return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
 }
 
 export type ExtendProColumns<T, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
-    dict?: string;
-    option?: OptionColumn<T>[];
-  };
+  dict?: string;
+  operate?: OperateColumn<T>[];
+};
 
-type Option = string | 'edit' | 'del' | 'add' | 'view' | 'enable';
 
-type OptionRender<T> = (record: T, index?: number) => React.ReactNode;
+type OperateType = string | 'edit' | 'del' | 'add' | 'view' | 'enable';
 
-type OptionColumn<T> =
-  | OptionRender<T>
-  | {
-      key: Option;
-      name: string;
-      handle: (record: T, index?: number) => void;
-    };
+type OperateRender<T> = (record: T, index?: number) => React.ReactNode;
+
+type OperateColumn<T> = OperateType | OperateRender<T> | {
+  key: OperateType;
+  name: string;
+  handle: (record: T, index?: number) => void;
+};
 
 // type OptionConfig<RecordType> = {
 //   render?: (value: any, record: RecordType, index: number) => React.ReactNode | RenderedCell<RecordType>;
@@ -45,76 +45,92 @@ type OptionColumn<T> =
 
 export function columnsExtend<T, ValueType = 'text'>(
   columns: ExtendProColumns<T, ValueType>[],
-  labels: FL<T> = {},
+  labels: FL<T> = {}
 ): ExtendProColumns<T, ValueType>[] {
   return columns?.map((column) => {
-    const { renderText, dict, valueType, option } = column;
-    let col: ExtendProColumns<T, ValueType> = {};
-    if (option) {
+    const { renderText, dict, valueType, operate } = column
+    let col: ExtendProColumns<T, ValueType> = {}
+    if (operate) {
       col = {
         title: '操作',
         dataIndex: 'option',
         valueType: 'option',
         render: (dom, entity, index) => {
-          return option.map((opt) => {
+          return operate.map((opt) => {
             if (typeof opt === 'function') {
-              return opt(entity, index);
+              return opt(entity, index)
             }
 
-            const { key, name, handle } = opt;
+            let o: {
+              key: OperateType;
+              name: string;
+              handle: (record: T, index?: number) => void;
+            }
+
+            if (typeof opt === 'string') {
+              o = {
+                key: opt,
+                name: opt,
+                handle: record => {}
+              }
+            }else {
+              o = {...opt}
+            }
+
+            const { key, name, handle } = o
             switch (key) {
               case 'del':
                 return (
                   <Popconfirm
-                    key={key}
+                    key={ key }
                     title="确定删除此行数据?"
-                    onConfirm={() => {
-                      handle(entity, index);
-                    }}
+                    onConfirm={ () => {
+                      handle(entity, index)
+                    } }
                     okText="确定"
                     cancelText="取消"
                   >
-                    <Button type="link" danger key={key}>
-                      {name}
+                    <Button type="link" danger key={ key }>
+                      { name }
                     </Button>
                   </Popconfirm>
-                );
+                )
               default:
                 return (
                   <Button
                     type="link"
-                    key={key}
-                    onClick={() => {
-                      handle(entity, index);
-                    }}
+                    key={ key }
+                    onClick={ () => {
+                      handle(entity, index)
+                    } }
                   >
-                    {name}
+                    { name }
                   </Button>
-                );
+                )
             }
-          });
-        },
-      };
+          })
+        }
+      }
     }
 
-    if (option || column.dataIndex === 'option') {
+    if (operate || column.dataIndex === 'operate') {
       col = {
         ...col,
         hideInForm: true,
         hideInDescriptions: true,
-        hideInSearch: true,
-      };
+        hideInSearch: true
+      }
     }
     return {
       // @ts-ignore
       title: labels[column.dataIndex],
       ...col,
       ...column,
-      renderText: renderText || ((text, record) => record[`${column.dataIndex}_dict`] || text),
+      renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
       valueType: valueType || (dict ? 'select' : 'text'),
-      request: dict ? () => formatDictItems(dict) : undefined,
-    };
-  });
+      request: dict ? () => formatDictItems(dict) : undefined
+    }
+  })
 }
 
 // export function l2f<T>(labels: FL<T>): FL<T> {
@@ -144,6 +160,7 @@ type EasyTableConfig<T> = {
   apis: ApiMap<T>;
   fl: FL<T>;
   formLayout?: ProFormLayoutType;
+  formatFormData?: (values: T) => any;
   // tableRef?: React.MutableRefObject<ActionType | undefined>,
   loadInfo?: boolean;
 };
@@ -191,27 +208,27 @@ type EasyTableState<T = any, ValueType = 'text'> = {
 // }
 
 export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
-  const tref = useRef<ActionType>();
-  const fref = useRef<ProFormInstance<T>>();
+  const tref = useRef<ActionType>()
+  const fref = useRef<ProFormInstance<T>>()
 
   const defaultState: any = {
     formVisible: false,
     formData: {},
-    formType: '',
-  };
+    formType: ''
+  }
 
-  const [state, setState] = useState(defaultState);
+  const [state, setState] = useState(defaultState)
   const setEasyTableState = (data: Record<any, any>) => {
-    setState({ ...state, ...data });
-  };
+    setState({ ...state, ...data })
+  }
 
   // const [formVisible, setFormVisible] = useState<boolean>(false)
   // const [formData, setFormData] = useState<T | {}>({})
   // const [formType] = useState<FormType>('')
 
-  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm' } = config;
+  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals } = config
   // let formVisible: boolean = false
-  const cols = columnsExtend<T, ValueType>(columns, fl);
+  const cols = columnsExtend<T, ValueType>(columns, fl)
   // const tableOptions: ProTableProps<T, PageParams, ValueType> = {
   //   rowKey: 'id',
   //   request: apis.list,
@@ -230,26 +247,25 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
   const showForm: (type: FormType, data?: T | any, call?: () => {}) => void = async (
     type,
     data = {},
-    call = undefined,
+    call = undefined
   ) => {
     const sta = {
       ...state,
       formType: type,
       formVisible: true,
-      formData: data,
-    };
+      formData: data
+    }
     if (loadInfo) {
-      sta.formData = await apis.info(data?.id);
+      sta.formData = await apis.info(data?.id)
     }
-    await setEasyTableState(sta);
-    fref.current?.setFieldsValue(sta.formData);
+    await setEasyTableState(sta)
+    fref.current?.setFieldsValue(sta.formData)
     if (call) {
-      await call();
+      await call()
     }
-  };
+  }
 
   return {
-    // ...defaultState,
     ...state,
     columns: cols,
     tableRef: tref,
@@ -262,14 +278,14 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
         actions: (
           <Button
             type="primary"
-            onClick={() => {
-              showForm('add');
-            }}
+            onClick={ () => {
+              showForm('add')
+            } }
           >
-            新增
+            <PlusOutlined /> 新增
           </Button>
-        ),
-      },
+        )
+      }
     },
     formRef: fref,
     formOptions: {
@@ -277,20 +293,35 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
       layoutType: formLayout,
       formRef: fref,
       onVisibleChange: (visible) => {
-        setEasyTableState({ formVisible: visible });
+        setEasyTableState({ formVisible: visible })
         if (!visible) {
-          fref.current?.resetFields();
+          fref.current?.resetFields()
           // setState({...state, formData: {}})
         }
       },
+      onFinish: async (values) => {
+        if (state.formType !== 'edit' && state.formType !== 'add') {
+          return
+        }
+        const params = await formatFormData({...state.formData, ...values})
+        const rep = state.formType === 'edit' ? apis.edit : apis.add
+        const { success, message: msg } = await rep(params)
+        if (success) {
+          message.success(msg)
+          tref.current?.reload()
+          setEasyTableState({ formVisible: false })
+        } else {
+          message.error(msg)
+        }
+      }
       // initialValues: state.formData
     },
     setFormVisible: async (visible) => {
-      await setEasyTableState({ formVisible: visible });
+      await setEasyTableState({ formVisible: visible })
     },
     setFormData: async (data) => {
-      fref.current?.setFieldsValue(data);
+      fref.current?.setFieldsValue(data)
     },
-    showForm,
-  };
+    showForm
+  }
 }

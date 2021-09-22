@@ -22,7 +22,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SysUserDepart extends Model<SysUserDepart> implements Serializable {
+public class SysUserDept extends Model<SysUserDept> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_ID)
@@ -36,10 +36,10 @@ public class SysUserDepart extends Model<SysUserDepart> implements Serializable 
     /**
      * 部门ID
      */
-    private String departId;
+    private String deptId;
 
-    public SysUserDepart(String userId, String departId) {
+    public SysUserDept(String userId, String deptId) {
         this.userId = userId;
-        this.departId = departId;
+        this.deptId = deptId;
     }
 }

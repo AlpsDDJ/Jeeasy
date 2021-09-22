@@ -1,22 +1,22 @@
-package org.jeeasy.system.enums.depart;
+package org.jeeasy.system.enums.dept;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
- * 机构类型
- * 1: 一级部门 2: 子部门
+ * 机构类别
+ * 1: 组织机构 2: 岗位
  *
  * @author AlpsDDJ
  * @date 2020/11/23 16:27
  */
 @Getter
 @AllArgsConstructor
-public enum OrgTypeEnum implements IDictEnum<Integer> {
-    // 机构类型
-    TOP(1, "一级部门"),
-    SUB(2, "子部门"),
+public enum OrgCategoryEnum implements IDictEnum<Integer> {
+    // 机构类别
+    ORG(1, "组织机构"),
+    POST(2, "岗位"),
     ;
 
     private final Integer value;

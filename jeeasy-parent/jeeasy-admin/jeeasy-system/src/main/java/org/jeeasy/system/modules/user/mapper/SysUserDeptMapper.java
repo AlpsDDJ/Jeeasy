@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.system.modules.user.domain.SysUserDepart;
+import org.jeeasy.system.modules.user.domain.SysUserDept;
 
 /**
  * SysUserRoleMapper: 用户部门表 Mapper 接口
@@ -10,5 +10,5 @@ import org.jeeasy.system.modules.user.domain.SysUserDepart;
  * @version v1.0
  * @date 2020/11/21 22:33
  */
-public interface SysUserDepartMapper extends BaseMapper<SysUserDepart> {
+public interface SysUserDeptMapper extends BaseMapper<SysUserDept> {
 }

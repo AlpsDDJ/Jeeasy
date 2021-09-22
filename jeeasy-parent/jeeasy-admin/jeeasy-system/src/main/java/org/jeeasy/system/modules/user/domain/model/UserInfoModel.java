@@ -23,5 +23,5 @@ public class UserInfoModel {
     private String roles;
 
     @ApiModelProperty("用户部门")
-    private String departs;
+    private String depts;
 }

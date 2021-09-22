@@ -11,7 +11,7 @@ export const apiType: Record<string, RequestMethod> = {
   edit: 'PUT'
 }
 
-export type BaseApi = string | Record<'base'|string, string>
+export type BaseApi = string | Record<'base' | string, string>
 
 export type ApiPathMap = Record<string, string> & {
   list?: string,
@@ -98,8 +98,8 @@ export type ApiMap<T> = Record<string, SendRequest<T>> & {
   info: (id: string, data?: any) => Promise<T>,
   del: (id: string, data?: any) => Promise<R>,
   delAll: (ids: string[], data?: any) => Promise<R>,
-  add: (entity: T & any) => Promise<R>,
-  edit: (entity: T & any) => Promise<R>,
+  add: (entity: T | any) => Promise<R>,
+  edit: (entity: T | any) => Promise<R>,
 }
 
 export const useApis = <T>(api: BaseApi): ApiMap<T> => {
@@ -111,13 +111,12 @@ export const useApis = <T>(api: BaseApi): ApiMap<T> => {
 
 
     if (key === 'list') {
-      apiMap[key] = async (params: T & {pageSize: number, current: number}, sort: any, filter: any) => {
+      apiMap[key] = async (params: T & { pageSize: number, current: number }, sort: any, filter: any) => {
         const data = {
           ...params,
           sort,
           filter
         }
-        console.log('data --------------------------------- ', data)
         const resp = await send(path, data)
         const { success, data: result, message } = resp
         return new Promise<Partial<RequestData<T>>>((resolve, reject) => {
@@ -140,11 +139,10 @@ export const useApis = <T>(api: BaseApi): ApiMap<T> => {
         _ = data
 
         if (key === 'info' || key === 'del' && typeof data === 'string') {
-          _ = {id: data}
+          _ = { id: data }
         }
         return send(path, _, options)
-    }
-
+      }
 
 
     }

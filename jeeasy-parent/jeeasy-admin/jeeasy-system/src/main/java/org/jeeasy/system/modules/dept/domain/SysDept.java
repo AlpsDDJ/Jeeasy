@@ -1,4 +1,4 @@
-package org.jeeasy.system.modules.depart.domain;
+package org.jeeasy.system.modules.dept.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -9,8 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
-import org.jeeasy.system.enums.depart.OrgCategoryEnum;
-import org.jeeasy.system.enums.depart.OrgTypeEnum;
+import org.jeeasy.system.enums.dept.OrgCategoryEnum;
+import org.jeeasy.system.enums.dept.OrgTypeEnum;
 
 import java.time.LocalDateTime;
 
@@ -22,9 +22,9 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("sys_depart")
+@TableName("sys_dept")
 @ApiModel(value = "组织机构")
-public class SysDepart extends Model<SysDepart> {
+public class SysDept extends Model<SysDept> {
 
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "ID")
@@ -34,13 +34,13 @@ public class SysDepart extends Model<SysDepart> {
     private String parentId;
 
     @ApiModelProperty(value = "机构/部门名称")
-    private String departName;
+    private String deptName;
 
     @ApiModelProperty(value = "英文名")
-    private String departNameEn;
+    private String deptNameEn;
 
     @ApiModelProperty(value = "缩写")
-    private String departNameAbbr;
+    private String deptNameAbbr;
 
     @ApiModelProperty(value = "排序")
     private Double sortNo;

@@ -8,11 +8,11 @@ import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.user.domain.SysUser;
-import org.jeeasy.system.modules.user.domain.SysUserDepart;
+import org.jeeasy.system.modules.user.domain.SysUserDept;
 import org.jeeasy.system.modules.user.domain.SysUserRole;
 import org.jeeasy.system.modules.user.domain.model.SysUserQueryPageModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
-import org.jeeasy.system.modules.user.mapper.SysUserDepartMapper;
+import org.jeeasy.system.modules.user.mapper.SysUserDeptMapper;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.mapper.SysUserRoleMapper;
 import org.jeeasy.system.modules.user.service.SysUserService;
@@ -38,7 +38,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysUserRoleMapper userRoleMapper;
     @Autowired
-    private SysUserDepartMapper userDepartMapper;
+    private SysUserDeptMapper userDeptMapper;
 
     @Override
     public IPage<SysUser> querySysUserVoPage(QueryWrapper<SysUser> wrapper, SysUserQueryPageModel model) {
@@ -89,7 +89,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 初始化用户密码
         SysUser sysUser = SysUserUtil.create(model.getUser()).initSaltAndPassword();
         this.save(sysUser);
-        saveUserRolesAndDeparts(model.getRoles(), model.getDeparts(), sysUser.getId(), true);
+        saveUserRolesAndDepts(model.getRoles(), model.getDepts(), sysUser.getId(), true);
     }
 
     @Override
@@ -97,23 +97,31 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void editUserWithUserInfoModel(UserInfoModel model) {
         SysUser sysUser = model.getUser();
         this.updateById(sysUser);
-        saveUserRolesAndDeparts(model.getRoles(), model.getDeparts(), sysUser.getId(), false);
+        saveUserRolesAndDepts(model.getRoles(), model.getDepts(), sysUser.getId(), false);
     }
 
-    private void saveUserRolesAndDeparts(String roles, String departs, String userId, boolean isInsert) {
+    /**
+     * 保存用户角色和部门
+     *
+     * @param roles    角色
+     * @param depts    部门
+     * @param userId   用户id
+     * @param isInsert 是插入
+     */
+    private void saveUserRolesAndDepts(String roles, String depts, String userId, boolean isInsert) {
         // 修改用户时删除原有 角色 和 部门信息
         if(!isInsert){
             new SysUserRole().delete(QueryGenerator.createWrapper(SysUserRole.class).lambda().eq(SysUserRole::getUserId, userId));
-            new SysUserDepart().delete(QueryGenerator.createWrapper(SysUserDepart.class).lambda().eq(SysUserDepart::getUserId, userId));
+            new SysUserDept().delete(QueryGenerator.createWrapper(SysUserDept.class).lambda().eq(SysUserDept::getUserId, userId));
         }
         if(Tools.isNotEmpty(roles)){
             Arrays.stream(StrUtil.split(roles, ",")).forEach(roleId -> {
                 new SysUserRole(userId, roleId).insert();
             });
         }
-        if(Tools.isNotEmpty(departs)){
-            Arrays.stream(StrUtil.split(departs, ",")).forEach(departId -> {
-                new SysUserDepart(userId, departId).insert();
+        if(Tools.isNotEmpty(depts)){
+            Arrays.stream(StrUtil.split(depts, ",")).forEach(deptId -> {
+                new SysUserDept(userId, deptId).insert();
             });
         }
     }

@@ -1,11 +1,8 @@
 package org.jeeasy.system.modules;
 
 import cn.hutool.core.util.ClassUtil;
-import cn.hutool.json.JSONUtil;
 import io.swagger.annotations.ApiModelProperty;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.system.modules.depart.domain.SysDepart;
-import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.user.domain.SysUser;
 
 import java.lang.reflect.Field;
