@@ -29,4 +29,5 @@ export class SysUser extends BaseModel<SysUser> {
 }
 
 console.log('SysUser -----> ', SysUser)
-console.log('new SysUser() -----> ', new SysUser())
+const user = new SysUser()
+console.log('new SysUser() -----> ', user)

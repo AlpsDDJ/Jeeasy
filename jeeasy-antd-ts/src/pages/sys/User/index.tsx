@@ -7,14 +7,14 @@ import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
 import { SysUser } from '@/pages/sys'
 
-const { labels, fields } = SysUser.prototype.$$
+const { labels, fields, baseApi, name } = SysUser.prototype.$$
 
 const UserList: React.FC = () => {
 
-  const apis = useApis<SysUser>('/api/sys/user')
+  const apis = useApis<SysUser>(baseApi)
 
   const { columns, formOptions, tableRef, tableOptions, showForm } = useEasyTable<SysUser>({
-    title: '系统用户',
+    title: name,
     fl: labels,
     apis,
     formatFormData: ({ roles, depts, ...user }) => {

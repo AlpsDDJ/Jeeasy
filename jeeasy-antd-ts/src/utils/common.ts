@@ -46,11 +46,20 @@ export function Label(label: string) {
 }
 
 export function Data(name: string, baseApi: string, access: string) {
-  return function (target: any) {
-    target.prototype.$$.name = name
-    target.prototype.$$.baseApi = baseApi
-    target.prototype.$$.access = access
+  const fun = function (target: any) {
+
+      target.prototype.$$.name = name
+      target.prototype.$$.baseApi = baseApi
+      target.prototype.$$.access = access
+
   }
+  fun.prototype.ss = 123
+  return fun
+  // return function (target: any) {
+  //   target.prototype.$$.name = name
+  //   target.prototype.$$.baseApi = baseApi
+  //   target.prototype.$$.access = access
+  // }
 }
 
 export class BaseModel<T = any> {

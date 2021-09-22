@@ -11,6 +11,7 @@ import type { ActionType } from '@ant-design/pro-table/lib/typing'
 import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
+import { BaseModel } from '@/utils/common'
 
 async function formatDictItems(code: string) {
   const resp = await getDictItems(code)
@@ -167,6 +168,10 @@ type EasyTableConfig<T> = {
 
 type FormType = '' | 'add' | 'edit' | 'view' | string;
 
+declare type RecursivePartial<T> = T extends object ? {
+  [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : T[P] extends object ? RecursivePartial<T[P]> : T[P];
+} : any;
+
 type EasyTableState<T = any, ValueType = 'text'> = {
   columns: ExtendProColumns<T, ValueType>[];
   // fl: FieldsAndLabels<T>,
@@ -178,7 +183,7 @@ type EasyTableState<T = any, ValueType = 'text'> = {
   // formVisible: boolean,
   formData: T | {};
   setFormVisible: (b: boolean) => void;
-  setFormData: (data: T) => void;
+  setFormData: (data: RecursivePartial<T>) => void;
   showForm: (type: FormType, data?: T | any, call?: () => {}) => void;
 };
 
@@ -207,7 +212,7 @@ type EasyTableState<T = any, ValueType = 'text'> = {
 //   setFormVisible: (b) => void
 // }
 
-export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
+export function useEasyTable<T extends BaseModel, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
 
