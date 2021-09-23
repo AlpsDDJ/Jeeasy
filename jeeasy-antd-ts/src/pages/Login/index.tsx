@@ -14,7 +14,7 @@ import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import styles from './index.less';
-import { saveToken } from '@/utils/tokenUtil'
+import { saveToken } from '@/common/utils/tokenUtil'
 
 const LoginMessage: React.FC<{
   content: string;

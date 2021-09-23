@@ -1,4 +1,4 @@
-import { Field, BaseVo, Data } from '@/utils/common'
+import { Field, BaseVo, Data } from '@/common/dataDecorator'
 
 @Data('系统用户', '/api/sys/user', 'sys:user')
 export default class SysUser extends BaseVo<SysUser> {

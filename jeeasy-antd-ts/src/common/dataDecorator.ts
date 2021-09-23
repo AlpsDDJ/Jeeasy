@@ -1,4 +1,4 @@
-import type { ExtendProColumns } from '@/utils/EasyTable'
+import type { ExtendProColumns } from '@/common/EasyTable'
 
 export function Field(label: string, column: ExtendProColumns | boolean = false) {
   return function (target: any, key: string) {

@@ -1,5 +1,5 @@
-import { localRefreshTokenKey, localTokenKey } from '@/utils/commotSense'
-import Storage from '@/utils/storageUtil'
+import Storage from '@/common/utils/storageUtil'
+import { localRefreshTokenKey, localTokenKey } from '@/common/setting'
 
 
 export function saveToken(token: string, refreshToken: string) {

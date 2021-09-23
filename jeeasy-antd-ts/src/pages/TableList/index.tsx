@@ -10,8 +10,8 @@ import ProDescriptions from '@ant-design/pro-descriptions'
 import type { FormValueType } from './components/UpdateForm'
 import UpdateForm from './components/UpdateForm'
 import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api'
-import type { ExtendProColumns } from '@/utils/EasyTable'
-import { columnsExtend } from '@/utils/EasyTable'
+import type { ExtendProColumns } from '@/common/EasyTable'
+import { columnsExtend } from '@/common/EasyTable'
 
 /**
  * @en-US Add node
