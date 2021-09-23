@@ -1,3 +1,5 @@
+import { ExtendProColumns } from '@/utils/EasyTable'
+
 export type DelFalg = 1 | 0
 
 export type EnableFlag = 1 | 0
@@ -25,13 +27,14 @@ export type R<T = any> = {
 }
 
 
-export function Label(label?: string) {
+export function Field(label: string, column: ExtendProColumns | boolean = false) {
   return function (target: any, key: string) {
     if (!Reflect.has(target, '$$')) {
       Reflect.defineProperty(target, '$$', {
         value: {
           labels: {},
-          fields: {}
+          fields: {},
+          columnMap: {},
         },
         configurable: false,
         writable: true,
@@ -39,10 +42,19 @@ export function Label(label?: string) {
       })
     }
     const { $$ } = target
-    const { labels, fields } = $$
+    const { labels, fields, columnMap } = $$
 
     $$.labels = { ...labels, [key]: label }
     $$.fields = { ...fields, [key]: key }
+
+    if(column){
+      if(column === true) {
+        $$.columnMap = { ...columnMap, [key]: { dataIndex: key, title: label } }
+      }else{
+        $$.columnMap = { ...columnMap, [key]: column }
+      }
+    }
+
     Reflect.set(target, '$$', $$)
   }
 }
@@ -80,13 +92,14 @@ export function Data(name?: string, baseApi?: string, access?: string) {
 type DataOption<T> = {
   labels: FL<T>,
   fields: FL<T>,
+  columnMap: Record<string, ExtendProColumns<T>>,
   name: string,
   baseApi: string,
   access: string,
 }
 
-export class BaseModel<T = any> {
+export class BaseVo<T = any> {
   $$: DataOption<T> = {
-    access: '', baseApi: '', fields: {}, labels: {}, name: ''
+    access: '', baseApi: '', fields: {}, labels: {}, name: '', columnMap: {}
   }
 }

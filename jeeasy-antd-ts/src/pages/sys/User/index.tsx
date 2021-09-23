@@ -5,8 +5,9 @@ import ProTable from '@ant-design/pro-table'
 import { useEasyTable } from '@/utils/EasyTable'
 import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
-import type SysUser from '@/vo/sys/SysUser'
-import { labels, fields, baseApi, name } from '@/vo/sys/SysUser'
+import SysUser, { labels, baseApi, name, columnMap } from '@/vo/sys/SysUser'
+
+console.log(columnMap)
 
 const UserList: React.FC = () => {
 
@@ -16,6 +17,7 @@ const UserList: React.FC = () => {
     title: name,
     fl: labels,
     apis,
+    columnMap,
     formatFormData: ({ roles, depts, ...user }) => {
       return {
         user,
@@ -24,27 +26,6 @@ const UserList: React.FC = () => {
       }
     },
     columns: [
-      {
-        dataIndex: fields.username
-      },
-      {
-        dataIndex: fields.userNo,
-        sorter: true
-      },
-      {
-        dataIndex: fields.realName
-      },
-      {
-        dataIndex: fields.phone
-      },
-      {
-        dataIndex: fields.sex,
-        dict: 'sex'
-      },
-      {
-        dataIndex: fields.status,
-        dict: 'sys_user_status'
-      },
       {
         operate: ['add', {
           key: 'edit',

@@ -18,11 +18,11 @@ async function formatDictItems(code: string) {
   return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
 }
 
-export type ExtendProColumns<T, ValueType = 'text'> = ProColumns<T> &
+export type ExtendProColumns<T = any, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
   dict?: string;
   operate?: OperateColumn<T>[];
-  dataIndex?: string | number | (string | number)[] | keyof T
+  dataIndex?: DataIndexType<T>
 };
 
 
@@ -36,19 +36,37 @@ type OperateColumn<T> = OperateType | OperateRender<T> | {
   handle: (record: T, index?: number) => void;
 };
 
-// type OptionConfig<RecordType> = {
-//   render?: (value: any, record: RecordType, index: number) => React.ReactNode | RenderedCell<RecordType>;
-//   actions?: Record<string, {
-//     name: string,
-//     handle: (value: any, record: RecordType, index?: number, action?: ProCoreActionType) => void
-//   }>
-// }
+type DataIndexType<T = any> = string | number | (string | number)[] | keyof T
 
-export function columnsExtend<T, ValueType = 'text'>(
-  columns: ExtendProColumns<T, ValueType>[],
-  labels: FL<T> = {}
-): ExtendProColumns<T, ValueType>[] {
-  return columns?.map((column) => {
+export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T> = {}, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}): ExtendProColumns<T, ValueType>[] {
+  const copyColumnMap = { ...columnMap }
+  columns.forEach((col, index) => {
+    if(col.dataIndex){
+      const di = typeof col.dataIndex === 'string' ? col.dataIndex : ''
+      if(di === 'status'){
+        console.log(copyColumnMap[di])
+      }
+      copyColumnMap[di] = {
+        ...copyColumnMap[di],
+        ...col
+      }
+    } else {
+      copyColumnMap['operate'] = col
+    }
+  })
+
+  Object.values(copyColumnMap)?.forEach((_column) => {
+    const di = typeof _column.dataIndex === 'string' ? _column.dataIndex : ''
+    const currCol = copyColumnMap[di]
+    const column = {
+      ...currCol,
+      ..._column
+    }
+
+    if(!column){
+      console.log(_column)
+    }
+
     const { renderText, dict, valueType, operate } = column
     let col: ExtendProColumns<T, ValueType> = {}
     if (operate) {
@@ -72,10 +90,11 @@ export function columnsExtend<T, ValueType = 'text'>(
               o = {
                 key: opt,
                 name: opt,
-                handle: record => {}
+                handle: () => {
+                }
               }
-            }else {
-              o = {...opt}
+            } else {
+              o = { ...opt }
             }
 
             const { key, name, handle } = o
@@ -122,16 +141,25 @@ export function columnsExtend<T, ValueType = 'text'>(
         hideInSearch: true
       }
     }
-    return {
-      // @ts-ignore
-      title: labels[column.dataIndex],
-      ...col,
-      ...column,
-      renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
-      valueType: valueType || (dict ? 'select' : 'text'),
-      request: dict ? () => formatDictItems(dict) : undefined
+    if (currCol || operate || column.dataIndex === 'operate') {
+      copyColumnMap[di] = {
+        // @ts-ignore
+        title: labels[column.dataIndex],
+        renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
+        valueType: valueType || (dict ? 'select' : 'text'),
+        request: dict ? () => formatDictItems(dict) : undefined,
+        // ...currCol,
+        ...col,
+        ...column,
+      }
+    } else {
+      console.log(column.dataIndex)
     }
   })
+
+  // console.log(copyColumnMap)
+  //
+  return Object.values(copyColumnMap)
 }
 
 // export function l2f<T>(labels: FL<T>): FL<T> {
@@ -158,6 +186,7 @@ export function columnsExtend<T, ValueType = 'text'>(
 type EasyTableConfig<T> = {
   title?: string;
   columns: ExtendProColumns<T>[];
+  columnMap: Record<string, ExtendProColumns<T>>;
   apis: ApiMap<T>;
   fl: FL<T>;
   formLayout?: ProFormLayoutType;
@@ -231,9 +260,9 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
   // const [formData, setFormData] = useState<T | {}>({})
   // const [formType] = useState<FormType>('')
 
-  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals } = config
+  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap } = config
   // let formVisible: boolean = false
-  const cols = columnsExtend<T, ValueType>(columns, fl)
+  const cols = columnsExtend<T, ValueType>(columns, fl, columnMap)
   // const tableOptions: ProTableProps<T, PageParams, ValueType> = {
   //   rowKey: 'id',
   //   request: apis.list,
@@ -308,7 +337,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
         if (state.formType !== 'edit' && state.formType !== 'add') {
           return
         }
-        const params = await formatFormData({...state.formData, ...values})
+        const params = await formatFormData({ ...state.formData, ...values })
         const rep = state.formType === 'edit' ? apis.edit : apis.add
         const { success, message: msg } = await rep(params)
         if (success) {

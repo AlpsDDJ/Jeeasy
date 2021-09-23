@@ -1,30 +1,30 @@
 import { DelFalg, Sex } from '@/utils/common'
-import { Label, BaseModel, Data } from '@/utils/common'
+import { Field, BaseVo, Data } from '@/utils/common'
 
 @Data('系统用户', '/api/sys/user', 'sys:user')
-class SysUser extends BaseModel<SysUser> {
-  @Label('ID') id?: string
-  @Label('用户名') username?: string
-  @Label('用户编号') userNo?: number
-  @Label('手机号') phone?: string
-  @Label('姓名') realName?: string
-  @Label('性别') sex?: Sex
-  @Label('出生日期') birthday?: string
-  @Label('密码') password?: string
-  @Label('状态') status?: 1 | 0
-  @Label('email') email?: string
-  @Label('头像') avatar?: string
-  @Label('创建时间') createTime?: Date
-  @Label('创建人') createBy?: string
-  @Label('更新时间') updateTime?: Date
-  @Label('更新人') updateBy?: string
-  @Label('备注') remark?: string
-  @Label('删除标记') delFlag?: DelFalg
-  @Label('角色') roles?: any
-  @Label('部门') depts?: any
+class SysUser extends BaseVo<SysUser> {
+  @Field('ID') id?: string
+  @Field('用户名', true) username?: string
+  @Field('用户编号', true) userNo?: number
+  @Field('手机号', true) phone?: string
+  @Field('姓名', true) realName?: string
+  @Field('性别', true) sex?: Sex
+  @Field('出生日期', true) birthday?: string
+  @Field('密码') password?: string
+  @Field('状态', true) status?: 1 | 0
+  @Field('email', true) email?: string
+  @Field('头像') avatar?: string
+  @Field('创建时间') createTime?: Date
+  @Field('创建人') createBy?: string
+  @Field('更新时间') updateTime?: Date
+  @Field('更新人') updateBy?: string
+  @Field('备注') remark?: string
+  @Field('删除标记', true) delFlag?: DelFalg
+  @Field('角色') roles?: any
+  @Field('部门') depts?: any
 }
 
 export default SysUser
 
-export const { labels, fields, baseApi, name, access } = SysUser.prototype.$$
+export const { labels, fields, baseApi, name, access, columnMap } = SysUser.prototype.$$
 
