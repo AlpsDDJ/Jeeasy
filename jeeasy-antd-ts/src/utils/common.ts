@@ -1,10 +1,10 @@
-export declare type DelFalg = 1 | 0
+export type DelFalg = 1 | 0
 
-export declare type EnableFlag = 1 | 0
+export type EnableFlag = 1 | 0
 
-export declare type Sex = 1 | 0
+export type Sex = 1 | 0
 
-export declare type PageParams = {
+export type PageParams = {
   current?: number;
   pageSize?: number;
 }
@@ -12,11 +12,11 @@ export declare type PageParams = {
 /**
  * 属性&名称
  */
-export declare type FL<T = Record<string, any>> = {
+export type FL<T = Record<string, any>> = {
   [P in keyof T | string]?: P | string
 }
 
-export declare type R<T = any> = {
+export type R<T = any> = {
   code?: number,
   success?: boolean,
   message?: string,

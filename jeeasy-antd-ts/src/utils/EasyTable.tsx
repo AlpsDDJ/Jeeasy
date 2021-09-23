@@ -11,7 +11,6 @@ import type { ActionType } from '@ant-design/pro-table/lib/typing'
 import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
-// import { BaseModel } from '@/utils/common'
 
 async function formatDictItems(code: string) {
   const resp = await getDictItems(code)

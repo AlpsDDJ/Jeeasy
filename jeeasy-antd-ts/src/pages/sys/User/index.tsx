@@ -5,9 +5,8 @@ import ProTable from '@ant-design/pro-table'
 import { useEasyTable } from '@/utils/EasyTable'
 import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
-import { SysUser } from '@/pages/sys'
-
-const { labels, fields, baseApi, name } = SysUser.prototype.$$
+import type SysUser from '@/vo/sys/SysUser'
+import { labels, fields, baseApi, name } from '@/vo/sys/SysUser'
 
 const UserList: React.FC = () => {
 

@@ -1,12 +1,8 @@
-// @ts-ignore
-/* eslint-disable */
-
-
-import type { DelFalg, Sex } from '@/utils/common'
+import { DelFalg, Sex } from '@/utils/common'
 import { Label, BaseModel, Data } from '@/utils/common'
 
 @Data('系统用户', '/api/sys/user', 'sys:user')
-export class SysUser extends BaseModel<SysUser> {
+class SysUser extends BaseModel<SysUser> {
   @Label('ID') id?: string
   @Label('用户名') username?: string
   @Label('用户编号') userNo?: number
@@ -27,3 +23,8 @@ export class SysUser extends BaseModel<SysUser> {
   @Label('角色') roles?: any
   @Label('部门') depts?: any
 }
+
+export default SysUser
+
+export const { labels, fields, baseApi, name, access } = SysUser.prototype.$$
+

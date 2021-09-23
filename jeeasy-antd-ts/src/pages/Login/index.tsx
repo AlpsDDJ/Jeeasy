@@ -15,7 +15,6 @@ import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import styles from './index.less';
 import { saveToken } from '@/utils/tokenUtil'
-import { SysUser } from '@/pages/sys'
 
 const LoginMessage: React.FC<{
   content: string;
@@ -35,12 +34,6 @@ const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
-
-
-
-  console.log('SysUser -----> ', SysUser)
-  const user = new SysUser()
-  console.log('new SysUser() -----> ', user)
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
