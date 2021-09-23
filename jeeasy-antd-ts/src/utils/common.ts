@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 export declare type DelFalg = 1 | 0
 
 export declare type EnableFlag = 1 | 0
@@ -26,61 +25,68 @@ export declare type R<T = any> = {
 }
 
 
-export function Label(label: string) {
+export function Label(label?: string) {
   return function (target: any, key: string) {
-    if(!target.$$) {
-      target.$$ = {}
+    if (!Reflect.has(target, '$$')) {
+      Reflect.defineProperty(target, '$$', {
+        value: {
+          labels: {},
+          fields: {}
+        },
+        configurable: false,
+        writable: true,
+        enumerable: false
+      })
     }
-    const { labels = {}, fields = {} } = target.$$
+    const { $$ } = target
+    const { labels, fields } = $$
 
-    target.$$.labels = { ...labels, [key]: label }
-    target.$$.fields = { ...fields, [key]: key }
-    // 替换属性，先删除原先的属性，再重新定义属性
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-invalid-this
-    // delete this['labels']
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-invalid-this
-    // delete this['fields']
+    $$.labels = { ...labels, [key]: label }
+    $$.fields = { ...fields, [key]: key }
+    Reflect.set(target, '$$', $$)
   }
 }
 
-export function Data(name: string, baseApi: string, access: string) {
-  const fun = function (target: any) {
+export function Data(name?: string, baseApi?: string, access?: string) {
+  return (target: any) => {
+    // save a reference to the original constructor
+    const original = target
 
-      target.prototype.$$.name = name
-      target.prototype.$$.baseApi = baseApi
-      target.prototype.$$.access = access
+    // a utility function to generate instances of a class
+    function construct(constructor: any, args: any[]) {
+      const C: any = function (this: any) {
+        return constructor.apply(this, args)
+      }
+      C.prototype = constructor.prototype
+      const obj = new C()
+      Reflect.deleteProperty(obj, '$$')
+      return obj
+    }
 
+    // the new constructor behaviour
+    const base: any = (...args: any[]) => construct(original, args)
+
+    // copy prototype so intanceof operator still works
+    base.prototype = original.prototype
+    base.prototype.$$.name = name
+    base.prototype.$$.baseApi = baseApi
+    base.prototype.$$.access = access
+
+    // return new constructor (will override original)
+    return base
   }
-  fun.prototype.ss = 123
-  return fun
-  // return function (target: any) {
-  //   target.prototype.$$.name = name
-  //   target.prototype.$$.baseApi = baseApi
-  //   target.prototype.$$.access = access
-  // }
+}
+
+type DataOption<T> = {
+  labels: FL<T>,
+  fields: FL<T>,
+  name: string,
+  baseApi: string,
+  access: string,
 }
 
 export class BaseModel<T = any> {
-  readonly $$: {
-    labels: FL<T>,
-    fields: FL<T>,
-    name: string,
-    baseApi: string,
-    access: string,
-  } = {
+  $$: DataOption<T> = {
     access: '', baseApi: '', fields: {}, labels: {}, name: ''
   }
-  // constructor() {
-  //   this.$$ = {}
-  //   console.log(this)
-  // }
-
-  // labels: FL<T> = {}
-  // fields: FL<T> = {}
-  // name: string = ''
-  // baseApi: string = ''
-  // access: string = ''
-
 }

@@ -27,7 +27,3 @@ export class SysUser extends BaseModel<SysUser> {
   @Label('角色') roles?: any
   @Label('部门') depts?: any
 }
-
-console.log('SysUser -----> ', SysUser)
-const user = new SysUser()
-console.log('new SysUser() -----> ', user)

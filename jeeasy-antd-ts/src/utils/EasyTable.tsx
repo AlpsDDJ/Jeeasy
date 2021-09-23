@@ -11,7 +11,7 @@ import type { ActionType } from '@ant-design/pro-table/lib/typing'
 import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
-import { BaseModel } from '@/utils/common'
+// import { BaseModel } from '@/utils/common'
 
 async function formatDictItems(code: string) {
   const resp = await getDictItems(code)
@@ -23,6 +23,7 @@ export type ExtendProColumns<T, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
   dict?: string;
   operate?: OperateColumn<T>[];
+  dataIndex?: string | number | (string | number)[] | keyof T
 };
 
 
@@ -212,7 +213,7 @@ type EasyTableState<T = any, ValueType = 'text'> = {
 //   setFormVisible: (b) => void
 // }
 
-export function useEasyTable<T extends BaseModel, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
+export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
 
