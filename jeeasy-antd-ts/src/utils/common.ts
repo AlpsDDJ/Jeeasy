@@ -1,31 +1,4 @@
-import { ExtendProColumns } from '@/utils/EasyTable'
-
-export declare type DelFalg = 1 | 0
-
-export declare type EnableFlag = 1 | 0
-
-export declare type Sex = 1 | 0
-
-export declare type PageParams = {
-  current?: number;
-  pageSize?: number;
-}
-
-/**
- * 属性&名称
- */
-export declare type FL<T = Record<string, any>> = {
-  [P in keyof T | string]?: P | string
-}
-
-export type R<T = any> = {
-  code?: number,
-  success?: boolean,
-  message?: string,
-  timestamp?: number,
-  data?: T
-}
-
+import type { ExtendProColumns } from '@/utils/EasyTable'
 
 export function Field(label: string, column: ExtendProColumns | boolean = false) {
   return function (target: any, key: string) {

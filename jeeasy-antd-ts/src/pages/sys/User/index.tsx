@@ -5,8 +5,8 @@ import ProTable from '@ant-design/pro-table'
 import { useEasyTable } from '@/utils/EasyTable'
 import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
-import type SysUser from '@/vo/sys/SysUser';
-import { labels, baseApi, name, columnMap } from '@/vo/sys/SysUser'
+import type SysUser from './vo'
+import { baseApi, columnMap, labels, name } from './vo'
 
 const UserList: React.FC = () => {
 

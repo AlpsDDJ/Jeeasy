@@ -1,6 +1,5 @@
 import { request } from 'umi'
 import type { RequestData } from '@ant-design/pro-table/lib/typing'
-import type { R } from '@/utils/common'
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 

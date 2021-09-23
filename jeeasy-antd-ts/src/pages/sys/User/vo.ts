@@ -1,13 +1,12 @@
-import type { DelFalg, Sex } from '@/utils/common'
 import { Field, BaseVo, Data } from '@/utils/common'
 
 @Data('系统用户', '/api/sys/user', 'sys:user')
-class SysUser extends BaseVo<SysUser> {
+export default class SysUser extends BaseVo<SysUser> {
   @Field('ID') id?: string
   @Field('用户名', true) username?: string
+  @Field('姓名', true) realName?: string
   @Field('用户编号', true) userNo?: number
   @Field('手机号', true) phone?: string
-  @Field('姓名', true) realName?: string
   @Field('性别', { hideInSearch: true }) sex?: Sex
   @Field('出生日期', { hideInSearch: true }) birthday?: string
   @Field('密码') password?: string
@@ -24,7 +23,4 @@ class SysUser extends BaseVo<SysUser> {
   @Field('部门') depts?: any
 }
 
-export default SysUser
-
 export const { labels, fields, baseApi, name, access, columnMap } = SysUser.prototype.$$
-
