@@ -40,7 +40,7 @@ type DataIndexType<T = any> = string | number | (string | number)[] | keyof T
 
 export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T> = {}, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}): ExtendProColumns<T, ValueType>[] {
   const copyColumnMap = { ...columnMap }
-  columns.forEach((col, index) => {
+  columns.forEach((col) => {
     if(col.dataIndex){
       const di = typeof col.dataIndex === 'string' ? col.dataIndex : ''
       if(di === 'status'){

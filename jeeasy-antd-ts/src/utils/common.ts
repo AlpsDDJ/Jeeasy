@@ -1,12 +1,12 @@
 import { ExtendProColumns } from '@/utils/EasyTable'
 
-export type DelFalg = 1 | 0
+export declare type DelFalg = 1 | 0
 
-export type EnableFlag = 1 | 0
+export declare type EnableFlag = 1 | 0
 
-export type Sex = 1 | 0
+export declare type Sex = 1 | 0
 
-export type PageParams = {
+export declare type PageParams = {
   current?: number;
   pageSize?: number;
 }
@@ -14,7 +14,7 @@ export type PageParams = {
 /**
  * 属性&名称
  */
-export type FL<T = Record<string, any>> = {
+export declare type FL<T = Record<string, any>> = {
   [P in keyof T | string]?: P | string
 }
 
@@ -48,10 +48,11 @@ export function Field(label: string, column: ExtendProColumns | boolean = false)
     $$.fields = { ...fields, [key]: key }
 
     if(column){
+      const defaultColumn = { dataIndex: key, title: label }
       if(column === true) {
-        $$.columnMap = { ...columnMap, [key]: { dataIndex: key, title: label } }
+        $$.columnMap = { ...columnMap, [key]: defaultColumn }
       }else{
-        $$.columnMap = { ...columnMap, [key]: column }
+        $$.columnMap = { ...columnMap, [key]: { ...defaultColumn, ...column } }
       }
     }
 
