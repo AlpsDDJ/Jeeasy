@@ -33,7 +33,7 @@ declare type TreeDict = Dict & {
   leaf: boolean
 }
 
-declare type EasyFormInputProps<T> = {
+declare type EasyFormInputProps<T = any> = {
   value?: T,
   onChange?: (value: T) => void
 }
