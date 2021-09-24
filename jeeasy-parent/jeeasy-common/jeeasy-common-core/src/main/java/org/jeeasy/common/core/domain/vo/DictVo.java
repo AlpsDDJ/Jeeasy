@@ -31,11 +31,11 @@ public class DictVo implements Serializable {
         this.dictName = dictEnum.getText();
     }
 
-    @JsonIgnore
-    private Integer leaf;
-
-    @JsonGetter
-    public Boolean isLeaf(){
-        return BooleanEnum.yes(leaf);
-    }
+//    @JsonIgnore
+//    private Integer leaf;
+//
+//    @JsonGetter("isLeaf")
+//    public Boolean isLeaf(){
+//        return BooleanEnum.yes(leaf);
+//    }
 }

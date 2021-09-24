@@ -32,7 +32,7 @@ public class SystemCommonServiceImpl implements CommonService {
     private SysTableDictService tableDictService;
 
     @Override
-    public List<DictVo> getDictsByCode(String code, String parentId) {
+    public List<DictVo> getDictsByCode(String code, String parentId, boolean async) {
         List<DictVo> dicts = new ArrayList<>();
         // 自定义表查询字典数据
         if (StrUtil.containsAny(code, dictEnumProperty.getDictTableFlag())) {
@@ -42,7 +42,7 @@ public class SystemCommonServiceImpl implements CommonService {
                 if(Tools.isNotEmpty(parentId)){
                     sysTableDict.setParentValue(parentId);
                 }
-                List<DictVo> sysDicts = dictService.queryByTableDict(sysTableDict);
+                List<? extends DictVo> sysDicts = dictService.queryByTableDict(sysTableDict, async);
                 dicts.addAll(sysDicts);
 //                sysDicts.forEach(dict -> {
 //                    dicts.add(new DictVo().setDictCode(dict.getDictCode()).setDictName(dict.getDictName()));

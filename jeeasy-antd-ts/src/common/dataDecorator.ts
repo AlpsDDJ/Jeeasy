@@ -72,7 +72,8 @@ type DataOption<T> = {
   access: string,
 }
 
-export class BaseVo<T = any> {
+export class BaseVo<T = any>{
+  [key: string]: any | any[]
   $$: DataOption<T> = {
     access: '', baseApi: '', fields: {}, labels: {}, name: '', columnMap: {}
   }

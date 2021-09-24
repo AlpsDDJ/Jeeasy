@@ -1,5 +1,7 @@
 package org.jeeasy.system.modules.common.controller;
 
+import cn.hutool.core.util.BooleanUtil;
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +36,8 @@ public class SystemCommonController {
     @GetMapping("/dicts/{code}")
     @DictTranslation
     @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
-    public R<List<DictVo>> getDicts(@PathVariable("code") String code, @RequestParam(required = false) String parentId) {
-        return R.ok(commonService.getDictsByCode(code, parentId));
+    public R<List<DictVo>> getDicts(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "true") String async) {
+        return R.ok(commonService.getDictsByCode(code, parentId, Boolean.parseBoolean(async)));
     }
 
     /**
@@ -52,3 +54,4 @@ public class SystemCommonController {
         return R.ok();
     }
 }
+

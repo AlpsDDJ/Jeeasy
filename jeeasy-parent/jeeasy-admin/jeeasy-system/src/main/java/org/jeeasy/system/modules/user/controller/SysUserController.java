@@ -1,5 +1,6 @@
 package org.jeeasy.system.modules.user.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ import org.jeeasy.system.tools.SysUserUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author AlpsDDJ
@@ -38,11 +40,21 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
         QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
         String deptId = queryPageModel.getDeptId();
         String roleId = queryPageModel.getRoleId();
-        if(Tools.isNotEmpty(deptId)){
-            wrapper.eq("dept_id", deptId);
+        if (Tools.isNotEmpty(deptId)) {
+            List<String> deptIds = StrUtil.split(deptId, ',', true, true);
+            if (deptIds.size() == 1) {
+                wrapper.eq("dept_id", deptIds.get(0));
+            } else if (deptIds.size() > 1) {
+                wrapper.in("dept_id", deptIds);
+            }
         }
-        if(Tools.isNotEmpty(roleId)){
-            wrapper.eq("role_id", roleId);
+        if (Tools.isNotEmpty(roleId)) {
+            List<String> roleIds = StrUtil.split(roleId, ',', true, true);
+            if (roleIds.size() == 1) {
+                wrapper.eq("role_id", roleIds.get(0));
+            } else if (roleIds.size() > 1) {
+                wrapper.in("role_id", roleIds);
+            }
         }
         wrapper.lambda().eq(SysUser::getDelFlag, DelFlagEnum.NO.getValue());
         IPage<SysUser> sysUserVoList = service.querySysUserVoPage(wrapper, queryPageModel);

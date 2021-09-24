@@ -105,7 +105,7 @@ export async function getTreeDictItems(code: string, parentId: string | number =
   })
   if(resp.success){
     const {data = []} = resp
-    return data.map(({leaf, dictCode, dictName}) => ({id: dictCode, value: dictCode, title: dictName, pId: parentId, isLeaf: leaf}))
+    return data.map(({isLeaf, dictCode, dictName, parentId: pId}) => ({id: dictCode, value: dictCode, title: dictName, pId: pId, isLeaf}))
   }else{
     return []
   }

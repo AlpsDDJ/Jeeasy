@@ -27,7 +27,7 @@ public interface SysDictService  extends IService<SysDict> {
      * @param parentCode
      * @return
      */
-    List<DictVo> queryByTableDict(SysTableDict tableDict);
+    List<? extends DictVo> queryByTableDict(SysTableDict tableDict, boolean async);
 
     /**
      * 根据 TableDict 获取字典列表

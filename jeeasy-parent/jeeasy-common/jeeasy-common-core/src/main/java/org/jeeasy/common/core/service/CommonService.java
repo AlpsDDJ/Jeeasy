@@ -16,7 +16,7 @@ public interface CommonService {
      * @param code
      * @return
      */
-    List<DictVo> getDictsByCode(String code, String parentId);
+    List<DictVo> getDictsByCode(String code, String parentId, boolean async);
     /**
      * 根据dictCode获取字典列表
      * @param code

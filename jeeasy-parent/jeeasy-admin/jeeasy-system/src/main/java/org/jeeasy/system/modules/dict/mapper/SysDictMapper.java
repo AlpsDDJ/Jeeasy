@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
+import org.jeeasy.common.core.domain.vo.TreeDictVo;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 
@@ -34,7 +35,7 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param tableDict
      * @return
      */
-    List<DictVo> queryTreeByTableDict(@Param("tableDict") SysTableDict tableDict);
+    List<TreeDictVo> queryTreeByTableDict(@Param("tableDict") SysTableDict tableDict, @Param("async") boolean async);
 
 
     /**

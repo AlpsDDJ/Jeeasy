@@ -6,10 +6,11 @@ import type { DataNode } from 'rc-tree-select/lib/interface'
 type TreeDictProps = Record<string, any> | EasyFormInputProps & {
   dictCode: string,
   multiple?: boolean,
-  fullValue?: boolean
+  fullValue?: boolean,
+  loadAll?: boolean
 }
 
-const TreeDict: React.FC<TreeDictProps> = ({ value = [], onChange, dictCode, multiple = false, ...props }) => {
+const TreeDict: React.FC<TreeDictProps> = ({ value = [], onChange, dictCode, multiple = false, loadAll = true, ...props }) => {
 
   const [options, setOptions] = useState<DataNode[]>([])
 
@@ -25,13 +26,13 @@ const TreeDict: React.FC<TreeDictProps> = ({ value = [], onChange, dictCode, mul
   }
   const v = value && Array.isArray(value) ? value : [value]
 
-  const loadData = ({ id }: DataNode) => {
+  const loadData = loadAll ? undefined: ({ id }: DataNode) => {
     return getTreeDictItems(dictCode, id).then(data => {
       setOptions([...options, ...data])
     })
   }
 
-  return <TreeSelect showSearch { ...props } multiple={ multiple } value={ v } onChange={ handleChange } loadData={ loadData } treeData={ options } />
+  return <TreeSelect treeDataSimpleMode={loadAll} showSearch { ...props } multiple={ multiple } value={ v } onChange={ handleChange } loadData={ loadData } treeData={ options } />
 }
 
 export default TreeDict

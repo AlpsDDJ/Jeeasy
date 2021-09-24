@@ -16,11 +16,13 @@
         from ${tableDict.tableName} t
     </select>
 
-    <select id="queryTreeByTableDict" resultType="org.jeeasy.common.core.domain.vo.DictVo">
-        select t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name, ${tableDict.leafColumn} as leaf
+    <select id="queryTreeByTableDict" resultType="org.jeeasy.common.core.domain.vo.TreeDictVo">
+        select t.${tableDict.parentId} as parent_id, t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name, ${tableDict.leafColumn} as leaf
         from ${tableDict.tableName} t
         <where>
-            t.${tableDict.parentId} = '${tableDict.parentValue}'
+            <if test="!async">
+                t.${tableDict.parentId} = '${tableDict.parentValue}'
+            </if>
         </where>
     </select>
 

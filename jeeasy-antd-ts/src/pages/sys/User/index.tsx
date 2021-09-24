@@ -28,17 +28,22 @@ const UserList: React.FC = () => {
     columns: [
       {
         dataIndex: 'roles',
-        renderText: (text) => {
-          return text.join(', ')
-        }
+        renderText: (text, {rolesText}) => rolesText.join(', ')
       },
       {
         dataIndex: 'depts',
-        renderText: (text) => {
-          return text.join(', ')
-        },
+        renderText: (text, {deptsText}) => deptsText.join(', '),
         valueType: 'text',
-        renderFormItem: ({ originProps: { dict = '' } }) => (<TreeDict dictCode={ dict } multiple={true} />)
+        renderFormItem: (item, config, form) => {
+
+          console.log('item -----> ', item)
+          console.log('config -----> ', config)
+          console.log('form -----> ', form)
+
+
+          const { originProps: { dict = '' } } = item
+          return <TreeDict dictCode={ dict } multiple={true} />
+        }
       },
       {
         dataIndex: 'operate',
@@ -80,8 +85,10 @@ const UserList: React.FC = () => {
           return [...records].map(({ roles, depts, ...user }) => {
             return {
               ...user,
-              roles: roles?.map((role: any) => role?.roleName),
-              depts: depts?.map((dept: any) => dept?.deptName)
+              roles: roles?.map((role: any) => role?.id),
+              rolesText: roles?.map((role: any) => role?.roleName),
+              depts: depts?.map((dept: any) => dept?.id),
+              deptsText: depts?.map((dept: any) => dept?.deptName)
             }
           })
 

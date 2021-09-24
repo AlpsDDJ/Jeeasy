@@ -30,7 +30,9 @@ declare type Dict = {
 }
 
 declare type TreeDict = Dict & {
-  leaf: boolean
+  isLeaf: boolean,
+  parentId: string,
+  children: TreeDict[]
 }
 
 declare type EasyFormInputProps<T = any> = {
