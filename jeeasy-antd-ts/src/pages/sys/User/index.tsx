@@ -86,6 +86,14 @@ const UserList: React.FC = () => {
           })
 
         } }
+        beforeSearchSubmit={({roles, depts, ...params}) => {
+          console.log(params)
+          return {
+            ...params,
+            roleId: roles?.join(),
+            deptId: depts?.join()
+          }
+        }}
         columns={ columns }
       />
       <BetaSchemaForm<SysUser>
