@@ -23,3 +23,17 @@ declare type R<T = any> = {
   timestamp?: number,
   data?: T
 }
+
+declare type Dict = {
+  dictCode: string,
+  dictName: string
+}
+
+declare type TreeDict = Dict & {
+  leaf: boolean
+}
+
+declare type EasyFormInputProps<T> = {
+  value?: T,
+  onChange?: (value: T) => void
+}

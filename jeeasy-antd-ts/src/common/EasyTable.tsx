@@ -146,7 +146,7 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
         title: labels[column.dataIndex],
         renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
         valueType: valueType || (dict ? 'select' : 'text'),
-        request: dict ? () => formatDictItems(dict) : undefined,
+        request: !valueType && dict ? () => formatDictItems(dict) : undefined,
         // ...currCol,
         ...col,
         ...column,

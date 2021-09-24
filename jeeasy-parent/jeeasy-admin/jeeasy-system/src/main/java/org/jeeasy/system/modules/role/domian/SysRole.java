@@ -43,7 +43,7 @@ public class SysRole {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("更信任")
+    @ApiModelProperty("更信人")
     private String updateBy;
 
     @ApiModelProperty("备注")

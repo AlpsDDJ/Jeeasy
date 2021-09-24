@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
+import { CascaderOptionType } from 'antd/lib/cascader'
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -89,4 +90,23 @@ export async function getDictItems(code: string, options?: { [key: string]: any 
     method: 'GET',
     ...(options || {}),
   })
+}
+
+export async function getTreeDictItems(code: string, parentId: string | number = 0, options?: { [key: string]: any }): Promise<CascaderOptionType[]> {
+  const params = {
+    parentId,
+    ...options?.params
+  }
+  const opt = { ...({ ...options, params } || {}) }
+  console.log('opt = ', opt)
+  const resp = await request<R<TreeDict[]>>('/api/common/dicts/' + code, {
+    method: 'GET',
+    ...opt
+  })
+  if(resp.success){
+    const {data = []} = resp
+    return data.map(({leaf, dictCode, dictName}) => ({value: dictCode, label: dictName, isLeaf: leaf}))
+  }else{
+    return []
+  }
 }
