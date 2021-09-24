@@ -38,18 +38,7 @@ const UserList: React.FC = () => {
           return text.join(', ')
         },
         valueType: 'text',
-        renderFormItem: ({ originProps: { dict = '' } }) => {
-          return <TreeDict dictCode={ dict } />
-          // return <Cascader loadData={(selectedOptions ) => {
-          //   const targetOption = selectedOptions?.[selectedOptions.length - 1] || {};
-          //   targetOption.loading = true
-          //   getTreeDictItems(dict, targetOption?.value).then(data => {
-          //     targetOption.loading = false
-          //     targetOption.children = data
-          //     setDeptOptions([...deptOptions])
-          //   })
-          // }} options={deptOptions} />
-        }
+        renderFormItem: ({ originProps: { dict = '' } }) => (<TreeDict dictCode={ dict } multiple={true} />)
       },
       {
         dataIndex: 'operate',

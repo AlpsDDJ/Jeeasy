@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { Cascader } from 'antd'
+import { TreeSelect } from 'antd'
 import { getTreeDictItems } from '@/services/ant-design-pro/api'
-import type { CascaderOptionType } from 'antd/lib/cascader'
+import type { DataNode } from 'rc-tree-select/lib/interface'
 
-type TreeDictProps = EasyFormInputProps & {
-  dictCode: string
+type TreeDictProps = Record<string, any> | EasyFormInputProps & {
+  dictCode: string,
+  multiple?: boolean,
+  fullValue?: boolean
 }
 
-const TreeDict: React.FC<TreeDictProps> = ({ value, onChange, dictCode }) => {
+const TreeDict: React.FC<TreeDictProps> = ({ value = [], onChange, dictCode, multiple = false, ...props }) => {
 
-  const [options, setOptions] = useState<CascaderOptionType[]>([])
+  const [options, setOptions] = useState<DataNode[]>([])
 
   useEffect(() => {
     getTreeDictItems(dictCode).then((data) => {
+      console.log(data)
       setOptions(data)
     })
   }, [])
 
-  const handleChange = (val: any) => {
-
+  const handleChange = (val: any[]) => {
     onChange?.(val)
   }
+  const v = value && Array.isArray(value) ? value : [value]
 
-
-  return <Cascader changeOnSelect showSearch  value={ value } onChange={ handleChange } loadData={ (selectedOptions) => {
-    const targetOption = selectedOptions?.[selectedOptions.length - 1] || {}
-    targetOption.loading = true
-    getTreeDictItems(dictCode, targetOption?.value).then(data => {
-      targetOption.loading = false
-      targetOption.children = data
-      setOptions([...options])
+  const loadData = ({ id }: DataNode) => {
+    return getTreeDictItems(dictCode, id).then(data => {
+      setOptions([...options, ...data])
     })
-  } } options={ options } />
+  }
+
+  return <TreeSelect showSearch { ...props } multiple={ multiple } value={ v } onChange={ handleChange } loadData={ loadData } treeData={ options } />
 }
 
 export default TreeDict
