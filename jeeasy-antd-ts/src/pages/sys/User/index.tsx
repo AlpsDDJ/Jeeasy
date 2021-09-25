@@ -7,7 +7,8 @@ import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
 import type SysUser from './vo'
 import { baseApi, columnMap, labels, name } from './vo'
-import TreeDict from '@/components/EasyForm/TreeDict'
+import TreeDictSelect from '@/components/EasyForm/dict/TreeDictSelect'
+// import DictSelect from '@/components/EasyForm/dict/DictSelect'
 
 const UserList: React.FC = () => {
 
@@ -28,22 +29,14 @@ const UserList: React.FC = () => {
     columns: [
       {
         dataIndex: 'roles',
-        renderText: (text, {rolesText}) => rolesText.join(', ')
+        renderText: (text, { rolesText }) => rolesText.join(', '),
+        // renderFormItem: ({ originProps: { dict = '' } }) => <DictSelect dictCode={ dict } multiple={ true } />
       },
       {
         dataIndex: 'depts',
-        renderText: (text, {deptsText}) => deptsText.join(', '),
+        renderText: (text, { deptsText }) => deptsText.join(', '),
         valueType: 'text',
-        renderFormItem: (item, config, form) => {
-
-          console.log('item -----> ', item)
-          console.log('config -----> ', config)
-          console.log('form -----> ', form)
-
-
-          const { originProps: { dict = '' } } = item
-          return <TreeDict dictCode={ dict } multiple={true} />
-        }
+        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dictCode={ dict } multiple={ true } />
       },
       {
         dataIndex: 'operate',
@@ -70,16 +63,10 @@ const UserList: React.FC = () => {
     ]
   })
 
-  // useEffect(() => {
-  //   getTreeDictItems(dictCode.sysDept).then((data) => {
-  //     setDeptOptions(data)
-  //   })
-  // }, [])
-
-
   return (
     <PageContainer>
       <ProTable<SysUser>
+        columns={ columns }
         { ...tableOptions }
         postData={ records => {
           return [...records].map(({ roles, depts, ...user }) => {
@@ -91,17 +78,14 @@ const UserList: React.FC = () => {
               deptsText: depts?.map((dept: any) => dept?.deptName)
             }
           })
-
         } }
-        beforeSearchSubmit={({roles, depts, ...params}) => {
-          console.log(params)
+        beforeSearchSubmit={ ({ roles, depts, ...params }) => {
           return {
             ...params,
             roleId: roles?.join(),
             deptId: depts?.join()
           }
-        }}
-        columns={ columns }
+        } }
       />
       <BetaSchemaForm<SysUser>
         { ...formOptions }
