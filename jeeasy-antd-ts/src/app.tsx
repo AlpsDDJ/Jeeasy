@@ -10,6 +10,9 @@ import { authHeaderKey, loginPath } from '@/common/setting'
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 import type { RunTimeLayoutConfig, RequestConfig } from 'umi'
 import type { RequestOptionsInit } from 'umi-request'
+import { stringify } from 'querystring'
+import { ErrorShowType } from '@@/plugin-request/request'
+import { Modal } from 'antd'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -50,6 +53,26 @@ export async function getInitialState(): Promise<{
   }
 }
 
+const loginRedirect = (): Promise<string> =>  {
+  return new Promise(resolve => {
+
+    const { query = {}, pathname } = history.location;
+    const { redirect } = query;
+    // Note: There may be security issues, please note
+    if (!redirect) {
+      history.replace({
+        pathname: loginPath,
+        search: stringify({
+          redirect: pathname,
+        }),
+      });
+      resolve(pathname)
+    }
+  })
+}
+
+
+
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
@@ -59,11 +82,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       content: initialState?.currentUser?.username
     },
     footerRender: () => <Footer />,
-    onPageChange: () => {
+    onPageChange: async () => {
       const { location } = history
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath)
+        // history.push(loginPath)
+        // await loginRedirect()
       }
     },
     links: isDev
@@ -102,10 +126,22 @@ export const request: RequestConfig = {
   timedout: 10000,
   errorConfig: {
     adaptor: (resData) => {
+      const {code} = resData
+      let showType = ErrorShowType.WARN_MESSAGE
+      if(code === 401) {
+        showType = ErrorShowType.SILENT
+        loginRedirect().then(() => {
+          Modal.warning({
+            title: '提示',
+            content: '登录失效，请重新登录!'
+          })
+        })
+      }
       return {
         ...resData,
-        success: resData.success,
-        errorMessage: resData.message
+        showType,
+        // success: resData.success,
+        errorMessage: resData.success ? '': resData.message
       }
     }
   },
