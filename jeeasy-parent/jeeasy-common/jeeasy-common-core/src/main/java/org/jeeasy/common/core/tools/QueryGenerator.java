@@ -40,7 +40,7 @@ public class QueryGenerator {
                 parseQueryParameters(wrapper, clazz, key, value);
             }
         });
-        System.out.println(wrapper.getCustomSqlSegment());
+//        System.out.println(wrapper.getCustomSqlSegment());
         return wrapper;
     }
 

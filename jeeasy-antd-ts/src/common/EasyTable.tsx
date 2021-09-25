@@ -12,9 +12,9 @@ import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/Sche
 import { PlusOutlined } from '@ant-design/icons'
 
 async function formatDictItems(code: string) {
-  const resp = await getDictItems(code)
-  const dicts = resp?.data
-  return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
+  return  await getDictItems(code)
+  // const dicts = resp?.data
+  // return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
 }
 
 export type ExtendProColumns<T = any, ValueType = 'text'> = ProColumns<T> &
@@ -147,7 +147,6 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
         renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
         valueType: valueType || (dict ? 'select' : 'text'),
         request: !valueType && dict ? () => formatDictItems(dict) : undefined,
-        // ...currCol,
         ...col,
         ...column,
       }
@@ -156,31 +155,8 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
     }
   })
 
-  // console.log(copyColumnMap)
-  //
   return Object.values(copyColumnMap)
 }
-
-// export function l2f<T>(labels: FL<T>): FL<T> {
-//   const fields: FL<T> = {};
-//   Object.keys(labels).forEach((label) => {
-//     // @ts-ignore
-//     fields[label] = label;
-//   });
-//   return fields;
-// }
-
-// type FieldsAndLabels<T> = {
-//   fields: FL<T>;
-//   labels: FL<T>;
-// };
-
-// export function useFl<T>(labels: FL<T>): FieldsAndLabels<T> {
-//   return {
-//     labels,
-//     fields: l2f<T>(labels),
-//   };
-// }
 
 type EasyTableConfig<T> = {
   title?: string;
@@ -215,67 +191,22 @@ type EasyTableState<T = any, ValueType = 'text'> = {
   showForm: (type: FormType, data?: T | any, call?: () => {}) => void;
 };
 
-// type Syr<T> = {
-//   formRef: React.MutableRefObject<ProFormInstance<T> | undefined>
-//   formType: '' | 'add' | 'edit' | 'view' | string
-//   tableRef: React.MutableRefObject<ActionType | undefined>
-//   formOptions: {
-//     initialValues: [({} | T), React.Dispatch<React.SetStateAction<{} | T>>][0]
-//     columns: any[]
-//     layoutType: string
-//     onVisibleChange: (visible) => void
-//   }
-//
-//   formVisible: boolean
-//   columns: ExtendProColumns < T, ValueType > []
-//   setFormData: (data) => Promise<void>
-//   tableOptions: {
-//     request: (data?: any, options?: any) => Promise<Partial<{ data: T[] | undefined; success?: boolean; total?: number } & Record<string, any>>>
-//     actionRef: React.MutableRefObject<ActionType | undefined> | undefined
-//     rowKey: string
-//     headerTitle: string | undefined
-//   }
-//
-//   formData: [({} | T), React.Dispatch<React.SetStateAction<{} | T>>][0]
-//   setFormVisible: (b) => void
-// }
+const defaultState: any = {
+  formVisible: false,
+  formData: {},
+  formType: ''
+}
 
 export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
+  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap } = config
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
-
-  const defaultState: any = {
-    formVisible: false,
-    formData: {},
-    formType: ''
-  }
 
   const [state, setState] = useState(defaultState)
   const setEasyTableState = (data: Record<any, any>) => {
     setState({ ...state, ...data })
   }
-
-  // const [formVisible, setFormVisible] = useState<boolean>(false)
-  // const [formData, setFormData] = useState<T | {}>({})
-  // const [formType] = useState<FormType>('')
-
-  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap } = config
-  // let formVisible: boolean = false
   const cols = columnsExtend<T, ValueType>(columns, fl, columnMap)
-  // const tableOptions: ProTableProps<T, PageParams, ValueType> = {
-  //   rowKey: 'id',
-  //   request: apis.list,
-  //   actionRef: tableRef,
-  //   headerTitle: title,
-  //   columns: cols
-  // }
-  // const defaultState: EasyTableState<T> = {
-  //   tableRef: tableRef || tref,
-  //   columns: [],
-  //   formType: '',
-  //   formVisible: false,
-  //   formData: {}
-  // }
 
   const showForm: (type: FormType, data?: T | any, call?: () => {}) => void = async (
     type,
@@ -329,7 +260,6 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
         setEasyTableState({ formVisible: visible })
         if (!visible) {
           fref.current?.resetFields()
-          // setState({...state, formData: {}})
         }
       },
       onFinish: async (values) => {
@@ -347,7 +277,6 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
           message.error(msg)
         }
       }
-      // initialValues: state.formData
     },
     setFormVisible: async (visible) => {
       await setEasyTableState({ formVisible: visible })

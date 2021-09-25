@@ -1,6 +1,8 @@
 package org.jeeasy.common.core.domain.model;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -26,6 +28,10 @@ public class QueryPageModel implements QueryModel {
     private int current = 1;
     private String sort;
 
+    public boolean hasSort() {
+        return BeanUtil.isNotEmpty(sort) && !StrUtil.EMPTY_JSON.equals(sort);
+    }
+
     public <T> Page<T> getPage(Class<T> tClass){
         Page<T> page = new Page<>(this.current, this.size);
         Map<String, String> sortMap = new HashMap<>();
@@ -39,6 +45,8 @@ public class QueryPageModel implements QueryModel {
             });
 
             page.setOrders(orderItems);
+        } else {
+            this.sort = StrUtil.EMPTY;
         }
 
         return page;

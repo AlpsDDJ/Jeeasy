@@ -85,16 +85,23 @@ export async function removeRule(options?: { [key: string]: any }) {
   });
 }
 
-export async function getDictItems(code: string, options?: { [key: string]: any }) {
-  return request('/api/common/dicts/' + code, {
+export async function getDictItems(code: string, options?: { [key: string]: any }): Promise<any[]> {
+  const resp = await request<R<any[]>>('/api/common/dicts/' + code, {
     method: 'GET',
     ...(options || {}),
   })
+  if(resp.success){
+    const {data = []} = resp
+    return data.map(({dictName, dictCode}) => ({value: dictCode, label: dictName}))
+  } else {
+    return []
+  }
 }
 
-export async function getTreeDictItems(code: string, parentId: string | number = 0, options?: { [key: string]: any }): Promise<DataNode[]> {
+export async function getTreeDictItems(code: string, parentId: string | number = 0, loadAll: boolean = true, options?: { [key: string]: any }): Promise<DataNode[]> {
   const params = {
     parentId,
+    'async': loadAll,
     ...options?.params
   }
   const opt = { ...({ ...options, params } || {}) }

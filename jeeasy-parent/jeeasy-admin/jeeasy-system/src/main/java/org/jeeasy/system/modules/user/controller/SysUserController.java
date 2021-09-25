@@ -1,5 +1,6 @@
 package org.jeeasy.system.modules.user.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author AlpsDDJ
@@ -38,6 +40,9 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @ApiOperation(value = "用户列表", notes = "用户列表")
     public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
         QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
+        if(!queryPageModel.hasSort()){
+            wrapper.lambda().orderByAsc(SysUser::getUserNo);
+        }
         String deptId = queryPageModel.getDeptId();
         String roleId = queryPageModel.getRoleId();
         if (Tools.isNotEmpty(deptId)) {
