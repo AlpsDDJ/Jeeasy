@@ -11,8 +11,8 @@ import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { Link, history, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { login } from '@/services/common/api';
+import { getFakeCaptcha } from '@/services/common/login';
 import styles from './index.less';
 import { saveToken } from '@/common/utils/tokenUtil'
 
@@ -39,7 +39,7 @@ const Login: React.FC = () => {
     const userInfo = await initialState?.fetchUserInfo?.();
 
     if (userInfo) {
-      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
+      await setInitialState((s: any) => ({ ...s, currentUser: userInfo }));
     }
   };
 
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
       const resp = await login({ ...values, type });
 
       if (resp.success) {
-        const {data: {refreshToken = '', token = ''}} = resp
+        const { refreshToken = '', token = '' } = resp.data
         // const {refreshToken, token} = data
         saveToken(token, refreshToken)
         const defaultLoginSuccessMessage = '登录成功！';

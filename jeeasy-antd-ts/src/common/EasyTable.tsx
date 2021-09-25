@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react'
 import React, { useRef, useState } from 'react'
-import { getDictItems } from '@/services/ant-design-pro/api'
+import { getDictItems } from '@/services/common/api'
 import type { ProColumns, ProTableProps } from '@ant-design/pro-table'
 import { Button, message, Popconfirm } from 'antd'
 import type { ProFormColumnsType } from '@ant-design/pro-form'

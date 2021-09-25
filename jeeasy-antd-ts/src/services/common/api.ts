@@ -2,6 +2,9 @@
 /* eslint-disable */
 import { request } from 'umi';
 import { DataNode } from 'rc-tree-select/lib/interface'
+import { refreshTokenUrl } from '@/common/setting'
+import { getRefreshToken, saveToken } from '@/common/utils/tokenUtil'
+import { RequestOptionsInit } from 'umi-request'
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
@@ -22,8 +25,8 @@ export async function outLogin(options?: { [key: string]: any }) {
 }
 
 /** 登录接口 POST /api/login/account */
-export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/auth/login', {
+export async function login(body: API.LoginParams, options?: { [key: string]: any }): Promise<R<LoginRespData>> {
+  return request<R<LoginRespData>>('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -115,5 +118,26 @@ export async function getTreeDictItems(code: string, parentId: string | number =
     return data.map(({isLeaf, dictCode, dictName, parentId: pId}) => ({id: dictCode, value: dictCode, title: dictName, pId: pId, isLeaf}))
   }else{
     return []
+  }
+}
+
+type LoginRespData = {refreshToken: string, token: string}
+
+export async function refreshToken(reqOptions?: RequestOptionsInit){
+  const refreshToken = getRefreshToken()
+  console.log('refreshToken   ----->>> ', refreshToken)
+  const resp = await request<R<LoginRespData>>(refreshTokenUrl, {
+    method: 'POST',
+    data: {
+      refreshToken,
+    }
+  })
+  if(resp.success) {
+    const {refreshToken, token} = resp.data
+    saveToken(token, refreshToken)
+    if(reqOptions) {
+      return request(reqOptions.url, reqOptions)
+    }
+    return Promise.reject(true)
   }
 }

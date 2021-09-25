@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TreeSelect } from 'antd'
-import { getTreeDictItems } from '@/services/ant-design-pro/api'
+import { getTreeDictItems } from '@/services/common/api'
 import type { DataNode } from 'rc-tree-select/lib/interface'
 
 type TreeDictProps = Record<string, any> | EasyFormInputProps & {

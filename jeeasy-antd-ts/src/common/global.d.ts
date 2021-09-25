@@ -17,11 +17,11 @@ declare type FL<T = Record<string, any>> = {
 }
 
 declare type R<T = any> = {
-  code?: number,
-  success?: boolean,
-  message?: string,
-  timestamp?: number,
-  data?: T
+  code: number,
+  success: boolean,
+  message: string,
+  timestamp: number,
+  data: T
 }
 
 declare type Dict = {

@@ -9,7 +9,7 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions'
 import ProDescriptions from '@ant-design/pro-descriptions'
 import type { FormValueType } from './components/UpdateForm'
 import UpdateForm from './components/UpdateForm'
-import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api'
+import { addRule, removeRule, rule, updateRule } from '@/services/common/api'
 import type { ExtendProColumns } from '@/common/EasyTable'
 import { columnsExtend } from '@/common/EasyTable'
 

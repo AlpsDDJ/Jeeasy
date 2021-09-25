@@ -2,10 +2,10 @@ import { PageLoading } from '@ant-design/pro-layout'
 import { history, Link } from 'umi'
 import RightContent from '@/components/RightContent'
 import Footer from '@/components/Footer'
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api'
+import { currentUser as queryCurrentUser, refreshToken } from './services/common/api'
 import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
-import { authHeaderKey, loginPath } from '@/common/setting'
+import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
 
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 import type { RunTimeLayoutConfig, RequestConfig } from 'umi'
@@ -122,6 +122,22 @@ const requestInterceptor = (url: string, options: RequestOptionsInit) => {
   }
 }
 
+const responseInterceptor = (response: Response, options: RequestOptionsInit): Response | Promise<Response> => {
+
+  console.log('RequestOptions =====> ', options)
+  console.log('Response =====> ', response)
+
+  const {status} = response
+  const { url } = options
+  if(status === 401) {
+    if(url !== refreshTokenUrl) {
+      return refreshToken(options)
+    }
+  }
+
+  return response
+}
+
 export const request: RequestConfig = {
   timedout: 10000,
   errorConfig: {
@@ -145,5 +161,6 @@ export const request: RequestConfig = {
       }
     }
   },
-  requestInterceptors: [requestInterceptor]
+  requestInterceptors: [requestInterceptor],
+  responseInterceptors: [responseInterceptor]
 }

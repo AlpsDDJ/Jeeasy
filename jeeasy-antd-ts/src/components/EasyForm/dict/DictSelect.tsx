@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from 'antd'
-import { getDictItems } from '@/services/ant-design-pro/api'
+import { getDictItems } from '@/services/common/api'
 
 type DictSelectProps = Record<string, any> | EasyFormInputProps & {
   dictCode: string,
