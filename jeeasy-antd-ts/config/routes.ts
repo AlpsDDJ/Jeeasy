@@ -22,8 +22,8 @@ export default [
     access: 'ROLE:admin',
     icon: 'crown',
     routes: [
-      { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'smile', component: './sys/User' },
-      { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'smile', component: './TableList' },
+      { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'smile', component: './sys/user' },
+      { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'smile', component: './sys/role' },
       { component: './404' },
     ],
   },

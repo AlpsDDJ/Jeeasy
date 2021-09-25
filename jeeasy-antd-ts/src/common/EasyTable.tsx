@@ -10,6 +10,7 @@ import type { ActionType } from '@ant-design/pro-table/lib/typing'
 import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
+import { defaultFormItemLayout } from '@/common/setting'
 
 async function formatDictItems(code: string) {
   return  await getDictItems(code)
@@ -150,8 +151,6 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
         ...col,
         ...column,
       }
-    } else {
-      console.log(column.dataIndex)
     }
   })
 
@@ -253,6 +252,8 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
     },
     formRef: fref,
     formOptions: {
+      ...defaultFormItemLayout,
+      layout: 'horizontal',
       visible: state.formVisible,
       layoutType: formLayout,
       formRef: fref,

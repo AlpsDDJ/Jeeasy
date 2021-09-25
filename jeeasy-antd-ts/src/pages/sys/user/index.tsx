@@ -40,7 +40,7 @@ const UserList: React.FC = () => {
       },
       {
         dataIndex: 'operate',
-        operate: ['add', {
+        operate: [{
           key: 'edit',
           name: '编辑',
           handle: (record) => {
