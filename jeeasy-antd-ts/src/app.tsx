@@ -12,6 +12,7 @@ import type { RequestOptionsInit } from 'umi-request'
 import { stringify } from 'querystring'
 import { ErrorShowType } from '@@/plugin-request/request'
 import { Modal } from 'antd'
+import TabsLayout from '@/components/TabsLayout'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -80,6 +81,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     waterMarkProps: {
       content: initialState?.currentUser?.username
     },
+    // childrenRender: dom => <TabsLayout children={dom} />,
+    headerRender: (props, defaultDom) => <TabsLayout children={defaultDom} />,
     footerRender: () => <Footer />,
     onPageChange: async () => {
       const { location } = history

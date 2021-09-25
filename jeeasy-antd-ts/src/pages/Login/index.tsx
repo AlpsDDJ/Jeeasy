@@ -31,7 +31,7 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState, setUserLoginState] = useState<API.LoginResult | any>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
