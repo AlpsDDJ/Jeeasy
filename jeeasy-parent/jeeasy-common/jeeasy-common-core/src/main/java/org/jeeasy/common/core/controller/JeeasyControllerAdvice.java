@@ -112,7 +112,7 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
                     response.setStatusCode(httpStatus);
                     return result;
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             } else {
                 HttpMethod method = serverHttpRequest.getMethod();

@@ -2,7 +2,6 @@
 /* eslint-disable */
 
 declare namespace API {
-  import R = PUB.R
   type CurrentUser = {
     id?: string;
     username?: string;

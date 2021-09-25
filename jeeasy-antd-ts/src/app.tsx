@@ -1,4 +1,6 @@
+import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
 import { PageLoading } from '@ant-design/pro-layout'
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi'
 import { history, Link } from 'umi'
 import RightContent from '@/components/RightContent'
 import Footer from '@/components/Footer'
@@ -6,9 +8,6 @@ import { currentUser as queryCurrentUser, refreshToken } from './services/common
 import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
 import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
-
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
-import type { RunTimeLayoutConfig, RequestConfig } from 'umi'
 import type { RequestOptionsInit } from 'umi-request'
 import { stringify } from 'querystring'
 import { ErrorShowType } from '@@/plugin-request/request'
@@ -123,10 +122,6 @@ const requestInterceptor = (url: string, options: RequestOptionsInit) => {
 }
 
 const responseInterceptor = (response: Response, options: RequestOptionsInit): Response | Promise<Response> => {
-
-  console.log('RequestOptions =====> ', options)
-  console.log('Response =====> ', response)
-
   const {status} = response
   const { url } = options
   if(status === 401) {
@@ -134,30 +129,39 @@ const responseInterceptor = (response: Response, options: RequestOptionsInit): R
       return refreshToken(options)
     }
   }
-
   return response
 }
 
 export const request: RequestConfig = {
   timedout: 10000,
   errorConfig: {
-    adaptor: (resData) => {
-      const {code} = resData
-      let showType = ErrorShowType.WARN_MESSAGE
-      if(code === 401) {
-        showType = ErrorShowType.SILENT
-        loginRedirect().then(() => {
-          Modal.warning({
-            title: '提示',
-            content: '登录失效，请重新登录!'
+    adaptor: (resp) => {
+      const {code} = resp
+      let showType = null
+
+      switch (code) {
+        case 200:
+          showType = ErrorShowType.SILENT
+          break
+        case 401:
+          showType = ErrorShowType.SILENT
+          loginRedirect().then(() => {
+            Modal.warning({
+              title: '提示',
+              content: '登录失效，请重新登录!'
+            })
           })
-        })
+          break
+        default:
+          showType = ErrorShowType.ERROR_MESSAGE
+          break
       }
+
       return {
-        ...resData,
+        ...resp,
         showType,
         // success: resData.success,
-        errorMessage: resData.success ? '': resData.message
+        errorMessage: resp.success ? '': resp.message
       }
     }
   },
