@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { remove, unionWith } from 'lodash'
+import { remove } from 'lodash'
 import type { MenuTabsItem } from '@/components/TabsLayout'
 
 // export type MenuTabsItem = {
@@ -20,9 +20,10 @@ export type MenuTabsState = {
   closeAll: () => void
 }
 
-const defaultMenu: MenuTabsItem = {
+export const defaultMenu: MenuTabsItem = {
   name: '欢迎页',
-  key: '/welcome', path: '/welcome'
+  key: '/welcome',
+  path: '/welcome'
 }
 
 export default function useMenuTabsModel(): MenuTabsState {
@@ -32,14 +33,17 @@ export default function useMenuTabsModel(): MenuTabsState {
   const [current, setCurrent] = useState<MenuTabsItem>()
 
   const openTab = useCallback((menu: MenuTabsItem) => {
-    const newMenus = unionWith(menus, [menu], (m1, m2) => m1.key === m2.key)
-    setMenus(newMenus)
+    // const newMenus = unionWith([...menus], [menu], (m1, m2) => m1.key === m2.key)
+    if(!menus.some(m => m.key === menu.key)){
+      setMenus([...menus, menu])
+    }
     setCurrent(menu)
   }, [menus])
 
   const closeTab = useCallback((key: string) => {
     const copyMeuns = [...menus]
     remove(copyMeuns, (menu: { key: string }) => menu.key === key)
+    // history.go(-1)
   }, [menus])
 
   const closeAll = useCallback(() => {

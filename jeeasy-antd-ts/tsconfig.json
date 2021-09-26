@@ -21,8 +21,8 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@@/*": ["./src/.umi/*"]
-//      "umi": ["./src/.umi/*"]
+      "@@/*": ["./src/.umi/*"],
+      "umi": ["./src/.umi/*"]
     }
   },
   "include": [

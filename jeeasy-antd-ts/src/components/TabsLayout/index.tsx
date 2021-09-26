@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './index.less'
-import { Row, Tag } from 'antd'
+import { Row, Tag, TagProps } from 'antd'
 import { history, useModel } from 'umi'
 import type { HeaderViewProps } from '@ant-design/pro-layout/lib/Header'
 import type { MenuDataItem } from '@ant-design/pro-layout'
@@ -22,15 +22,13 @@ function getMenuList(menus: MenuDataItem[] = []): MenuTabsItem[] {
       tabMenus = [...tabMenus, ...getMenuList(children)]
     }
   })
-
   return tabMenus
 }
 
-const TabsLayout: React.FC<HeaderViewProps> = (props) => {
-  // console.log('props =--=---=> ', props)
-
-  const { menus, current, openTab } = useModel('menu-tabs')
-  const [tabs, setTabs] = useState<MenuTabsItem[]>([])
+const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
+  const { menus, current, openTab, closeTab } = useModel('menu-tabs')
+  const [currPath, setCurrPath] = useState<string>('')
+  const tabs = getMenuList(menuData)
 
   const getTabMenuByPath = useCallback((path: string): MenuTabsItem | null => {
     let tab = null
@@ -42,36 +40,61 @@ const TabsLayout: React.FC<HeaderViewProps> = (props) => {
     return tab
   }, [tabs])
 
+
+  // useEffect(() => {
+  //   history.listen((location) => {
+  //     const tab = getTabMenuByPath(location.pathname)
+  //     if (tab) {
+  //       openTab(tab)
+  //     }
+  //   })
+  // }, [getTabMenuByPath, menus, openTab])
+
+
   useEffect(() => {
-    const { menuData } = props
-    const tabMenus = getMenuList(menuData)
-    setTabs(tabMenus)
     history.listen((location) => {
+      setCurrPath(location.pathname)
       const tab = getTabMenuByPath(location.pathname)
       if (tab) {
         openTab(tab)
       }
     })
+    if(!currPath) {
+      setCurrPath(history.location.pathname)
+    }
     const currMenu = getTabMenuByPath(history.location.pathname)
-    if (currMenu) {
+    if (currMenu && currMenu.key !== '/welcome') {
       openTab(currMenu)
     }
-  }, [getTabMenuByPath, openTab, props])
+  }, [currPath])
 
   const isCurrent = useCallback((key): boolean => {
     return current?.key === key
   }, [current?.key])
 
+  const closeHandle = useCallback((key) => {
+    closeTab(key)
+  }, [closeTab])
+
   return (
     <>
-      { props.children }
+      { children }
       <Row className="tabs">
         {
           menus.map(({ name, key, path }) => {
-            // const sty = current?.key === key ? 'tab active-tab' : 'tab'
-            return <Tag key={ key } color={ isCurrent(key) ? 'success' : '' } onClick={ () => {
-              history.push(path)
-            } }>{ name }</Tag>
+            const curr = isCurrent(key)
+            const tagProps: TagProps = {
+              closable: key !== '/welcome',
+              color: curr ? 'success' : '',
+              className: curr ? 'tab active-tab' : 'tab',
+              onClick: () => {
+                history.push(path)
+              },
+              onClose: () => {
+                closeHandle(key)
+              }
+            }
+            return <Tag key={key} { ...tagProps }>{ name }</Tag>
           })
         }
       </Row>
