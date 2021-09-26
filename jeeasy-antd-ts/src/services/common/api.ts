@@ -125,7 +125,7 @@ type LoginRespData = {refreshToken: string, token: string}
 
 export async function refreshToken(reqOptions?: RequestOptionsInit){
   const refreshToken = getRefreshToken()
-  console.log('refreshToken   ----->>> ', refreshToken)
+  // console.log('refreshToken   ----->>> ', refreshToken)
   const resp = await request<R<LoginRespData>>(refreshTokenUrl, {
     method: 'POST',
     data: {

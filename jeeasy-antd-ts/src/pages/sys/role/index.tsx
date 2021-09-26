@@ -1,6 +1,5 @@
 import React from 'react'
 import { message } from 'antd'
-import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { useEasyTable } from '@/common/EasyTable'
 import { useApis } from '@/services'
@@ -64,7 +63,7 @@ const RoleList: React.FC = () => {
   })
 
   return (
-    <PageContainer>
+    <>
       <ProTable<SysRole>
         columns={ columns }
         { ...tableOptions }
@@ -91,7 +90,7 @@ const RoleList: React.FC = () => {
         { ...formOptions }
         columns={ columns }
       />
-    </PageContainer>
+    </>
   )
 }
 

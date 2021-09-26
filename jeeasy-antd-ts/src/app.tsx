@@ -1,18 +1,19 @@
+import { Modal } from 'antd'
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout'
-import { PageLoading } from '@ant-design/pro-layout'
+import { PageContainer, PageLoading } from '@ant-design/pro-layout'
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi'
-import { history, Link } from 'umi'
+import { ErrorShowType, history, Link } from 'umi'
 import RightContent from '@/components/RightContent'
 import Footer from '@/components/Footer'
 import { currentUser as queryCurrentUser, refreshToken } from './services/common/api'
 import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
-import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
 import type { RequestOptionsInit } from 'umi-request'
 import { stringify } from 'querystring'
-import { ErrorShowType } from '@@/plugin-request/request'
-import { Modal } from 'antd'
+// import { ErrorShowType } from '@@/plugin-request/request'
 import TabsLayout from '@/components/TabsLayout'
+import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
+// import { useModel } from '@@/plugin-model/useModel'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -53,37 +54,54 @@ export async function getInitialState(): Promise<{
   }
 }
 
-const loginRedirect = (): Promise<string> =>  {
+const loginRedirect = (): Promise<string> => {
   return new Promise(resolve => {
 
-    const { query = {}, pathname } = history.location;
-    const { redirect } = query;
+    const { query = {}, pathname } = history.location
+    const { redirect } = query
     // Note: There may be security issues, please note
     if (!redirect) {
       history.replace({
         pathname: loginPath,
         search: stringify({
-          redirect: pathname,
-        }),
-      });
+          redirect: pathname
+        })
+      })
       resolve(pathname)
     }
   })
 }
 
 
-
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  // useModel('menu-tabs')
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
       content: initialState?.currentUser?.username
     },
-    // childrenRender: dom => <TabsLayout children={dom} />,
-    headerRender: (props, defaultDom) => <TabsLayout children={defaultDom} />,
+    childrenRender: dom => <PageContainer title={false} children={dom} />,
+    headerRender: (props, dom) => {
+      return <TabsLayout {...props} children={dom} />
+    },
     footerRender: () => <Footer />,
+    // itemRender: (route, params, routes, paths) => {
+    //   console.log('paths --- ', paths)
+    //   return ('')
+    // },
+    // pageTitleRender: (props, defaultPageTitle, info) => {
+    //   console.log(info)
+    //   return '123123123'
+    // },
+    // menuDataRender: menuData => {
+    //   // console.log('menuData ====== ',menuData)
+    //   return menuData.map(({name, ...menu}) => ({
+    //     name: `${name}`,
+    //     ...menu
+    //   }))
+    // },
     onPageChange: async () => {
       const { location } = history
       // 如果没有登录，重定向到 login
