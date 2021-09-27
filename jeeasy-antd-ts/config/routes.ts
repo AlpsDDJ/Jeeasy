@@ -23,6 +23,7 @@ export default [
     routes: [
       { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'user', component: './sys/user' },
       { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'team', component: './sys/role' },
+      { path: 'permission', access: 'ROLE:admin', name: '权限菜单', icon: 'apartment', component: './sys/permission' },
       { component: './404' },
     ],
   },

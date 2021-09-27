@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
@@ -16,6 +17,7 @@ import org.jeeasy.system.enums.permission.PermsTypeEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 菜单权限表(sys_permission)实体类
@@ -26,9 +28,10 @@ import java.time.LocalDateTime;
  */
 @Data
 @NoArgsConstructor
+@ApiModel("系统权限")
 @Accessors(chain = true)
 @TableName("sys_permission")
-@ApiModel("系统权限")
+@EqualsAndHashCode(callSuper = true)
 public class SysPermission extends Model<SysPermission> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -203,9 +206,12 @@ public class SysPermission extends Model<SysPermission> implements Serializable 
     @Dict(dictEnum = LinkOpenTypeEnum.class)
     private Integer internalOrExternal;
 
-    @JsonGetter
-    public boolean hasChildren() {
-        return !BooleanEnum.yes(this.isLeaf);
-    }
+//    @JsonGetter
+//    public boolean hasChildren() {
+//        return !BooleanEnum.yes(this.isLeaf);
+//    }
+
+    @TableField(exist = false)
+    private List<SysPermission> children;
 
 }
