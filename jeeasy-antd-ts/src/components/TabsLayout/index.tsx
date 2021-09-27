@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import './index.less'
+// import styles from './index.less';
 import type { TagProps } from 'antd'
 import { Row, Tag } from 'antd'
 import { history } from 'umi'
 import type { HeaderViewProps } from '@ant-design/pro-layout/lib/Header'
 import type { MenuDataItem } from '@ant-design/pro-layout'
 import { remove } from 'lodash'
-// import { defaultMenu } from '@/models/menu-tabs'
 
-// type Menus = any[]
 export type MenuTabsItem = {
   key: string,
   name: string,
@@ -16,122 +15,128 @@ export type MenuTabsItem = {
 }
 
 const defaultMenu: MenuTabsItem = {
-    name: '欢迎页',
-    key: '/welcome',
-    path: '/welcome'
-  }
+  name: '欢迎页',
+  key: '/welcome',
+  path: '/welcome'
+}
 
-function getMenuList(menus: MenuDataItem[] = []): MenuTabsItem[] {
+
+const getMenuList = (menus: MenuDataItem[]): MenuTabsItem[] => {
+  console.log('getMenuList')
   let tabMenus: MenuTabsItem[] = []
-  menus.forEach(({ key, name, children, path }) => {
+  menus.forEach(({ key, name, children: child, path }) => {
     if (key && name && path) {
       tabMenus.push({ key, name, path })
     }
-    if (children && children.length > 0) {
-      tabMenus = [...tabMenus, ...getMenuList(children)]
+    if (child && child.length > 0) {
+      tabMenus = [...tabMenus, ...getMenuList(child)]
     }
   })
   return tabMenus
 }
 
-const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
-  // const { menus, current, openTab, closeTab } = useModel('menu-tabs')
-  const [menus, setMenus] = useState<MenuTabsItem[]>([defaultMenu])
-  const [currPath, setCurrPath] = useState<string>('')
+const TabsLayout: React.FC<HeaderViewProps & { breadcrumb: any }> = ({ children, menuData = [], breadcrumb }) => {
+  const [tabs, setTabs] = useState<MenuTabsItem[]>([defaultMenu])
+  const [allTabs, setAllTabs] = useState<MenuTabsItem[]>([])
+  // const [currPath, setCurrPath] = useState<string>('')
   const [historyPath, setHistoryPath] = useState<string[]>([defaultMenu.path])
-  console.log('historyPath -- ', historyPath)
+
+  // let allTabs: MenuTabsItem[] = []
+
+  // if (!allTabs || allTabs.length === 0) {
+  //   setAllTabs(getMenuList(menuData))
+  //   // allTabs = getMenuList(menuData)
+  // }
+  // console.log('historyPath -- ', historyPath)
 
   const closeTab = useCallback((key: string) => {
-    const copyMeuns = [...menus]
+    const copyMeuns = [...tabs]
     const copyHistoryPath = [...historyPath]
     remove(copyMeuns, (menu: { key: string }) => menu.key === key)
     remove(copyHistoryPath, (path: string) => path === key)
-    setMenus(copyMeuns)
+    setTabs(copyMeuns)
     setHistoryPath(copyHistoryPath)
-    console.log('historyPath -  2222  - ', historyPath)
-    if(key === currPath) {
+    // console.log('historyPath -  2222  - ', historyPath)
+    if (key === history.location.pathname) {
       history.push(copyHistoryPath[copyHistoryPath.length - 1])
     }
     // history.go(-1)
-  }, [currPath])
+  }, [history.location.pathname])
 
   const openTab = useCallback((menu: MenuTabsItem) => {
     // const path = history.location.pathname
-    setCurrPath(menu.path)
-    if(!menus.some(m => m.key === menu.key)) {
-      setMenus([...menus, menu])
+    // setCurrPath(menu.path)
+    // console.log('menus -  2222  - ', menus)
+    if (!tabs.some(m => m.key === menu.key)) {
+      setTabs([...tabs, menu])
     }
-    console.log('historyPath -    - ', historyPath)
+    // console.log('historyPath -    - ', historyPath)
     setHistoryPath([...historyPath.filter(p => p !== menu.key), menu.path])
-  }, [currPath])
+  }, [history.location.pathname])
 
   // const closeAll = useCallback(() => {
   //   setMenus([defaultMenu])
   // }, [])
 
-  const tabs = getMenuList(menuData)
+
   const getTabMenuByPath = useCallback((path: string): MenuTabsItem | null => {
-    let tab = null
-    tabs.forEach((t) => {
-      if (path === t.key) {
-        tab = t
-      }
-    })
-    return tab
-  }, [menuData])
+    // const allTabs = getMenuList(menuData)
+    console.log('getTabMenuByPath')
+
+    return breadcrumb[path]
+
+    // let tab = null
+    // allTabs.forEach((t) => {
+    //   if (path === t.key) {
+    //     tab = t
+    //   }
+    // })
+    // return tab
+  }, [history.location.pathname])
+
+  useLayoutEffect(() => {
+    setAllTabs(getMenuList(menuData))
+  }, [])
 
   useEffect(() => {
-    // setCurrPath(history.location.pathname)
-    // const tab = getTabMenuByPath(history.location.pathname)
-    // if (tab) {
-    //   openTab(tab)
-    // }
-    history.listen((location) => {
-      setCurrPath(location.pathname)
-      const tab = getTabMenuByPath(location.pathname)
-      if (tab) {
-        openTab(tab)
-      }
-    })
-  }, [getTabMenuByPath, openTab, closeTab])
+    // console.log(history)
+    const path = history.location.pathname
+    // setCurrPath(path)
+    console.log('allTabs ---->', allTabs)
+    const tab = getTabMenuByPath(path)
+    if (tab) {
+      openTab(tab)
+    }
+  }, [history.location.pathname])
 
-  // useEffect(() => {
-  //   // if(!currPath) {
-  //   //   setCurrPath(history.location.pathname)
-  //   // }
-  //   const currMenu = getTabMenuByPath(history.location.pathname)
-  //   if (currMenu) {
-  //     openTab(currMenu)
-  //   }
-  // }, [openTab])
-
-  const isCurrent = useCallback((key): boolean => {
-    return currPath === key
-  }, [currPath])
 
   const closeHandle = useCallback((key) => {
     closeTab(key)
-  }, [closeTab])
+  }, [history.location.pathname])
 
   return (
     <>
       { children }
       <Row className="tabs">
         {
-          menus.map(({ name, key, path }) => {
-            const curr = isCurrent(key)
+          tabs.map(({ name, key, path }) => {
+            const isCurrent = history.location.pathname === key
+
+            // const curr = isCurrent(key)
             const tagProps: TagProps = {
               closable: key !== '/welcome',
-              color: curr ? 'success' : '',
-              className: curr ? 'tab active-tab' : 'tab',
+              // color: curr ? 'success' : '',
+              className: isCurrent ? 'tab active-tab' : 'tab',
               onClick: () => {
-                history.push(path)
+                if (history.location.pathname !== key) {
+                  history.push(path)
+                }
               },
               onClose: () => {
                 closeHandle(key)
               }
             }
-            return <Tag key={key} { ...tagProps }>{ name }</Tag>
+            return <Tag key={ key } { ...tagProps }>{ name }</Tag>
           })
         }
       </Row>

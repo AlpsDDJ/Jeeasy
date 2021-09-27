@@ -10,10 +10,9 @@ import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
 import type { RequestOptionsInit } from 'umi-request'
 import { stringify } from 'querystring'
-// import { ErrorShowType } from '@@/plugin-request/request'
+// import type { MenuTabsItem } from '@/components/TabsLayout'
 import TabsLayout from '@/components/TabsLayout'
 import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
-// import { useModel } from '@@/plugin-model/useModel'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -72,36 +71,20 @@ const loginRedirect = (): Promise<string> => {
   })
 }
 
-
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
-  // useModel('menu-tabs')
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
       content: initialState?.currentUser?.username
     },
-    childrenRender: dom => <PageContainer title={false} children={dom} />,
+    childrenRender: dom => <PageContainer title={ false } breadcrumb={{}} children={ dom } />,
     headerRender: (props, dom) => {
-      return <TabsLayout {...props} children={dom} />
+      // @ts-ignore
+      return <TabsLayout { ...props } children={ dom } breadcrumb={ props.breadcrumb } />
     },
     footerRender: () => <Footer />,
-    // itemRender: (route, params, routes, paths) => {
-    //   console.log('paths --- ', paths)
-    //   return ('')
-    // },
-    // pageTitleRender: (props, defaultPageTitle, info) => {
-    //   console.log(info)
-    //   return '123123123'
-    // },
-    // menuDataRender: menuData => {
-    //   // console.log('menuData ====== ',menuData)
-    //   return menuData.map(({name, ...menu}) => ({
-    //     name: `${name}`,
-    //     ...menu
-    //   }))
-    // },
     onPageChange: async () => {
       const { location } = history
       // 如果没有登录，重定向到 login
@@ -143,10 +126,10 @@ const requestInterceptor = (url: string, options: RequestOptionsInit) => {
 }
 
 const responseInterceptor = (response: Response, options: RequestOptionsInit): Response | Promise<Response> => {
-  const {status} = response
+  const { status } = response
   const { url } = options
-  if(status === 401) {
-    if(url !== refreshTokenUrl) {
+  if (status === 401) {
+    if (url !== refreshTokenUrl) {
       return refreshToken(options)
     }
   }
@@ -157,7 +140,7 @@ export const request: RequestConfig = {
   timedout: 10000,
   errorConfig: {
     adaptor: (resp) => {
-      const {code} = resp
+      const { code } = resp
       let showType = null
 
       switch (code) {
@@ -182,7 +165,7 @@ export const request: RequestConfig = {
         ...resp,
         showType,
         // success: resData.success,
-        errorMessage: resp.success ? '': resp.message
+        errorMessage: resp.success ? '' : resp.message
       }
     }
   },
