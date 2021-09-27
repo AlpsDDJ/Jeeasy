@@ -4,7 +4,7 @@ import { PageContainer, PageLoading } from '@ant-design/pro-layout'
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi'
 import { ErrorShowType, history, Link } from 'umi'
 import RightContent from '@/components/RightContent'
-import Footer from '@/components/Footer'
+// import Footer from '@/components/Footer'
 import { currentUser as queryCurrentUser, refreshToken } from './services/common/api'
 import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
@@ -77,14 +77,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.username
+      // content: initialState?.currentUser?.username
     },
     childrenRender: dom => <PageContainer title={ false } breadcrumb={ {} } children={ dom } />,
     headerRender: (props, dom) => {
       // @ts-ignore
       return <TabsLayout { ...props } children={ dom } breadcrumb={ props.breadcrumb } />
     },
-    footerRender: () => <Footer />,
+    // footerRender: () => <Footer />,
     menuItemRender: (menuItemProps, defaultDom) => {
       if (menuItemProps.isUrl || !menuItemProps.path) {
         return defaultDom
