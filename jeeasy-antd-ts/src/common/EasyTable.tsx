@@ -43,9 +43,9 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
   columns.forEach((col) => {
     if(col.dataIndex){
       const di = typeof col.dataIndex === 'string' ? col.dataIndex : ''
-      if(di === 'status'){
-        console.log(copyColumnMap[di])
-      }
+      // if(di === 'status'){
+      //   console.log(copyColumnMap[di])
+      // }
       copyColumnMap[di] = {
         ...copyColumnMap[di],
         ...col

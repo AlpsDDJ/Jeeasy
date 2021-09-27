@@ -108,7 +108,7 @@ export async function getTreeDictItems(code: string, parentId: string | number =
     ...options?.params
   }
   const opt = { ...({ ...options, params } || {}) }
-  console.log('opt = ', opt)
+  // console.log('opt = ', opt)
   const resp = await request<R<TreeDict[]>>('/api/common/dicts/' + code, {
     method: 'GET',
     ...opt

@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './index.less'
-import { Row, Tag, TagProps } from 'antd'
-import { history, useModel } from 'umi'
+import type { TagProps } from 'antd'
+import { Row, Tag } from 'antd'
+import { history } from 'umi'
 import type { HeaderViewProps } from '@ant-design/pro-layout/lib/Header'
 import type { MenuDataItem } from '@ant-design/pro-layout'
+import { remove } from 'lodash'
+// import { defaultMenu } from '@/models/menu-tabs'
 
 // type Menus = any[]
 export type MenuTabsItem = {
@@ -11,6 +14,12 @@ export type MenuTabsItem = {
   name: string,
   path: string
 }
+
+const defaultMenu: MenuTabsItem = {
+    name: '欢迎页',
+    key: '/welcome',
+    path: '/welcome'
+  }
 
 function getMenuList(menus: MenuDataItem[] = []): MenuTabsItem[] {
   let tabMenus: MenuTabsItem[] = []
@@ -26,8 +35,34 @@ function getMenuList(menus: MenuDataItem[] = []): MenuTabsItem[] {
 }
 
 const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
-  const { menus, current, openTab, closeTab } = useModel('menu-tabs')
+  // const { menus, current, openTab, closeTab } = useModel('menu-tabs')
+  const [menus, setMenus] = useState<MenuTabsItem[]>([defaultMenu])
   const [currPath, setCurrPath] = useState<string>('')
+  const [historyPath, setHistoryPath] = useState<string[]>([defaultMenu.path])
+
+  const openTab = useCallback((menu: MenuTabsItem) => {
+    if(!menus.some(m => m.key === menu.key)) {
+      setMenus([...menus, menu])
+    }
+    setHistoryPath([...historyPath.filter(path => path !== menu.key), menu.path])
+  }, [currPath])
+
+  const closeTab = useCallback((key: string) => {
+    const copyMeuns = [...menus]
+    const copyHistoryPath = [...historyPath]
+    remove(copyMeuns, (menu: { key: string }) => menu.key === key)
+    remove(copyHistoryPath, (path: string) => path === key)
+    setMenus(copyMeuns)
+    if(key === currPath) {
+      history.push(copyHistoryPath[copyHistoryPath.length - 1])
+    }
+    // history.go(-1)
+  }, [currPath])
+
+  // const closeAll = useCallback(() => {
+  //   setMenus([defaultMenu])
+  // }, [])
+
   const tabs = getMenuList(menuData)
 
   const getTabMenuByPath = useCallback((path: string): MenuTabsItem | null => {
@@ -40,25 +75,22 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
     return tab
   }, [tabs])
 
-
-  // useEffect(() => {
-  //   history.listen((location) => {
-  //     const tab = getTabMenuByPath(location.pathname)
-  //     if (tab) {
-  //       openTab(tab)
-  //     }
-  //   })
-  // }, [getTabMenuByPath, menus, openTab])
-
+  useEffect(() => {
+    setCurrPath(location.pathname)
+    const tab = getTabMenuByPath(location.pathname)
+    if (tab) {
+      openTab(tab)
+    }
+    // history.listen((location) => {
+    //   setCurrPath(location.pathname)
+    //   const tab = getTabMenuByPath(location.pathname)
+    //   if (tab) {
+    //     openTab(tab)
+    //   }
+    // })
+  }, [getTabMenuByPath, openTab])
 
   useEffect(() => {
-    history.listen((location) => {
-      setCurrPath(location.pathname)
-      const tab = getTabMenuByPath(location.pathname)
-      if (tab) {
-        openTab(tab)
-      }
-    })
     if(!currPath) {
       setCurrPath(history.location.pathname)
     }
@@ -69,8 +101,8 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
   }, [currPath])
 
   const isCurrent = useCallback((key): boolean => {
-    return current?.key === key
-  }, [current?.key])
+    return currPath === key
+  }, [currPath])
 
   const closeHandle = useCallback((key) => {
     closeTab(key)
