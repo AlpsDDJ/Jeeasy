@@ -13,4 +13,6 @@ import org.jeeasy.system.modules.premission.domain.SysPermission;
  */
 public interface SysPermissionService extends IService<SysPermission> {
 
+
+
 }

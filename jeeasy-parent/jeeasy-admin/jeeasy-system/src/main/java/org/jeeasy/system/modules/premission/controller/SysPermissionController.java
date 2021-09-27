@@ -41,6 +41,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
         wrapper.lambda().orderByAsc(SysPermission::getSortNo);
         String customSqlSegment = wrapper.getCustomSqlSegment();
         log.info("customSqlSegment ======== {}", customSqlSegment);
+
         List<SysPermission> list = service.list(wrapper);
         IPage<SysPermission> page = new Page<>();
         page.setRecords(list);
