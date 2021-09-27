@@ -1,6 +1,6 @@
 import { Field, BaseVo, Data } from '@/common/dataDecorator'
 import { dictCode } from '@/common/dict'
-import type SysRole from '@/pages/sys/Role/vo'
+import type SysRole from '@/pages/sys/role/vo'
 
 @Data('系统用户', '/api/sys/user', 'sys:user')
 export default class SysUser extends BaseVo<SysUser> {

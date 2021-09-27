@@ -39,13 +39,7 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
   const [menus, setMenus] = useState<MenuTabsItem[]>([defaultMenu])
   const [currPath, setCurrPath] = useState<string>('')
   const [historyPath, setHistoryPath] = useState<string[]>([defaultMenu.path])
-
-  const openTab = useCallback((menu: MenuTabsItem) => {
-    if(!menus.some(m => m.key === menu.key)) {
-      setMenus([...menus, menu])
-    }
-    setHistoryPath([...historyPath.filter(path => path !== menu.key), menu.path])
-  }, [currPath])
+  console.log('historyPath -- ', historyPath)
 
   const closeTab = useCallback((key: string) => {
     const copyMeuns = [...menus]
@@ -53,10 +47,22 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
     remove(copyMeuns, (menu: { key: string }) => menu.key === key)
     remove(copyHistoryPath, (path: string) => path === key)
     setMenus(copyMeuns)
+    setHistoryPath(copyHistoryPath)
+    console.log('historyPath -  2222  - ', historyPath)
     if(key === currPath) {
       history.push(copyHistoryPath[copyHistoryPath.length - 1])
     }
     // history.go(-1)
+  }, [currPath])
+
+  const openTab = useCallback((menu: MenuTabsItem) => {
+    // const path = history.location.pathname
+    setCurrPath(menu.path)
+    if(!menus.some(m => m.key === menu.key)) {
+      setMenus([...menus, menu])
+    }
+    console.log('historyPath -    - ', historyPath)
+    setHistoryPath([...historyPath.filter(p => p !== menu.key), menu.path])
   }, [currPath])
 
   // const closeAll = useCallback(() => {
@@ -64,7 +70,6 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
   // }, [])
 
   const tabs = getMenuList(menuData)
-
   const getTabMenuByPath = useCallback((path: string): MenuTabsItem | null => {
     let tab = null
     tabs.forEach((t) => {
@@ -73,32 +78,32 @@ const TabsLayout: React.FC<HeaderViewProps> = ({ children, menuData }) => {
       }
     })
     return tab
-  }, [tabs])
+  }, [menuData])
 
   useEffect(() => {
-    setCurrPath(location.pathname)
-    const tab = getTabMenuByPath(location.pathname)
-    if (tab) {
-      openTab(tab)
-    }
-    // history.listen((location) => {
-    //   setCurrPath(location.pathname)
-    //   const tab = getTabMenuByPath(location.pathname)
-    //   if (tab) {
-    //     openTab(tab)
-    //   }
-    // })
-  }, [getTabMenuByPath, openTab])
+    // setCurrPath(history.location.pathname)
+    // const tab = getTabMenuByPath(history.location.pathname)
+    // if (tab) {
+    //   openTab(tab)
+    // }
+    history.listen((location) => {
+      setCurrPath(location.pathname)
+      const tab = getTabMenuByPath(location.pathname)
+      if (tab) {
+        openTab(tab)
+      }
+    })
+  }, [getTabMenuByPath, openTab, closeTab])
 
-  useEffect(() => {
-    if(!currPath) {
-      setCurrPath(history.location.pathname)
-    }
-    const currMenu = getTabMenuByPath(history.location.pathname)
-    if (currMenu && currMenu.key !== '/welcome') {
-      openTab(currMenu)
-    }
-  }, [currPath])
+  // useEffect(() => {
+  //   // if(!currPath) {
+  //   //   setCurrPath(history.location.pathname)
+  //   // }
+  //   const currMenu = getTabMenuByPath(history.location.pathname)
+  //   if (currMenu) {
+  //     openTab(currMenu)
+  //   }
+  // }, [openTab])
 
   const isCurrent = useCallback((key): boolean => {
     return currPath === key
