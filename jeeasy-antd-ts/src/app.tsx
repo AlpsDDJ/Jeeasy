@@ -79,12 +79,21 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     waterMarkProps: {
       content: initialState?.currentUser?.username
     },
-    childrenRender: dom => <PageContainer title={ false } breadcrumb={{}} children={ dom } />,
+    childrenRender: dom => <PageContainer title={ false } breadcrumb={ {} } children={ dom } />,
     headerRender: (props, dom) => {
       // @ts-ignore
       return <TabsLayout { ...props } children={ dom } breadcrumb={ props.breadcrumb } />
     },
     footerRender: () => <Footer />,
+    menuItemRender: (menuItemProps, defaultDom) => {
+      if (menuItemProps.isUrl || !menuItemProps.path) {
+        return defaultDom
+      }
+
+      return <Link to={ menuItemProps.path }>
+          { menuItemProps.pro_layout_parentKeys && menuItemProps.pro_layout_parentKeys.length > 0 &&
+          menuItemProps.icon }{ defaultDom }</Link>
+    },
     onPageChange: async () => {
       const { location } = history
       // 如果没有登录，重定向到 login

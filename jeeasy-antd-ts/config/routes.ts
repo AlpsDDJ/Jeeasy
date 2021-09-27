@@ -19,10 +19,10 @@ export default [
     path: 'sys',
     name: '系统管理',
     access: 'ROLE:admin',
-    icon: 'crown',
+    icon: 'setting',
     routes: [
-      { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'smile', component: './sys/user' },
-      { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'smile', component: './sys/role' },
+      { path: 'user', access: 'ROLE:admin', name: '用户管理', icon: 'user', component: './sys/user' },
+      { path: 'role', access: 'ROLE:admin', name: '角色管理', icon: 'team', component: './sys/role' },
       { component: './404' },
     ],
   },

@@ -7,17 +7,20 @@ import { history } from 'umi'
 import type { HeaderViewProps } from '@ant-design/pro-layout/lib/Header'
 import type { MenuDataItem } from '@ant-design/pro-layout'
 import { remove } from 'lodash'
+import { HomeOutlined } from '@ant-design/icons'
 
 export type MenuTabsItem = {
   key: string,
   name: string,
   path: string
+  icon?: string | React.ReactNode
 }
 
 const defaultMenu: MenuTabsItem = {
   name: '欢迎页',
   key: '/welcome',
-  path: '/welcome'
+  path: '/welcome',
+  icon: <HomeOutlined />
 }
 
 
@@ -119,11 +122,12 @@ const TabsLayout: React.FC<HeaderViewProps & { breadcrumb: any }> = ({ children,
       { children }
       <Row className="tabs">
         {
-          tabs.map(({ name, key, path }) => {
+          tabs.map(({ name, key, path = '', icon }) => {
             const isCurrent = history.location.pathname === key
 
             // const curr = isCurrent(key)
             const tagProps: TagProps = {
+              icon,
               closable: key !== '/welcome',
               // color: curr ? 'success' : '',
               className: isCurrent ? 'tab active-tab' : 'tab',
