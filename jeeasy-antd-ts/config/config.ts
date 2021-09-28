@@ -1,35 +1,42 @@
 // https://umijs.org/config/
-import { defineConfig } from 'umi';
-import { join } from 'path';
-import defaultSettings from './defaultSettings';
-import proxy from './proxy';
-import routes from './routes';
-const { REACT_APP_ENV } = process.env;
+import { defineConfig } from 'umi'
+import { join } from 'path'
+import defaultSettings from './defaultSettings'
+import proxy from './proxy'
+import routes from './routes'
+
+const { REACT_APP_ENV } = process.env
 export default defineConfig({
   hash: true,
   antd: {
     dark: true
   },
   dva: {
-    hmr: true,
+    hmr: true
   },
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
     locale: false,
     siderWidth: 208,
-    ...defaultSettings,
+    ...defaultSettings
   },
   dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
+    loading: '@ant-design/pro-layout/es/PageLoading'
   },
   targets: {
-    ie: 11,
+    ie: 11
   },
   // umi routes: https://umijs.org/docs/routing
   routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     'primary-color': defaultSettings.primaryColor,
+    'white': 'fade(@white, 80%)',
+    'black': 'fade(@black, 80%)',
+    // 'text-color': 'fade(@white, 55%)',
+    // 'text-color-secondary': 'fade(@white, 40%)',
+    // 'text-color-dark': 'fade(@black, 75%)',
+    // 'text-color-secondary-dark': 'fade(@black, 55%)',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild
@@ -38,26 +45,26 @@ export default defineConfig({
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
   manifest: {
-    basePath: '/',
+    basePath: '/'
   },
   // Fast Refresh 热更新
   fastRefresh: {},
   openAPI: [
     {
-      requestLibPath: "import { request } from 'umi'",
+      requestLibPath: 'import { request } from \'umi\'',
       // 或者使用在线的版本
       // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
       schemaPath: join(__dirname, 'oneapi.json'),
-      mock: false,
+      mock: false
     },
     {
-      requestLibPath: "import { request } from 'umi'",
+      requestLibPath: 'import { request } from \'umi\'',
       schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
-      projectName: 'swagger',
-    },
+      projectName: 'swagger'
+    }
   ],
   nodeModulesTransform: {
-    type: 'none',
+    type: 'none'
   },
   mfsu: {},
   webpack5: {},
@@ -67,4 +74,4 @@ export default defineConfig({
       'root-entry-name': 'default'
     }
   }
-});
+})
