@@ -2,7 +2,7 @@ import type { MutableRefObject } from 'react'
 import React, { useRef, useState } from 'react'
 import { getDictItems } from '@/services/common/api'
 import type { ProColumns, ProTableProps } from '@ant-design/pro-table'
-import { Button, message, Popconfirm } from 'antd'
+import { Button, FormInstance, message, Popconfirm } from 'antd'
 import type { ProFormColumnsType } from '@ant-design/pro-form'
 import type { ApiMap } from '@/services'
 import type { FormSchema } from '@ant-design/pro-form/lib/components/SchemaForm'
@@ -11,9 +11,10 @@ import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
 import { defaultFormItemLayout } from '@/common/setting'
+import { dictCode } from '@/common/dict'
 
 async function formatDictItems(code: string) {
-  return  await getDictItems(code)
+  return await getDictItems(code)
   // const dicts = resp?.data
   // return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
 }
@@ -22,7 +23,8 @@ export type ExtendProColumns<T = any, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
   dict?: string;
   operate?: OperateColumn<T>[];
-  dataIndex?: DataIndexType<T>
+  dataIndex?: DataIndexType<T>;
+  hiddenByData?: (record: T, form: FormInstance<T>) => boolean
 };
 
 
@@ -38,10 +40,10 @@ type OperateColumn<T> = OperateType | OperateRender<T> | {
 
 type DataIndexType<T = any> = string | number | (string | number)[] | keyof T
 
-export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T> = {}, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}): ExtendProColumns<T, ValueType>[] {
+export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T>, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}): ExtendProColumns<T, ValueType>[] {
   const copyColumnMap = { ...columnMap }
   columns.forEach((col) => {
-    if(col.dataIndex){
+    if (col.dataIndex) {
       const di = typeof col.dataIndex === 'string' ? col.dataIndex : ''
       // if(di === 'status'){
       //   console.log(copyColumnMap[di])
@@ -51,7 +53,7 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
         ...col
       }
     } else {
-      copyColumnMap['operate'] = col
+      copyColumnMap.operate = col
     }
   })
 
@@ -63,11 +65,11 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
       ..._column
     }
 
-    if(!column){
+    if (!column) {
       console.log(_column)
     }
 
-    const { renderText, dict, valueType, operate } = column
+    const { renderText, dict, valueType, operate, hiddenByData, formItemProps } = column
     let col: ExtendProColumns<T, ValueType> = {}
     if (operate) {
       col = {
@@ -141,15 +143,48 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
         hideInSearch: true
       }
     }
+
+    if (hiddenByData) {
+      if (!formItemProps) {
+        col = {
+          ...col,
+          // @ts-ignore
+          formItemProps: (form: FormInstance<T>) => {
+            const record = form.getFieldsValue()
+            return {
+              style: { display: hiddenByData(record, form) ? 'none' : '' }
+            }
+          }
+        }
+      }
+      if (typeof formItemProps === 'function') {
+        col = {
+          ...col,
+          // @ts-ignore
+          formItemProps: (form: FormInstance<T>, config: any) => {
+            const record: T = form.getFieldsValue()
+            return {
+              style: { display: hiddenByData(record, form) ? 'none' : '' },
+              ...formItemProps(form, config)
+            }
+          }
+        }
+      }
+    }
+
+
     if (currCol || operate || column.dataIndex === 'operate') {
+
+      const vt = valueType || (dict ? (dict === dictCode.bool || dict === dictCode.enableFlag ? 'radioButton' : 'select') : 'text')
+
       copyColumnMap[di] = {
-        // @ts-ignore
         title: labels[column.dataIndex],
         renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
-        valueType: valueType || (dict ? 'select' : 'text'),
+        valueType: vt,
+        // renderFormItem: renderFormItem || (schema, config) => ()
         request: !valueType && dict ? () => formatDictItems(dict) : undefined,
         ...col,
-        ...column,
+        ...column
       }
     }
   })
@@ -159,6 +194,7 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
 
 type EasyTableConfig<T> = {
   title?: string;
+  isTree?: boolean;
   columns: ExtendProColumns<T>[];
   columnMap: Record<string, ExtendProColumns<T>>;
   apis: ApiMap<T>;
@@ -197,7 +233,7 @@ const defaultState: any = {
 }
 
 export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
-  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap } = config
+  const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap, isTree = false } = config
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
 
@@ -212,6 +248,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
     data = {},
     call = undefined
   ) => {
+    // console.log('showForm----- data ===== ', data)
     const sta = {
       ...state,
       formType: type,
@@ -221,12 +258,17 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
     if (loadInfo) {
       sta.formData = await apis.info(data?.id)
     }
-    await setEasyTableState(sta)
     fref.current?.setFieldsValue(sta.formData)
+    await setEasyTableState(sta)
     if (call) {
       await call()
     }
   }
+
+  // const tableRequest = !isTree ? apis.list: async (params) => {
+  //   const resp = await apis.list(params)
+  //
+  // }
 
   return {
     ...state,
@@ -237,6 +279,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
       request: apis.list,
       actionRef: tref,
       headerTitle: title,
+      search: !isTree,
       toolbar: {
         actions: (
           <Button

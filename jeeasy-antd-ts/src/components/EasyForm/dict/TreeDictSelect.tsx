@@ -10,7 +10,7 @@ type TreeDictProps = Record<string, any> | EasyFormInputProps & {
   loadAll?: boolean
 }
 
-const TreeDictSelect: React.FC<TreeDictProps> = ({ value = [], onChange, dictCode, multiple = false, loadAll = true, ...props }) => {
+const TreeDictSelect: React.FC<TreeDictProps> = ({ value, onChange, dictCode, multiple = false, loadAll = true, ...props }) => {
 
   const [options, setOptions] = useState<DataNode[]>([])
 
@@ -23,7 +23,7 @@ const TreeDictSelect: React.FC<TreeDictProps> = ({ value = [], onChange, dictCod
   const handleChange = (val: any[]) => {
     onChange?.(val)
   }
-  const v = value && Array.isArray(value) ? value : [value]
+  // const v = value && Array.isArray(value) ? value : [value]
 
   const loadData = loadAll ? undefined: ({ id }: DataNode) => {
     return getTreeDictItems(dictCode, id, loadAll).then(data => {
@@ -31,7 +31,7 @@ const TreeDictSelect: React.FC<TreeDictProps> = ({ value = [], onChange, dictCod
     })
   }
 
-  return <TreeSelect treeDataSimpleMode={loadAll} showSearch { ...props } multiple={ multiple } value={ v } onChange={ handleChange } loadData={ loadData } treeData={ options } />
+  return <TreeSelect treeDataSimpleMode={loadAll} showSearch { ...props } multiple={ multiple } value={ value } onChange={ handleChange } loadData={ loadData } treeData={ options } />
 }
 
 export default TreeDictSelect

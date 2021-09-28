@@ -94,6 +94,7 @@ type SendRequest<T> = (data?: any, options?: any) => Promise<T>
 
 export type ApiMap<T> = Record<string, SendRequest<T>> & {
   list: SendRequest<Partial<RequestData<T>>>,
+  // list: (params: any, options: any) => Promise<R<RequestData<T>>>
   info: (id: string, data?: any) => Promise<T>,
   del: (id: string, data?: any) => Promise<R>,
   delAll: (ids: string[], data?: any) => Promise<R>,
@@ -101,13 +102,12 @@ export type ApiMap<T> = Record<string, SendRequest<T>> & {
   edit: (entity: T | any) => Promise<R>,
 }
 
-export const useApis = <T>(api: BaseApi): ApiMap<T> => {
+export const useApis = <T>(api: BaseApi, isTree: boolean = false): ApiMap<T> => {
   const apiPathMap = parseApi(api)
   const apiMap: any = {}
   Object.keys(apiPathMap).forEach(key => {
     let _
     const path = apiPathMap[key]
-
 
     if (key === 'list') {
       apiMap[key] = async (params: T & { pageSize: number, current: number }, sort: any, filter: any) => {
@@ -116,6 +116,11 @@ export const useApis = <T>(api: BaseApi): ApiMap<T> => {
           sort,
           filter
         }
+
+        if(isTree){
+          return send(path, data)
+        }
+
         const resp = await send(path, data)
         const { success, data: result, message } = resp
         return new Promise<Partial<RequestData<T>>>((resolve, reject) => {

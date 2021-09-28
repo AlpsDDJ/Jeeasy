@@ -5,14 +5,13 @@ import type { RequestConfig, RunTimeLayoutConfig } from 'umi'
 import { ErrorShowType, history, Link } from 'umi'
 import RightContent from '@/components/RightContent'
 import { currentUser as queryCurrentUser, refreshToken } from './services/common/api'
-import { BookOutlined, LinkOutlined } from '@ant-design/icons'
 import { getToken } from '@/common/utils/tokenUtil'
 import type { RequestOptionsInit } from 'umi-request'
 import { stringify } from 'querystring'
 import TabsLayout from '@/components/TabsLayout'
 import { authHeaderKey, loginPath, refreshTokenUrl } from '@/common/setting'
 
-const isDev = process.env.NODE_ENV === 'development'
+// const isDev = process.env.NODE_ENV === 'development'
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -100,18 +99,18 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
         // await loginRedirect()
       }
     },
-    links: isDev
-      ? [
-        <Link to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-        <Link to="/~docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>
-      ]
-      : [],
+    // links: isDev
+    //   ? [
+    //     <Link to="/umi/plugin/openapi" target="_blank">
+    //         <LinkOutlined />
+    //         <span>OpenAPI 文档</span>
+    //       </Link>,
+    //     <Link to="/~docs">
+    //         <BookOutlined />
+    //         <span>业务组件文档</span>
+    //       </Link>
+    //   ]
+    //   : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,

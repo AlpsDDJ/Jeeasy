@@ -4,21 +4,71 @@ import ProTable from '@ant-design/pro-table'
 import { useEasyTable } from '@/common/EasyTable'
 import { useApis } from '@/services'
 import { BetaSchemaForm } from '@ant-design/pro-form'
-import type SysPremission from './vo'
+import type SysPermission from './vo'
 import { baseApi, columnMap, labels, name } from './vo'
+import TreeDictSelect from '@/components/EasyForm/dict/TreeDictSelect'
+
+const menuTypeEnum = {
+  type1: 1, // 一级菜单
+  type2: 2, // 子菜单
+  type3: 3, // 权限&按钮
+
+}
 
 const PremissionList: React.FC = () => {
 
-  const apis = useApis<SysPremission>(baseApi)
+  const isTree = true
+  const apis = useApis<SysPermission>(baseApi, isTree)
 
-  const { columns, formOptions, tableRef, tableOptions, showForm } = useEasyTable<SysPremission>({
+  const hiddenInButton = (record: SysPermission) => record.menuType === menuTypeEnum.type3
+
+  const { columns, formOptions, tableRef, tableOptions, showForm } = useEasyTable<SysPermission>({
     title: name,
     fl: labels,
     apis,
+    isTree,
     columnMap,
     columns: [
       {
+        dataIndex: 'parentId',
+        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dictCode={ dict } />,
+        hiddenByData: record => record.menuType === menuTypeEnum.type1,
+      },
+      {
+        dataIndex: 'path',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'permsType',
+        hiddenByData: record => record.menuType !== menuTypeEnum.type3,
+      },
+      {
+        dataIndex: 'component',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'isRoute',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'isLeaf',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'hidden',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'alwaysShow',
+        hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'keepAlive',
+        hiddenByData: hiddenInButton,
+      },
+      {
         dataIndex: 'operate',
+        width: '200',
         operate: [{
           key: 'edit',
           name: '编辑',
@@ -44,11 +94,11 @@ const PremissionList: React.FC = () => {
 
   return (
     <>
-      <ProTable<SysPremission>
+      <ProTable<SysPermission>
         columns={ columns }
         { ...tableOptions }
       />
-      <BetaSchemaForm<SysPremission>
+      <BetaSchemaForm<SysPermission>
         { ...formOptions }
         columns={ columns }
       />

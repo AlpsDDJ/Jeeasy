@@ -75,6 +75,7 @@ type DataOption<T> = {
 export class BaseVo<T = any>{
   [key: string]: any | any[]
   $$: DataOption<T> = {
+    // @ts-ignore
     access: '', baseApi: '', fields: {}, labels: {}, name: '', columnMap: {}
   }
 }

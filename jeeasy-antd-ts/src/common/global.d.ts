@@ -13,7 +13,7 @@ declare type PageParams = {
  * 属性&名称
  */
 declare type FL<T = Record<string, any>> = {
-  [P in keyof T | string]?: P | string
+  [P in keyof T | string]: P | string
 }
 
 declare type R<T = any> = {

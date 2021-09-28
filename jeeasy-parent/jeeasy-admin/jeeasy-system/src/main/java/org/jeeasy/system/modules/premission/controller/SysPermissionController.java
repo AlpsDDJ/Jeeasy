@@ -36,16 +36,16 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "权限列表", notes = "权限列表")
-    public R<IPage<SysPermission>> list(HttpServletRequest req) {
-        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
-        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
-        String customSqlSegment = wrapper.getCustomSqlSegment();
-        log.info("customSqlSegment ======== {}", customSqlSegment);
-
-        List<SysPermission> list = service.list(wrapper);
-        IPage<SysPermission> page = new Page<>();
-        page.setRecords(list);
-        return R.ok(page);
+    public R<List<SysPermission>> list() {
+//        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
+//        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
+//        String customSqlSegment = wrapper.getCustomSqlSegment();
+//        log.info("customSqlSegment ======== {}", customSqlSegment);
+//        List<SysPermission> list = service.list(wrapper);
+//        IPage<SysPermission> page = new Page<>();
+//        page.setRecords(list);
+//        return R.ok(page);
+        return R.ok(service.queryAllChildren(null));
     }
 
     /**

@@ -33,7 +33,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             tableDict.setTableName(StrUtil.concat(true, "(", tableName, ")"));
         }
         if (BooleanEnum.yes(tableDict.getIsTree())) {
-            List<TreeDictVo> treeDictVos = baseMapper.queryTreeByTableDict(tableDict, async);
+//            List<TreeDictVo> treeDictVos = baseMapper.queryTreeByTableDict(tableDict, async);
             return baseMapper.queryTreeByTableDict(tableDict, async);
         }
 
