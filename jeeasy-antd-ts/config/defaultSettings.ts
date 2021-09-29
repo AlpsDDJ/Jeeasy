@@ -13,7 +13,7 @@ const Settings: LayoutSettings & {
   // fixSiderbar: true,
   navTheme: 'realDark',
   // headerTheme: "dark",
-  primaryColor: 'fade(#13C2C2, 80%)',
+  primaryColor: 'fade(#13C2C2, 85%)',
   fixSiderbar: true,
   fixedHeader: true,
   layout: 'side',
