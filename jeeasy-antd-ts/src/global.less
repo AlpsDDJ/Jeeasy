@@ -1,10 +1,32 @@
 @import '~antd/es/style/themes/default.less';
 
+@tabs-height: 37px;
+//@text-color: fade(@black, 55%);
+//@text-color-dark: fade(@white, 75%);
+//@white: fade(#fff, 80%);
+//@black: fade(#000, 80%);
+//@heading-color: fade(#fff, 70%);
+//@highlight-color: fade(#fff, 70%);
+//@text-color: @white;
+//@text-color-secondary: fade(@text-color, 60%);
+
 html,
 body,
 #root {
   height: 100%;
+  //color: @text-color-dark;
 }
+
+//.ant-table-thead > tr > th{
+//  color: fade(@white, 70%) !important;
+//}
+//
+//.ant-pro-menu-item-title{
+//  color: fade(#fff, 70%);
+//}
+//.ant-form-item-label > label{
+//  color: fade(#fff, 70%) !important;
+//}
 
 .colorWeak {
   filter: invert(80%);
@@ -81,11 +103,13 @@ ol {
   }
 }
 
-@tabs-height: 37px;
-@text-color: fade(@black, 55%);
-@text-color-dark: fade(@white, 75%);
-
 .ant-pro-basicLayout-content {
   //margin-top: 61px;
   padding-top: @tabs-height;
+}
+
+#login{
+  .ant-pro-page-container-children-content{
+    margin: 0;
+  }
 }

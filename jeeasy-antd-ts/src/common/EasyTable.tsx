@@ -138,6 +138,8 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
     if (operate || column.dataIndex === 'operate') {
       col = {
         ...col,
+        fixed: 'right',
+        width: 200,
         hideInForm: true,
         hideInDescriptions: true,
         hideInSearch: true

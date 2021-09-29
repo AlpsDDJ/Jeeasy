@@ -80,7 +80,7 @@ const Login: React.FC = () => {
   const { success, message: errorMessage } = userLoginState;
   const loginType = type
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="login">
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>

@@ -9,7 +9,7 @@ const { REACT_APP_ENV } = process.env
 export default defineConfig({
   hash: true,
   antd: {
-    dark: true
+    // dark: true
   },
   dva: {
     hmr: true
@@ -31,8 +31,6 @@ export default defineConfig({
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     'primary-color': defaultSettings.primaryColor,
-    'white': 'fade(@white, 80%)',
-    'black': 'fade(@black, 80%)',
     // 'text-color': 'fade(@white, 55%)',
     // 'text-color-secondary': 'fade(@white, 40%)',
     // 'text-color-dark': 'fade(@black, 75%)',
