@@ -182,7 +182,7 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
       copyColumnMap[di] = {
         title: labels[column.dataIndex],
         renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
-        renderFormItem: renderFormItem || dict ? () => <DictSelect dict={ dict } />: undefined,
+        renderFormItem: renderFormItem || dict ? () => <DictSelect dict={ dict } /> : undefined,
         // valueType: vt,
         // renderFormItem: renderFormItem || (schema, config) => ()
         // request: !valueType && dict ? () => formatDictItems(dict) : undefined,

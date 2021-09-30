@@ -38,23 +38,24 @@ const DictSelect: React.FC<DictSelectProps> = ({ value, onChange, dict, multiple
 
   switch (showType) {
     case 'checkBox': {
-      return <Checkbox.Group options={options} value={value} onChange={handleChange} { ...props } />
+      return <Checkbox.Group options={ options } value={ value } onChange={ handleChange } { ...props } />
     }
     case 'switch': {
       const vals = {}
       options.forEach(({ value: v, label }) => {
         vals[v] = label
       })
-      return <Switch { ...props } checked={value === 1} onChange={ (checked) => handleChange(checked ? 1: 0) } checkedChildren={vals[1]} unCheckedChildren={vals[0]} />
+      return <Switch { ...props } checked={ value === 1 } style={ { width: 'auto' } } onChange={ (checked) => handleChange(checked ? 1 : 0) } checkedChildren={ vals[1] }
+                     unCheckedChildren={ vals[0] } />
     }
     case 'select': {
-      return <Select loading={loading} showSearch { ...props } mode={ multiple ? 'multiple' : undefined } value={ value } onChange={ handleChange } options={ options } />
+      return <Select loading={ loading } showSearch { ...props } mode={ multiple ? 'multiple' : undefined } value={ value } onChange={ handleChange } options={ options } />
     }
     case 'radio': {
-      return <Radio.Group options={options} value={value} onChange={handleChange} { ...props } />
+      return <Radio.Group options={ options } value={ value } onChange={ handleChange } { ...props } />
     }
     case 'radioButton': {
-      return <Radio.Group options={options} value={value} onChange={handleChange} { ...props } optionType="button" />
+      return <Radio.Group options={ options } value={ value } onChange={ handleChange } { ...props } optionType="button" />
     }
   }
 }
