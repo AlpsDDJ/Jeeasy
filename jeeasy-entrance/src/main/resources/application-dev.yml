@@ -1,0 +1,119 @@
+server:
+  # 端 口
+  port: 8888
+
+# 数据源配置
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:mysql://jeeasy.cn:3306/jeeasy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          username: jeeasy
+          password: 26yMBG8hRRNKrEMT
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    host: jeeasy.cn
+    password: KaK6Jm55PLaJyWtW
+    port: 6379
+    database: 10
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 1ms
+        max-idle: 8
+        min-idle: 0
+mybatis-plus:
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+jeeasy:
+  dict:
+    dict-table-flag: ["@", "#"]
+    dict-text-suffix: _dict
+    # 根据属性名称自动翻译字典，无需注释 @Dict
+    auto-translate-enum-class:
+      enableFlag: org.jeeasy.common.core.enums.EnableFlagEnum
+      delFlag: org.jeeasy.common.core.enums.DelFlagEnum
+      sex: org.jeeasy.common.core.enums.SexEnum
+  modules:
+    system:
+      # 登录图片验证码开关
+      enable-captcha: false
+  cache:
+    manager:
+      # cache自定义键 过期时间
+      configs:
+        - key: menu
+          second: 300
+        - key: user
+          second: 1800
+  #  system:
+  #    enable-captcha: false
+  # 权 限 配 置
+  security:
+    jwt:
+      header: Authorization
+      secret: jeeasy
+      expiration: 1000
+    # 不 需 要 权 限 拦 截 的 接 口 配 置
+    open-api:
+      - /auth/**  # 开放 登录 接口
+      - /noUser  # 开放 未登录重定向 接口
+      - /noAuth  # 开放 权限不足重定向 接口
+      - /captcha/** # 开放 验证码生成 接口
+      #      - /assets/** # 开放 静态资源
+      #      - /admin/** # 开放 静态资源
+      #      - /component/** # 开放 静态资源
+      - /favicon.ico # 开放 Logo
+      # swagger 排除
+      - /doc.html
+      - /swagger-ui.html
+      - /webjars/**
+      - /swagger-resources/**
+      - /v2/**
+      - /v3/**
+  #    login-url: /nouser
+  #    login-processing-url: /login
+  #    logout-url: /logout
+  doc:
+    # 是否启用swagger文档 -- 无效
+    #    enable: true
+    # 为不同模块单独配置swagger分组 -- 无效
+    #    default-module: jeeasy-system
+    modules:
+      -
+        group-key: jeeasy-system
+        group-name: Jeeasy 系统管理
+        title: Jeeasy 系统管理接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.system.modules
+      -
+        group-key: jeeasy-common
+        group-name: Jeeasy 公共接口
+        title: Jeeasy 公共接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.common
+        annotation: org.springframework.web.bind.annotation.RequestMapping
+      -
+        group-key: jeeasy-auth
+        group-name: Jeeasy 认证接口
+        title: Jeeasy 认证接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.auth
+        annotation: org.springframework.web.bind.annotation.RequestMapping
+      -
+        group-key: jeeasy-gen
+        group-name: Jeeasy 代码生成接口
+        title: Jeeasy 代码生成接口 API文档
+        version: 1.0
+        base-package: org.jeeasy.generate
+        annotation: org.springframework.web.bind.annotation.RequestMapping
+#      jeeasy-online:
+#        groupName: Jeeasy 在线开发
+#        title: Jeeasy 在线开发 API接口文档
+#        version: 1.0
+#        basePackage: org.jeeasy.online
