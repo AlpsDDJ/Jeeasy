@@ -18,6 +18,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
@@ -144,6 +145,19 @@ public class DictAspect {
 
             }
         }
+
+        // 树形结构数据 字典翻译
+        if(record instanceof BaseTree){
+            List<Map<String, Object>> childrenMap = new ArrayList<>();
+            List<?> children = ((BaseTree<?>) record).getChildren();
+            if(BeanUtil.isNotEmpty(children)){
+                children.forEach(r -> {
+                    childrenMap.add(translate(r));
+                });
+                objectNode.put("children", childrenMap);
+            }
+        }
+
         return objectNode;
     }
 

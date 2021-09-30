@@ -2,7 +2,6 @@ package org.jeeasy.system.modules.premission.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.system.enums.permission.LinkOpenTypeEnum;
 import org.jeeasy.system.enums.permission.MenuTypeEnum;
@@ -32,7 +32,7 @@ import java.util.List;
 @Accessors(chain = true)
 @TableName("sys_permission")
 @EqualsAndHashCode(callSuper = true)
-public class SysPermission extends Model<SysPermission> implements Serializable {
+public class SysPermission extends Model<SysPermission> implements BaseTree<SysPermission>, Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

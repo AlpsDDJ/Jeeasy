@@ -20,7 +20,7 @@
         select t.${tableDict.parentId} as parent_id, t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name, ${tableDict.leafColumn} as leaf
         from ${tableDict.tableName} t
         <where>
-            <if test="!async">
+            <if test="async">
                 t.${tableDict.parentId} = '${tableDict.parentValue}'
             </if>
         </where>

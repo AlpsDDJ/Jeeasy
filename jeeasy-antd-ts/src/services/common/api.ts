@@ -104,7 +104,7 @@ export async function getDictItems(code: string, options?: { [key: string]: any 
 export async function getTreeDictItems(code: string, parentId: string | number = 0, loadAll: boolean = true, options?: { [key: string]: any }): Promise<DataNode[]> {
   const params = {
     parentId,
-    'async': loadAll,
+    'async': !loadAll,
     ...options?.params
   }
   const opt = { ...({ ...options, params } || {}) }

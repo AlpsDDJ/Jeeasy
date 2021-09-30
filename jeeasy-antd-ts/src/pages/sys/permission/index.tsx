@@ -7,6 +7,9 @@ import { BetaSchemaForm } from '@ant-design/pro-form'
 import type SysPermission from './vo'
 import { baseApi, columnMap, labels, name } from './vo'
 import TreeDictSelect from '@/components/EasyForm/dict/TreeDictSelect'
+import EasyIcon from '@/components/EasyIcon'
+// import Icon from '@ant-design/icons'
+// import IconBase from '@ant-design/icons/es/components/IconBase'
 
 const menuTypeEnum = {
   type1: 1, // 一级菜单
@@ -31,7 +34,7 @@ const PremissionList: React.FC = () => {
     columns: [
       {
         dataIndex: 'parentId',
-        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dictCode={ dict } />,
+        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dict={ dict } />,
         hiddenByData: record => record.menuType === menuTypeEnum.type1,
       },
       {
@@ -57,6 +60,10 @@ const PremissionList: React.FC = () => {
       {
         dataIndex: 'hidden',
         hiddenByData: hiddenInButton,
+      },
+      {
+        dataIndex: 'icon',
+        render: (dom, { icon }) => <EasyIcon icon={icon} />
       },
       {
         dataIndex: 'alwaysShow',

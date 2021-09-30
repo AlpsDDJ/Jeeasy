@@ -28,30 +28,34 @@ public class SystemCommonController {
     private CommonService commonService;
 
     /**
-     * @param code
-     * @return {@link R}
+     * 根据ID查找数据字典
+     *
+     * @param code     代码
+     * @param parentId 父id
+     * @param async    异步
+     * @return {@link R}<{@link List}<{@link DictVo}>>
      * @author Alps
      * @date 2020/11/21 16:05
      */
     @GetMapping("/dicts/{code}")
     @DictTranslation
     @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
-    public R<List<DictVo>> getDicts(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "true") String async) {
+    public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") String async) {
         return R.ok(commonService.getDictsByCode(code, parentId, Boolean.parseBoolean(async)));
     }
 
-    /**
-     * @param code
-     * @return {@link R}
-     * @author Alps
-     * @date 2020/11/21 16:05
-     */
-    @GetMapping("/dicts/parents/{code}/{value}")
-    @DictTranslation
-    @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
-    public R<List<DictVo>> parents(@PathVariable("code") String code, @PathVariable("value") String value) {
-//        return R.ok(commonService.getDictsByCode(code, parentId));
-        return R.ok();
-    }
+//    /**
+//     * @param code
+//     * @return {@link R}
+//     * @author Alps
+//     * @date 2020/11/21 16:05
+//     */
+//    @GetMapping("/dicts/parents/{code}/{value}")
+//    @DictTranslation
+//    @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
+//    public R<List<DictVo>> parents(@PathVariable("code") String code, @PathVariable("value") String value) {
+////        return R.ok(commonService.getDictsByCode(code, parentId));
+//        return R.ok();
+//    }
 }
 

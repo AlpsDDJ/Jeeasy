@@ -12,7 +12,6 @@ export default class SysUser extends BaseVo<SysUser> {
   @Field('性别', { hideInSearch: true, dict: dictCode.sex }) sex?: Sex
   @Field('出生日期', { hideInSearch: true, valueType: 'date' }) birthday?: string
   @Field('密码') password?: string
-  @Field('状态', { dict: dictCode.sysUserStatus }) status?: 1 | 0
   @Field('email', { hideInSearch: true }) email?: string
   @Field('头像') avatar?: string
   @Field('创建时间') createTime?: Date
@@ -23,6 +22,7 @@ export default class SysUser extends BaseVo<SysUser> {
   @Field('删除标记') delFlag?: DelFalg
   @Field('角色', { dict: dictCode.sysRole, fieldProps: { mode: 'multiple' } }) roles?: SysRole[]
   @Field('部门', { dict: dictCode.sysDept }) depts?: any[] | string[]
+  @Field('状态', { dict: dictCode.sysUserStatus }) status?: 1 | 0
 }
 
 export const { labels, fields, baseApi, name, access, columnMap } = SysUser.prototype.$$

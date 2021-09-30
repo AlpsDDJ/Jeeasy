@@ -15,14 +15,14 @@ export default class SysPermission extends BaseVo<SysPermission> {
   // @Field('一级菜单跳转地址') redirect?: string
   @Field('菜单权限编码', true) perms?: string
   @Field('权限策略', { dict: permsType, hideInTable: true }) permsType?: number
-  @Field('菜单排序') sortNo?: number
+  @Field('菜单排序', { hideInTable: true, hideInSearch: true, valueType: 'digit' }) sortNo?: number
   @Field('聚合子路由', { dict: bool, hideInTable: true }) alwaysShow?: number
-  @Field('菜单图标') icon?: string
-  @Field('路由菜单', { dict: bool, hideInTable: true  }) isRoute?: number
+  @Field('菜单图标', true) icon?: string
+  @Field('路由菜单', { dict: bool, hideInTable: true }) isRoute?: number
   @Field('叶子节点', { dict: bool, hideInTable: true }) isLeaf?: number
   @Field('缓存该页面', { dict: bool, hideInTable: true }) keepAlive?: number
   @Field('隐藏路由', { dict: bool, hideInTable: true }) hidden?: number
-  @Field('描述') description?: string
+  @Field('描述', { hideInTable: true, hideInSearch: true }) description?: string
   // @Field('创建人') createBy?: string
   // @Field('创建时间') createTime?: Date
   // @Field('更新人') updateBy?: string

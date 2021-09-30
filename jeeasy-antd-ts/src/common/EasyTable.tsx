@@ -1,8 +1,8 @@
 import type { MutableRefObject } from 'react'
 import React, { useRef, useState } from 'react'
-import { getDictItems } from '@/services/common/api'
+// import { getDictItems } from '@/services/common/api'
 import type { ProColumns, ProTableProps } from '@ant-design/pro-table'
-import { Button, FormInstance, message, Popconfirm } from 'antd'
+import { Button, FormInstance, message, Popconfirm, Table } from 'antd'
 import type { ProFormColumnsType } from '@ant-design/pro-form'
 import type { ApiMap } from '@/services'
 import type { FormSchema } from '@ant-design/pro-form/lib/components/SchemaForm'
@@ -11,13 +11,13 @@ import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
 import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
 import { defaultFormItemLayout } from '@/common/setting'
-import { dictCode } from '@/common/dict'
+import DictSelect from '@/components/EasyForm/dict/DictSelect'
 
-async function formatDictItems(code: string) {
-  return await getDictItems(code)
-  // const dicts = resp?.data
-  // return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
-}
+// async function formatDictItems(code: string) {
+//   return await getDictItems(code)
+//   // const dicts = resp?.data
+//   // return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
+// }
 
 export type ExtendProColumns<T = any, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
@@ -40,7 +40,7 @@ type OperateColumn<T> = OperateType | OperateRender<T> | {
 
 type DataIndexType<T = any> = string | number | (string | number)[] | keyof T
 
-export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T>, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}): ExtendProColumns<T, ValueType>[] {
+export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T, ValueType>[], labels: FL<T>, columnMap: Record<string, ExtendProColumns<T, ValueType>> = {}, showIndex = true): ExtendProColumns<T, ValueType>[] {
   const copyColumnMap = { ...columnMap }
   columns.forEach((col) => {
     if (col.dataIndex) {
@@ -69,7 +69,7 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
       console.log(_column)
     }
 
-    const { renderText, dict, valueType, operate, hiddenByData, formItemProps } = column
+    const { renderText, renderFormItem, dict, operate, hiddenByData, formItemProps } = column
     let col: ExtendProColumns<T, ValueType> = {}
     if (operate) {
       col = {
@@ -177,21 +177,42 @@ export function columnsExtend<T, ValueType = 'text'>(columns: ExtendProColumns<T
 
     if (currCol || operate || column.dataIndex === 'operate') {
 
-      const vt = valueType || (dict ? (dict === dictCode.bool || dict === dictCode.enableFlag ? 'radioButton' : 'select') : 'text')
+      // const vt = valueType || (dict ? (dict === dictCode.bool || dict === dictCode.enableFlag ? 'radioButton' : 'select') : 'text')
 
       copyColumnMap[di] = {
         title: labels[column.dataIndex],
         renderText: renderText || ((text, record) => record[`${ column.dataIndex }_dict`] || text),
-        valueType: vt,
+        renderFormItem: renderFormItem || dict ? () => <DictSelect dict={ dict } />: undefined,
+        // valueType: vt,
         // renderFormItem: renderFormItem || (schema, config) => ()
-        request: !valueType && dict ? () => formatDictItems(dict) : undefined,
+        // request: !valueType && dict ? () => formatDictItems(dict) : undefined,
         ...col,
         ...column
       }
     }
   })
 
-  return Object.values(copyColumnMap)
+  const indexAndSelectCol: ExtendProColumns<T>[] = []
+  const finaCols = Object.values(copyColumnMap)
+  // if(showSelect) {
+  //   indexAndSelectCol.push({
+  //     dataIndex: 'index',
+  //     valueType: 'indexBorder',
+  //     title: '#',
+  //     order: 100,
+  //     width: 48,
+  //   })
+  // }
+  if (showIndex) {
+    indexAndSelectCol.push({
+      dataIndex: '#',
+      valueType: 'index',
+      title: '',
+      width: 48
+    })
+  }
+
+  return [...indexAndSelectCol, ...finaCols]
 }
 
 type EasyTableConfig<T> = {
@@ -203,6 +224,8 @@ type EasyTableConfig<T> = {
   fl: FL<T>;
   formLayout?: ProFormLayoutType;
   formatFormData?: (values: T) => any;
+  showIndex?: boolean;
+  showSelect?: boolean;
   // tableRef?: React.MutableRefObject<ActionType | undefined>,
   loadInfo?: boolean;
 };
@@ -236,6 +259,7 @@ const defaultState: any = {
 
 export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>): EasyTableState<T> {
   const { apis, columns, fl, title, loadInfo = false, formLayout = 'DrawerForm', formatFormData = vals => vals, columnMap, isTree = false } = config
+  const { showIndex = !isTree, showSelect = true } = config
   const tref = useRef<ActionType>()
   const fref = useRef<ProFormInstance<T>>()
 
@@ -243,9 +267,9 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
   const setEasyTableState = (data: Record<any, any>) => {
     setState({ ...state, ...data })
   }
-  const cols = columnsExtend<T, ValueType>(columns, fl, columnMap)
+  const cols = columnsExtend<T, ValueType>(columns, fl, columnMap, showIndex)
 
-  const showForm: (type: FormType, data?: T | any, call?: () => {}) => void = async (
+  const showForm: (type: FormType, data?: T | any, call?: () => void) => void = async (
     type,
     data = {},
     call = undefined
@@ -257,11 +281,11 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
       formVisible: true,
       formData: data
     }
-    if (loadInfo) {
+    if (type === 'edit' && loadInfo) {
       sta.formData = await apis.info(data?.id)
     }
     fref.current?.setFieldsValue(sta.formData)
-    await setEasyTableState(sta)
+    setEasyTableState(sta)
     if (call) {
       await call()
     }
@@ -282,6 +306,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
       actionRef: tref,
       headerTitle: title,
       search: !isTree,
+      pagination: !isTree,
       toolbar: {
         actions: (
           <Button
@@ -293,7 +318,10 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
             <PlusOutlined /> 新增
           </Button>
         )
-      }
+      },
+      rowSelection: showSelect ? {
+        selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+      } : null
     },
     formRef: fref,
     formOptions: {
@@ -306,6 +334,7 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
         setEasyTableState({ formVisible: visible })
         if (!visible) {
           fref.current?.resetFields()
+          // setEasyTableState({ formData: {} })
         }
       },
       onFinish: async (values) => {
@@ -317,8 +346,10 @@ export function useEasyTable<T, ValueType = 'text'>(config: EasyTableConfig<T>):
         const { success, message: msg } = await rep(params)
         if (success) {
           message.success(msg)
-          tref.current?.reload()
           setEasyTableState({ formVisible: false })
+          fref.current?.resetFields()
+          await tref.current?.reload()
+          // setEasyTableState({ formData: {} })
         } else {
           message.error(msg)
         }

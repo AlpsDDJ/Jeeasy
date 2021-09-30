@@ -6,7 +6,7 @@ import java.util.List;
  * @author AlpsDDJ
  * @date 2021/8/17 9:49
  */
-public interface BaseTreeVo<T> {
+public interface BaseTree<T> {
     List<T> getChildren();
-    boolean hasChildren();
+//    boolean hasChildren();
 }

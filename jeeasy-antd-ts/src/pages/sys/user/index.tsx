@@ -35,7 +35,7 @@ const UserList: React.FC = () => {
         dataIndex: 'depts',
         renderText: (text, { deptsText }) => deptsText.join(', '),
         valueType: 'text',
-        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dictCode={ dict } multiple={ true } />
+        renderFormItem: ({ originProps: { dict = '' } }) => <TreeDictSelect dict={ dict } multiple={ true } />
       },
       {
         dataIndex: 'operate',
