@@ -1,23 +1,16 @@
 import type { MutableRefObject } from 'react'
 import React, { useRef, useState } from 'react'
-// import { getDictItems } from '@/services/common/api'
 import type { ProColumns, ProTableProps } from '@ant-design/pro-table'
-import { Button, FormInstance, message, Popconfirm, Table } from 'antd'
+import type { FormInstance } from 'antd'
+import { Button, message, Popconfirm, Table } from 'antd'
 import type { ProFormColumnsType } from '@ant-design/pro-form'
 import type { ApiMap } from '@/services'
-import type { FormSchema } from '@ant-design/pro-form/lib/components/SchemaForm'
+import type { FormSchema, ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import type { ActionType } from '@ant-design/pro-table/lib/typing'
 import type { ProFormInstance } from '@ant-design/pro-form/lib/BaseForm'
-import type { ProFormLayoutType } from '@ant-design/pro-form/lib/components/SchemaForm'
 import { PlusOutlined } from '@ant-design/icons'
 import { defaultFormItemLayout } from '@/common/setting'
 import DictSelect from '@/components/EasyForm/dict/DictSelect'
-
-// async function formatDictItems(code: string) {
-//   return await getDictItems(code)
-//   // const dicts = resp?.data
-//   // return dicts.map(({ dictCode, dictName }: any) => ({ label: dictName, value: dictCode }))
-// }
 
 export type ExtendProColumns<T = any, ValueType = 'text'> = ProColumns<T> &
   ProFormColumnsType<T, ValueType> & {
