@@ -18,12 +18,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.domain.vo.BaseTree;
+import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.DictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 

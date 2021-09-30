@@ -1,10 +1,8 @@
 package org.jeeasy.system.modules.dict.service.impl;
 
-import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeeasy.common.core.domain.vo.DictVo;
-import org.jeeasy.common.core.domain.vo.TreeDictVo;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;

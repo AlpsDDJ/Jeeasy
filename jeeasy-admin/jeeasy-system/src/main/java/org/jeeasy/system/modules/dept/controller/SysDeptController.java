@@ -1,8 +1,5 @@
 package org.jeeasy.system.modules.dept.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.system.modules.dept.domain.SysDept;
 import org.jeeasy.system.modules.dept.service.SysDeptService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,13 +30,14 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
     @GetMapping
     @DictTranslation
     @ApiOperation(value = "组织机构列表", notes = "组织机构列表")
-    public R<IPage<SysDept>> list(HttpServletRequest req) {
-        QueryWrapper<SysDept> wrapper = QueryGenerator.createWrapper(SysDept.class, req.getParameterMap());
-        wrapper.lambda().orderByAsc(SysDept::getSortNo);
-        List<SysDept> list = service.list(wrapper);
-        IPage<SysDept> page = new Page<>();
-        page.setRecords(list);
-        return R.ok(page);
+    public R<List<SysDept>> list() {
+//        QueryWrapper<SysDept> wrapper = QueryGenerator.createWrapper(SysDept.class, req.getParameterMap());
+//        wrapper.lambda().orderByAsc(SysDept::getSortNo);
+//        List<SysDept> list = service.list(wrapper);
+//        IPage<SysDept> page = new Page<>();
+//        page.setRecords(list);
+//        return R.ok(page);
+        return R.ok(service.queryAllChildren(null));
     }
 
     /**

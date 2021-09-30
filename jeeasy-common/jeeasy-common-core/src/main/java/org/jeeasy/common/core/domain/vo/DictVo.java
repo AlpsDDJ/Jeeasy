@@ -1,11 +1,8 @@
 package org.jeeasy.common.core.domain.vo;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.common.core.enums.IDictEnum;
 
 import java.io.Serializable;

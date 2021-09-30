@@ -9,10 +9,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.system.enums.dept.OrgCategoryEnum;
 import org.jeeasy.system.enums.dept.OrgTypeEnum;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 组织机构
@@ -24,7 +26,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("sys_dept")
 @ApiModel(value = "组织机构")
-public class SysDept extends Model<SysDept> {
+public class SysDept extends Model<SysDept> implements BaseTree<SysDept> {
 
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "ID")
@@ -101,5 +103,8 @@ public class SysDept extends Model<SysDept> {
         Integer orgType = this.getOrgType();
         return OrgTypeEnum.TOP.getValue().equals(orgType);
     }
+
+    @TableField(exist = false)
+    private List<SysDept> children;
 
 }

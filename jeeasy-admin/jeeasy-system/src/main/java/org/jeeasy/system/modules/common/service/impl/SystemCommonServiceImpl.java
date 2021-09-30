@@ -1,12 +1,12 @@
 package org.jeeasy.system.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import org.jeeasy.common.core.config.property.DictEnumProperty;
+import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.enums.IDictEnum;
 import org.jeeasy.common.core.service.CommonService;
 import org.jeeasy.common.core.tools.DictUtil;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.domain.vo.DictVo;
-import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
 import org.jeeasy.system.modules.dict.service.SysDictService;

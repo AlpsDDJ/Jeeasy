@@ -1,6 +1,8 @@
 package org.jeeasy.system.modules.dept.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.netty.util.internal.StringUtil;
 import org.jeeasy.common.core.tools.YouBianCodeUtil;
@@ -89,5 +91,22 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         }
         // 返回最终封装了部门编码和部门类型的数组
         return new SysDept().setOrgCode(newOrgCode).setOrgType(orgType);
+    }
+
+    @Override
+    public List<SysDept> queryAllChildren(String parentId) {
+        QueryWrapper<SysDept> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(SysDept::getParentId, parentId).orderByAsc(SysDept::getSortNo);
+        if(StrUtil.isEmpty(parentId) || "0".equals(parentId)){
+            wrapper.lambda().or().isNull(SysDept::getParentId);
+        }
+        List<SysDept> list = list(wrapper);
+        list.forEach(perm -> {
+            List<SysDept> children = queryAllChildren(perm.getId());
+            if(children != null && !children.isEmpty()){
+                perm.setChildren(children);
+            }
+        });
+        return list;
     }
 }

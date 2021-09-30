@@ -1,14 +1,12 @@
 package org.jeeasy.system.modules.common.controller;
 
-import cn.hutool.core.util.BooleanUtil;
-import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.service.CommonService;
+import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.service.CommonService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

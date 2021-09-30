@@ -1,9 +1,9 @@
 package org.jeeasy.common.core.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.enums.RestCode;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

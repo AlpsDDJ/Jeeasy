@@ -1,9 +1,9 @@
 package org.jeeasy.auth.provider;
 
 import org.jeeasy.auth.annotation.AuthType;
-import org.jeeasy.auth.vo.AuthUserFormModel;
 import org.jeeasy.auth.domain.Permission;
 import org.jeeasy.auth.service.IAuthService;
+import org.jeeasy.auth.vo.AuthUserFormModel;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,8 @@
 package org.jeeasy.auth.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.security.core.GrantedAuthority;
