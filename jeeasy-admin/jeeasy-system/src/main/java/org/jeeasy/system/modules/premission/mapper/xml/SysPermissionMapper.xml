@@ -8,5 +8,25 @@
     <sql id="baseColumn">
         id,parent_id,name,url,component,component_name,redirect,menu_type,perms,perms_type,sort_no,always_show,icon,is_route,is_leaf,keep_alive,hidden,description,create_by,create_time,update_by,update_time,del_flag,rule_flag,status,internal_or_external
     </sql>
+    <select id="queryByRoleId" resultType="org.jeeasy.system.modules.premission.domain.SysPermission"
+            parameterType="java.lang.String">
+        select a.id, a.name
+        from sys_permission a
+                 right join sys_role_permission b on a.id = b.permission_id
+        where b.role_id = #{roleId}
+          and a.enable_flag = 1
+          and a.del_flag = 0
+    </select>
+    <select id="queryByUserId" resultType="org.jeeasy.system.modules.premission.domain.SysPermission"
+            parameterType="java.lang.String">
+        SELECT
+            DISTINCT a.*
+        FROM
+            `sys_role_permission` b
+                LEFT JOIN sys_permission a ON a.id = b.permission_id
+                LEFT JOIN sys_user_role c ON b.role_id = c.role_id
+        WHERE
+            c.user_id = #{userId}
+    </select>
 
 </mapper>

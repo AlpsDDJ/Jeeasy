@@ -10,10 +10,13 @@ import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.ServletUtil;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.config.property.SystemConfigProperties;
+import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.SysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,11 +44,14 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     @Resource
     private SysUserService sysUserService;
 
+    @Autowired
+    private SysPermissionService permissionService;
+
     @Resource
     private SystemConfigProperties properties;
 
     @Override
-    @Cacheable(value = CommonConstant.CACHE_SYS_USER_KEY, key= "#username")
+    @Cacheable(value = CommonConstant.CACHE_SYS_USER_KEY, key = "#username")
     public SystemAuthUser getAuthUserByUsername(String username) {
         SysUser sysUser = sysUserService.getByUserName(username);
         if (Tools.isNotEmpty(sysUser)) {
@@ -57,7 +64,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     }
 
     @Override
-    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key= "#username")
+    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key = "#username")
     public boolean verifyLogin(String username, Authentication authentication) {
         try {
             // 验证码
@@ -76,7 +83,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
         if (Tools.isEmpty(sysUser)) {
             throw new UsernameNotFoundException("用户名不存在");
         }
-        if(SysUserUtil.create(sysUser).checkPassword(password)){
+        if (SysUserUtil.create(sysUser).checkPassword(password)) {
 //            SystemAuthUser authUser = IAuthUser.create(sysUser, SystemAuthUser.class);
 //            authUser.setPermissions(this.getPermissionSetByUsername(username)).setRoles(this.getRoleSetByUsername(username));
 //            return authUser;
@@ -95,7 +102,15 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Override
     public Set<String> getPermissionSetByUsername(String username) {
-        return new HashSet<>();
+        Set<String> pset = new HashSet<>();
+        SysUser user = sysUserService.getByUserName(username);
+        if (Tools.isNotEmpty(user)) {
+            List<SysPermission> userPermissions = permissionService.queryByUserId(user.getId());
+            userPermissions.forEach(p -> {
+                pset.add(p.getPerms());
+            });
+        }
+        return pset;
     }
 
     @Override

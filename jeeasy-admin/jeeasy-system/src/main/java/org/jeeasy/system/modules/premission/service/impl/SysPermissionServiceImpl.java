@@ -43,4 +43,14 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         });
         return list;
     }
+
+    @Override
+    public List<SysPermission> queryByRoleId(String roleId) {
+        return baseMapper.queryByRoleId(roleId);
+    }
+
+    @Override
+    public List<SysPermission> queryByUserId(String userId) {
+        return baseMapper.queryByUserId(userId);
+    }
 }

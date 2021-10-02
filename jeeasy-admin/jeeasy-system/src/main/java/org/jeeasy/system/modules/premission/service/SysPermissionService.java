@@ -25,4 +25,20 @@ public interface SysPermissionService extends IService<SysPermission> {
      */
     List<SysPermission> queryAllChildren(String parentId);
 
+    /**
+     * 通过角色id查询权限
+     *
+     * @param roleId 角色id
+     * @return {@link List}<{@link SysPermission}>
+     */
+    List<SysPermission> queryByRoleId(String roleId);
+
+    /**
+     * 通过用户id查询权限
+     *
+     * @param userId 用户id
+     * @return {@link List}<{@link SysPermission}>
+     */
+    List<SysPermission> queryByUserId(String userId);
+
 }

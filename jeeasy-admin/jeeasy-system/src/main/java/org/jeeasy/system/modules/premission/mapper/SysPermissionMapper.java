@@ -2,7 +2,10 @@ package org.jeeasy.system.modules.premission.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
+
+import java.util.List;
 
 /**
  * 菜单权限表(sys_permission)数据Mapper
@@ -16,4 +19,20 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
 
 //    @ResultMap("PermissionTreeMap")
 //    List<SysPermission> queryTreeList();
+
+    /**
+     * 通过角色id查询权限
+     *
+     * @param roleId 角色id
+     * @return {@link List}<{@link SysPermission}>
+     */
+    List<SysPermission> queryByRoleId(@Param("roleId") String roleId);
+
+    /**
+     * 通过用户id查询权限
+     *
+     * @param userId 用户id
+     * @return {@link List}<{@link SysPermission}>
+     */
+    List<SysPermission> queryByUserId(String userId);
 }
