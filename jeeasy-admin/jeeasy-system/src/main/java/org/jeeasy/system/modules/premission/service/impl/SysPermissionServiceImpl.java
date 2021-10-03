@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
 import org.jeeasy.system.modules.premission.mapper.SysPermissionMapper;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,11 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public List<SysPermission> queryByUserId(String userId) {
         return baseMapper.queryByUserId(userId);
+    }
+
+
+    @Override
+    public List<MenuVo> queryMenuByUserId(String userId) {
+        return baseMapper.queryMenuByUserId(userId, "0");
     }
 }

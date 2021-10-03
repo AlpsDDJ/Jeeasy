@@ -3,6 +3,7 @@ package org.jeeasy.system.modules.premission.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -40,5 +41,13 @@ public interface SysPermissionService extends IService<SysPermission> {
      * @return {@link List}<{@link SysPermission}>
      */
     List<SysPermission> queryByUserId(String userId);
+
+    /**
+     * 通过用户id查询菜单
+     *
+     * @param userId 用户id
+     * @return {@link List}<{@link MenuVo}>
+     */
+    List<MenuVo> queryMenuByUserId(String userId);
 
 }

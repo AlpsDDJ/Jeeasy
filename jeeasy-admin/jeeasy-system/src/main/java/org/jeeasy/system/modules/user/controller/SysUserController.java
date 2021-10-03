@@ -6,18 +6,24 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.auth.tools.SecurityUtil;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
+import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
+import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.model.ChangePasswordByOldPasswordModel;
 import org.jeeasy.system.modules.user.domain.model.SysUserQueryPageModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
 import org.jeeasy.system.modules.user.service.SysUserService;
 import org.jeeasy.system.tools.SysUserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +38,8 @@ import java.util.List;
 @Api(tags = "系统用户")
 @RequestMapping("/sys/user")
 public class SysUserController extends SimpleBaseController<SysUserService, SysUser> {
+    @Autowired
+    private SysPermissionService permissionService;
 
     @GetMapping
     @DictTranslation
@@ -130,6 +138,18 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     public R<?> resetPassword(@RequestBody String id) {
         SysUser sysUser = this.service.getById(id);
         return this.update(SysUserUtil.create(sysUser).initSaltAndPassword());
+    }
+
+
+
+    @GetMapping("/menus")
+    @DictTranslation
+    @ApiOperation(value = "当前登录用户菜单列表", notes = "当前登录用户菜单列表")
+    public R<List<MenuVo>> menus() {
+        String currentAuthUserId = SecurityUtil.getCurrentAuthUser().id();
+        List<MenuVo> sysPermissions = permissionService.queryMenuByUserId(currentAuthUserId);
+//        return super.getById(id);
+        return R.ok(sysPermissions);
     }
 
 }

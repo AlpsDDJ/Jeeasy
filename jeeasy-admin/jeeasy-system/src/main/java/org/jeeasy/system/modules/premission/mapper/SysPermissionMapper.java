@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
+import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -34,5 +35,13 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @param userId 用户id
      * @return {@link List}<{@link SysPermission}>
      */
-    List<SysPermission> queryByUserId(String userId);
+    List<SysPermission> queryByUserId(@Param("userId") String userId);
+
+    /**
+     * 通过用户id查询菜单
+     *
+     * @param userId 用户id
+     * @return {@link List}<{@link MenuVo}>
+     */
+    List<MenuVo> queryMenuByUserId(@Param("userId") String userId, @Param("parentId") String parentId);
 }

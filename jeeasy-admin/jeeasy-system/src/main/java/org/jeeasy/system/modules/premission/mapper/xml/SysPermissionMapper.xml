@@ -20,13 +20,37 @@
     <select id="queryByUserId" resultType="org.jeeasy.system.modules.premission.domain.SysPermission"
             parameterType="java.lang.String">
         SELECT
-            DISTINCT a.*
+            DISTINCT a.name, a.id
         FROM
             `sys_role_permission` b
                 LEFT JOIN sys_permission a ON a.id = b.permission_id
                 LEFT JOIN sys_user_role c ON b.role_id = c.role_id
         WHERE
             c.user_id = #{userId}
+    </select>
+
+    <resultMap id="MenuVo" type="org.jeeasy.system.modules.premission.domain.vo.MenuVo" autoMapping="true">
+        <id column="id" property="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <collection property="children" column="{parentId=id, userId=userId}" select="queryMenuByUserId"/>
+    </resultMap>
+
+
+    <select id="queryMenuByUserId" resultMap="MenuVo">
+        SELECT
+            DISTINCT a.*,
+            ${userId} as userId
+        FROM
+            `sys_role_permission` b
+                LEFT JOIN sys_permission a ON a.id = b.permission_id
+                LEFT JOIN sys_user_role c ON b.role_id = c.role_id
+        WHERE
+            c.user_id = #{userId} and a.menu_type != 3
+            <if test="parentId != 0">
+                and a.parent_id = #{parentId}
+            </if>
+            <if test="parentId == 0">
+                and (a.parent_id = 0 or a.parent_id is null)
+            </if>
     </select>
 
 </mapper>

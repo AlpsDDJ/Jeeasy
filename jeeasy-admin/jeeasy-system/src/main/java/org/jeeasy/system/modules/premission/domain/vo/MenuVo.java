@@ -18,6 +18,12 @@ import java.util.List;
 @Accessors(chain = true)
 public class MenuVo {
 
+    @ApiModelProperty("ID")
+    private String id;
+
+    @ApiModelProperty("上级菜单id")
+    private String parentId;
+
     @ApiModelProperty("菜单名称")
     private String name;
 
@@ -26,6 +32,9 @@ public class MenuVo {
 
     @ApiModelProperty("菜单图标")
     private String icon;
+
+    @ApiModelProperty("组件")
+    private String component;
 
     @ApiModelProperty("打开方式")
     private String target;
