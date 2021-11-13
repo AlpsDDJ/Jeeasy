@@ -14,7 +14,7 @@
         <result property="nameColumn" column="name_column" jdbcType="VARCHAR"/>
         <result property="isTree" column="is_tree" jdbcType="BOOLEAN"/>
         <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
-        <result property="isLeaf" column="is_leaf" jdbcType="VARCHAR"/>
+<!--        <result property="isLeaf" column="is_leaf" jdbcType="VARCHAR"/>-->
         <result property="enableFlag" column="enable_flag" jdbcType="BOOLEAN"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -25,7 +25,7 @@
 
     <sql id="Base_Column_List">
         id,dict_code,dict_name,table_name,
-        database_name,value_column,name_column,is_tree,parent_id,is_leaf
+        database_name,value_column,name_column,is_tree,parent_id
         enable_flag,create_by,create_time,
         update_by,update_time,del_flag
     </sql>

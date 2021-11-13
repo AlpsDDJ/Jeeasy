@@ -1,9 +1,6 @@
 package org.jeeasy.system.modules.dict.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -107,24 +104,28 @@ public class SysTableDict implements Serializable {
      * 创建人
      */
     @ApiModelProperty(value = "createBy", notes = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "createTime", notes = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新人
      */
     @ApiModelProperty(value = "updateBy", notes = "更新人")
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
      * 更新时间
      */
     @ApiModelProperty(value = "updateTime", notes = "更新时间")
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     /**
@@ -132,6 +133,8 @@ public class SysTableDict implements Serializable {
      */
     @ApiModelProperty(value = "delFlag", notes = "删除标记")
     @Dict(dictEnum = DelFlagEnum.class)
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private Integer delFlag;
 
     @TableField(exist = false)

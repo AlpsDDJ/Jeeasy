@@ -155,6 +155,7 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
      * 创建人
      */
     @ApiModelProperty("创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
@@ -168,6 +169,7 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
      * 更新人
      */
     @ApiModelProperty("更新人")
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
@@ -181,7 +183,7 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
      * 删除状态 0正常 1已删除
      */
     @ApiModelProperty(value = "删除状态", notes = "0:正常 1:已删除")
-//    @Dict(dictEnum = DelFlagEnum.class)
+    @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;
 
@@ -196,7 +198,6 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
      * 按钮权限状态(0无效1有效)
      */
     @ApiModelProperty(value = "启用标记", notes = "0:未启用 1:启用")
-//    @Dict(dictEnum = EnableFlagEnum.class)
     private Integer enableFlag;
 
     /**

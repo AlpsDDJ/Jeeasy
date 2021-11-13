@@ -1,9 +1,6 @@
 package org.jeeasy.generate.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
-import org.jeeasy.generate.emuns.IdTypeEnum;
 import org.jeeasy.generate.emuns.RelationTypeEnum;
 import org.jeeasy.generate.emuns.TableTypeEnum;
 
@@ -28,7 +24,7 @@ import java.time.LocalDateTime;
 @TableName("gen_table")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "gen_table对象", description = "代码生成表信息")
+@ApiModel(value = "代码生成表信息", description = "代码生成表信息")
 public class GenTable {
 
     /**
@@ -106,15 +102,15 @@ public class GenTable {
     /**
      * 主键生成序列
      */
-    @ApiModelProperty(value = "主键生成序列")
-    private String idSequence;
+//    @ApiModelProperty(value = "主键生成序列")
+//    private String idSequence;
 
     /**
      * 主键类型
      */
-    @ApiModelProperty(value = "主键类型")
-    @Dict(dictEnum = IdTypeEnum.class)
-    private Integer idType = 3;
+//    @ApiModelProperty(value = "主键类型")
+//    @Dict(dictEnum = IdTypeEnum.class)
+//    private Integer idType = 3;
 
     @ApiModelProperty(value = "表类型", notes = "single单表、main主表、slave附表、catalog分类")
     @Dict(dictEnum = TableTypeEnum.class)
@@ -196,29 +192,39 @@ public class GenTable {
      * 创建人
      */
     @ApiModelProperty(value = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建日期
      */
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新人
      */
     @ApiModelProperty(value = "更新人")
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
      * 更新日期
      */
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+
+    @ApiModelProperty(value = "删除状态", notes = "0: 正常 1: 已删除")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
+    private Integer delFlag;
 
     /**
      * 所属部门
      */
     @ApiModelProperty(value = "所属部门")
+    @TableField(fill = FieldFill.INSERT)
     private String sysOrgCode;
 }

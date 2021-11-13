@@ -92,13 +92,13 @@ public class SysUser extends Model<SysUser> implements Serializable {
 
     @TableLogic
     @ApiModelProperty("删除标记")
-    @TableField(fill = FieldFill.UPDATE)
-//    @Dict(dictEnum = DelFlagEnum.class)
+    @TableField(fill = FieldFill.INSERT)
     private Integer delFlag;
 
 
     @TableField(exist = false)
     private List<SysRole> roles;
+
     @TableField(exist = false)
     private List<SysDept> depts;
 

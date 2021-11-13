@@ -1,9 +1,10 @@
-package org.jeeasy.system.modules;
+package org.jeeasy;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModelProperty;
 import org.jeeasy.common.core.tools.Tools;
+import org.jeeasy.generate.entity.GenTable;
 import org.jeeasy.system.modules.dept.domain.SysDept;
 
 import java.lang.reflect.Field;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
-        Field[] declaredFields = ClassUtil.getDeclaredFields(SysDept.class);
+        Field[] declaredFields = ClassUtil.getDeclaredFields(GenTable.class);
         Map<String, String> map = new HashMap<>();
         Map<String, String> map2 = new HashMap<>();
 //        System.out.println(declaredFields.length);

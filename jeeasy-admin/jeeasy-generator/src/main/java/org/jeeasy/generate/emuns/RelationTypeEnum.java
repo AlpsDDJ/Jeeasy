@@ -5,6 +5,8 @@ import lombok.Getter;
 import org.jeeasy.common.core.enums.IDictEnum;
 
 /**
+ * 表映射关系
+ *
  * @author AlpsDDJ
  * @date 2021/1/14 13:30
  */

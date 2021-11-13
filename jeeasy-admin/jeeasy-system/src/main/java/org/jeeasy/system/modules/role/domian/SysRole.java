@@ -1,7 +1,6 @@
 package org.jeeasy.system.modules.role.domian;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,15 +34,19 @@ public class SysRole {
     private Integer enableFlag;
 
     @ApiModelProperty("创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("创建人")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     @ApiModelProperty("更新时间")
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty("更信人")
+    @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     @ApiModelProperty("备注")
@@ -54,6 +57,14 @@ public class SysRole {
 
     @ApiModelProperty("排序")
     private Double sortNo;
+
+    /**
+     * 删除状态 0正常 1已删除
+     */
+    @ApiModelProperty(value = "删除状态", notes = "0:正常 1:已删除")
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
+    private Integer delFlag;
 
 
 }
