@@ -1,7 +1,7 @@
 package org.jeeasy.generate.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeeasy.generate.entity.GenTable;
+import org.jeeasy.generate.domain.GenTable;
 
 /**
  * @author AlpsDDJ

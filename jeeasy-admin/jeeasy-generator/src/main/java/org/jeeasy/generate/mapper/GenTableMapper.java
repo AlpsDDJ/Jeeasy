@@ -1,7 +1,7 @@
 package org.jeeasy.generate.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeeasy.generate.entity.GenTable;
+import org.jeeasy.generate.domain.GenTable;
 
 /**
  * @Description: 代码生成

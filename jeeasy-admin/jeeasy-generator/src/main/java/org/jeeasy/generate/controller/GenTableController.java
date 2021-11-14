@@ -7,7 +7,7 @@ import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.generate.entity.GenTable;
+import org.jeeasy.generate.domain.GenTable;
 import org.jeeasy.generate.service.GenTableService;
 import org.springframework.web.bind.annotation.*;
 

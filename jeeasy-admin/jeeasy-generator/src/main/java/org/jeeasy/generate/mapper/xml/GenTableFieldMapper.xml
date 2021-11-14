@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeeasy.generate.mapper.GenTableFieldMapper">
+
+    <resultMap id="BaseResultMap" type="org.jeeasy.generate.domain.GenTableField">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="columnName" column="column_name" jdbcType="VARCHAR"/>
+            <result property="primaryKey" column="primary_key" jdbcType="BOOLEAN"/>
+            <result property="fieldName" column="field_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="jdbcType" column="jdbc_type" jdbcType="VARCHAR"/>
+            <result property="javaType" column="java_type" jdbcType="VARCHAR"/>
+            <result property="length" column="length" jdbcType="INTEGER"/>
+            <result property="decimalPlaces" column="decimal_places" jdbcType="INTEGER"/>
+            <result property="allowNull" column="allow_null" jdbcType="BOOLEAN"/>
+            <result property="defaultValue" column="default_value" jdbcType="VARCHAR"/>
+            <result property="dictCode" column="dict_code" jdbcType="VARCHAR"/>
+            <result property="formType" column="form_type" jdbcType="VARCHAR"/>
+            <result property="viewOptionsJson" column="view_options_json" jdbcType="VARCHAR"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,column_name,primary_key,
+        field_name,description,jdbc_type,
+        java_type,length,decimal_places,
+        allow_null,default_value,dict_code,
+        form_type,view_options_json,create_by,
+        create_time,update_by,update_time
+    </sql>
+</mapper>

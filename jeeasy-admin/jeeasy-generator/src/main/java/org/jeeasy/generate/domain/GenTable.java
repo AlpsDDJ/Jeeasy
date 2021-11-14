@@ -1,6 +1,7 @@
-package org.jeeasy.generate.entity;
+package org.jeeasy.generate.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -132,35 +133,35 @@ public class GenTable {
      * 主表字段
      */
     @ApiModelProperty(value = "主表字段")
-    @TableField(exist = false)
+    @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String mainColumn = "";
 
     /**
      * 主表字段Code
      */
     @ApiModelProperty(value = "主表字段Code")
-    @TableField(exist = false)
+    @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String mainColumnCode = "";
 
     /**
      * 从表字段
      */
     @ApiModelProperty(value = "从表字段")
-    @TableField(exist = false)
+    @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String slaveColumn = "";
 
     /**
      * 从表字段Code
      */
     @ApiModelProperty(value = "从表字段Code")
-    @TableField(exist = false)
+    @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String slaveColumnCode = "";
 
     /**
      * 显示样式
      */
-    @ApiModelProperty(value = "显示样式")
-    private String formStyle = "default";
+//    @ApiModelProperty(value = "显示样式")
+//    private String formStyle = "default";
 
     /**
      * 映射关系

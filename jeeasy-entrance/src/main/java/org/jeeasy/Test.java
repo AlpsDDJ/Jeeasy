@@ -4,8 +4,8 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModelProperty;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.generate.entity.GenTable;
-import org.jeeasy.system.modules.dept.domain.SysDept;
+import org.jeeasy.generate.domain.GenTable;
+import org.jeeasy.generate.domain.GenTableField;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -13,12 +13,16 @@ import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
-        Field[] declaredFields = ClassUtil.getDeclaredFields(GenTable.class);
+        Field[] declaredFields = ClassUtil.getDeclaredFields(GenTableField.class);
         Map<String, String> map = new HashMap<>();
         Map<String, String> map2 = new HashMap<>();
 //        System.out.println(declaredFields.length);
         for (Field field : declaredFields) {
+            Class<?> type = field.getType();
             String fieldName = field.getName();
+            if("serialVersionUID".equals(fieldName)){
+                continue;
+            }
 //            System.out.println(fieldName);
             map.put(fieldName, fieldName);
             String fieldText = "";
@@ -26,7 +30,7 @@ public class Test {
             if(annotation != null && Tools.isNotEmpty(annotation.value())){
                 fieldText = annotation.value();
             }
-            String simpleName = field.getType().getSimpleName();
+            String simpleName = type.getSimpleName();
             map2.put(fieldName, fieldText);
 //            System.out.println(fieldName);
 
@@ -39,4 +43,6 @@ public class Test {
 //        System.out.println(JSONUtil.toJsonStr(map));
 //        System.out.println(JSONUtil.toJsonStr(map2));
     }
+
+
 }
