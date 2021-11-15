@@ -14,7 +14,7 @@
     <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
 
-    <name>jeeasy</name>
+    <name>Jeeasy</name>
     <description>Demo project for Spring Boot</description>
 
     <modules>

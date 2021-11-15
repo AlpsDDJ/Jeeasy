@@ -58,7 +58,7 @@ public class GenTable {
      */
     @ApiModelProperty(value = "同步数据库状态")
     @Dict(dictEnum = BooleanEnum.class)
-    private Integer izSync = 1;
+    private Integer izSync = 0;
 
     /**
      * 是否简单查询
