@@ -26,7 +26,7 @@
     <!-- 版 本 管 理 -->
     <properties>
         <!-- JDK 版本 -->
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <!-- 数 据 源 版 本 -->
         <druid.version>1.1.22</druid.version>
         <!-- Mysql 版 本 -->
