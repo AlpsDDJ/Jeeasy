@@ -33,7 +33,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
     @DictTranslation
     @ApiOperation(value = "数据字典列表", notes = "数据字典列表")
     public R<IPage<SysDict>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        return super.query(queryPageModel, req, SysDict.class);
+        return super.query(queryPageModel, req);
     }
 
     /**

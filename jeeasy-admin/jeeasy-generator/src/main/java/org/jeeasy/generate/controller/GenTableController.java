@@ -26,7 +26,7 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
     @DictTranslation
     @ApiOperation(value = "表信息列表", notes = "表信息列表")
     public R<IPage<GenTable>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        return super.query(queryPageModel, req, GenTable.class);
+        return super.query(queryPageModel, req);
     }
 
     @GetMapping("/{id}")

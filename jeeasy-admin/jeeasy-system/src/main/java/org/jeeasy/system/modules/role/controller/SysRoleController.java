@@ -42,7 +42,7 @@ public class SysRoleController extends SimpleBaseController<SysRoleService, SysR
     @DictTranslation
     @ApiOperation(value = "角色列表", notes = "角色列表")
     public R<IPage<SysRole>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        return super.query(queryPageModel, req, SysRole.class);
+        return super.query(queryPageModel, req);
     }
 
     @GetMapping("/{id}")
