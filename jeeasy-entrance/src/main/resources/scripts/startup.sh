@@ -15,7 +15,7 @@ APP_HOME=${DIR}/..
 CLASSPATH=$APP_HOME/conf
 APP_LOG=${APP_HOME}/logs
 APP_CONFIG=${APP_HOME}/conf/application.yml
-APP_MAIN=${main.class}
+APP_MAIN=${application.main.class}
 
 JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn128m -XX:ParallelGCThreads=20 -XX:+UseConcMarkSweepGC -XX:MaxGCPauseMillis=850 -XX:+PrintGCDetails -Xloggc:$APP_LOG/gc.log -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true"
 JAVA_OPTS="$JAVA_OPTS -DlogPath=$APP_LOG"

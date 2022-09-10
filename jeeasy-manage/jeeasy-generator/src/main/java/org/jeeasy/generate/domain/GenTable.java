@@ -1,9 +1,7 @@
 package org.jeeasy.generate.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -25,199 +23,203 @@ import java.time.LocalDateTime;
 @TableName("gen_table")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "代码生成表信息", description = "代码生成表信息")
+@Schema(description = "代码生成表信息")
 public class GenTable {
 
     /**
      * 编号
      */
     @TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private String id;
 
     /**
      * 表名
      */
-    @ApiModelProperty(value = "表名")
+    @Schema(description = "表名")
     private String name;
 
     /**
      * 表描述
      */
-    @ApiModelProperty(value = "表描述")
+    @Schema(description = "表描述")
     private String description;
 
     /**
      * 数据源
      */
-    @ApiModelProperty(value = "数据源")
+    @Schema(description = "数据源")
     private String dataSource;
 
     /**
      * 同步数据库状态
      */
-    @ApiModelProperty(value = "同步数据库状态")
+    @Schema(description = "同步数据库状态")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer izSync = 0;
 
     /**
      * 是否简单查询
      */
-    @ApiModelProperty(value = "是否简单查询")
+    @Schema(description = "是否简单查询")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer izSimpleQuery = 1;
 
     /**
      * 是否分页
      */
-    @ApiModelProperty(value = "是否分页")
+    @Schema(description = "是否分页")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer izPage = 1;
 
     /**
      * 是否是树
      */
-    @ApiModelProperty(value = "是否是树")
+    @Schema(description = "是否是树")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer izTree = 0;
 
     /**
      * 树PID
      */
-    @ApiModelProperty(value = "树PID")
+    @Schema(description = "树PID")
     private String treePid = "pid";
 
     /**
      * 树名称字段
      */
-    @ApiModelProperty(value = "树名称字段")
+    @Schema(description = "树名称字段")
     private String treeNameField = "name";
 
     /**
      * 表单风格
      * @description 12 一列、6 二列、4 三列、3 四列
      */
-    @ApiModelProperty(value = "表单风格", notes = "12 一列、6 二列、4 三列、3 四列")
+    @Schema(description = "表单风格")
     private Integer formType = 12;
 
-    /**
-     * 主键生成序列
-     */
-//    @ApiModelProperty(value = "主键生成序列")
+//    /**
+//     * 主键生成序列
+//     */
+//    @Schema(description = "主键生成序列")
 //    private String idSequence;
 
-    /**
-     * 主键类型
-     */
-//    @ApiModelProperty(value = "主键类型")
+//    /**
+//     * 主键类型
+//     */
+//    @Schema(description = "主键类型")
 //    @Dict(dictEnum = IdTypeEnum.class)
 //    private Integer idType = 3;
 
-    @ApiModelProperty(value = "表类型", notes = "single单表、main主表、slave附表、catalog分类")
+    /**
+     * 表类型
+     * single单表、main主表、slave附表、catalog分类
+     */
+    @Schema(description = "表类型")
     @Dict(dictEnum = TableTypeEnum.class)
     private String tableType = "single";
 
     /**
      * 主表
      */
-    @ApiModelProperty(value = "主表")
+    @Schema(description = "主表")
     private String mainTable = "";
 
     /**
      * 从表
      */
-    @ApiModelProperty(value = "从表")
+    @Schema(description = "从表")
     private String slaveTable = "";
 
     /**
      * 主表字段
      */
-    @ApiModelProperty(value = "主表字段")
+    @Schema(description = "主表字段")
     @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String mainColumn = "";
 
     /**
      * 主表字段Code
      */
-    @ApiModelProperty(value = "主表字段Code")
+    @Schema(description = "主表字段Code")
     @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String mainColumnCode = "";
 
     /**
      * 从表字段
      */
-    @ApiModelProperty(value = "从表字段")
+    @Schema(description = "从表字段")
     @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String slaveColumn = "";
 
     /**
      * 从表字段Code
      */
-    @ApiModelProperty(value = "从表字段Code")
+    @Schema(description = "从表字段Code")
     @com.baomidou.mybatisplus.annotation.TableField(exist = false)
     private String slaveColumnCode = "";
 
     /**
      * 显示样式
      */
-//    @ApiModelProperty(value = "显示样式")
+//    @Schema(description = "显示样式")
 //    private String formStyle = "default";
 
     /**
      * 映射关系
      * @description oneToMany一对多  oneToOne一对一
      */
-    @ApiModelProperty(value = "映射关系", notes = "oneToMany一对多  oneToOne一对一")
+    @Schema(description = "映射关系")
     @Dict(dictEnum = RelationTypeEnum.class)
     private String relationType = "oneToMany";
 
     /**
      * 子表
      */
-    @ApiModelProperty(value = "子表")
+    @Schema(description = "子表")
     private String subTableStr;
 
     /**
      * 附表排序序号
      */
-    @ApiModelProperty(value = "附表排序序号")
+    @Schema(description = "附表排序序号")
     private Integer tabOrderNum = 1;
 
 //    /**
 //     * 内容
 //     */
-//    @ApiModelProperty(value = "内容")
+//    @Schema(description = "内容")
 //    private String content;
 
     /**
      * 创建人
      */
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
      * 创建日期
      */
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新人
      */
-    @ApiModelProperty(value = "更新人")
+    @Schema(description = "更新人")
     @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
     /**
      * 更新日期
      */
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "删除状态", notes = "0: 正常 1: 已删除")
+    @Schema(description = "删除状态")
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;
@@ -225,7 +227,7 @@ public class GenTable {
     /**
      * 所属部门
      */
-    @ApiModelProperty(value = "所属部门")
+    @Schema(description = "所属部门")
     @TableField(fill = FieldFill.INSERT)
     private String sysOrgCode;
 }

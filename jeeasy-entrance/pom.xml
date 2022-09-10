@@ -14,7 +14,7 @@
 
 
     <properties>
-        <main.class>org.jeeasy.JeeasyEntranceApplication</main.class>
+        <application.main.class>org.jeeasy.JeeasyEntranceApplication</application.main.class>
     </properties>
 
     <!-- 依赖管理 -->
@@ -95,12 +95,18 @@
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*Mapper.xml</include>
+                </includes>
+            </resource>
+            <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>*.properties</include>
                     <include>*.yml</include>
-                    <include>*.xml</include>
+                    <include>**/*.xml</include>
                     <include>*.jet</include>
                 </includes>
             </resource>
@@ -112,7 +118,7 @@
                     <exclude>sdk/**</exclude>
                     <exclude>*.properties</exclude>
                     <exclude>*.yml</exclude>
-                    <exclude>*.xml</exclude>
+                    <exclude>**/*.xml</exclude>
                     <exclude>*.jet</exclude>
                 </excludes>
             </resource>
@@ -216,13 +222,13 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>${main.class}</mainClass>
+                                    <mainClass>${application.main.class}</mainClass>
                                 </manifest>
                             </archive>
                             <descriptors>
                                 <descriptor>src/main/resources/scripts/assembly.xml</descriptor>
                             </descriptors>
-                            <finalName>${project.name}-${project.version}</finalName>
+                            <finalName>${project.artifactId}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>

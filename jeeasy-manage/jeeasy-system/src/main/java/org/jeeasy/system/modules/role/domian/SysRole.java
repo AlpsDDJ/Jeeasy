@@ -1,8 +1,7 @@
 package org.jeeasy.system.modules.role.domian;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
@@ -15,53 +14,53 @@ import java.time.LocalDateTime;
  * @date 2020/11/10
  */
 @Data
-@ApiModel("系统角色")
+@Schema(description = "系统角色")
 @Accessors(chain = true)
 public class SysRole {
 
     @TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty("ID")
+    @Schema(description = "ID")
     private String id;
 
-    @ApiModelProperty("角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
-    @ApiModelProperty("角色标识")
+    @Schema(description = "角色标识")
     private String roleCode;
 
-    @ApiModelProperty("启用标记")
+    @Schema(description = "启用标记")
     @Dict(dictEnum = EnableFlagEnum.class)
     private Integer enableFlag;
 
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @ApiModelProperty("创建人")
+    @Schema(description = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty("更信人")
+    @Schema(description = "更信人")
     @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
-    @ApiModelProperty("备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @ApiModelProperty("描述")
+    @Schema(description = "描述")
     private String description;
 
-    @ApiModelProperty("排序")
+    @Schema(description = "排序")
     private Double sortNo;
 
     /**
      * 删除状态 0正常 1已删除
      */
-    @ApiModelProperty(value = "删除状态", notes = "0:正常 1:已删除")
+    @Schema(description = "删除状态", example = "0:正常 1:已删除")
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;

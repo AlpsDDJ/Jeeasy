@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
  */
 @Slf4j
 @SpringBootApplication
-@MapperScan("org.jeeasy.**.mapper")
+//@MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
 public class JeeasyEntranceApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {

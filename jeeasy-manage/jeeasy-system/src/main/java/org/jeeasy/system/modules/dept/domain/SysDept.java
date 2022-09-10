@@ -3,8 +3,7 @@ package org.jeeasy.system.modules.dept.domain;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -25,76 +24,76 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_dept")
-@ApiModel(value = "组织机构")
+@Schema(description = "组织机构")
 public class SysDept extends Model<SysDept> implements BaseTree<SysDept> {
 
     @TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private String id;
 
-    @ApiModelProperty(value = "父机构ID")
+    @Schema(description = "父机构ID")
     private String parentId;
 
-    @ApiModelProperty(value = "机构/部门名称")
+    @Schema(description = "机构/部门名称")
     private String deptName;
 
-    @ApiModelProperty(value = "英文名")
+    @Schema(description = "英文名")
     private String deptNameEn;
 
-    @ApiModelProperty(value = "缩写")
+    @Schema(description = "缩写")
     private String deptNameAbbr;
 
-    @ApiModelProperty(value = "排序")
+    @Schema(description = "排序")
     private Double sortNo;
 
-    @ApiModelProperty(value = "描述")
+    @Schema(description = "描述")
     private String description;
 
-    @ApiModelProperty(value = "机构类别", notes = "1: 组织机构 2: 岗位")
+    @Schema(description = "机构类别", example = "1: 组织机构 2: 岗位")
     @Dict(dictEnum = OrgCategoryEnum.class)
     private Integer orgCategory;
 
-    @ApiModelProperty(value = "机构类型", notes = "1: 一级部门 2: 子部门")
+    @Schema(description = "机构类型", example = "1: 一级部门 2: 子部门")
     @Dict(dictEnum = OrgTypeEnum.class)
     private Integer orgType;
 
-    @ApiModelProperty(value = "机构编码")
+    @Schema(description = "机构编码")
     private String orgCode;
 
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     private String mobile;
 
-    @ApiModelProperty(value = "传真")
+    @Schema(description = "传真")
     private String fax;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(description = "地址")
     private String address;
 
-    @ApiModelProperty(value = "备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "启用标记", notes = "1: 启用 0: 不启用")
+    @Schema(description = "启用标记", example = "1: 启用 0: 不启用")
     @TableField(fill = FieldFill.INSERT)
     private Integer enableFlag;
 
-    @ApiModelProperty(value = "删除状态", notes = "0: 正常 1: 已删除")
+    @Schema(description = "删除状态", example = "0: 正常 1: 已删除")
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
-    @ApiModelProperty(value = "创建日期")
+    @Schema(description = "创建日期")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新人")
+    @Schema(description = "更新人")
     @TableField(fill = FieldFill.UPDATE)
     private String updateBy;
 
-    @ApiModelProperty(value = "更新日期")
+    @Schema(description = "更新日期")
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 

@@ -32,6 +32,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author AlpsDDJ
@@ -137,9 +138,16 @@ public class DictAspect {
                     assert objectNode != null;
                     objectNode.put(fieldName + dictTextSuffix, textValue);
                 } else {
-                    Class<? extends Enum> aClass = dictEnumProperty.getAutoTranslateEnumClass().get(fieldName);
-                    if (Tools.isNotEmpty(aClass)) {
-                        objectNode.put(fieldName + dictTextSuffix, dictTranslationService.translateDictFromEnum(aClass, fieldValue));
+//                    Class<? extends Enum> aClass = dictEnumProperty.getAutoTranslateEnumClass().get(fieldName);
+                    AtomicReference<Class<? extends Enum>> aClass = new AtomicReference<>(null);
+                    dictEnumProperty.getAutoTranslateEnumClass().forEach(clazz -> {
+                        String clazzName = clazz.getSimpleName();
+                        if(clazzName.replace("Enum", "").equalsIgnoreCase(fieldName)) {
+                            aClass.set(clazz);
+                        }
+                    });
+                    if (null != aClass.get()) {
+                        objectNode.put(fieldName + dictTextSuffix, dictTranslationService.translateDictFromEnum(aClass.get(), fieldValue));
                     }
                 }
 
@@ -174,7 +182,7 @@ public class DictAspect {
             return StrUtil.EMPTY;
         }
 
-        if(Tools.isNotEmpty(enumClass) && !enumClass.equals(Enum.class)){
+        if(null != enumClass && !enumClass.equals(Enum.class)){
             return translateEnum(enumClass, value);
         }
 

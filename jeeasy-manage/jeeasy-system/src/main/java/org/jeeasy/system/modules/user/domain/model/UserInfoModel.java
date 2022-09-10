@@ -1,7 +1,6 @@
 package org.jeeasy.system.modules.user.domain.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.jeeasy.system.modules.user.domain.SysUser;
 
@@ -12,16 +11,16 @@ import org.jeeasy.system.modules.user.domain.SysUser;
  * @version v1.0
  * @date 2020/11/21 22:11
  */
-@ApiModel("保存用户 数据模型")
+@Schema(description = "保存用户 数据模型")
 @Data
 public class UserInfoModel {
 
-    @ApiModelProperty("用户信息")
+    @Schema(description = "用户信息")
     private SysUser user;
 
-    @ApiModelProperty("用户角色")
+    @Schema(description = "用户角色")
     private String roles;
 
-    @ApiModelProperty("用户部门")
+    @Schema(description = "用户部门")
     private String depts;
 }

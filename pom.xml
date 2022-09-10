@@ -70,8 +70,8 @@
         <velocity.version>1.7</velocity.version>
         <!-- hutool 工 具 箱 版 本 -->
         <hutool.version>5.7.7</hutool.version>
-        <!-- knife4j 接口文档 -->
-        <knife4j.version>3.0.3</knife4j.version>
+        <!-- springdoc 接口文档 -->
+        <springdoc.version>1.6.11</springdoc.version>
     </properties>
 
     <dependencyManagement>
@@ -182,11 +182,6 @@
                 <artifactId>sa-token-dao-redis-jackson</artifactId>
                 <version>${sa-token.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-pool2</artifactId>
-                <version>${commons.pool2.version}</version>
-            </dependency>
 
             <!-- Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉） -->
             <dependency>
@@ -229,10 +224,15 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-micro-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -274,23 +274,82 @@
         </profile>
     </profiles>
 
-
     <!-- 构建工具 -->
     <build>
+        <finalName>${artifactId}</finalName>
         <resources>
+            <!-- 加载 .Java 下的 XML 文件 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <!-- 加载 .Java 下的 XML 文件 -->
             <resource>
                 <directory>src/main/resources</directory>
-                <!--resource的filtering属性用来表示资源文件中的占位符是否需要被替换，true为需要替换-->
-                <filtering>true</filtering>
-                <!--引入资源文件信息-->
                 <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                    <include>application-${profiles.active}.yml</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 配置生成源代码jar的plugin -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <attach>true</attach>
+                    <!-- 配置源代码jar文件的存放路径 -->
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 使用方式命令： versions:set -DoldVersion=* -DnewVersion=1.2.1 -DprocessAllModules=true -DallowSnapshots=true -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.2</version>
+            </plugin>
+
+            <!-- javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <reportOutputDirectory>../javadocs</reportOutputDirectory>
+                    <destDir>easy-delivery</destDir>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>

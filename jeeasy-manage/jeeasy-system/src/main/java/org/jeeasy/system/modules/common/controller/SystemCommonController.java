@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.common.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.domain.vo.DictVo;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@Api(tags = "系统 公共模块")
+@Tag(name = "系统 公共模块", description = "系统 公共模块")
 @RequestMapping("/common")
 public class SystemCommonController {
 
@@ -37,7 +37,7 @@ public class SystemCommonController {
      */
     @GetMapping("/dicts/{code}")
     @DictTranslation
-    @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
+    @Operation(summary = "根据ID查找数据字典", description = "根据ID查找数据字典")
     public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") String async) {
         return R.ok(commonService.getDictsByCode(code, parentId, Boolean.parseBoolean(async)));
     }

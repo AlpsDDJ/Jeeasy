@@ -42,7 +42,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public IPage<SysUser> querySysUserVoPage(QueryWrapper<SysUser> wrapper, SysUserQueryPageModel model) {
-        return baseMapper.querySysUserVoPage(model.getPage(SysUser.class), wrapper, model);
+        IPage<SysUser> sysUserIPage = baseMapper.querySysUserVoPage(model.getPage(SysUser.class), wrapper, model);
+        return sysUserIPage;
     }
 
     public static void main(String[] args) {

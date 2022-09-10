@@ -4,8 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@Api(tags = "系统用户")
+@Tag(name = "系统用户")
 @RequestMapping("/sys/user")
 public class SysUserController extends SimpleBaseController<SysUserService, SysUser> {
     @Autowired
@@ -41,7 +41,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
 
     @GetMapping
     @DictTranslation
-    @ApiOperation(value = "用户列表", notes = "用户列表")
+    @Operation(summary = "用户列表", description = "用户列表")
     public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
         QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
         if(!queryPageModel.hasSort()){
@@ -72,33 +72,33 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
 
     @GetMapping("/{id}")
     @DictTranslation
-    @ApiOperation(value = "根据ID查找用户", notes = "根据ID查找用户")
+    @Operation(summary = "根据ID查找用户", description = "根据ID查找用户")
     public R<SysUser> info(@PathVariable("id") String id) {
         return super.getById(id);
     }
 
     @PostMapping
-    @ApiOperation(value = "添加用户", notes = "添加用户")
+    @Operation(summary = "添加用户", description = "添加用户")
     public R<?> add(@RequestBody UserInfoModel model) {
         service.addUserWithUserInfoModel(model);
         return R.ok().setMessage("添加成功");
     }
 
     @PutMapping
-    @ApiOperation(value = "修改用户", notes = "修改用户")
+    @Operation(summary = "修改用户", description = "修改用户")
     public R<?> edit(@RequestBody UserInfoModel model) {
         service.editUserWithUserInfoModel(model);
         return R.ok().setMessage("修改成功");
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "根据ID删除用户", notes = "根据ID删除用户")
+    @Operation(summary = "根据ID删除用户", description = "根据ID删除用户")
     public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
 
     @DeleteMapping("/batch")
-    @ApiOperation(value = "批量删除用户", notes = "批量删除用户")
+    @Operation(summary = "批量删除用户", description = "批量删除用户")
     public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
@@ -110,7 +110,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
      * @return
      */
     @PutMapping("/changePasswordByOldPassword")
-    @ApiOperation(value = "修改用户密码", notes = "通过旧密码验证修改新密码")
+    @Operation(summary = "修改用户密码", description = "通过旧密码验证修改新密码")
     public R<?> changePasswordByOldPassword(@RequestBody ChangePasswordByOldPasswordModel model) {
         SysUser sysUser = this.service.getById(model.getId());
         SysUserUtil sysUserUtil = SysUserUtil.create(sysUser);
@@ -132,7 +132,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
      * @date 2020/11/21 21:50
      */
     @PutMapping("/resetPassword")
-    @ApiOperation(value = "重置用户密码", notes = "重置用户密码为初始密码")
+    @Operation(summary = "重置用户密码", description = "重置用户密码为初始密码")
     public R<?> resetPassword(@RequestBody String id) {
         SysUser sysUser = this.service.getById(id);
         return this.update(SysUserUtil.create(sysUser).initSaltAndPassword());
@@ -142,7 +142,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
 
     @GetMapping("/menus")
     @DictTranslation
-    @ApiOperation(value = "当前登录用户菜单列表", notes = "当前登录用户菜单列表")
+    @Operation(summary = "当前登录用户菜单列表", description = "当前登录用户菜单列表")
     public R<List<MenuVo>> menus() {
         String currentAuthUserId = StpUtil.getLoginId().toString();
         List<MenuVo> sysPermissions = permissionService.queryMenuByUserId(currentAuthUserId);

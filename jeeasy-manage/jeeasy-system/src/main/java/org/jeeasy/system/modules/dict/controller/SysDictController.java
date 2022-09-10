@@ -1,8 +1,8 @@
 package org.jeeasy.system.modules.dict.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
@@ -25,13 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "数据字典")
+@Tag(name = "数据字典")
 @RequestMapping("/sys/dict")
 public class SysDictController extends SimpleBaseController<SysDictService, SysDict> {
 
     @GetMapping
     @DictTranslation
-    @ApiOperation(value = "数据字典列表", notes = "数据字典列表")
+    @Operation(summary = "数据字典列表", description = "数据字典列表")
     public R<IPage<SysDict>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
         return super.query(queryPageModel, req);
     }
@@ -44,7 +44,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      */
     @GetMapping("/{id}")
     @DictTranslation
-    @ApiOperation(value = "根据ID查找数据字典", notes = "根据ID查找数据字典")
+    @Operation(summary = "根据ID查找数据字典", description = "根据ID查找数据字典")
     public R<SysDict> info(@PathVariable("id") String id) {
         return super.getById(id);
     }
@@ -56,7 +56,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:03
      */
     @PutMapping
-    @ApiOperation(value = "编辑数据字典", notes = "编辑数据字典")
+    @Operation(summary = "编辑数据字典", description = "编辑数据字典")
     public R<?> edit(@RequestBody SysDict entity) {
         return super.update(entity);
     }
@@ -68,7 +68,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:18
      */
     @PostMapping
-    @ApiOperation(value = "添加数据字典", notes = "添加数据字典")
+    @Operation(summary = "添加数据字典", description = "添加数据字典")
     public R<?> add(@RequestBody SysDict entity) {
         super.insert(entity);
         return R.ok().setData("添加成功");
@@ -81,7 +81,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 22:11
      */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "根据ID删除数据字典", notes = "根据ID删除数据字典")
+    @Operation(summary = "根据ID删除数据字典", description = "根据ID删除数据字典")
     public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
@@ -93,7 +93,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:10
      */
     @DeleteMapping("/batch")
-    @ApiOperation(value = "批量删除数据字典", notes = "批量删除数据字典")
+    @Operation(summary = "批量删除数据字典", description = "批量删除数据字典")
     public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }

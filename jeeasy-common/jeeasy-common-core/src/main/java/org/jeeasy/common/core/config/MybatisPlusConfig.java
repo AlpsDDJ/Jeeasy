@@ -3,6 +3,8 @@ package org.jeeasy.common.core.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-11-15
  */
 @Configuration
+@MapperScan("org.jeeasy.**.mapper")
 public class MybatisPlusConfig {
 
     /**

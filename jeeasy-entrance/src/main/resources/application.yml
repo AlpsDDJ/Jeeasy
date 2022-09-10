@@ -2,8 +2,6 @@
 server:
   # 端 口
   port: 8080
-  servlet:
-    context-path:
 
 # Spring 配置
 spring:
@@ -13,9 +11,9 @@ spring:
     active: '@profiles.active@'
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
   #true为使用 CGLIB 代理，false为JDK代理，默认为false
 #  aop:
 #    proxy-target-class: true
@@ -80,9 +78,11 @@ sa-token:
     # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明）
 
 mybatis-plus:
+  # org.jeeasy.system.modules.user.mapper
   mapper-locations: classpath*:org/jeeasy/**/mapper/xml/*Mapper.xml
-  type-aliases-package: org.jeeasy.**.entity
-  type-enums-package: org.jeeasy.**.enums
+  check-config-location: true
+  type-aliases-package: org.jeeasy.**.domain
+#  type-enums-package: org.jeeasy.**.enums
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
@@ -92,12 +92,6 @@ mybatis-plus:
       # 默认数据库表下划线命名
       table-underline: true
 
-  configuration:
-    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 返回类型为Map,显示null对应的字段
-    call-setters-on-nulls: true
-
   # logging 配置
   logging:
     # 日 志 级 别
@@ -106,4 +100,52 @@ mybatis-plus:
       org.jeeasy.*: DEBUG
 
 
+springdoc:
+  api-docs:
+    #是否开启文档功能
+    enabled: false
+    #swagger后端请求地址
+    path: /api-docs
+  swagger-ui:
+    path: /doc.html
+    # 禁止默认路径
+    disable-swagger-default-url: true
+  group-configs:
+    #分组名
+    - group: 系统管理
+      #按路径匹配
+      packages-to-scan: org.jeeasy.system.modules
+      #分组名
+    - group: 公共接口
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.common
+    - group: 统一认证
+      #按包路径匹配
+      paths-to-match: /sso/*
+    - group: 代码生成
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.generate
 
+jeeasy:
+  dict:
+    dict-table-flag: ["@", "#"]
+    dict-text-suffix: _dict
+    # 根据属性名称自动翻译字典，无需注释 @Dict
+    auto-translate-enum-class:
+      - org.jeeasy.common.core.enums.EnableFlagEnum
+      - org.jeeasy.common.core.enums.DelFlagEnum
+      - org.jeeasy.common.core.enums.SexEnum
+  modules:
+    system:
+      # 登录图片验证码开关
+      enable-captcha: false
+  cache:
+    manager:
+      # cache自定义键 过期时间
+      configs:
+        - key: menu
+          second: 300
+        - key: user
+          second: 1800
+  #  system:
+  #    enable-captcha: false

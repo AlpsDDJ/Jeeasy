@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.premission.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.DictTranslation;
@@ -23,14 +23,14 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@Api(tags = "系统权限")
+@Tag(name = "系统权限")
 @RequestMapping("/sys/permission")
 public class SysPermissionController extends SimpleBaseController<SysPermissionService, SysPermission> {
 
 
     @GetMapping
     @DictTranslation
-    @ApiOperation(value = "权限列表", notes = "权限列表")
+    @Operation(summary = "权限列表", description = "权限列表")
     public R<List<SysPermission>> list() {
 //        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
 //        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
@@ -51,7 +51,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      */
     @GetMapping("/{id}")
     @DictTranslation
-    @ApiOperation(value = "根据ID查找权限", notes = "根据ID查找权限")
+    @Operation(summary = "根据ID查找权限", description = "根据ID查找权限")
     public R<SysPermission> info(@PathVariable("id") String id) {
         return super.getById(id);
     }
@@ -63,7 +63,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @return {@link R}
      */
     @PutMapping
-    @ApiOperation(value = "编辑权限", notes = "编辑权限")
+    @Operation(summary = "编辑权限", description = "编辑权限")
     public R<?> edit(@RequestBody SysPermission entity) {
         return super.update(entity);
     }
@@ -75,7 +75,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @return {@link R}
      */
     @PostMapping
-    @ApiOperation(value = "添加权限", notes = "添加权限")
+    @Operation(summary = "添加权限", description = "添加权限")
     public R<?> add(@RequestBody SysPermission entity) {
         return super.insert(entity);
     }
@@ -88,7 +88,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @return {@link org.jeeasy.common.core.domain.vo.R<?>}
      */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "根据ID删除权限", notes = "根据ID删除权限")
+    @Operation(summary = "根据ID删除权限", description = "根据ID删除权限")
     public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
@@ -100,7 +100,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
      * @return {@link R}
      */
     @DeleteMapping("/batch")
-    @ApiOperation(value = "批量删除权限", notes = "批量删除权限")
+    @Operation(summary = "批量删除权限", description = "批量删除权限")
     public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }

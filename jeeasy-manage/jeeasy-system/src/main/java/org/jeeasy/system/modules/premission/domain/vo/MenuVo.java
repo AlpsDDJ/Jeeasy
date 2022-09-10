@@ -1,7 +1,6 @@
 package org.jeeasy.system.modules.premission.domain.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,31 +13,31 @@ import java.util.List;
  * @date 2020/11/24 16:01
  */
 @Data
-@ApiModel("菜单数据")
+@Schema(description = "菜单数据")
 @Accessors(chain = true)
 public class MenuVo {
 
-    @ApiModelProperty("ID")
+    @Schema(description = "ID")
     private String id;
 
-    @ApiModelProperty("上级菜单id")
+    @Schema(description = "上级菜单id")
     private String parentId;
 
-    @ApiModelProperty("菜单名称")
+    @Schema(description = "菜单名称")
     private String name;
 
-    @ApiModelProperty("菜单路径")
+    @Schema(description = "菜单路径")
     private String path;
 
-    @ApiModelProperty("菜单图标")
+    @Schema(description = "菜单图标")
     private String icon;
 
-    @ApiModelProperty("组件")
+    @Schema(description = "组件")
     private String component;
 
-    @ApiModelProperty("打开方式")
+    @Schema(description = "打开方式")
     private String target;
 
-    @ApiModelProperty("子菜单")
+    @Schema(description = "子菜单")
     private List<MenuVo> children;
 }

@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ public class DictEnumProperty {
     /**
      * 根据属性名称自动翻译字典，无需注释@Dict
      */
-    private Map<String, Class<? extends Enum<?>>> autoTranslateEnumClass = new HashMap<>();
+    private List<Class<? extends Enum>> autoTranslateEnumClass = new ArrayList<>();
 
     private char[] dictTableFlag = new char[] {'@'};
 
