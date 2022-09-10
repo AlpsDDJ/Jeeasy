@@ -8,8 +8,12 @@ import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
 import org.jeeasy.common.core.service.CurrentAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -33,7 +37,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public static final Integer DEFAULT_STATUS = 1;
 
     @Autowired
-    CurrentAuthUserService currentAuthUserService;
+    private CurrentAuthUserService currentAuthUserService;
 
     @Override
     public void insertFill(MetaObject metaObject) {

@@ -12,6 +12,11 @@
     <artifactId>jeeasy-entrance</artifactId>
     <name>启动模块</name>
 
+
+    <properties>
+        <main.class>org.jeeasy.JeeasyEntranceApplication</main.class>
+    </properties>
+
     <!-- 依赖管理 -->
     <dependencies>
         <dependency>
@@ -87,10 +92,144 @@
 
     <!-- 构建工具 -->
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.properties</include>
+                    <include>*.yml</include>
+                    <include>*.xml</include>
+                    <include>*.jet</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>scripts/**</exclude>
+                    <exclude>sdk/**</exclude>
+                    <exclude>*.properties</exclude>
+                    <exclude>*.yml</exclude>
+                    <exclude>*.xml</exclude>
+                    <exclude>*.jet</exclude>
+                </excludes>
+            </resource>
+
+
+            <!-- 收集运行脚本 -->
+            <resource>
+                <directory>src/main/resources/scripts</directory>
+                <targetPath>${project.build.directory}/bin</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.sh</include>
+                    <include>*.bat</include>
+                </includes>
+            </resource>
+            <!-- 收集配置文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/conf</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yml</include>
+                    <include>application-${profiles.active}.yml</include>
+                    <include>*.xml</include>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+
+            <!-- 收集静态资源文件 -->
+            <resource>
+                <directory>src/main/resources/static</directory>
+                <targetPath>${project.build.directory}/static</targetPath>
+            </resource>
+
+            <!-- 收集sdk文件 -->
+            <resource>
+                <directory>src/main/resources/sdk</directory>
+                <targetPath>${project.build.directory}/sdk</targetPath>
+            </resource>
+
+            <!-- 收集手动导入的jar包 -->
+            <resource>
+                <directory>lib</directory>
+                <targetPath>${project.build.directory}/lib</targetPath>
+            </resource>
+        </resources>
         <plugins>
+            <!-- <plugin> -->
+            <!-- <artifactId>maven-war-plugin</artifactId> -->
+            <!-- <version>3.0.0</version> -->
+            <!-- </plugin> -->
+
+            <!-- 2.用于生成jar包的plugin -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <excludes>
+                        <exclude>static/**</exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.jet</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- 3.用于拷贝maven依赖(lib)的plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 打包zip -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>dfrp-portal</id>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${main.class}</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptors>
+                                <descriptor>src/main/resources/scripts/assembly.xml</descriptor>
+                            </descriptors>
+                            <finalName>${project.name}-${project.version}</finalName>
+                        </configuration>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

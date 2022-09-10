@@ -13,6 +13,8 @@ import java.util.Collection;
  */
 public interface IAuthUser extends Serializable {
 
+    String SESSION_KEY = "session:user";
+
     static <T extends IAuthUser> T create(Object user, Class<T> clazz) {
         return BeanUtil.copyProperties(user, clazz);
     }

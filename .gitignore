@@ -14,10 +14,10 @@ HELP.md
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+.idea/
+**/*.iws
+**/*.iml
+**/*.ipr
 
 ### NetBeans ###
 /nbproject/private/
@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 **/rebel.xml
-**/application-dev.yml
+#**/application-dev.yml
 
