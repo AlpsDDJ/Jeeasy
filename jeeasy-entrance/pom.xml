@@ -33,66 +33,6 @@
             <groupId>mobie.alps</groupId>
             <artifactId>fast-note</artifactId>
         </dependency>
-        <!-- 定 时 任 务 -->
-        <!--<dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-schedule</artifactId>
-        </dependency>-->
-        <!-- 工 作 流 程 -->
-        <!--<dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-process</artifactId>
-        </dependency>-->
-        <!-- 三方依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <!-- Web 模块 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- 模 板 引 擎 -->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>-->
-        <!-- MyBatis 框架 -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- 分 页 组 件 -->
-        <!--<dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>-->
-        <!-- Spring Boot 监控 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!-- My Sql 连接工具 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!-- 数据库连接池 -->
-        <!--<dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>-->
-        <!-- 验证码 -->
-        <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-        </dependency>
-        <!-- 权限标签 -->
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-        </dependency>
     </dependencies>
 
     <!-- 构建工具 -->
@@ -113,6 +53,7 @@
                     <include>*.yml</include>
                     <include>**/*.xml</include>
                     <include>*.jet</include>
+                    <include>*.bat</include>
                 </includes>
             </resource>
             <resource>

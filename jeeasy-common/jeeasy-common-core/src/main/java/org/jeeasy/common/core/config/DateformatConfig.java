@@ -44,25 +44,6 @@ public class DateformatConfig implements WebMvcConfigurer {
      */
     private static final String TIME_FORMAT = "HH:mm:ss";
 
-//    /**
-//     * 自定义Bean
-//     *
-//     * @return
-//     */
-//    @Bean
-//    @Primary
-//    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-//        return builder -> builder
-//                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
-//                .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)))
-//                .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(TIME_FORMAT)))
-//                .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)))
-//                .deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DATE_FORMAT)))
-//                .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(TIME_FORMAT)))
-////                .featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
-//                ;
-//    }
-
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -76,7 +57,8 @@ public class DateformatConfig implements WebMvcConfigurer {
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().modules(module).build();
         // 设置格式化内容
         converter.setObjectMapper(objectMapper);
-        converters.add(0, converter);
+        // 添加位置不能小于2，否则openapi无法加载，上限未测
+        converters.add(2, converter);
     }
 
 }
