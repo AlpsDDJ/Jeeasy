@@ -1,20 +1,19 @@
 package org.jeeasy.biz.fastnote.modules.member.api;
 
-import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.biz.fastnote.modules.member.api.dto.LoginMember;
 import org.jeeasy.biz.fastnote.modules.member.api.dto.MemberLoginDTO;
 import org.jeeasy.biz.fastnote.modules.member.api.dto.MemberRegisterDTO;
 import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
 import org.jeeasy.biz.fastnote.modules.member.service.FnMemberService;
+import org.jeeasy.common.core.annotation.controller.ApiController;
 import org.jeeasy.common.core.base.SimpleBaseApi;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.sso.service.IAuthService;
+import org.jeeasy.common.core.service.IAuthService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,10 +27,9 @@ import java.io.IOException;
  * @date 2022/9/11 13:52:05
  */
 @Slf4j
-@RestController("FnMemberApi")
 @RequiredArgsConstructor
 @Tag(name = "FastNote用户")
-@RequestMapping("api/fn/member")
+@ApiController("/fn/member")
 public class FnMemberApi extends SimpleBaseApi<FnMemberService, FnMember> {
 
     /**

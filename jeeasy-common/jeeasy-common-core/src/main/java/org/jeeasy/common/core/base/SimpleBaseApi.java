@@ -10,8 +10,10 @@ import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -36,33 +38,36 @@ public class SimpleBaseApi<S extends IService<T>, T> {
         return (Class<T>) type.getActualTypeArguments()[1];
     }
 
+    protected QueryWrapper<T> getWapper(HttpServletRequest req) {
+        return QueryGenerator.createWrapper(tClass(), req.getParameterMap());
+    }
+
+
     /**
      * 列表分页查询
      *
      * @param query
-     * @param clazz
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> queryPage(QueryPageModel query, QueryWrapper<T> wrapper) {
+        Page<T> page = service.page(query.getPage(tClass()), wrapper);
+        return R.ok(page);
+    }
+
+
+    /**
+     * 列表分页查询
+     *
+     * @param query
      * @param req
      * @return {@link R< IPage<T>>}
      * @author mobie
      * @date 2020/11/21 16:24
      */
     protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req) {
-        return queryPage(query, req, tClass());
-    }
-
-    /**
-     * 列表分页查询
-     *
-     * @param query
-     * @param clazz
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
-        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(clazz, req.getParameterMap());
-        Page<T> page = service.page(query.getPage(clazz), queryWrapper);
+        Page<T> page = service.page(query.getPage(tClass()), getWapper(req));
         return R.ok(page);
     }
 

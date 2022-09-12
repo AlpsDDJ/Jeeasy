@@ -1,4 +1,4 @@
-package org.jeeasy.sso.annotation;
+package org.jeeasy.common.core.annotation.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,9 +37,8 @@ public @interface AuthType {
         FM_MEMBER("fn_member")
         ;
 
+        private final String value;
 
-
-        private String value;
     }
 
 }

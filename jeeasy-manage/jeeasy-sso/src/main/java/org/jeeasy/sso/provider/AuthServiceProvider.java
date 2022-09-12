@@ -4,9 +4,9 @@ import cn.dev33.satoken.context.SaHolder;
 import org.jeeasy.common.core.domain.model.AuthUserModel;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.sso.annotation.AuthType;
-import org.jeeasy.sso.domain.Permission;
-import org.jeeasy.sso.service.IAuthService;
+import org.jeeasy.common.core.annotation.auth.AuthType;
+import org.jeeasy.common.core.domain.Permission;
+import org.jeeasy.common.core.service.IAuthService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

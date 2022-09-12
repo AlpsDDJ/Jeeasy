@@ -4,12 +4,9 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.ListUtil;
 import org.jeeasy.common.core.domain.IAuthUser;
-import org.jeeasy.sso.provider.AuthServiceProvider;
-import org.jeeasy.sso.service.IAuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeeasy.common.core.service.IAuthService;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
 
 /**

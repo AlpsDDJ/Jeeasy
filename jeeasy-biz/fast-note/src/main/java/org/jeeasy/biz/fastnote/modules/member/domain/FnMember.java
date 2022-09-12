@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeeasy.biz.fastnote.enums.member.MemberStatusEnum;
-import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.handler.userpwd.IUserPassword;
 
 import java.io.Serializable;

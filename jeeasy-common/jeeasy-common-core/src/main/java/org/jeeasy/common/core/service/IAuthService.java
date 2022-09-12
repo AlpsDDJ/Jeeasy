@@ -1,10 +1,8 @@
-package org.jeeasy.sso.service;
+package org.jeeasy.common.core.service;
 
-import cn.dev33.satoken.stp.StpUtil;
+import org.jeeasy.common.core.annotation.auth.AuthType;
 import org.jeeasy.common.core.domain.IAuthUser;
-import org.jeeasy.common.core.domain.model.AuthUserModel;
-import org.jeeasy.sso.annotation.AuthType;
-import org.jeeasy.sso.domain.Permission;
+import org.jeeasy.common.core.domain.Permission;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.util.Set;
@@ -36,9 +34,9 @@ public interface IAuthService<U extends IAuthUser> {
         }
     }
 
-    default void setSessionUser(IAuthUser user) {
-        StpUtil.getSession().set(SESSION_USER_KEY, user);
-    }
+//    default void setSessionUser(IAuthUser user) {
+//        StpUtil.getSession().set(SESSION_USER_KEY, user);
+//    }
 
     /**
      * 根据用户名获取用户信息

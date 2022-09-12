@@ -1,19 +1,15 @@
 package org.jeeasy.sso.controller;
 
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
 import com.ejlchina.okhttps.OkHttps;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.domain.IAuthUser;
-import org.jeeasy.common.core.domain.model.AuthUserModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.sso.provider.AuthServiceProvider;
-import org.jeeasy.sso.service.IAuthService;
+import org.jeeasy.common.core.service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +58,7 @@ public class SsoServerController {
             IAuthUser authUser = authService.login(name, pwd);
             if(BeanUtil.isNotEmpty(authUser)) {
                 StpUtil.login(authUser.id());
-                authService.setSessionUser(authUser);
+//                authService.setSessionUser(authUser);
                 authService.onAuthenticationSuccess(authUser);
                 return R.ok("登录成功！").setData(StpUtil.getTokenValue());
             }

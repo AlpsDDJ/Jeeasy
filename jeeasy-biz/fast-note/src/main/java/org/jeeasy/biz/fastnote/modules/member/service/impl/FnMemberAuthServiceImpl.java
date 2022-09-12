@@ -1,16 +1,16 @@
 package org.jeeasy.biz.fastnote.modules.member.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.biz.fastnote.modules.member.api.dto.LoginMember;
 import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
 import org.jeeasy.biz.fastnote.modules.member.service.FnMemberService;
 import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.sso.annotation.AuthType;
-import org.jeeasy.sso.domain.Permission;
-import org.jeeasy.sso.service.IAuthService;
+import org.jeeasy.common.core.annotation.auth.AuthType;
+import org.jeeasy.common.core.domain.Permission;
+import org.jeeasy.common.core.service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -61,6 +61,6 @@ public class FnMemberAuthServiceImpl implements IAuthService<LoginMember> {
 
     @Override
     public void onAuthenticationSuccess(IAuthUser authUser) {
-
+        StpUtil.getSession().set(IAuthService.SESSION_USER_KEY, authUser);
     }
 }

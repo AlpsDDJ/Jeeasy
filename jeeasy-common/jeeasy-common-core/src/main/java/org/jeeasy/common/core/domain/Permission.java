@@ -1,4 +1,4 @@
-package org.jeeasy.sso.domain;
+package org.jeeasy.common.core.domain;
 
 import lombok.Data;
 

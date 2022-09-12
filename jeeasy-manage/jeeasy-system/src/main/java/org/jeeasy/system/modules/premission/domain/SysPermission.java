@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.system.enums.permission.LinkOpenTypeEnum;

@@ -1,6 +1,7 @@
 package org.jeeasy.biz.fastnote.modules.note.api;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.biz.fastnote.modules.note.domain.FnNote;
 import org.jeeasy.biz.fastnote.modules.note.service.FnNoteService;
+import org.jeeasy.common.core.annotation.controller.ApiController;
 import org.jeeasy.common.core.base.SimpleBaseApi;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
@@ -23,10 +25,9 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2022/9/11 13:52:05
  */
 @Slf4j
-@RestController("FnNoteApi")
 @RequiredArgsConstructor
 @Tag(name = "FastNote笔记")
-@RequestMapping("api/fn/note")
+@ApiController("/fn/note")
 public class FnNoteApi extends SimpleBaseApi<FnNoteService, FnNote> {
 
     /**
@@ -51,7 +52,9 @@ public class FnNoteApi extends SimpleBaseApi<FnNoteService, FnNote> {
     @GetMapping("list")
     @Operation(summary = "笔记列表", description = "笔记列表")
     public R<IPage<FnNote>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
-        return super.queryPage(queryPageModel, req);
+        QueryWrapper<FnNote> wapper = getWapper(req);
+        wapper.lambda().eq(FnNote::getFtMemberId, StpUtil.getLoginId());
+        return super.queryPage(queryPageModel, wapper);
     }
 
 }

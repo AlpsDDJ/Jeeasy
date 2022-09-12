@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
 import org.jeeasy.biz.fastnote.modules.member.service.FnMemberService;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;

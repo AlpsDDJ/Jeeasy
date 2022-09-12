@@ -22,7 +22,7 @@ import java.util.List;
  * @author Alps
  */
 @Slf4j
-@RequestMapping("manage")
+@RequestMapping("api")
 public class SimpleBaseController<S extends IService<T>, T> {
 
     @Autowired
@@ -36,33 +36,36 @@ public class SimpleBaseController<S extends IService<T>, T> {
         return (Class<T>) type.getActualTypeArguments()[1];
     }
 
+    protected QueryWrapper<T> getWapper(HttpServletRequest req) {
+        return QueryGenerator.createWrapper(tClass(), req.getParameterMap());
+    }
+
+
     /**
      * 列表分页查询
      *
      * @param query
-     * @param clazz
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> queryPage(QueryPageModel query, QueryWrapper<T> wrapper) {
+        Page<T> page = service.page(query.getPage(tClass()), wrapper);
+        return R.ok(page);
+    }
+
+
+    /**
+     * 列表分页查询
+     *
+     * @param query
      * @param req
      * @return {@link R< IPage<T>>}
      * @author mobie
      * @date 2020/11/21 16:24
      */
     protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req) {
-        return queryPage(query, req, tClass());
-    }
-
-    /**
-     * 列表分页查询
-     *
-     * @param query
-     * @param clazz
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
-        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(clazz, req.getParameterMap());
-        Page<T> page = service.page(query.getPage(clazz), queryWrapper);
+        Page<T> page = service.page(query.getPage(tClass()), getWapper(req));
         return R.ok(page);
     }
 

@@ -1,4 +1,4 @@
-package org.jeeasy.common.core.annotation;
+package org.jeeasy.common.core.annotation.dict;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

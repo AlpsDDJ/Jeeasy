@@ -5,9 +5,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeeasy.biz.fastnote.enums.member.MemberStatusEnum;
-import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
-import org.jeeasy.common.core.annotation.Dict;
 
 import java.io.Serializable;
 import java.time.LocalDate;

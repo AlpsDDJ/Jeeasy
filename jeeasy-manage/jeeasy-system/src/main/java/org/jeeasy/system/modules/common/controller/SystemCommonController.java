@@ -3,7 +3,7 @@ package org.jeeasy.system.modules.common.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.service.CommonService;

@@ -16,8 +16,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.jeeasy.common.core.annotation.Dict;
-import org.jeeasy.common.core.annotation.DictTranslation;
+import org.jeeasy.common.core.annotation.dict.Dict;
+import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.domain.vo.R;
@@ -58,7 +58,7 @@ public class DictAspect {
     /**
      * 定义切点Pointcut拦截所有对服务器的请求
      */
-    @Pointcut(value = "@annotation(org.jeeasy.common.core.annotation.DictTranslation)")
+    @Pointcut(value = "@annotation(org.jeeasy.common.core.annotation.dict.DictTranslation)")
     public void dictTranslation() {
     }
 
