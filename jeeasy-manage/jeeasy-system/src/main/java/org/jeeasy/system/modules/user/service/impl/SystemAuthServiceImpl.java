@@ -3,7 +3,6 @@ package org.jeeasy.system.modules.user.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.domain.IAuthUser;
-import org.jeeasy.common.core.domain.model.AuthUserModel;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.sso.annotation.AuthType;
 import org.jeeasy.sso.domain.Permission;
@@ -16,7 +15,6 @@ import org.jeeasy.system.modules.user.domain.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ import java.util.Set;
  */
 @Slf4j
 @Component("systemAuthService")
-@AuthType(value = "account", izDefault = true)
+@AuthType(type = AuthType.Type.SYS_USER, izDefault = true)
 @EnableConfigurationProperties(SystemConfigProperties.class)
 public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
@@ -60,7 +58,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 
     @Override
 //    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key = "#username")
-    public boolean login(String username, String password) {
+    public SystemAuthUser login(String username, String password) {
 //        try {
 //            // 验证码
 //            if (properties.getEnableCaptcha()) {
@@ -86,7 +84,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 //        } else {
 //            throw new BadCredentialsException("密码错误");
 //        }
-        return true;
+        return null;
     }
 
     @Override

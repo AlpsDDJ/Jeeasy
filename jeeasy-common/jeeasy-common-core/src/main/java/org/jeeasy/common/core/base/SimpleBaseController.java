@@ -10,6 +10,7 @@ import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author Alps
  */
 @Slf4j
+@RequestMapping("manage")
 public class SimpleBaseController<S extends IService<T>, T> {
 
     @Autowired
@@ -34,69 +36,34 @@ public class SimpleBaseController<S extends IService<T>, T> {
         return (Class<T>) type.getActualTypeArguments()[1];
     }
 
-//
-//    /**
-//     * 列表分页查询
-//     *
-//     * @param entity
-//     * @param page
-//     * @param req
-//     * @return {@link R< IPage<T>>}
-//     * @author mobie
-//     * @date 2020/11/21 16:24
-//     */
-//    protected R<IPage<T>> page(T entity, IPage<T> page, HttpServletRequest req) {
-//        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-//        return R.ok(service.page(page, queryWrapper));
-//    }
+    /**
+     * 列表分页查询
+     *
+     * @param query
+     * @param clazz
+     * @param req
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req) {
+        return queryPage(query, req, tClass());
+    }
 
-//    /**
-//     * 列表分页查询
-//     *
-//     * @param entity
-//     * @param pageNo
-//     * @param pageSize
-//     * @param req
-//     * @return {@link R< IPage<T>>}
-//     * @author mobie
-//     * @date 2020/11/21 16:24
-//     */
-//    protected R<IPage<T>> query(T entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
-//        QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(entity, req.getParameterMap());
-//        return R.ok(service.page(new Page<T>(pageNo, pageSize), queryWrapper));
-//    }
-
-    protected IPage<T> page(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
+    /**
+     * 列表分页查询
+     *
+     * @param query
+     * @param clazz
+     * @param req
+     * @return {@link R< IPage<T>>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
         QueryWrapper<T> queryWrapper = QueryGenerator.createWrapper(clazz, req.getParameterMap());
-        return service.page(new Page<T>(query.getCurrent(), query.getSize()), queryWrapper);
-    }
-
-    /**
-     * 列表分页查询
-     *
-     * @param query
-     * @param clazz
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> query(QueryPageModel query, HttpServletRequest req) {
-        return query(query, req, tClass());
-    }
-
-    /**
-     * 列表分页查询
-     *
-     * @param query
-     * @param clazz
-     * @param req
-     * @return {@link R< IPage<T>>}
-     * @author mobie
-     * @date 2020/11/21 16:24
-     */
-    protected R<IPage<T>> query(QueryPageModel query, HttpServletRequest req, Class<T> clazz) {
-        return R.ok(page(query, req, clazz));
+        Page<T> page = service.page(query.getPage(clazz), queryWrapper);
+        return R.ok(page);
     }
 
     /**

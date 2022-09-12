@@ -1,6 +1,7 @@
 package org.jeeasy.sso.annotation;
 
-import org.springframework.core.annotation.AliasFor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,20 +18,28 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AuthType {
 
-    @AliasFor("value")
-    String type() default "";
-
     /**
      * 处理方法名，与前端登录form参数authType匹配
      * @return 处理方法名
      */
-    @AliasFor("type")
-    String value() default "";
+    Type type();
 
     /**
      * 是否为默认处理方法
      * @return boolean
      */
     boolean izDefault() default false;
+
+    @Getter
+    @AllArgsConstructor
+    public enum Type {
+        SYS_USER("sys_account"),
+        FM_MEMBER("fn_member")
+        ;
+
+
+
+        private String value;
+    }
 
 }

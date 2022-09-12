@@ -1,5 +1,6 @@
 package org.jeeasy;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +28,7 @@ public class JeeasyEntranceApplication extends SpringBootServletInitializer {
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         String path = env.getProperty("server.servlet.context-path");
+        path = StrUtil.isEmpty(path) ? "": path;
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application Jeeasy is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +

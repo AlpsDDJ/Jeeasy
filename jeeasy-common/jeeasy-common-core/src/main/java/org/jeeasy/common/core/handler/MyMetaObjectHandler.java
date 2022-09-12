@@ -1,5 +1,6 @@
 package org.jeeasy.common.core.handler;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -41,9 +42,17 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
+        try {
+            IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
+
+            if(BeanUtil.isNotEmpty(currentAuthUser)) {
+                this.strictInsertFill(metaObject, CREATE_BY, currentAuthUser::id, String.class);
+            }
+        } catch (Exception e) {
+            log.warn("MyMetaObjectHandler ---> {}", e.getMessage());
+        }
+
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime::now, LocalDateTime.class);
-        this.strictInsertFill(metaObject, CREATE_BY, currentAuthUser::id, String.class);
         // 启用标记 - 默认启用
         this.strictInsertFill(metaObject, ENABLE_FLAG, EnableFlagEnum.YES::getValue, Integer.class);
         // 删除标记 - 默认未删除
@@ -54,8 +63,17 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
+
+
+        try {
+            IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
+
+            if(BeanUtil.isNotEmpty(currentAuthUser)) {
+                this.strictUpdateFill(metaObject, UPDATE_BY, currentAuthUser::id, String.class);
+            }
+        } catch (Exception e) {
+            log.warn("MyMetaObjectHandler ---> {}", e.getMessage());
+        }
         this.strictUpdateFill(metaObject, UPDATE_TIME, LocalDateTime::now, LocalDateTime.class);
-        this.strictUpdateFill(metaObject, UPDATE_BY, currentAuthUser::id, String.class);
     }
 }

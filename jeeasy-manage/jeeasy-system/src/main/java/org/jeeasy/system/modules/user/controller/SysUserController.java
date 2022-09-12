@@ -20,7 +20,7 @@ import org.jeeasy.system.modules.user.domain.model.ChangePasswordByOldPasswordMo
 import org.jeeasy.system.modules.user.domain.model.SysUserQueryPageModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
 import org.jeeasy.system.modules.user.service.SysUserService;
-import org.jeeasy.system.tools.SysUserUtil;
+import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -113,9 +113,9 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @Operation(summary = "修改用户密码", description = "通过旧密码验证修改新密码")
     public R<?> changePasswordByOldPassword(@RequestBody ChangePasswordByOldPasswordModel model) {
         SysUser sysUser = this.service.getById(model.getId());
-        SysUserUtil sysUserUtil = SysUserUtil.create(sysUser);
-        if (sysUserUtil.checkPassword(model.getOldPassword())) {
-            sysUserUtil.changePassword(model.getNewPassword());
+        UserPasswordHandler userPasswordHandler = UserPasswordHandler.create(sysUser);
+        if (userPasswordHandler.checkPassword(model.getOldPassword())) {
+            userPasswordHandler.changePassword(model.getNewPassword());
             this.service.updateById(sysUser);
             return R.ok("密码修改成功");
         } else {
@@ -135,7 +135,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @Operation(summary = "重置用户密码", description = "重置用户密码为初始密码")
     public R<?> resetPassword(@RequestBody String id) {
         SysUser sysUser = this.service.getById(id);
-        return this.update(SysUserUtil.create(sysUser).initSaltAndPassword());
+        return this.update(UserPasswordHandler.create(sysUser).initSaltAndPassword());
     }
 
 

@@ -1,5 +1,6 @@
 package org.jeeasy.sso.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.domain.model.AuthUserModel;
 import org.jeeasy.sso.annotation.AuthType;
@@ -18,6 +19,8 @@ import java.util.Set;
  */
 public interface IAuthService<U extends IAuthUser> {
 
+    String SESSION_USER_KEY = "auth:session:user:";
+
     /**
      * 获取认证类型
      * @return
@@ -33,6 +36,10 @@ public interface IAuthService<U extends IAuthUser> {
         }
     }
 
+    default void setSessionUser(IAuthUser user) {
+        StpUtil.getSession().set(SESSION_USER_KEY, user);
+    }
+
     /**
      * 根据用户名获取用户信息
      *
@@ -44,10 +51,11 @@ public interface IAuthService<U extends IAuthUser> {
     /**
      * 登录验证逻辑
      *
-     * @param authentication
+     * @param username 用户名
+     * @param password 密码
      * @return
      */
-    boolean login(String user, String password);
+    U login(String username, String password);
 
     /**
      * 登录验证逻辑

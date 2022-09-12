@@ -76,6 +76,17 @@ sa-token:
     # 接口调用秘钥（用于SSO模式三的单点注销功能）
     secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
     # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明）
+  path:
+    base: /**
+    exclude:
+      - /api/fn/member/login
+      - /api/fn/member/register
+    rules:
+      - path: /api/fn/**
+        roles:
+          - ROLE_FN_MEMBER
+
+
 
 mybatis-plus:
   # org.jeeasy.system.modules.user.mapper
@@ -112,19 +123,34 @@ springdoc:
     disable-swagger-default-url: true
   group-configs:
     #分组名
-    - group: 系统管理
+    - group: FastNote Manage
+      #按路径匹配
+      packages-to-scan: org.jeeasy.biz.fastnote.modules
+      display-name: FastNote 后管
+      paths-to-match: /manage/**
+    - group: FastNote API
+      #按路径匹配
+      packages-to-scan: org.jeeasy.biz.fastnote.modules
+      display-name: FastNote API
+      paths-to-match: /api/**
+    #分组名
+    - group: system
       #按路径匹配
       packages-to-scan: org.jeeasy.system.modules
+      display-name: 系统管理
       #分组名
-    - group: 公共接口
+    - group: common
       #按包路径匹配
       packages-to-scan: org.jeeasy.common
+      display-name: 公共接口
     - group: 统一认证
       #按包路径匹配
       paths-to-match: /sso/*
-    - group: 代码生成
+      display-name: 统一认证
+    - group: generate
       #按包路径匹配
       packages-to-scan: org.jeeasy.generate
+      display-name: 代码生成
 
 jeeasy:
   dict:

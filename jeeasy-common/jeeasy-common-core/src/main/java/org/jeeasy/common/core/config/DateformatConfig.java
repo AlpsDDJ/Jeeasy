@@ -10,12 +10,16 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * 时间格式化
@@ -25,7 +29,7 @@ import java.time.format.DateTimeFormatter;
  */
 
 @Configuration
-public class DateformatConfig {
+public class DateformatConfig implements WebMvcConfigurer {
 
     /**
      * Date格式化字符串
@@ -59,8 +63,9 @@ public class DateformatConfig {
 //                ;
 //    }
 
-    @Bean
-    public ObjectMapper objectMapper() {
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         JavaTimeModule module = new JavaTimeModule();
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)));
         module.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DATE_FORMAT)));
@@ -68,8 +73,10 @@ public class DateformatConfig {
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT)));
         module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DATE_FORMAT)));
         module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(TIME_FORMAT)));
-        final ObjectMapper build = Jackson2ObjectMapperBuilder.json().modules(module).build();
-        return build;
+        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().modules(module).build();
+        // 设置格式化内容
+        converter.setObjectMapper(objectMapper);
+        converters.add(0, converter);
     }
 
 }

@@ -28,6 +28,11 @@
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-system</artifactId>
         </dependency>
+        <!-- 模块引用 -->
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>fast-note</artifactId>
+        </dependency>
         <!-- 定 时 任 务 -->
         <!--<dependency>
             <groupId>mobie.alps</groupId>

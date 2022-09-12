@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.Dict;
+import org.jeeasy.common.core.handler.userpwd.IUserPassword;
 import org.jeeasy.system.enums.user.SysUserStatusEnum;
 import org.jeeasy.system.modules.dept.domain.SysDept;
 import org.jeeasy.system.modules.role.domian.SysRole;
@@ -26,7 +27,7 @@ import java.util.List;
 @TableName("sys_user")
 @Schema(description = "系统用户")
 @Accessors(chain = true)
-public class SysUser extends Model<SysUser> implements Serializable {
+public class SysUser extends Model<SysUser> implements IUserPassword, Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
     @Schema(description = "ID")

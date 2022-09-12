@@ -6,7 +6,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>mobie.alps</groupId>
@@ -21,6 +20,7 @@
         <module>jeeasy-common</module>
         <module>jeeasy-manage</module>
         <module>jeeasy-entrance</module>
+        <module>jeeasy-biz</module>
     </modules>
 
     <!-- 版 本 管 理 -->
@@ -107,6 +107,11 @@
             <dependency>
                 <groupId>mobie.alps</groupId>
                 <artifactId>jeeasy-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>fast-note</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- 代 码 生 成 模 块 -->

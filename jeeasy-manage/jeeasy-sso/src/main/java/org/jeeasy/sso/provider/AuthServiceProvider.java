@@ -37,13 +37,22 @@ public class AuthServiceProvider {
      */
     public <M extends AuthUserModel> IAuthService<?> getAuthService() {
         String type = SaHolder.getRequest().getParam("type");
+        return getAuthService(type);
+    }
+
+    /**
+     * 根据方法参数获取对应的 AuthService
+     *
+     * @return
+     */
+    public <M extends AuthUserModel> IAuthService<?> getAuthService(String type) {
         AtomicReference<IAuthService<?>> authService = new AtomicReference<>();
         authServiceList.forEach(service -> {
             AuthType authType = service.getAuthType();
             if (Tools.isEmpty(authType)) {
                 return;
             }
-            if (authType.izDefault() || authType.type().equals(type)) {
+            if (authType.izDefault() || authType.type().getValue().equals(type)) {
                 authService.set(service);
             }
         });
@@ -59,7 +68,7 @@ public class AuthServiceProvider {
         if (Tools.isEmpty(authType)) {
             return null;
         }
-        return authType.type();
+        return authType.type().getValue();
     }
 
 //    public <M extends AuthUserModel> IAuthService<?, M> getAuthService(M authentication) {

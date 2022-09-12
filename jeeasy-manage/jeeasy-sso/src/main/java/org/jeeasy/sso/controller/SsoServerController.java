@@ -4,16 +4,20 @@ import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
 import com.ejlchina.okhttps.OkHttps;
+import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.domain.model.AuthUserModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.sso.provider.AuthServiceProvider;
 import org.jeeasy.sso.service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * TODO
@@ -21,14 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wei.yang
  * @date 2022-09-10 10:19
  */
+@Slf4j
 @RestController
 public class SsoServerController {
 
     @Autowired
     private AuthServiceProvider authServiceProvider;
 
-    @RequestMapping("/sso/*")
-    public Object ssoRequest() {
+    @RequestMapping("/sso/{handle}")
+    @CrossOrigin("*")
+    public Object ssoRequest(Map<String, Object> params, @PathVariable("handle") String handle) {
+        log.info("SSO：[{}]，请求参数：[{}]", handle, params.toString());
         return SaSsoHandle.serverRequest();
     }
 
@@ -46,11 +53,17 @@ public class SsoServerController {
         });
 
         // 配置：登录处理函数
+        // http://192.168.1.2:8888/sso/doLogin?name=13257805204&pwd=123456&type=fn_memberhttp://192.168.1.2:8888/sso/doLogin?name=13257805204&pwd=123456&type=fn_member
         sso.setDoLoginHandle((name, pwd) -> {
+//            String username = SaHolder.getRequest().getParam("username");
+//            String password = SaHolder.getRequest().getParam("password");
             // 此处仅做模拟登录，真实环境应该查询数据进行登录
             IAuthService<?> authService = authServiceProvider.getAuthService();
-            if(authService.login(name, pwd)) {
-                StpUtil.login(name);
+            IAuthUser authUser = authService.login(name, pwd);
+            if(BeanUtil.isNotEmpty(authUser)) {
+                StpUtil.login(authUser.id());
+                authService.setSessionUser(authUser);
+                authService.onAuthenticationSuccess(authUser);
                 return R.ok("登录成功！").setData(StpUtil.getTokenValue());
             }
 //            authService.

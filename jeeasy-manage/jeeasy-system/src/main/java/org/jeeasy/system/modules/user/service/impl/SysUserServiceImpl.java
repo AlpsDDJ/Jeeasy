@@ -17,14 +17,13 @@ import org.jeeasy.system.modules.user.mapper.SysUserDeptMapper;
 import org.jeeasy.system.modules.user.mapper.SysUserMapper;
 import org.jeeasy.system.modules.user.mapper.SysUserRoleMapper;
 import org.jeeasy.system.modules.user.service.SysUserService;
-import org.jeeasy.system.tools.SysUserUtil;
+import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,14 +80,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (Tools.isEmpty(sysUser)) {
             throw new JeeasyException("用户名不存在");
         }
-        return SysUserUtil.create(sysUser).checkPassword(password);
+        return UserPasswordHandler.create(sysUser).checkPassword(password);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addUserWithUserInfoModel(UserInfoModel model) {
         // 初始化用户密码
-        SysUser sysUser = SysUserUtil.create(model.getUser()).initSaltAndPassword();
+        SysUser sysUser = UserPasswordHandler.create(model.getUser()).initSaltAndPassword();
         this.save(sysUser);
         saveUserRolesAndDepts(model.getRoles(), model.getDepts(), sysUser.getId(), true);
     }

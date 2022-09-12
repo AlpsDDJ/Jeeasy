@@ -34,3 +34,4 @@ build/
 **/rebel.xml
 #**/application-dev.yml
 
+/jeeasy-manage/jeeasy-auth/
