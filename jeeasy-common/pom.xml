@@ -5,13 +5,13 @@
     <parent>
         <artifactId>jeeasy</artifactId>
         <groupId>mobie.alps</groupId>
-        <version>1.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
     <artifactId>jeeasy-common</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>${revision}</version>
     <name>公共模块-pom</name>
 
     <modules>

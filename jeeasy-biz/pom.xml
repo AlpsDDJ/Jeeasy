@@ -6,7 +6,7 @@
     <parent>
         <artifactId>jeeasy</artifactId>
         <groupId>mobie.alps</groupId>
-        <version>1.0.0-RELEASE</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>jeeasy-biz</artifactId>
