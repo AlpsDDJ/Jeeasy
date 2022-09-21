@@ -1,6 +1,7 @@
 package org.jeeasy;
 
 import cn.hutool.core.util.StrUtil;
+import com.tangzc.mpe.actable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,7 @@ import java.net.UnknownHostException;
  * @date
  */
 @Slf4j
+@EnableAutoTable
 @SpringBootApplication
 //@MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })

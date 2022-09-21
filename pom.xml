@@ -21,6 +21,7 @@
         <module>jeeasy-manage</module>
         <module>jeeasy-entrance</module>
         <module>jeeasy-biz</module>
+        <module>jeeasy-cloud</module>
     </modules>
 
     <!-- 版 本 管 理 -->
@@ -55,8 +56,10 @@
         <pagehelper.version>1.2.10</pagehelper.version>
         <!-- mybatis-plus 依 赖 -->
         <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <!-- mybatis-plus-ext 依 赖 -->
+        <mybatis.plus.ext.version>3.5.2-EXT144</mybatis.plus.ext.version>
         <!-- dynamic-datasource 依 赖 -->
-        <dynamic.datasource.version>3.2.1</dynamic.datasource.version>
+        <dynamic.datasource.version>3.5.2</dynamic.datasource.version>
         <!-- 代 码 生 成 依 赖 -->
         <mybatis.plus.generator.version>3.5.2</mybatis.plus.generator.version>
         <!-- freemarker 版本 -->
@@ -141,10 +144,29 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>com.tangzc</groupId>
+                <artifactId>mybatis-plus-ext-boot-starter</artifactId>
+                <version>${mybatis.plus.ext.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-dependencies</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-web</artifactId>
+                    </exclusion>
+                    <!--<exclusion>
+                        <groupId>com.baomidou</groupId>
+                        <artifactId>mybatis-plus-boot-starter</artifactId>
+                    </exclusion>-->
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -386,7 +408,7 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>aliyun-spring</id>
             <url>https://maven.aliyun.com/repository/spring</url>
@@ -397,6 +419,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-    </repositories>
+    </repositories>-->
 
 </project>

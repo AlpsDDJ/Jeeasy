@@ -66,9 +66,14 @@
             <optional>true</optional>
         </dependency>
         <!-- mybatis-plus -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>-->
+        <!-- mybatis-plus-ext MP扩展包 自动引入MP -->
+        <dependency>
+            <groupId>com.tangzc</groupId>
+            <artifactId>mybatis-plus-ext-boot-starter</artifactId>
         </dependency>
         <!-- dynamic-datasource 多数据源 -->
         <dependency>
