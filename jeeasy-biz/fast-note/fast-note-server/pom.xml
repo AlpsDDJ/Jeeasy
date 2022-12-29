@@ -3,30 +3,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jeeasy</artifactId>
+        <artifactId>fast-note</artifactId>
         <groupId>mobie.alps</groupId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
+    <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jeeasy-entrance</artifactId>
-    <name>启动模块</name>
-
+    <artifactId>fast-note-server</artifactId>
 
     <properties>
-        <application.main.class>org.jeeasy.org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
+        <application.main.class>org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
     </properties>
 
     <!-- 依赖管理 -->
     <dependencies>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-generator</artifactId>
-        </dependency>
         <!-- 模块引用 -->
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-system</artifactId>
+            <artifactId>jeeasy-cloud-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>fast-note-domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -180,5 +180,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

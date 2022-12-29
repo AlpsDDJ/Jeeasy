@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: https://nacos.jeeasy.cn
+  application:
+    name: fast-note

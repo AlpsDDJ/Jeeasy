@@ -1,6 +1,8 @@
-package org.jeeasy.system.modules.dict.controller;
+package org.jeeasy.biz.fastnote.manage.member;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
+import org.jeeasy.biz.fastnote.modules.member.service.FnMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -9,30 +11,28 @@ import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.system.modules.dict.domain.SysDict;
-import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 数据字典表服务控制器
+ * FastNote用户控制器
  *
  * @author AlpsDDJ
- * @description 数据字典
- * @since 2020-11-21 13:52:05
+ * @description FastNote用户
+ * @date 2022/9/11 13:52:05
  */
 @Slf4j
-@RestController
+@RestController("FnMemberController")
 @RequiredArgsConstructor
-@Tag(name = "数据字典")
-@RequestMapping("/sys/dict")
-public class SysDictController extends SimpleBaseController<SysDictService, SysDict> {
+@Tag(name = "FastNote用户")
+@RequestMapping("/fn/member")
+public class FnMemberController extends SimpleBaseController<FnMemberService, FnMember> {
 
     @GetMapping
     @DictTranslation
-    @Operation(summary = "数据字典列表", description = "数据字典列表")
-    public R<IPage<SysDict>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+    @Operation(summary = "FastNote用户列表", description = "FastNote用户列表")
+    public R<IPage<FnMember>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
         return super.queryPage(queryPageModel, req);
     }
 
@@ -44,8 +44,8 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      */
     @GetMapping("/{id}")
     @DictTranslation
-    @Operation(summary = "根据ID查找数据字典", description = "根据ID查找数据字典")
-    public R<SysDict> info(@PathVariable("id") String id) {
+    @Operation(summary = "根据ID查找FastNote用户", description = "根据ID查找FastNote用户")
+    public R<FnMember> info(@PathVariable("id") String id) {
         return super.getById(id);
     }
 
@@ -56,8 +56,8 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:03
      */
     @PutMapping
-    @Operation(summary = "编辑数据字典", description = "编辑数据字典")
-    public R<?> edit(@RequestBody SysDict entity) {
+    @Operation(summary = "编辑FastNote用户", description = "编辑FastNote用户")
+    public R<?> edit(@RequestBody FnMember entity) {
         return super.update(entity);
     }
 
@@ -68,8 +68,8 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:18
      */
     @PostMapping
-    @Operation(summary = "添加数据字典", description = "添加数据字典")
-    public R<?> add(@RequestBody SysDict entity) {
+    @Operation(summary = "添加FastNote用户", description = "添加FastNote用户")
+    public R<?> add(@RequestBody FnMember entity) {
         return super.insert(entity);
     }
 
@@ -80,7 +80,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 22:11
      */
     @DeleteMapping("/{id}")
-    @Operation(summary = "根据ID删除数据字典", description = "根据ID删除数据字典")
+    @Operation(summary = "根据ID删除FastNote用户", description = "根据ID删除FastNote用户")
     public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
@@ -92,7 +92,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      * @date 2020/11/21 16:10
      */
     @DeleteMapping("/batch")
-    @Operation(summary = "批量删除数据字典", description = "批量删除数据字典")
+    @Operation(summary = "批量删除FastNote用户", description = "批量删除FastNote用户")
     public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }

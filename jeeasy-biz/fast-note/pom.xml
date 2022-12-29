@@ -10,20 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fast-note</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-doc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-sso</artifactId>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
+    <modules>
+        <module>fast-note-domain</module>
+        <module>fast-note-server</module>
+    </modules>
+
 
 
 </project>

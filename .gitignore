@@ -35,3 +35,4 @@ build/
 #**/application-dev.yml
 
 /jeeasy-manage/jeeasy-auth/
+/**/pom-xml-flattened
