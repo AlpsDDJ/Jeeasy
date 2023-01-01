@@ -5,10 +5,11 @@
     <parent>
         <artifactId>fast-note</artifactId>
         <groupId>mobie.alps</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
     <artifactId>fast-note-server</artifactId>
 
@@ -20,13 +21,17 @@
     <dependencies>
         <!-- 模块引用 -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-cloud-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>fast-note-domain</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

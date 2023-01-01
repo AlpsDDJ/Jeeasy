@@ -1,7 +1,17 @@
 spring:
+  profiles:
+    active: '@profiles.active@'
   cloud:
     nacos:
       config:
-        server-addr: https://nacos.jeeasy.cn
+#        server-addr: https://nacos.jeeasy.cn
+#        prefix: fast-note
+#        namespace: public
+        file-extension: yml
+#      discovery:
+#        server-addr: https://nacos.jeeasy.cn
+      server-addr: https://nacos.jeeasy.cn
   application:
     name: fast-note
+
+

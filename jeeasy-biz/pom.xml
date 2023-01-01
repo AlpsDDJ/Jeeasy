@@ -12,6 +12,7 @@
     <artifactId>jeeasy-biz</artifactId>
     <name>业务模块</name>
     <packaging>pom</packaging>
+    <version>${revision}</version>
 
     <modules>
         <module>fast-note</module>

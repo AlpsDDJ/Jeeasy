@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>2.6.11</version>
     </parent>
 
     <groupId>mobie.alps</groupId>
@@ -26,7 +26,7 @@
 
     <!-- 版 本 管 理 -->
     <properties>
-        <revision>1.0.0</revision>
+        <revision>1.0.1</revision>
         <!-- JDK 版本 -->
         <java.version>11</java.version>
         <!-- 数 据 源 版 本 -->
@@ -35,7 +35,10 @@
         <mysql.version>8.0.30</mysql.version>
         <!-- MyBatis 版 本 -->
         <mybatis.version>2.2.2</mybatis.version>
-        <nacos.version>2022.0.0.0-RC1</nacos.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <nacos.version>2021.1</nacos.version>
+        <nacos-client.version>2.2.0</nacos-client.version>
         <!-- Fast Json 序 列 化 版 本 -->
         <!--        <fastjson.version>1.2.68</fastjson.version>-->
         <jackson.version>2.11.3</jackson.version>
@@ -120,14 +123,48 @@
                 <artifactId>jeeasy-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--<dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>fast-note-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>mobie.alps</groupId>
+                <artifactId>fast-note-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- Cloud Starter -->
             <dependency>
                 <groupId>mobie.alps</groupId>
                 <artifactId>jeeasy-cloud-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- Nacos -->
             <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Nacos -->
+            <!--<dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-starter</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-discovery-spring-boot-starter</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>-->
+            <!--<dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
                 <version>${nacos.version}</version>
@@ -136,7 +173,18 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${nacos.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba.nacos</groupId>
+                        <artifactId>nacos-client</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
+            </dependency>-->
 
             <!-- 数 据 库 连 接 工 具 -->
             <dependency>

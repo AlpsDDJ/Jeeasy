@@ -3,6 +3,7 @@ package org.jeeasy.biz.fastnote;
 import cn.hutool.core.util.StrUtil;
 import com.tangzc.mpe.actable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -22,7 +23,7 @@ import java.net.UnknownHostException;
 @EnableAutoTable
 @SpringBootApplication
 @EnableDiscoveryClient
-//@MapperScan("org.jeeasy.**.mapper")
+@MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
 public class FastNoteApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {

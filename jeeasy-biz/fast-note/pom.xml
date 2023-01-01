@@ -7,6 +7,7 @@
         <groupId>mobie.alps</groupId>
         <version>${revision}</version>
     </parent>
+    <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fast-note</artifactId>
