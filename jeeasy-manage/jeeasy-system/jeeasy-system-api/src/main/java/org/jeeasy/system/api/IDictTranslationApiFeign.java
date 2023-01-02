@@ -12,6 +12,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author AlpsDDJ
@@ -32,7 +34,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * @return
      */
     @GetMapping("dict/getTableDictByCode")
-    R<TableDictVo> getTableDictByCode(String code);
+    R<TableDictVo> getTableDictByCode(@RequestParam("code") String code);
 
     /**
      * 根据table翻译字典
@@ -42,7 +44,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * @return
      */
     @PostMapping("dict/translateDictFromTable")
-    R<String> translateDictFromTable(TranslateDictFromTableDTO dto);
+    R<String> translateDictFromTable(@RequestBody TranslateDictFromTableDTO dto);
 
     /**
      * 普通字典的翻译
@@ -52,5 +54,5 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * @return
      */
     @PostMapping("dict/translateDict")
-    R<String> translateDict(TranslateDictDTO dto);
+    R<String> translateDict(@RequestBody TranslateDictDTO dto);
 }
