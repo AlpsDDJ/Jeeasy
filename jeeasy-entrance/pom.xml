@@ -26,7 +26,8 @@
         <!-- 模块引用 -->
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-system</artifactId>
+            <artifactId>jeeasy-system-biz</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

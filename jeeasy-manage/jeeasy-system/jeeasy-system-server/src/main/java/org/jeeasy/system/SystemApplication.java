@@ -1,6 +1,5 @@
-package org.jeeasy.biz.fastnote;
+package org.jeeasy.system;
 
-import cn.dev33.satoken.SaManager;
 import cn.hutool.core.util.StrUtil;
 import com.tangzc.mpe.actable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
@@ -27,17 +26,16 @@ import java.net.UnknownHostException;
 @EnableFeignClients
 // @MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
-public class FastNoteApplication extends SpringBootServletInitializer {
+public class SystemApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {
-        ConfigurableApplicationContext application = SpringApplication.run(FastNoteApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(SystemApplication.class, args);
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         String path = env.getProperty("server.servlet.context-path");
         path = StrUtil.isEmpty(path) ? "": path;
-        log.info("启动成功：Sa-Token配置如下：{}", SaManager.getConfig());
         log.info("\n----------------------------------------------------------\n\t" +
-                "Application FastNote is running! Access URLs:\n\t" +
+                "Application Jeeasy System is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
                 "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
 //                "Swagger-ui: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +

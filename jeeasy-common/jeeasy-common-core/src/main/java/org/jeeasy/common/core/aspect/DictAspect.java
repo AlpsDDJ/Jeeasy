@@ -22,9 +22,10 @@ import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
-import org.jeeasy.common.core.service.DictTranslationService;
+import org.jeeasy.common.core.service.IDictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -47,8 +48,9 @@ public class DictAspect {
     @Resource
     private DictEnumProperty dictEnumProperty;
 
+    @Lazy
     @Resource
-    DictTranslationService dictTranslationService;
+    IDictTranslationService dictTranslationService;
 
 
 
@@ -187,7 +189,7 @@ public class DictAspect {
         }
 
         if(ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), code.charAt(0))){
-            TableDictVo tableDictVo = dictTranslationService.getTableDictByCode(code);
+            TableDictVo tableDictVo = dictTranslationService.getTableDictByCode(code).getData();
             return translateTableDict(tableDictVo, value);
         }
 
@@ -238,7 +240,7 @@ public class DictAspect {
                 }
             });
         } else {
-            String tmpValue = dictTranslationService.translateDict(code, value);
+            String tmpValue = dictTranslationService.translateDict(code, value).getData();
             if(Tools.isNotEmpty(tmpValue)){
                 textValue.append(tmpValue);
             }
@@ -296,7 +298,7 @@ public class DictAspect {
                 }
             });
         } else {
-            String tmpValue = dictTranslationService.translateDictFromTable(tableDict, value);
+            String tmpValue = dictTranslationService.translateDictFromTable(tableDict, value).getData();
             if(Tools.isNotEmpty(tmpValue)){
                 textValue.append(tmpValue);
             }

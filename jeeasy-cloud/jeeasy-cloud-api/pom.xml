@@ -3,33 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jeeasy-common</artifactId>
+        <artifactId>jeeasy-cloud</artifactId>
         <groupId>mobie.alps</groupId>
         <version>${revision}</version>
     </parent>
+    <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jeeasy-common-all</artifactId>
-    <name>公共模块-All</name>
+    <artifactId>jeeasy-cloud-api</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-common-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-doc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-cloud-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-common-cache</artifactId>
-        </dependency>
     </dependencies>
-
 
 </project>

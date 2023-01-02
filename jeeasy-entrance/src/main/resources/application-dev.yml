@@ -1,6 +1,6 @@
 server:
   # 端 口
-  port: 8888
+  port: 6688
 #  servlet:
 #    context-path: /jeeasy
 
@@ -26,6 +26,17 @@ spring:
         max-idle: 8
         min-idle: 0
 
+sa-token:
+  path:
+    base: /**
+    exclude:
+      - /api/fn/member/login
+      - /api/fn/member/register
+    rules:
+      - path: /api/fn/**
+        roles:
+          - ROLE_FN_MEMBER
+
 
 mybatis-plus:
   configuration:
@@ -36,4 +47,34 @@ springdoc:
   api-docs:
     #是否开启文档功能
     enabled: true
+  group-configs:
+#    #分组名
+#    - group: FastNote Manage
+#      #按路径匹配
+#      packages-to-scan: org.jeeasy.biz.fastnote.modules
+#      display-name: FastNote 后管
+#      paths-to-match: /manage/**
+#    - group: FastNote API
+#      #按路径匹配
+#      packages-to-scan: org.jeeasy.biz.fastnote.modules
+#      display-name: FastNote API
+#      paths-to-match: /api/**
+#    #分组名
+    - group: system
+      #按路径匹配
+      packages-to-scan: org.jeeasy.system.modules
+      display-name: 系统管理
+      #分组名
+    - group: common
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.common
+      display-name: 公共接口
+    - group: 统一认证
+      #按包路径匹配
+      paths-to-match: /sso/*
+      display-name: 统一认证
+    - group: generate
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.generate
+      display-name: 代码生成
 

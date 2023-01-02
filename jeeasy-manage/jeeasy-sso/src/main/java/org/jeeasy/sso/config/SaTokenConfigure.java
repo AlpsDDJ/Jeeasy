@@ -26,14 +26,18 @@ import java.util.List;
 @EnableConfigurationProperties(SaTokenProperty.class)
 public class SaTokenConfigure implements WebMvcConfigurer {
 
-        @Resource
+    @Resource
     private SaTokenProperty saTokenProperty;
 
     // 注册 Sa-Token 拦截器，打开注解式鉴权功能
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
+        List<String> exclude = saTokenProperty.getExclude();
+        exclude.addAll(saTokenProperty.getCommonExclude());
         registry.addInterceptor(new SaInterceptor(handle -> {
+                    // SaRouter.match("/**").notMatch(exclude).check(r -> StpUtil.checkLogin());
+                    StpUtil.checkLogin();
                     List<SaTokenProperty.MatchRule> rules = saTokenProperty.getRules();
                     rules.forEach(rule -> {
                         SaRouter.match(rule.getPath(), r -> {
@@ -49,7 +53,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                     });
                 }))
                 .addPathPatterns(saTokenProperty.getBase())
-                .excludePathPatterns(saTokenProperty.getExclude());
+                .excludePathPatterns(exclude);
         registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
     }
 }

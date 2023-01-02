@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * DictEnumProperty: 根据Enum翻译字典 配置
@@ -22,6 +21,7 @@ import java.util.Map;
 public class SaTokenProperty {
     private String base = "/**";
     private List<String> exclude = new ArrayList<>();
+    private List<String> commonExclude = new ArrayList<>();
     private List<MatchRule> rules;
 
     @Data

@@ -15,6 +15,7 @@
 
     <modules>
         <module>jeeasy-cloud-starter</module>
+        <module>jeeasy-cloud-api</module>
     </modules>
 
 

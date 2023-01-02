@@ -24,7 +24,7 @@ public class Swagger2Config implements WebMvcConfigurer {
     @Lazy
     public OpenAPI springShopOpenApi() {
         final String loginToken = "BearerAuth";
-        return new OpenAPI().info(new Info().title("Simple Boot API")
+        return new OpenAPI().info(new Info().title("Jeeasy API")
                         .description("Jeeasy")
                         .version("v1.0.0")).externalDocs(new ExternalDocumentation()
                         .description("Jeeasy")

@@ -3,19 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>fast-note</artifactId>
+        <artifactId>jeeasy-system</artifactId>
         <groupId>mobie.alps</groupId>
         <version>${revision}</version>
     </parent>
     <version>${revision}</version>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
 
-    <artifactId>fast-note-server</artifactId>
+    <artifactId>jeeasy-system-server</artifactId>
 
     <properties>
         <application.main.class>org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
-        <server-name>fast-note</server-name>
+        <server-name>jeeasy-system</server-name>
     </properties>
 
     <!-- 依赖管理 -->
@@ -31,8 +30,8 @@
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>fast-note-domain</artifactId>
-            <version>${revision}</version>
+            <artifactId>jeeasy-system-biz</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -186,4 +185,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>
