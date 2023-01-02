@@ -1,5 +1,7 @@
 package org.jeeasy.system.modules.common.service.impl;
 
+import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
+import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.IDictTranslationService;
@@ -40,8 +42,8 @@ public class DictTranslationServiceImpl implements IDictTranslationService {
     }
 
     @Override
-    public R<String> translateDictFromTable(TableDictVo tableDict, Object value) {
-        SysDict dict = dictMapper.getOneByTableDictAndCode(tableDict, value.toString());
+    public R<String> translateDictFromTable(TranslateDictFromTableDTO dto) {
+        SysDict dict = dictMapper.getOneByTableDictAndCode(dto.getTableDict(), dto.getValue().toString());
         if(Tools.isNotEmpty(dict)){
             return R.ok(dict.getDictName());
         }
@@ -49,8 +51,8 @@ public class DictTranslationServiceImpl implements IDictTranslationService {
     }
 
     @Override
-    public R<String> translateDict(String code, Object value) {
-        SysDict dict = dictMapper.getOneByParentCodeAndDictCode(code, value.toString());
+    public R<String> translateDict(TranslateDictDTO dto) {
+        SysDict dict = dictMapper.getOneByParentCodeAndDictCode(dto.getCode(), dto.getValue().toString());
         if(Tools.isNotEmpty(dict)){
             return R.ok(dict.getDictName());
         }

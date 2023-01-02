@@ -28,11 +28,22 @@
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-cloud-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>fast-note-domain</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-system-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

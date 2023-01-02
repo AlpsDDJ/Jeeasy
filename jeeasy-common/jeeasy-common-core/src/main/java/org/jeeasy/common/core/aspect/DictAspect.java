@@ -19,6 +19,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.config.property.DictEnumProperty;
+import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
+import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
@@ -240,7 +242,7 @@ public class DictAspect {
                 }
             });
         } else {
-            String tmpValue = dictTranslationService.translateDict(code, value).getData();
+            String tmpValue = dictTranslationService.translateDict(new TranslateDictDTO(code, value)).getData();
             if(Tools.isNotEmpty(tmpValue)){
                 textValue.append(tmpValue);
             }
@@ -298,7 +300,7 @@ public class DictAspect {
                 }
             });
         } else {
-            String tmpValue = dictTranslationService.translateDictFromTable(tableDict, value).getData();
+            String tmpValue = dictTranslationService.translateDictFromTable(new TranslateDictFromTableDTO(tableDict, value)).getData();
             if(Tools.isNotEmpty(tmpValue)){
                 textValue.append(tmpValue);
             }

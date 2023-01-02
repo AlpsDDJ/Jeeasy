@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
 @EnableAutoTable
 @SpringBootApplication(scanBasePackages = "org.jeeasy")
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "org.jeeasy")
 // @MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
 public class FastNoteApplication extends SpringBootServletInitializer {

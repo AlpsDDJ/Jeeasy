@@ -2,6 +2,8 @@ package org.jeeasy.system.api;
 
 import org.jeeasy.common.api.CommonFallback;
 import org.jeeasy.common.core.config.constant.ServiceNameConstant;
+import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
+import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.IDictTranslationService;
@@ -9,18 +11,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClas
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author AlpsDDJ
  * @date 2020/11/23 9:43
  */
 @Component
-@FeignClient(url = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApi.DictTranslationApiFallbackFactory.class)
+@FeignClient(url = "http://172.26.144.1:8888", path = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApiFeign.DictTranslationApiFallbackFactory.class)
 @ConditionalOnMissingClass("org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl")
-public interface IDictTranslationApi extends IDictTranslationService {
+public interface IDictTranslationApiFeign extends IDictTranslationService {
 
     @Component
-    class DictTranslationApiFallbackFactory implements CommonFallback<IDictTranslationApi> {
+    class DictTranslationApiFallbackFactory implements CommonFallback<IDictTranslationApiFeign> {
     }
 
     /**
@@ -38,8 +41,8 @@ public interface IDictTranslationApi extends IDictTranslationService {
      * @param value
      * @return
      */
-    @GetMapping("dict/translateDictFromTable")
-    R<String> translateDictFromTable(TableDictVo tableDict, Object value);
+    @PostMapping("dict/translateDictFromTable")
+    R<String> translateDictFromTable(TranslateDictFromTableDTO dto);
 
     /**
      * 普通字典的翻译
@@ -48,6 +51,6 @@ public interface IDictTranslationApi extends IDictTranslationService {
      * @param value
      * @return
      */
-    @GetMapping("dict/translateDict")
-    R<String> translateDict(String code, Object value);
+    @PostMapping("dict/translateDict")
+    R<String> translateDict(TranslateDictDTO dto);
 }

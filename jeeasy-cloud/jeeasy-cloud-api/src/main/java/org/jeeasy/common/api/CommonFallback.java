@@ -15,16 +15,13 @@ import org.springframework.core.ResolvableType;
  */
 public interface CommonFallback<T> extends FallbackFactory<T> {
 
-    // Logger logger = LogFactory.getLog(CommonFallback.class);
     Logger logger = LoggerFactory.getLogger(CommonFallback.class);
 
     @Override
     default T create(Throwable cause) {
         ResolvableType resolvableType = ResolvableType.forClass(this.getClass());
         ResolvableType superType = resolvableType.getSuperType();
-
         final Class<?> clazz = superType.getGeneric(0).getRawClass();
-
         return (T)Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, (proxy, method, args) -> {
             logger.error("服务降级：{} - {}: {}", clazz.getName(), method.getName(), cause);
             return R.error(cause.getMessage());

@@ -1,6 +1,8 @@
 package org.jeeasy.common.core.service;
 
 import cn.hutool.core.util.EnumUtil;
+import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
+import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.enums.IDictEnum;
@@ -45,7 +47,7 @@ public interface IDictTranslationService {
      * @param value
      * @return
      */
-    R<String> translateDictFromTable(TableDictVo tableDict, Object value);
+    R<String> translateDictFromTable(TranslateDictFromTableDTO dto);
 
     /**
      * 普通字典的翻译
@@ -54,5 +56,5 @@ public interface IDictTranslationService {
      * @param value
      * @return
      */
-    R<String> translateDict(String code, Object value);
+    R<String> translateDict(TranslateDictDTO dto);
 }

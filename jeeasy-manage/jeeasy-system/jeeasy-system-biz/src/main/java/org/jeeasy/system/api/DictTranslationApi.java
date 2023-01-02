@@ -1,12 +1,13 @@
 package org.jeeasy.system.api;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
+import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,18 +25,18 @@ public class DictTranslationApi {
     @Resource
     private DictTranslationServiceImpl dictTranslationService;
 
-    @PostMapping("/getTableDictByCode")
-    public R<TableDictVo> getTableDictByCode(String code) {
+    @GetMapping("/getTableDictByCode")
+    public R<TableDictVo> getTableDictByCode(@RequestParam("code") String code) {
         return dictTranslationService.getTableDictByCode(code);
     }
 
     @PostMapping("/translateDictFromTable")
-    public R<String> translateDictFromTable(TableDictVo tableDict, Object value) {
-        return dictTranslationService.translateDictFromTable(tableDict, value);
+    public R<String> translateDictFromTable(@RequestBody TranslateDictFromTableDTO dto) {
+        return dictTranslationService.translateDictFromTable(dto);
     }
 
     @PostMapping("/translateDict")
-    public R<String> translateDict(String code, Object value) {
-        return dictTranslationService.translateDict(code, value);
+    public R<String> translateDict(@RequestBody TranslateDictDTO dto) {
+        return dictTranslationService.translateDict(dto);
     }
 }
