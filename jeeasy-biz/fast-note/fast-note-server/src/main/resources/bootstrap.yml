@@ -3,6 +3,8 @@ spring:
     active: '@profiles.active@'
   cloud:
     nacos:
+      username: '@nacos-username@'
+      password: '@nacos-password@'
       config:
         #        server-addr: http://jeeasy-cloud:8848
         #        prefix: fast-note
