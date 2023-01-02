@@ -44,6 +44,10 @@
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

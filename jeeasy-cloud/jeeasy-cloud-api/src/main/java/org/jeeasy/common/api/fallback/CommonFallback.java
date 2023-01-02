@@ -1,4 +1,4 @@
-package org.jeeasy.common.api;
+package org.jeeasy.common.api.fallback;
 
 import org.jeeasy.common.core.domain.vo.R;
 import org.slf4j.Logger;

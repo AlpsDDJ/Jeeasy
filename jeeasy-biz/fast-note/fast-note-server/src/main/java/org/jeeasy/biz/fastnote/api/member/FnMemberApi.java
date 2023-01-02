@@ -88,9 +88,9 @@ public class FnMemberApi extends SimpleBaseApi<FnMemberService, FnMember> {
     @GetMapping("test")
 //    @SaCheckRole(LoginMember.VIRTUAL_MEMBER_ROLE)
     @Operation(summary = "测试", description = "测试")
-    public R<?> test() {
-        TableDictVo data = dictTranslationService.getTableDictByCode("11").getData();
-        return R.ok(StpUtil.getSession().get(IAuthService.SESSION_USER_KEY));
+    public R<TableDictVo> test() {
+        TableDictVo data = dictTranslationService.getTableDictByCode("sys_role").getData();
+        return R.ok(data);
     }
 
 }
