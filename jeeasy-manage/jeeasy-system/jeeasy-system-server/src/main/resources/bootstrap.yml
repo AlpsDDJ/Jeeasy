@@ -4,18 +4,19 @@ spring:
   cloud:
     nacos:
       config:
-#        server-addr: https://nacos.jeeasy.cn
-#        prefix: fast-note
-#        namespace: public
+        #        server-addr: http://jeeasy-cloud:8848
+        #        prefix: fast-note
+        namespace: '@nacos-namespace@'
+        group: 'group-@profiles.active@'
         file-extension: yml
-        extension-configs:
+        shared-configs:
           - data-id: jeeasy.yml
             group: DEFAULT_GROUP
             refresh: true
-#      discovery:
-#        server-addr: https://nacos.jeeasy.cn
-      server-addr: https://nacos.jeeasy.cn
+      discovery:
+        namespace: '@nacos-namespace@'
+        group: 'group-@profiles.active@'
+      #        server-addr: http://jeeasy-cloud:8848
+      server-addr: http://jeeasy-cloud:8848
   application:
-    name: @server-name@
-
-
+    name: '@server-name@'

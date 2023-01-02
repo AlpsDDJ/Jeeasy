@@ -7,12 +7,12 @@ spring:
         #        server-addr: http://jeeasy-cloud:8848
         #        prefix: fast-note
         namespace: '@nacos-namespace@'
-        group: 'group-@profiles.active@'
+#        group: 'group-@profiles.active@'
         file-extension: yml
-        shared-configs:
-          - data-id: jeeasy.yml
-            group: DEFAULT_GROUP
-            refresh: false
+      #        shared-configs:
+      #          - data-id: jeeasy.yml
+      #            group: DEFAULT_GROUP
+      #            refresh: true
       discovery:
         namespace: '@nacos-namespace@'
         group: 'group-@profiles.active@'

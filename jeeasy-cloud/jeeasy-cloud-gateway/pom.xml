@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>fast-note</artifactId>
+        <artifactId>jeeasy-cloud</artifactId>
         <groupId>mobie.alps</groupId>
         <version>${revision}</version>
     </parent>
@@ -11,39 +11,30 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
-    <artifactId>fast-note-server</artifactId>
+    <artifactId>jeeasy-cloud-gateway</artifactId>
 
     <properties>
-        <application.main.class>org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
-        <server-name>fast-note</server-name>
+        <application.main.class>org.jeeasy.cloud.gateway.JeeasyGatewayApplication</application.main.class>
+        <server-name>jeeasy-cloud-gateway</server-name>
     </properties>
 
-    <!-- 依赖管理 -->
     <dependencies>
-        <!-- 模块引用 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-cloud-starter</artifactId>
-            <!--<exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                </exclusion>
-            </exclusions>-->
+        </dependency>
+        <!--gateway网关-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>fast-note-domain</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-system-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
     </dependencies>
 
