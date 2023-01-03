@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2020/11/23 9:43
  */
 @Component
-@FeignClient(url = "http://172.26.144.1:8888", path = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApiFeign.DictTranslationApiFallbackFactory.class)
+@FeignClient(path = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApiFeign.DictTranslationApiFallbackFactory.class)
 @ConditionalOnMissingClass("org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl")
 public interface IDictTranslationApiFeign extends IDictTranslationService {
 

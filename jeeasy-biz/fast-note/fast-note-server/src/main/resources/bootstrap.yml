@@ -1,4 +1,7 @@
+
 spring:
+  application:
+    name: '@server-name@'
   profiles:
     active: '@profiles.active@'
   cloud:
@@ -20,5 +23,13 @@ spring:
         group: 'group-@profiles.active@'
       #        server-addr: http://jeeasy-cloud:8848
       server-addr: http://jeeasy-cloud:8848
-  application:
-    name: '@server-name@'
+    sentinel:
+      transport:
+        port: 8719 # 启动HTTP Server，并且该服务与Sentinel仪表进行交互，是Sentinel仪表盘可以控制应用，如被占用，则从8719依次+1扫描
+        dashboard: jeeasy-cloud:8849 # 指定仪表盘地址
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 公开所有端点
