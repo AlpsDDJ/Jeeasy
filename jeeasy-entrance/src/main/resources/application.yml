@@ -1,22 +1,22 @@
 # Tomcat
 server:
   # 端 口
-  port: 8080
+  port: 7777
 
 # Spring 配置
 spring:
   # Druid Pool 运行环境
-  profiles:
-    # 运 行 环 境
-    active: '@profiles.active@'
+  #  profiles:
+  #    # 运 行 环 境
+  #    active: '@profiles.active@'
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
+  #  mvc:
+  #    pathmatch:
+  #      matching-strategy: ant_path_matcher
   #true为使用 CGLIB 代理，false为JDK代理，默认为false
-#  aop:
-#    proxy-target-class: true
+  #  aop:
+  #    proxy-target-class: true
   # 数据源配置
   datasource:
     druid:
@@ -52,7 +52,7 @@ spring:
         # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
         filters: stat,wall,slf4j
         # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+#        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
 
 # Sa-Token 配置
 sa-token:
@@ -78,6 +78,13 @@ sa-token:
     # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明）
   path:
     base: /**
+    common-exclude:
+      - /sso/doLogin
+      - /api-docs/**
+      - /swagger-ui/**
+      - /webjars/**
+      - /doc.html
+      - /favicon.ico
 
 
 mybatis-plus:
@@ -87,7 +94,7 @@ mybatis-plus:
     - classpath*:mapper/*Mapper.xml
   check-config-location: true
   type-aliases-package: org.jeeasy.**.domain
-#  type-enums-package: org.jeeasy.**.enums
+  #  type-enums-package: org.jeeasy.**.enums
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
@@ -98,11 +105,11 @@ mybatis-plus:
       table-underline: true
 
   # logging 配置
-  logging:
-    # 日 志 级 别
-    level:
-      # 日 志 包 配 置
-      org.jeeasy.*: DEBUG
+  # logging:
+  #   # 日 志 级 别
+  #   level:
+  #     # 日 志 包 配 置
+  #     org.jeeasy.*: DEBUG
 
 # actable的原配置信息仅保留了如下几项
 # MPE以在代码中对其做了默认配置，正常无需显式声明配置，忽略即可

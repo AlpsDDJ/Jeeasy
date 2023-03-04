@@ -29,7 +29,10 @@
         <revision>1.0.1</revision>
         <!-- JDK 版本 -->
         <java.version>11</java.version>
+        <sentinel-server>jeeasy-cloud:8849</sentinel-server>
+        <nacos-server>jeeasy-cloud:8848</nacos-server>
         <nacos-namespace>c7ad9e2b-e0fb-480e-99db-44451e79e336</nacos-namespace>
+        <nacos-sentinel-namespace>facd8823-3154-4cb6-bbc7-523e7d1f6747</nacos-sentinel-namespace>
         <nacos-username>nacos</nacos-username>
         <nacos-password>nacos123456</nacos-password>
         <!-- 数 据 源 版 本 -->

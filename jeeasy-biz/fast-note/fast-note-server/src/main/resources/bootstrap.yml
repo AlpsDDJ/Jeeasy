@@ -1,32 +1,45 @@
-
 spring:
   application:
     name: '@server-name@'
   profiles:
     active: '@profiles.active@'
+  #  config:
+  #    import:
+  #      - nacos:jeeasy-app
   cloud:
     nacos:
       username: '@nacos-username@'
       password: '@nacos-password@'
       config:
-        #        server-addr: http://jeeasy-cloud:8848
+        #        server-addr: '@nacos-server@'
         #        prefix: fast-note
         namespace: '@nacos-namespace@'
         group: 'group-@profiles.active@'
-        file-extension: yml
-        shared-configs:
-          - data-id: jeeasy.yml
-            group: DEFAULT_GROUP
-            refresh: false
+        file-extension: yaml
+      #        extension-configs:
+      #          - data-id: jeeasy-app
+      #            group: DEFAULT_GROUP
+      #            refresh: true
       discovery:
         namespace: '@nacos-namespace@'
         group: 'group-@profiles.active@'
-      #        server-addr: http://jeeasy-cloud:8848
-      server-addr: http://jeeasy-cloud:8848
+      #        server-addr: '@nacos-server@'
+      server-addr: '@nacos-server@'
     sentinel:
       transport:
-        port: 8719 # 启动HTTP Server，并且该服务与Sentinel仪表进行交互，是Sentinel仪表盘可以控制应用，如被占用，则从8719依次+1扫描
-        dashboard: jeeasy-cloud:8849 # 指定仪表盘地址
+        #        port: 8719 # 启动HTTP Server，并且该服务与Sentinel仪表进行交互，是Sentinel仪表盘可以控制应用，如被占用，则从8719依次+1扫描
+        dashboard: '@sentinel-server@' # 指定仪表盘地址
+      eager: true
+      datasource:
+        ds:
+          nacos:
+            server-addr: '@nacos-server@'
+            namespace: '@nacos-sentinel-namespace@'
+            username: '@nacos-username@'
+            password: '@nacos-password@'
+            data-id: '@server-name@-flow'
+            #            group-id: DEFAULT_GROUP
+            rule-type: flow
 
 management:
   endpoints:
