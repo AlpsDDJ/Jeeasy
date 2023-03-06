@@ -5,7 +5,7 @@ package org.jeeasy.common.core.config.constant;
  * @date 2020/11/9
  */
 public class CommonConstant {
-    public static final String X_ACCESS_TOKEN = "JEEASY-ACCESS-TOKEN";
+    public static final String X_ACCESS_TOKEN = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
     public static final String CACHE_SYS_USER_KEY = "sys:user:";

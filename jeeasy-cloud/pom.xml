@@ -14,7 +14,7 @@
     <name>微服务</name>
 
     <modules>
-        <module>jeeasy-cloud-starter</module>
+        <module>jeeasy-cloud-base</module>
         <module>jeeasy-cloud-api</module>
         <module>jeeasy-cloud-gateway</module>
     </modules>

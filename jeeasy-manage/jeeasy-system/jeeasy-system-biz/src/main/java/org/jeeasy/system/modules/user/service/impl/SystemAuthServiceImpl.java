@@ -1,18 +1,20 @@
 package org.jeeasy.system.modules.user.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.annotation.auth.AuthType;
 import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.domain.IAuthUser;
-import org.jeeasy.common.core.tools.Tools;
-import org.jeeasy.common.core.annotation.auth.AuthType;
 import org.jeeasy.common.core.domain.Permission;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.service.IAuthService;
-import org.jeeasy.system.property.SystemConfigProperties;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.jeeasy.system.modules.user.domain.SysUser;
 import org.jeeasy.system.modules.user.domain.model.SystemAuthUser;
 import org.jeeasy.system.modules.user.service.SysUserService;
+import org.jeeasy.system.property.SystemConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.Cacheable;
@@ -59,6 +61,12 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     @Override
 //    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key = "#username")
     public SystemAuthUser login(String username, String password) {
+        if(sysUserService.checkPasswordByUserName(username, password)) {
+            return getAuthUserByUsername(username);
+        } else {
+            throw new JeeasyException("用户名或密码不正确");
+        }
+
 //        try {
 //            // 验证码
 //            if (properties.getEnableCaptcha()) {
@@ -84,7 +92,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
 //        } else {
 //            throw new BadCredentialsException("密码错误");
 //        }
-        return null;
+//         return null;
     }
 
     @Override
@@ -115,6 +123,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     @Override
     public void onAuthenticationSuccess(IAuthUser authUser) {
         log.info("用户[ {} ]登录成功", authUser.username());
+        StpUtil.getSession().set(IAuthService.SESSION_USER_KEY, authUser);
     }
 
 }

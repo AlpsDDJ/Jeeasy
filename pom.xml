@@ -27,6 +27,7 @@
     <!-- 版 本 管 理 -->
     <properties>
         <revision>1.0.1</revision>
+        <main.basedir>${basedir}</main.basedir>
         <!-- JDK 版本 -->
         <java.version>11</java.version>
         <sentinel-server>jeeasy-cloud:8849</sentinel-server>
@@ -148,7 +149,7 @@
             <!-- Cloud Starter -->
             <dependency>
                 <groupId>mobie.alps</groupId>
-                <artifactId>jeeasy-cloud-starter</artifactId>
+                <artifactId>jeeasy-cloud-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

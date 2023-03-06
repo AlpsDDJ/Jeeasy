@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-cloud-starter</artifactId>
+            <artifactId>jeeasy-cloud-base</artifactId>
         </dependency>
         <!--gateway网关-->
         <dependency>
@@ -176,7 +176,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>dfrp-portal</id>
+                        <id>zip</id>
                         <configuration>
                             <archive>
                                 <manifest>
@@ -184,9 +184,10 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>src/main/resources/scripts/assembly.xml</descriptor>
+                                <descriptor>${main.basedir}/scripts/assembly.xml</descriptor>
                             </descriptors>
-                            <finalName>${project.artifactId}</finalName>
+                            <outputDirectory>./zip/${profileActive}/</outputDirectory>
+                            <finalName>${project.name}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>
