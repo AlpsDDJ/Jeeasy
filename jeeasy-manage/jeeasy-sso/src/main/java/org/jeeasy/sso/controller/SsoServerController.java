@@ -50,18 +50,21 @@ public class SsoServerController {
         return SaSsoHandle.serverRequest();
     }
 
+    @RequestMapping("/sso/userinfo")
+    @CrossOrigin("*")
+    public R<IAuthUser> userinfo() {
+        return R.ok((IAuthUser)StpUtil.getSession().get(IAuthService.SESSION_USER_KEY));
+    }
+
     /**
      * 配置SSO相关参数
      */
     @Autowired
     private void configSso(SaSsoConfig sso) {
         // 配置：未登录时返回的View
-        sso.setNotLoginView(() -> {
-            String msg = "当前会话在SSO-Server端尚未登录，请先访问"
-                    + "<a href='/sso/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
-                    + "进行登录之后，刷新页面开始授权";
-            return msg;
-        });
+        sso.setNotLoginView(() -> "当前会话在SSO-Server端尚未登录，请先访问"
+                + "<a href='/sso/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
+                + "进行登录之后，刷新页面开始授权");
 
 
 
