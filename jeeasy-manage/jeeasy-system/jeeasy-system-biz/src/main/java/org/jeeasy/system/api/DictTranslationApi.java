@@ -1,6 +1,5 @@
 package org.jeeasy.system.api;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
 import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;

@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Tag(name = "系统 公共模块", description = "系统 公共模块")
-@RequestMapping("/common")
+@RequestMapping("/sys/common")
 public class SystemCommonController {
 
     @Resource

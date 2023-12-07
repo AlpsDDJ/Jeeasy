@@ -9,10 +9,13 @@ import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
+import org.jeeasy.common.core.service.CommonService;
+import org.jeeasy.common.core.service.IDictTranslationService;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -28,6 +31,18 @@ import javax.servlet.http.HttpServletRequest;
 @Tag(name = "数据字典")
 @RequestMapping("/sys/dict")
 public class SysDictController extends SimpleBaseController<SysDictService, SysDict> {
+
+    //@Resource
+    //private CommonService commonService;
+    //
+    //@GetMapping("/queryByCode/{code}")
+    //@DictTranslation
+    //@Operation(summary = "型号列表", description = "型号列表")
+    //public R<IPage<SysDict>> queryDictByCode(@PathVariable("code") String code, @RequestParam(value = "pid", required = false) String pid) {
+    //    //service.queryByParentCode()
+    //    commonService.getDictsByCode(code, pid, false);
+    //    return null;
+    //}
 
     @GetMapping
     @DictTranslation

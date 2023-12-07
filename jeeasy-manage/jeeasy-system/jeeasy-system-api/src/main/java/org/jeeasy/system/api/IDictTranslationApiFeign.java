@@ -7,6 +7,7 @@ import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.IDictTranslationService;
+import org.jeeasy.system.api.config.FeignConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date 2020/11/23 9:43
  */
 @Component
-@FeignClient(path = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApiFeign.DictTranslationApiFallbackFactory.class)
+@FeignClient(path = "sys/api", contextId = "dictTranslationApi", value = ServiceNameConstant.SERVICE_SYSTEM, fallbackFactory = IDictTranslationApiFeign.DictTranslationApiFallbackFactory.class, configuration = FeignConfiguration.class)
 @ConditionalOnMissingClass("org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl")
 public interface IDictTranslationApiFeign extends IDictTranslationService {
 

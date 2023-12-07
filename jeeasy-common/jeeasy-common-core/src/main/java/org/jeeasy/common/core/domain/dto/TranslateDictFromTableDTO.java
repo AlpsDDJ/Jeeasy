@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 
+import java.io.Serializable;
+
 /**
  * TODO
  *
@@ -14,7 +16,9 @@ import org.jeeasy.common.core.domain.vo.TableDictVo;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TranslateDictFromTableDTO {
+public class TranslateDictFromTableDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private TableDictVo tableDict;
     private Object value;
 }

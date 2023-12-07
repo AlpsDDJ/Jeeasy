@@ -14,7 +14,7 @@ public enum EnableFlagEnum implements IDictEnum<Integer> {
     // 启用
     YES(1, "启用"),
     // 未启用
-    NO(0, "未启用"),
+    NO(0, "停用"),
     ;
 
     private final Integer value;

@@ -10,5 +10,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface MbModelService extends IService<MbModel> {
-
 }

@@ -28,6 +28,7 @@ import org.jeeasy.common.core.service.IDictTranslationService;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -126,8 +127,9 @@ public class DictAspect {
         }
         for (Field field : ClassUtil.getDeclaredFields(record.getClass())) {
             //update-end--Author:scott  -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
-            JsonIgnore ignoreAnnotation = field.getAnnotation(JsonIgnore.class);
-            Dict dictAnnotation = field.getAnnotation(Dict.class);
+            JsonIgnore ignoreAnnotation = AnnotationUtils.getAnnotation(field, JsonIgnore.class);
+            //Dict dictAnnotation = field.getAnnotation(Dict.class);
+            Dict dictAnnotation = AnnotationUtils.getAnnotation(field, Dict.class);
             String fieldName = field.getName();
             Object fieldValue = BeanUtil.getFieldValue(record, fieldName);
             // 排除有 @JsonIgnore 注解的字段
@@ -191,7 +193,8 @@ public class DictAspect {
         }
 
         if(ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), code.charAt(0))){
-            TableDictVo tableDictVo = dictTranslationService.getTableDictByCode(code).getData();
+            R<TableDictVo> tableDictByCode = dictTranslationService.getTableDictByCode(code.substring(1));
+            TableDictVo tableDictVo = tableDictByCode.getData();
             return translateTableDict(tableDictVo, value);
         }
 
@@ -300,7 +303,8 @@ public class DictAspect {
                 }
             });
         } else {
-            String tmpValue = dictTranslationService.translateDictFromTable(new TranslateDictFromTableDTO(tableDict, value)).getData();
+            TranslateDictFromTableDTO tableDTO = new TranslateDictFromTableDTO(tableDict, value);
+            String tmpValue = dictTranslationService.translateDictFromTable(tableDTO).getData();
             if(Tools.isNotEmpty(tmpValue)){
                 textValue.append(tmpValue);
             }

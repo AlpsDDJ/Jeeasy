@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -19,10 +20,10 @@ import java.net.UnknownHostException;
  * @date
  */
 @Slf4j
-@EnableAutoTable(activeProfile="dev")
+@EnableAutoTable
 @SpringBootApplication(scanBasePackages = "org.jeeasy")
 @EnableDiscoveryClient
-//@EnableFeignClients
+@EnableFeignClients(basePackages = "org.jeeasy")
 public class MobileBeautyApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext application = SpringApplication.run(MobileBeautyApplication.class, args);

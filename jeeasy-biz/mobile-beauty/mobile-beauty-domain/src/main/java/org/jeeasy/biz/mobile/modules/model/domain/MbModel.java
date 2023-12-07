@@ -32,8 +32,9 @@ public class MbModel extends Model<MbModel> implements Serializable {
     @Schema(description = "型号")
     private String model;
 
-    @Schema(description = "品牌id")
-    private String brandId;
+    @Schema(description = "品牌编码")
+    @Dict("#mb_brand")
+    private String brandCode;
 
     @Schema(description = "型号编码")
     private String code;

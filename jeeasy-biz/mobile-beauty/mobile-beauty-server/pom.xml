@@ -33,6 +33,11 @@
             <artifactId>mobile-beauty-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-system-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 构建工具 -->
