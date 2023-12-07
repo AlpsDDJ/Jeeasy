@@ -2,21 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jeeasy</artifactId>
+        <artifactId>jeeasy-biz</artifactId>
         <groupId>mobie.alps</groupId>
         <version>${revision}</version>
     </parent>
-
-    <artifactId>jeeasy-biz</artifactId>
-    <name>业务模块</name>
-    <packaging>pom</packaging>
     <version>${revision}</version>
+    <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>mobile-beauty</artifactId>
+    <packaging>pom</packaging>
     <modules>
-        <module>fast-note</module>
-        <module>mobile-beauty</module>
+        <module>mobile-beauty-domain</module>
+        <module>mobile-beauty-server</module>
+        <module>mobile-beauty-domain</module>
+        <module>mobile-beauty-server</module>
     </modules>
+
+
 
 </project>

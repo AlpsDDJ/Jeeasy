@@ -1,6 +1,5 @@
-package org.jeeasy.biz.fastnote;
+package org.jeeasy.biz.mobile.mobile;
 
-import cn.dev33.satoken.SaManager;
 import cn.hutool.core.util.StrUtil;
 import com.tangzc.mpe.autotable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -21,23 +19,20 @@ import java.net.UnknownHostException;
  * @date
  */
 @Slf4j
-@EnableAutoTable
+@EnableAutoTable(activeProfile="dev")
 @SpringBootApplication(scanBasePackages = "org.jeeasy")
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "org.jeeasy")
-// @MapperScan("org.jeeasy.**.mapper")
-//@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
-public class FastNoteApplication extends SpringBootServletInitializer {
+//@EnableFeignClients
+public class MobileBeautyApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {
-        ConfigurableApplicationContext application = SpringApplication.run(FastNoteApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(MobileBeautyApplication.class, args);
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         String path = env.getProperty("server.servlet.context-path");
         path = StrUtil.isEmpty(path) ? "": path;
-        log.info("启动成功：Sa-Token配置如下：{}", SaManager.getConfig());
         log.info("\n----------------------------------------------------------\n\t" +
-                "Application FastNote is running! Access URLs:\n\t" +
+                "Application Jeeasy System is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
                 "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
 //                "Swagger-ui: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +

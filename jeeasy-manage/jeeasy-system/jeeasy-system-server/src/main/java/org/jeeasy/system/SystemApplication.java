@@ -1,7 +1,7 @@
 package org.jeeasy.system;
 
 import cn.hutool.core.util.StrUtil;
-import com.tangzc.mpe.actable.EnableAutoTable;
+import com.tangzc.mpe.autotable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

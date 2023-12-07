@@ -37,7 +37,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     public static final Integer DEFAULT_STATUS = 1;
 
-    @Autowired
+    @Autowired(required = false)
     private CurrentAuthUserService currentAuthUserService;
 
     @Override

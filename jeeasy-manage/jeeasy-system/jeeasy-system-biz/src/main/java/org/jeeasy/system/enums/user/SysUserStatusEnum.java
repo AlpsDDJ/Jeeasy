@@ -12,7 +12,6 @@ import org.jeeasy.common.core.enums.IDictEnum;
  * @date 2020/11/22 2:10
  */
 @Getter
-
 @AllArgsConstructor
 public enum SysUserStatusEnum implements IDictEnum<Integer> {
 

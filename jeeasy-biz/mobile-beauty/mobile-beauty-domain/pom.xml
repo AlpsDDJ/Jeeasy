@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mobile-beauty</artifactId>
+        <groupId>mobie.alps</groupId>
+        <version>${revision}</version>
+    </parent>
+    <version>${revision}</version>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+
+    <artifactId>mobile-beauty-domain</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-common-doc</artifactId>
+        </dependency>
+        <!--<dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-sso</artifactId>
+        </dependency>-->
+    </dependencies>
+
+</project>

@@ -1,6 +1,6 @@
 package org.jeeasy.biz.fastnote.modules.note.domain;
 
-import com.tangzc.mpe.actable.annotation.*;
+import com.tangzc.mpe.autotable.annotation.*;
 import lombok.Data;
 
 import java.math.BigDecimal;

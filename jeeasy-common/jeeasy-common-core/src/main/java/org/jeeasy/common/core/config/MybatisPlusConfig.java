@@ -3,9 +3,7 @@ package org.jeeasy.common.core.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.tangzc.mpe.actable.EnableAutoTable;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-11-15
  */
 @Configuration
-@MapperScan({"org.jeeasy.**.mapper", "com.tangzc.mpe.actable.mapper"})
+@MapperScan({"org.jeeasy.**.mapper", "com.tangzc.mpe.autotable.mapper"})
 public class MybatisPlusConfig {
 
     /**
