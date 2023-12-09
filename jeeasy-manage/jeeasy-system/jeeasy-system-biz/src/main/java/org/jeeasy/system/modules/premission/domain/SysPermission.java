@@ -48,9 +48,9 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
     private String parentId;
 
     /**
-     * 菜单标题
+     * 资源名称
      */
-    @Schema(description = "菜单标题")
+    @Schema(description = "资源名称")
     private String name;
 
     /**
@@ -121,14 +121,14 @@ public class SysPermission extends Model<SysPermission> implements BaseTree<SysP
      */
     @Schema(description = "是否路由菜单", example = "1:是 0:不是（默认值1）")
     @Dict(dictEnum = BooleanEnum.class)
-    private Integer isRoute;
+    private Integer route;
 
     /**
      * 是否叶子节点:    1:是   0:不是
      */
     @Schema(description = "是否叶子节点", example = "1:是 0:不是")
     @Dict(dictEnum = BooleanEnum.class)
-    private Integer isLeaf;
+    private Integer leaf;
 
     /**
      * 是否缓存该页面:    1:是   0:不是

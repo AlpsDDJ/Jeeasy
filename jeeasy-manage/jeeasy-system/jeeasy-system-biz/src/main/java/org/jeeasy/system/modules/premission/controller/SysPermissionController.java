@@ -1,16 +1,19 @@
 package org.jeeasy.system.modules.premission.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,10 +31,10 @@ import java.util.List;
 public class SysPermissionController extends SimpleBaseController<SysPermissionService, SysPermission> {
 
 
-    @GetMapping
+    @GetMapping("/tree")
     @DictTranslation
     @Operation(summary = "权限列表", description = "权限列表")
-    public R<List<SysPermission>> list() {
+    public R<List<SysPermission>> tree() {
 //        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
 //        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
 //        String customSqlSegment = wrapper.getCustomSqlSegment();
@@ -41,6 +44,23 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
 //        page.setRecords(list);
 //        return R.ok(page);
         return R.ok(service.queryAllChildren(null));
+    }
+
+
+    @GetMapping
+    @DictTranslation
+    @Operation(summary = "权限列表", description = "权限列表")
+    public R<IPage<SysPermission>> treePage(QueryPageModel queryPageModel, HttpServletRequest req) {
+//        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
+//        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
+//        String customSqlSegment = wrapper.getCustomSqlSegment();
+//        log.info("customSqlSegment ======== {}", customSqlSegment);
+//        List<SysPermission> list = service.list(wrapper);
+//        IPage<SysPermission> page = new Page<>();
+//        page.setRecords(list);
+//        return R.ok(page);
+
+        return R.ok(service.queryPageTreeList(null, queryPageModel, req));
     }
 
     /**

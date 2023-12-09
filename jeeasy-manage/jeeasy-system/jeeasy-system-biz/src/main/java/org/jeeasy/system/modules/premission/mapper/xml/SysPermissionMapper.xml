@@ -6,7 +6,7 @@
     </sql>
 
     <sql id="baseColumn">
-        id,parent_id,name,url,component,component_name,redirect,menu_type,perms,perms_type,sort_no,always_show,icon,is_route,is_leaf,keep_alive,hidden,description,create_by,create_time,update_by,update_time,del_flag,rule_flag,status,internal_or_external
+        id,parent_id,name,url,component,component_name,redirect,menu_type,perms,perms_type,sort_no,always_show,icon,route,leaf,keep_alive,hidden,description,create_by,create_time,update_by,update_time,del_flag,rule_flag,status,internal_or_external
     </sql>
     <select id="queryByRoleId" resultType="org.jeeasy.system.modules.premission.domain.SysPermission"
             parameterType="java.lang.String">

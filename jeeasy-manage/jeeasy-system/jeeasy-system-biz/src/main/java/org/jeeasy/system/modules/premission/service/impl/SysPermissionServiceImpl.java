@@ -2,16 +2,22 @@ package org.jeeasy.system.modules.premission.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.enums.BooleanEnum;
+import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
 import org.jeeasy.system.modules.premission.mapper.SysPermissionMapper;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,7 +41,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         }
         List<SysPermission> list = list(wrapper);
         list.forEach(perm -> {
-            if(!BooleanEnum.yes(perm.getIsLeaf())) {
+            if(!BooleanEnum.yes(perm.getLeaf())) {
                 List<SysPermission> children = queryAllChildren(perm.getId());
                 if(children != null && !children.isEmpty()){
                     perm.setChildren(children);
@@ -43,6 +49,30 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             }
         });
         return list;
+    }
+
+    @Override
+    public IPage<SysPermission> queryPageTreeList(String parentId, QueryPageModel query, HttpServletRequest req) {
+        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
+        //if(StringUtils.isEmpty(parentId)) {
+        //    parentId = "0";
+        //}
+
+        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
+        //if(StrUtil.isEmpty(parentId) || "0".equals(parentId)){
+        //    wrapper.lambda().or().isNull(SysPermission::getParentId);
+        //}
+        Page<SysPermission> page = this.page(query.getPage(SysPermission.class), wrapper);
+        List<SysPermission> list = page.getRecords();
+        list.forEach(perm -> {
+            if(!BooleanEnum.yes(perm.getLeaf())) {
+                List<SysPermission> children = queryAllChildren(perm.getId());
+                if(children != null && !children.isEmpty()){
+                    perm.setChildren(children);
+                }
+            }
+        });
+        return page;
     }
 
     @Override
