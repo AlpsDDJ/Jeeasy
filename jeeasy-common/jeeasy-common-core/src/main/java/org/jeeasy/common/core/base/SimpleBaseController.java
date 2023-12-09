@@ -137,7 +137,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @author mobie
      * @date 2020/11/21 16:24
      */
-    public R<?> deleteBatch(String ids) {
+    protected R<?> batchDelete(String ids) {
         if (Tools.isEmpty(ids)) {
             return R.error("未选中数据");
         } else {

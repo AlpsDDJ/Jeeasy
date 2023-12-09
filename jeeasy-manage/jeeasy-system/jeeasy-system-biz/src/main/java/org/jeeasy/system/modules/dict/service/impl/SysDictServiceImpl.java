@@ -32,7 +32,8 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         }
         if (BooleanEnum.yes(tableDict.getIsTree())) {
 //            List<TreeDictVo> treeDictVos = baseMapper.queryTreeByTableDict(tableDict, async);
-            return baseMapper.queryTreeByTableDict(tableDict, async);
+
+            return async? baseMapper.queryTreeByTableDictWithAsync(tableDict) : baseMapper.queryTreeByTableDict(tableDict);
         }
 
         return baseMapper.queryByTableDict(tableDict);

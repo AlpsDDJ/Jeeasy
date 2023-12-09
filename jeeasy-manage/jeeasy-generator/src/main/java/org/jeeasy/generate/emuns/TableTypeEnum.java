@@ -28,7 +28,8 @@ public enum TableTypeEnum implements IDictEnum<String> {
     /**
      * 分类
      */
-    CATALOG("catalog", "分类");
+    //CATALOG("catalog", "分类")
+    ;
 
     private final String value;
     private final String text;

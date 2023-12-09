@@ -38,8 +38,8 @@ public class SystemCommonController {
     @GetMapping("/dicts/{code}")
     @DictTranslation
     @Operation(summary = "根据ID查找数据字典", description = "根据ID查找数据字典")
-    public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") String async) {
-        return R.ok(commonService.getDictsByCode(code, parentId, Boolean.parseBoolean(async)));
+    public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") Boolean async) {
+        return R.ok(commonService.getDictsByCode(code, parentId, async));
     }
 
 //    /**

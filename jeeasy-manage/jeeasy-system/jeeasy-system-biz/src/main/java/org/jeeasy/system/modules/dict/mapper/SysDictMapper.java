@@ -35,7 +35,14 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param tableDict
      * @return
      */
-    List<TreeDictVo> queryTreeByTableDict(@Param("tableDict") SysTableDict tableDict, @Param("async") boolean async);
+    List<TreeDictVo> queryTreeByTableDict(SysTableDict tableDict);
+
+    /**
+     * 根据 TableDict 获取字典列表
+     * @param tableDict
+     * @return
+     */
+    List<TreeDictVo> queryTreeByTableDictWithAsync(@Param("tableDict") SysTableDict tableDict);
 
 
     /**

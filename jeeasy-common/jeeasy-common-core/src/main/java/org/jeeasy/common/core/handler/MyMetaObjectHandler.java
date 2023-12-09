@@ -9,12 +9,8 @@ import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
 import org.jeeasy.common.core.service.CurrentAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -45,7 +41,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         try {
             IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
 
-            if(BeanUtil.isNotEmpty(currentAuthUser)) {
+            if (BeanUtil.isNotEmpty(currentAuthUser)) {
                 this.strictInsertFill(metaObject, CREATE_BY, currentAuthUser::id, String.class);
             }
         } catch (Exception e) {
@@ -63,12 +59,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-
-
         try {
             IAuthUser currentAuthUser = currentAuthUserService.getCurrentAuthUser();
 
-            if(BeanUtil.isNotEmpty(currentAuthUser)) {
+            if (BeanUtil.isNotEmpty(currentAuthUser)) {
                 this.strictUpdateFill(metaObject, UPDATE_BY, currentAuthUser::id, String.class);
             }
         } catch (Exception e) {

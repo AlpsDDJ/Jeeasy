@@ -93,7 +93,7 @@ public class FnMemberController extends SimpleBaseController<FnMemberService, Fn
      */
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除FastNote用户", description = "批量删除FastNote用户")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 }

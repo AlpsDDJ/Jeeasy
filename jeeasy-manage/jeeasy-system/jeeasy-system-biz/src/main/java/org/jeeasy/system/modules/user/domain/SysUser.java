@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * 系统用户
+ *
  * @author Alps
  */
 @EqualsAndHashCode(callSuper = true)

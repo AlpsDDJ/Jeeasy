@@ -8,6 +8,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,8 @@ public class Tools {
             return StrUtil.isNotEmpty((String)obj);
         } else if(obj instanceof Collection){
             return CollectionUtil.isNotEmpty((Collection)obj);
+        } else if(ArrayUtil.isArray(obj)) {
+            return ArrayUtil.isNotEmpty(obj);
         }
         return BeanUtil.isNotEmpty(obj);
     }

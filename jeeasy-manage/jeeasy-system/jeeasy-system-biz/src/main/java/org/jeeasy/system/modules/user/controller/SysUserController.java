@@ -1,7 +1,7 @@
 package org.jeeasy.system.modules.user.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +11,7 @@ import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.enums.DelFlagEnum;
+import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
@@ -20,7 +21,6 @@ import org.jeeasy.system.modules.user.domain.model.ChangePasswordByOldPasswordMo
 import org.jeeasy.system.modules.user.domain.model.SysUserQueryPageModel;
 import org.jeeasy.system.modules.user.domain.model.UserInfoModel;
 import org.jeeasy.system.modules.user.service.SysUserService;
-import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,13 +44,13 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @Operation(summary = "用户列表", description = "用户列表")
     public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
         QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
-        if(!queryPageModel.hasSort()){
+        if (!queryPageModel.hasSort()) {
             wrapper.lambda().orderByAsc(SysUser::getUserNo);
         }
-        String deptId = queryPageModel.getDeptId();
-        String roleId = queryPageModel.getRoleId();
+        String[] deptId = queryPageModel.getDepts();
+        String[] roleId = queryPageModel.getRoles();
         if (Tools.isNotEmpty(deptId)) {
-            List<String> deptIds = StrUtil.split(deptId, ',', true, true);
+            List<String> deptIds = CollectionUtil.newArrayList(deptId);
             if (deptIds.size() == 1) {
                 wrapper.eq("dept_id", deptIds.get(0));
             } else if (deptIds.size() > 1) {
@@ -58,7 +58,7 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
             }
         }
         if (Tools.isNotEmpty(roleId)) {
-            List<String> roleIds = StrUtil.split(roleId, ',', true, true);
+            List<String> roleIds = CollectionUtil.newArrayList(roleId);
             if (roleIds.size() == 1) {
                 wrapper.eq("role_id", roleIds.get(0));
             } else if (roleIds.size() > 1) {
@@ -80,14 +80,14 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     @PostMapping
     @Operation(summary = "添加用户", description = "添加用户")
     public R<?> add(@RequestBody UserInfoModel model) {
-        service.addUserWithUserInfoModel(model);
+        service.insertUserWithUserInfoModel(model);
         return R.ok().setMessage("添加成功");
     }
 
     @PutMapping
     @Operation(summary = "修改用户", description = "修改用户")
     public R<?> edit(@RequestBody UserInfoModel model) {
-        service.editUserWithUserInfoModel(model);
+        service.updateUserWithUserInfoModel(model);
         return R.ok().setMessage("修改成功");
     }
 
@@ -99,8 +99,8 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
 
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除用户", description = "批量删除用户")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 
     /**
@@ -139,14 +139,12 @@ public class SysUserController extends SimpleBaseController<SysUserService, SysU
     }
 
 
-
     @GetMapping("/menus")
     @DictTranslation
     @Operation(summary = "当前登录用户菜单列表", description = "当前登录用户菜单列表")
     public R<List<MenuVo>> menus() {
         String currentAuthUserId = StpUtil.getLoginId().toString();
         List<MenuVo> sysPermissions = permissionService.queryMenuByUserId(currentAuthUserId);
-//        return super.getById(id);
         return R.ok(sysPermissions);
     }
 

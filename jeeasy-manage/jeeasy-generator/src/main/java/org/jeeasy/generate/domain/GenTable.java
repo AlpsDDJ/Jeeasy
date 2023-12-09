@@ -1,16 +1,22 @@
 package org.jeeasy.generate.domain;
 
+import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.generate.emuns.RelationTypeEnum;
+import org.jeeasy.generate.emuns.TableStyleEnum;
 import org.jeeasy.generate.emuns.TableTypeEnum;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 代码生成
@@ -93,9 +99,11 @@ public class GenTable {
 
     /**
      * 表单风格
+     *
      * @description 12 一列、6 二列、4 三列、3 四列
      */
     @Schema(description = "表单风格")
+    @Dict(dictEnum = TableStyleEnum.class)
     private Integer formType = 12;
 
 //    /**
@@ -167,6 +175,7 @@ public class GenTable {
 
     /**
      * 映射关系
+     *
      * @description oneToMany一对多  oneToOne一对一
      */
     @Schema(description = "映射关系")
@@ -230,4 +239,52 @@ public class GenTable {
     @Schema(description = "所属部门")
     @TableField(fill = FieldFill.INSERT)
     private String sysOrgCode;
+
+    public static void main(String[] args) {
+        String[] ignore = {"id", "createBy", "createTime", "updateBy", "updateTime", "delFlag", "sysOrgCode"};
+        Arrays.stream(ClassUtil.getDeclaredFields(GenTable.class)).forEach(field -> {
+            String fieldName = field.getName();
+            String typeName = field.getType().getSimpleName().toLowerCase();
+            Schema schema = field.getAnnotation(Schema.class);
+            String label = fieldName;
+            if (Objects.nonNull(schema)) {
+                label = schema.description();
+            }
+            Dict dict = field.getAnnotation(Dict.class);
+            String dictCode = "";
+            if (Objects.nonNull(dict)) {
+                dictCode = dict.dictCode();
+                if (StringUtils.isEmpty(dictCode)) {
+                    dictCode = dict.dictEnum().getSimpleName().replace("Enum", "");
+                }
+            }
+
+            if (!ArrayUtils.contains(ignore, fieldName)) {
+                String tsType;
+                switch (typeName) {
+                    case "integer":
+                    case "int":
+                    case "long":
+                    case "double":
+                    case "float":
+                        tsType = "number";
+                        break;
+                    case "boolean":
+                        tsType = "boolean";
+                        break;
+                    default:
+                        tsType = "string";
+                        break;
+                }
+                System.out.println("@Field('" + label + "')");
+                if (StringUtils.isNoneEmpty(dictCode)) {
+                    System.out.println("@Field.Dict('" + dictCode + "')");
+                }
+                if ("number".equals(tsType)) {
+                    System.out.println("@Field.DataType(FormDataType.NUMBER)");
+                }
+                System.out.println(fieldName + ": " + tsType + "\n");
+            }
+        });
+    }
 }

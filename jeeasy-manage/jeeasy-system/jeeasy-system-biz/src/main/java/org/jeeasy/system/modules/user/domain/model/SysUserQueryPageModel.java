@@ -12,7 +12,7 @@ import org.jeeasy.common.core.domain.model.QueryPageModel;
 @Setter
 public class SysUserQueryPageModel extends QueryPageModel {
 
-    private String roleId;
-    private String deptId;
+    private String[] roles;
+    private String[] depts;
 
 }

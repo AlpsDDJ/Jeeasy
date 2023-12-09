@@ -56,8 +56,8 @@ public class BrandController extends SimpleBaseController<MbBrandService, MbBran
 
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除品牌", description = "批量删除品牌")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 
 }

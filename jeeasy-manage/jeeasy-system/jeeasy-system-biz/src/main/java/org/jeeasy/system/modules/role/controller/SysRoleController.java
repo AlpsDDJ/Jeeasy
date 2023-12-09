@@ -71,8 +71,8 @@ public class SysRoleController extends SimpleBaseController<SysRoleService, SysR
 
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除角色", description = "批量删除角色")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 
     @GetMapping("/permissions/{id}")

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeeasy.system.modules.user.domain.SysUserRole;
 import org.jeeasy.system.modules.user.mapper.SysUserRoleMapper;
 import org.jeeasy.system.modules.user.service.SysUserRoleService;
+import org.springframework.stereotype.Service;
 
 /**
  * SysUserRoleServiceImpl: 用户角色表 服务实现类
@@ -12,5 +13,6 @@ import org.jeeasy.system.modules.user.service.SysUserRoleService;
  * @version v1.0
  * @date 2020/11/21 22:32
  */
+@Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 }

@@ -98,7 +98,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      */
     @DeleteMapping("/batch")
     @Operation(summary =  "批量删除组织机构", description = "批量删除组织机构")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 }

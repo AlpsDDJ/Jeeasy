@@ -16,12 +16,31 @@
         from ${tableDict.tableName} t
     </select>
 
-    <select id="queryTreeByTableDict" resultType="org.jeeasy.common.core.domain.vo.TreeDictVo">
+    <select id="queryTreeByTableDictWithAsync" resultType="org.jeeasy.common.core.domain.vo.TreeDictVo">
         select t.${tableDict.parentId} as parent_id, t.${tableDict.valueColumn} as dict_code, t.${tableDict.nameColumn} as dict_name, ${tableDict.leafColumn} as leaf
         from ${tableDict.tableName} t
         <where>
-            <if test="async">
+            <if test="tableDict.parentId != null and tableDict.parentId != ''">
                 t.${tableDict.parentId} = '${tableDict.parentValue}'
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="TreeDictMap" type="org.jeeasy.common.core.domain.vo.TreeDictVo">
+<!--        <id column="id" property="dictCode" javaType="String" jdbcType="VARCHAR"/>-->
+        <result column="dict_code" property="dictCode" />
+        <result column="dict_name" property="dictName" />
+        <result column="leaf" property="leaf" />
+        <result column="parent_id" property="parentId" />
+<!--        <collection property="children" column="dict_code" ofType="org.jeeasy.common.core.domain.vo.TreeDictVo" select="queryTreeByTableDictWithAsync"/>-->
+    </resultMap>
+
+    <select id="queryTreeByTableDict" resultMap="TreeDictMap">
+        select t.${parentId} as parent_id, t.${valueColumn} as dict_code, t.${nameColumn} as dict_name, ${leafColumn} as leaf
+        from ${tableName} t
+        <where>
+            <if test="parentId != null and parentId != ''">
+                t.${parentId} = '${parentValue}'
             </if>
         </where>
     </select>

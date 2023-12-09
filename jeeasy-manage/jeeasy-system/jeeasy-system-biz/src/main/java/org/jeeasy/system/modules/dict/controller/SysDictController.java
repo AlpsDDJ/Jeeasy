@@ -9,13 +9,10 @@ import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
-import org.jeeasy.common.core.service.CommonService;
-import org.jeeasy.common.core.service.IDictTranslationService;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -108,7 +105,7 @@ public class SysDictController extends SimpleBaseController<SysDictService, SysD
      */
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除数据字典", description = "批量删除数据字典")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 }

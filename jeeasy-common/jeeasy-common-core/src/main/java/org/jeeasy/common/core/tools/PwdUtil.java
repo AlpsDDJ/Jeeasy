@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.charset.Charset;
 
 /**
+ * 密码工具类
+ *
  * @author AlpsDDJ
  * @date 2020/11/10
  */
@@ -21,40 +23,41 @@ public class PwdUtil {
 
     /**
      * 加密
-     * @param username
-     * @param password
-     * @param salt
-     * @return
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param salt     盐值
+     * @return 加密后的密码
      */
-    public static String encrypt(String username, String password, String salt){
+    public static String encrypt(String username, String password, String salt) {
         SymmetricCrypto crypto = getSymmetricCrypto(username, salt);
         return crypto.encryptHex(password, CHARSET);
     }
 
     /**
      * 解密
-     * @param username
-     * @param password
-     * @param salt
-     * @return
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param salt     盐值
+     * @return 解密后的密码
      */
-    public static String decrypt(String username, String password, String salt){
+    public static String decrypt(String username, String password, String salt) {
         SymmetricCrypto crypto = getSymmetricCrypto(username, salt);
         return crypto.decryptStr(password, CHARSET);
     }
 
-    private static SymmetricCrypto getSymmetricCrypto(String username, String salt){
+    /**
+     * 根据给定的用户名和盐值获取对称加密对象
+     *
+     * @param username 用户名
+     * @param salt     盐值
+     * @return 对称加密对象
+     */
+    private static SymmetricCrypto getSymmetricCrypto(String username, String salt) {
         String key = MD5.create().digestHex16(username + salt, CHARSET);
         return new SymmetricCrypto(ALGORITHM, SecureUtil.generateKey(ALGORITHM.getValue(), key.getBytes(CHARSET)).getEncoded());
     }
 
-//    public static void main(String[] args) {
-//        String username = "admi1你好213123n1";
-//        String password = "1234564567456748456345623463756";
-//        String salt = "kjyck2";
-//        String encryptPwd = PwdUtil.encrypt(username, password, salt);
-//        System.out.println(encryptPwd);
-//        String pwd = decrypt(username, encryptPwd, salt);
-//        System.out.println(pwd);
-//    }
+
 }

@@ -11,45 +11,38 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 字典工具类
+ *
  * @author AlpsDDJ
  * @date 2021/8/13 11:26
  */
 public class DictUtil {
-    public static List<IDictEnum<?>> getDictEnum(String code){
-//        AtomicReference<Map<String, Object>> value = new AtomicReference<>();
+    /**
+     * 根据代码获取字典枚举列表
+     *
+     * @param code 代码
+     * @return 字典枚举列表
+     */
+    public static List<IDictEnum<?>> getDictEnum(String code) {
+        // 扫描包路径下的所有继承自IDictEnum的类
         Set<Class<?>> classSet = ClassUtil.scanPackageBySuper("org.jeeasy", IDictEnum.class);
         List<IDictEnum<?>> dictEnumList = new ArrayList<>();
+        // 遍历每个类
         classSet.forEach(cls -> {
             String className = cls.getSimpleName();
 
+            // 获取类的代码
             String dictCode = StrUtil.toCamelCase(className.replace("Enum", ""));
-            if(code.equalsIgnoreCase(dictCode) || code.equalsIgnoreCase(StrUtil.toUnderlineCase(dictCode))){
+            // 判断代码是否与给定的代码相等或转换为下划线形式后相等
+            if (code.equalsIgnoreCase(dictCode) || code.equalsIgnoreCase(StrUtil.toUnderlineCase(dictCode))) {
                 System.out.println(dictCode);
+                // 获取枚举的映射表
                 LinkedHashMap<String, Enum> enumMap = EnumUtil.getEnumMap((Class<Enum>) cls);
-                enumMap.entrySet().forEach(e -> {
-                    dictEnumList.add((IDictEnum<?>) e.getValue());
-                });
-
-//                LinkedHashMap<String, Enum<? extends IDictEnum>> enumMap = EnumUtil.getEnumMap(eCls);
-//                enumMap.forEach(entity -> {
-//                    System.out.println(entity. + " - - " + entity.getValue());
-//                });
-
-
-
-//                value.set(EnumUtil.getNameFieldMap((Class<? extends Enum<?>>) cls, "value"));
+                // 将枚举添加到字典枚举列表中
+                enumMap.forEach((key, value) -> dictEnumList.add((IDictEnum<?>) value));
             }
         });
+        // 返回字典枚举列表
         return dictEnumList;
-    }
-
-
-    public static void main(String[] args) {
-
-        List<IDictEnum<?>> sysUserStatus = DictUtil.getDictEnum("enable_flag");
-        sysUserStatus.forEach(entity -> {
-            System.out.println(entity.getValue() + " - - " + entity.getText());
-        });
-
     }
 }

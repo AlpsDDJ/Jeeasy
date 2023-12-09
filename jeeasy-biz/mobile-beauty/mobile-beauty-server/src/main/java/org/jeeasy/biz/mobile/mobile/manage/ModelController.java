@@ -56,8 +56,8 @@ public class ModelController extends SimpleBaseController<MbModelService, MbMode
 
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除型号", description = "批量删除型号")
-    public R<?> removeBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+    public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
     }
 
 }

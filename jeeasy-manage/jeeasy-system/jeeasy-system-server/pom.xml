@@ -33,6 +33,11 @@
             <artifactId>jeeasy-system-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-generator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 构建工具 -->

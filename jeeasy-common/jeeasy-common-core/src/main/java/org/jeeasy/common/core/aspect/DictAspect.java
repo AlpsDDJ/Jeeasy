@@ -1,8 +1,6 @@
 package org.jeeasy.common.core.aspect;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -25,6 +23,7 @@ import org.jeeasy.common.core.domain.vo.BaseTree;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.common.core.service.IDictTranslationService;
+import org.jeeasy.common.core.tools.JStopWatch;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
@@ -56,7 +55,6 @@ public class DictAspect {
     IDictTranslationService dictTranslationService;
 
 
-
     @Resource
     ObjectMapper mapper;
 
@@ -69,22 +67,19 @@ public class DictAspect {
 
     @Around(value = "@annotation(dictTranslation)")
     public Object doTranslation(final ProceedingJoinPoint pjp, DictTranslation dictTranslation) throws Throwable {
-//        long time1 = System.currentTimeMillis();
-        TimeInterval timer = DateUtil.timer();
+        JStopWatch stopWatch = JStopWatch.create("字典翻译", "获取JSON数据");
         Object result = pjp.proceed();
-//        long time2 = System.currentTimeMillis();
-        log.debug("获取JSON数据 耗时：" + timer.interval() + "ms");
-        long start = System.currentTimeMillis();
+        stopWatch.startNew("解析注入JSON数据");
         if (result instanceof R) {
             R dataResult = (R) result;
             if (dataResult.getData() instanceof IPage) {
                 List<Map<String, Object>> items = new ArrayList<>();
-                IPage page = (IPage) dataResult.getData();
+                IPage<Map<String, Object>> page = (IPage) dataResult.getData();
                 for (Object record : page.getRecords()) {
                     items.add(translate(record));
                 }
                 page.setRecords(items);
-            } else if(dataResult.getData() instanceof List) {
+            } else if (dataResult.getData() instanceof List) {
                 List<?> list = (List<?>) dataResult.getData();
                 List<Map<String, Object>> listTemp = new ArrayList<>();
                 list.forEach(record -> {
@@ -95,13 +90,13 @@ public class DictAspect {
                 dataResult.setData(translate(dataResult.getData()));
             }
         }
-        long end = System.currentTimeMillis();
-        log.debug("解析注入JSON数据  耗时" + (end - start) + "ms");
+        log.debug(stopWatch.stopAndPrettyPrint());
         return result;
     }
 
     /**
      * 翻译返回的数据对象
+     *
      * @param record
      * @return
      */
@@ -122,7 +117,7 @@ public class DictAspect {
             e.printStackTrace();
         }
         String dictTextSuffix = dictEnumProperty.getDictTextSuffix();
-        if(ObjectUtil.isNull(record)){
+        if (ObjectUtil.isNull(record)) {
             return objectNode;
         }
         for (Field field : ClassUtil.getDeclaredFields(record.getClass())) {
@@ -148,7 +143,7 @@ public class DictAspect {
                     AtomicReference<Class<? extends Enum>> aClass = new AtomicReference<>(null);
                     dictEnumProperty.getAutoTranslateEnumClass().forEach(clazz -> {
                         String clazzName = clazz.getSimpleName();
-                        if(clazzName.replace("Enum", "").equalsIgnoreCase(fieldName)) {
+                        if (clazzName.replace("Enum", "").equalsIgnoreCase(fieldName)) {
                             aClass.set(clazz);
                         }
                     });
@@ -161,10 +156,10 @@ public class DictAspect {
         }
 
         // 树形结构数据 字典翻译
-        if(record instanceof BaseTree){
+        if (record instanceof BaseTree) {
             List<Map<String, Object>> childrenMap = new ArrayList<>();
             List<?> children = ((BaseTree<?>) record).getChildren();
-            if(BeanUtil.isNotEmpty(children)){
+            if (BeanUtil.isNotEmpty(children)) {
                 children.forEach(r -> {
                     childrenMap.add(translate(r));
                 });
@@ -188,45 +183,21 @@ public class DictAspect {
             return StrUtil.EMPTY;
         }
 
-        if(null != enumClass && !enumClass.equals(Enum.class)){
+        if (null != enumClass && !enumClass.equals(Enum.class)) {
             return translateEnum(enumClass, value);
         }
 
-        if(ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), code.charAt(0))){
+        if (ArrayUtil.contains(dictEnumProperty.getDictTableFlag(), code.charAt(0))) {
             R<TableDictVo> tableDictByCode = dictTranslationService.getTableDictByCode(code.substring(1));
             TableDictVo tableDictVo = tableDictByCode.getData();
             return translateTableDict(tableDictVo, value);
         }
 
         return translateDict(code, value);
-
-
-//        StringBuilder textValue = new StringBuilder();
-//        String fieldValue = value.toString();
-//        // 含有 "," 则按拼接值处理
-//        if (StrUtil.contains(fieldValue, StrUtil.C_COMMA)) {
-//            List<String> values = StrUtil.split(fieldValue, StrUtil.C_COMMA, true, true);
-//            values.forEach(val -> {
-//                log.debug(" 字典 value : " + val);
-//                if(Tools.isNotEmpty(val)){
-//                    String tmpValue = translate(code, enumClass, val);
-//                    if (tmpValue != null) {
-//                        if (Tools.isNotEmpty(textValue.toString())) {
-//                            textValue.append(StrUtil.C_COMMA);
-//                        }
-//                        textValue.append(tmpValue);
-//                    }
-//                }
-//            });
-//        } else {
-//            textValue.append(translate(code, enumClass, value));
-//        }
-//
-//        return textValue.toString();
     }
 
 
-    private String translateDict(String code, Object value){
+    private String translateDict(String code, Object value) {
         StringBuilder textValue = new StringBuilder();
         String fieldValue = value.toString();
         // 含有 "," 则按拼接值处理
@@ -234,7 +205,7 @@ public class DictAspect {
             List<String> values = StrUtil.split(fieldValue, StrUtil.C_COMMA, true, true);
             values.forEach(val -> {
                 log.debug(" 字典 value : " + val);
-                if(Tools.isNotEmpty(val)){
+                if (Tools.isNotEmpty(val)) {
                     String tmpValue = translateDict(code, val);
                     if (Tools.isNotEmpty(tmpValue)) {
                         if (Tools.isNotEmpty(textValue.toString())) {
@@ -246,7 +217,7 @@ public class DictAspect {
             });
         } else {
             String tmpValue = dictTranslationService.translateDict(new TranslateDictDTO(code, value)).getData();
-            if(Tools.isNotEmpty(tmpValue)){
+            if (Tools.isNotEmpty(tmpValue)) {
                 textValue.append(tmpValue);
             }
         }
@@ -255,7 +226,7 @@ public class DictAspect {
     }
 
 
-    private String translateEnum(Class<? extends Enum> enumClass, Object value){
+    private String translateEnum(Class<? extends Enum> enumClass, Object value) {
         StringBuilder textValue = new StringBuilder();
         String fieldValue = value.toString();
         // 含有 "," 则按拼接值处理
@@ -263,7 +234,7 @@ public class DictAspect {
             List<String> values = StrUtil.split(fieldValue, StrUtil.C_COMMA, true, true);
             values.forEach(val -> {
                 log.debug(" 字典 value : " + val);
-                if(Tools.isNotEmpty(val)){
+                if (Tools.isNotEmpty(val)) {
                     String tmpValue = translateEnum(enumClass, val);
                     if (Tools.isNotEmpty(tmpValue)) {
                         if (Tools.isNotEmpty(textValue.toString())) {
@@ -275,7 +246,7 @@ public class DictAspect {
             });
         } else {
             String tmpValue = dictTranslationService.translateDictFromEnum(enumClass, value);
-            if(Tools.isNotEmpty(tmpValue)){
+            if (Tools.isNotEmpty(tmpValue)) {
                 textValue.append(tmpValue);
             }
         }
@@ -284,7 +255,7 @@ public class DictAspect {
     }
 
 
-    private String translateTableDict(TableDictVo tableDict, Object value){
+    private String translateTableDict(TableDictVo tableDict, Object value) {
         StringBuilder textValue = new StringBuilder();
         String fieldValue = value.toString();
         // 含有 "," 则按拼接值处理
@@ -292,7 +263,7 @@ public class DictAspect {
             List<String> values = StrUtil.split(fieldValue, StrUtil.C_COMMA, true, true);
             values.forEach(val -> {
                 log.debug(" 字典 value : " + val);
-                if(Tools.isNotEmpty(val)){
+                if (Tools.isNotEmpty(val)) {
                     String tmpValue = translateTableDict(tableDict, val);
                     if (Tools.isNotEmpty(tmpValue)) {
                         if (Tools.isNotEmpty(textValue.toString())) {
@@ -305,7 +276,7 @@ public class DictAspect {
         } else {
             TranslateDictFromTableDTO tableDTO = new TranslateDictFromTableDTO(tableDict, value);
             String tmpValue = dictTranslationService.translateDictFromTable(tableDTO).getData();
-            if(Tools.isNotEmpty(tmpValue)){
+            if (Tools.isNotEmpty(tmpValue)) {
                 textValue.append(tmpValue);
             }
         }

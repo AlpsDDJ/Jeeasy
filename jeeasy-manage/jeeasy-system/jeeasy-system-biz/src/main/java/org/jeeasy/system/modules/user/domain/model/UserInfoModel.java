@@ -19,8 +19,8 @@ public class UserInfoModel {
     private SysUser user;
 
     @Schema(description = "用户角色")
-    private String roles;
+    private String[] roles;
 
     @Schema(description = "用户部门")
-    private String depts;
+    private String[] depts;
 }

@@ -2,6 +2,7 @@ package org.jeeasy.system.modules.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeeasy.system.modules.user.domain.SysUserDept;
+import org.springframework.stereotype.Service;
 
 /**
  * SysUserRoleService: 用户部门表 服务类
