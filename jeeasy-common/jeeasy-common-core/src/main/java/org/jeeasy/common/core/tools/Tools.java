@@ -37,11 +37,11 @@ public class Tools {
     }
 
     public static boolean isNotEmpty(Object obj) {
-        if(obj instanceof String){
-            return StrUtil.isNotEmpty((String)obj);
-        } else if(obj instanceof Collection){
-            return CollectionUtil.isNotEmpty((Collection)obj);
-        } else if(ArrayUtil.isArray(obj)) {
+        if (obj instanceof String) {
+            return StrUtil.isNotEmpty((String) obj);
+        } else if (obj instanceof Collection) {
+            return CollectionUtil.isNotEmpty((Collection) obj);
+        } else if (ArrayUtil.isArray(obj)) {
             return ArrayUtil.isNotEmpty(obj);
         }
         return BeanUtil.isNotEmpty(obj);
@@ -73,10 +73,10 @@ public class Tools {
 
     public static boolean verifyCaptcha(String key, String captcha) throws JeeasyException {
         LineCaptcha lineCaptcha = captchaCache.get(key);
-        if(isEmpty(lineCaptcha)){
+        if (isEmpty(lineCaptcha)) {
             throw new JeeasyException("验证码失效");
         }
-        if(!captchaCache.get(key).verify(captcha)){
+        if (!captchaCache.get(key).verify(captcha)) {
             throw new JeeasyException("验证码错误");
         }
         return true;

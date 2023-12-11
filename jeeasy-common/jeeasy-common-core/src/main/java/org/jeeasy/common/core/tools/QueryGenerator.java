@@ -49,9 +49,12 @@ public class QueryGenerator {
             // 获取指定字段
             Field field = ReflectUtil.getField(clazz, key);
             // 判断字段是否存在且不包含TableField注解
-            if (Objects.nonNull(field) && Objects.isNull(AnnotationUtils.getAnnotation(field, TableField.class))) {
-                // 解析查询参数
-                parseQueryParameters(wrapper, clazz, key, value);
+            if (Objects.nonNull(field)) {
+                TableField tableFieldAnnotation = AnnotationUtils.getAnnotation(field, TableField.class);
+                if (Objects.isNull(tableFieldAnnotation) || !tableFieldAnnotation.exist()) {
+                    // 解析查询参数
+                    parseQueryParameters(wrapper, clazz, key, value);
+                }
             }
         });
         return wrapper;

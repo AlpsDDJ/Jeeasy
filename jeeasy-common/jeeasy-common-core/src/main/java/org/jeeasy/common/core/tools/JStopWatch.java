@@ -2,10 +2,14 @@ package org.jeeasy.common.core.tools;
 
 import org.springframework.util.StopWatch;
 
+import java.text.NumberFormat;
+
 public class JStopWatch extends StopWatch {
+    private boolean _keepTaskList;
 
     public JStopWatch(String id) {
         super(id);
+        this._keepTaskList = true;
     }
 
     /**
@@ -52,6 +56,12 @@ public class JStopWatch extends StopWatch {
         this.startNew("");
     }
 
+    @Override
+    public void setKeepTaskList(boolean keepTaskList) {
+        super.setKeepTaskList(keepTaskList);
+        this._keepTaskList = keepTaskList;
+    }
+
     /**
      * 停止计时器并返回格式良好的字符串表示
      *
@@ -59,6 +69,30 @@ public class JStopWatch extends StopWatch {
      */
     public String stopAndPrettyPrint() {
         this.stop();
-        return "\n" + this.prettyPrint();
+        StringBuilder sb = new StringBuilder("StopWatch '" + this.getId() + "': running time = " + this.getTotalTimeNanos() / 1000000 + " ms");
+        sb.append('\n');
+        if (!this._keepTaskList) {
+            sb.append("No task info kept");
+        } else {
+            sb.append("---------------------------------------------\n");
+            sb.append("ms         %     Task name\n");
+            sb.append("---------------------------------------------\n");
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            nf.setMinimumIntegerDigits(9);
+            nf.setGroupingUsed(false);
+            NumberFormat pf = NumberFormat.getPercentInstance();
+            pf.setMinimumIntegerDigits(3);
+            pf.setGroupingUsed(false);
+            TaskInfo[] var4 = this.getTaskInfo();
+            int var5 = var4.length;
+
+            for (TaskInfo task : var4) {
+                sb.append(nf.format(task.getTimeNanos() / 1000000)).append("  ");
+                sb.append(pf.format((double) task.getTimeNanos() / (double) this.getTotalTimeNanos())).append("  ");
+                sb.append(task.getTaskName()).append('\n');
+            }
+        }
+
+        return sb.toString();
     }
 }

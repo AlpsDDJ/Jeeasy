@@ -8,4 +8,7 @@ import org.jeeasy.generate.domain.GenTable;
  * @date 2020/11/9
  */
 public interface GenTableService extends IService<GenTable> {
+    boolean updateWithFields(GenTable entity);
+
+    boolean saveWithFields(GenTable entity);
 }

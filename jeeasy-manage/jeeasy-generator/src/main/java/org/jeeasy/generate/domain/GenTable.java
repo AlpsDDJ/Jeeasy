@@ -1,22 +1,20 @@
 package org.jeeasy.generate.domain;
 
-import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.generate.emuns.RelationTypeEnum;
 import org.jeeasy.generate.emuns.TableStyleEnum;
 import org.jeeasy.generate.emuns.TableTypeEnum;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * 代码生成
@@ -30,7 +28,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Schema(description = "代码生成表信息")
-public class GenTable {
+public class GenTable extends Model<GenTable> implements Serializable {
 
     /**
      * 编号
@@ -240,51 +238,7 @@ public class GenTable {
     @TableField(fill = FieldFill.INSERT)
     private String sysOrgCode;
 
-    public static void main(String[] args) {
-        String[] ignore = {"id", "createBy", "createTime", "updateBy", "updateTime", "delFlag", "sysOrgCode"};
-        Arrays.stream(ClassUtil.getDeclaredFields(GenTable.class)).forEach(field -> {
-            String fieldName = field.getName();
-            String typeName = field.getType().getSimpleName().toLowerCase();
-            Schema schema = field.getAnnotation(Schema.class);
-            String label = fieldName;
-            if (Objects.nonNull(schema)) {
-                label = schema.description();
-            }
-            Dict dict = field.getAnnotation(Dict.class);
-            String dictCode = "";
-            if (Objects.nonNull(dict)) {
-                dictCode = dict.dictCode();
-                if (StringUtils.isEmpty(dictCode)) {
-                    dictCode = dict.dictEnum().getSimpleName().replace("Enum", "");
-                }
-            }
-
-            if (!ArrayUtils.contains(ignore, fieldName)) {
-                String tsType;
-                switch (typeName) {
-                    case "integer":
-                    case "int":
-                    case "long":
-                    case "double":
-                    case "float":
-                        tsType = "number";
-                        break;
-                    case "boolean":
-                        tsType = "boolean";
-                        break;
-                    default:
-                        tsType = "string";
-                        break;
-                }
-                System.out.println("@Field('" + label + "')");
-                if (StringUtils.isNoneEmpty(dictCode)) {
-                    System.out.println("@Field.Dict('" + dictCode + "')");
-                }
-                if ("number".equals(tsType)) {
-                    System.out.println("@Field.DataType(FormDataType.NUMBER)");
-                }
-                System.out.println(fieldName + ": " + tsType + "\n");
-            }
-        });
-    }
+    @Schema(description = "字段列表")
+    @TableField(exist = false)
+    private List<GenTableField> tableFields;
 }

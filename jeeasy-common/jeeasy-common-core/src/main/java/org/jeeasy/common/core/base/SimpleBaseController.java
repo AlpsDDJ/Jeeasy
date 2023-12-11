@@ -36,7 +36,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
         return (Class<T>) type.getActualTypeArguments()[1];
     }
 
-    protected QueryWrapper<T> getWapper(HttpServletRequest req) {
+    protected QueryWrapper<T> getWrapper(HttpServletRequest req) {
         return QueryGenerator.createWrapper(tClass(), req.getParameterMap());
     }
 
@@ -65,7 +65,7 @@ public class SimpleBaseController<S extends IService<T>, T> {
      * @date 2020/11/21 16:24
      */
     protected R<IPage<T>> queryPage(QueryPageModel query, HttpServletRequest req) {
-        Page<T> page = service.page(query.getPage(tClass()), getWapper(req));
+        Page<T> page = service.page(query.getPage(tClass()), getWrapper(req));
         return R.ok(page);
     }
 

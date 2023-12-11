@@ -40,17 +40,17 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         List<String> exclude = saTokenProperty.getExclude();
         exclude.addAll(saTokenProperty.getCommonExclude());
         registry.addInterceptor(new SaInterceptor(handle -> {
-                    // SaRouter.match("/**").notMatch(exclude).check(r -> StpUtil.checkLogin());
+                    //SaRouter.match("/**").notMatch(exclude).check(r -> StpUtil.checkLogin());
                     StpUtil.checkLogin();
                     List<SaTokenProperty.MatchRule> rules = saTokenProperty.getRules();
                     rules.forEach(rule -> {
                         SaRouter.match(rule.getPath(), r -> {
                             List<String> roles = rule.getRoles();
                             List<String> permissions = rule.getPermissions();
-                            if(CollectionUtil.isNotEmpty(roles)) {
+                            if (CollectionUtil.isNotEmpty(roles)) {
                                 StpUtil.checkRoleAnd(ArrayUtil.toArray(roles, String.class));
                             }
-                            if(CollectionUtil.isNotEmpty(permissions)) {
+                            if (CollectionUtil.isNotEmpty(permissions)) {
                                 StpUtil.checkRoleAnd(ArrayUtil.toArray(permissions, String.class));
                             }
                         });
