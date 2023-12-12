@@ -3,7 +3,7 @@ package org.jeeasy.generate.domain;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.tangzc.mpe.autotable.annotation.Table;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,9 +25,11 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)
-@TableName(value = "gen_table_field")
+@Table(value = "gen_table_field", comment = "表字段配置")
 @Schema(description = "代码生成表字段信息")
 public class GenTableField implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * ID
      */
@@ -104,6 +106,8 @@ public class GenTableField implements Serializable {
     @Schema(description = "默认值")
     private String defaultValue;
 
+    /* 页面配置 */
+
     /**
      * 字典
      */
@@ -121,6 +125,87 @@ public class GenTableField implements Serializable {
      */
     @Schema(description = "页面配置（json）")
     private String viewOptionsJson;
+
+    /**
+     * 新增时展示
+     */
+    @Schema(description = "新增时展示")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer showAdd;
+
+    /**
+     * 修改时展示
+     */
+    @Schema(description = "修改时展示")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer showEdit;
+
+    /**
+     * 列表展示
+     */
+    @Schema(description = "列表展示")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer showTable;
+
+    /**
+     * 搜索展示
+     */
+    @Schema(description = "搜索展示")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer showSearch;
+
+    /**
+     * 修改时禁用
+     */
+    @Schema(description = "修改时禁用")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer disableOnEdit;
+
+    /**
+     * 新增时禁用
+     */
+    @Schema(description = "新增时禁用")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer disableOnAdd;
+
+    /**
+     * 行内编辑时禁用
+     */
+    @Schema(description = "行内编辑时禁用")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer disableOnTableEdit;
+
+    /* 校验路径 */
+    @Schema(description = "校验路径")
+    private String fieldPath;
+
+    /**
+     * 必填
+     */
+    @Schema(description = "必填")
+    @Dict(dictEnum = BooleanEnum.class)
+    private Integer required;
+
+    /**
+     * 校验规则
+     */
+    @Schema(description = "校验规则")
+    private String rule;
+
+    /* 外键关联 */
+
+    /**
+     * 主表
+     */
+    @Schema(description = "主表")
+    private String mainTable;
+
+    /**
+     * 主表字段
+     */
+    @Schema(description = "主表字段")
+    private String mainTableField;
+
 
     /**
      * 创建人
@@ -149,7 +234,4 @@ public class GenTableField implements Serializable {
     @TableField(fill = FieldFill.UPDATE)
     @Schema(description = "更新日期")
     private Date updateTime;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

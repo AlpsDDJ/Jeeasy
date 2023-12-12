@@ -2,6 +2,7 @@ package org.jeeasy.generate.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.tangzc.mpe.autotable.annotation.Table;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,18 +18,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 代码生成
+ * 代码生成 表配置
  *
  * @author AlpsDDJ
  * @description 菜单权限
  * @since 2021-01-14 13:52:05
  */
 @Data
-@TableName("gen_table")
+@Table(value = "gen_table", comment = "表配置")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Schema(description = "代码生成表信息")
 public class GenTable extends Model<GenTable> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 编号

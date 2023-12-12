@@ -40,11 +40,14 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         List<String> exclude = saTokenProperty.getExclude();
         exclude.addAll(saTokenProperty.getCommonExclude());
         registry.addInterceptor(new SaInterceptor(handle -> {
-                    //SaRouter.match("/**").notMatch(exclude).check(r -> StpUtil.checkLogin());
+                    // 匹配所有路径，如果不属于排除列表，则进行登录检查
                     StpUtil.checkLogin();
+                    // 遍历权限规则列表
                     List<SaTokenProperty.MatchRule> rules = saTokenProperty.getRules();
                     rules.forEach(rule -> {
+                        // 根据路径进行匹配
                         SaRouter.match(rule.getPath(), r -> {
+                            // 判断是否需要进行角色和权限检查
                             List<String> roles = rule.getRoles();
                             List<String> permissions = rule.getPermissions();
                             if (CollectionUtil.isNotEmpty(roles)) {
@@ -58,8 +61,10 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 }))
                 .addPathPatterns(saTokenProperty.getBase())
                 .excludePathPatterns(exclude);
+        // 注册 MyInterceptor 并拦截所有路径
         registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
     }
+
 
     // Sa-Token 参数配置，参考文档：https://sa-token.cc
     // 此配置会覆盖 application.yml 中的配置
@@ -73,7 +78,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         config.setIsConcurrent(true);               // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
         config.setIsShare(false);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
         config.setTokenStyle("random-64");               // token风格
-        config.setIsLog(false);                     // 是否输出操作日志
+        config.setIsLog(true);                     // 是否输出操作日志
         return config;
     }
 }
