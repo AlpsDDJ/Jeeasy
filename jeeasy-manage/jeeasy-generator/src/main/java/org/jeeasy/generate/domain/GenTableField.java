@@ -19,7 +19,6 @@ import java.util.Date;
  * 表字段
  *
  * @author mobie
- * @TableName gen_table_field
  * @date 2021/11/14
  */
 @Data

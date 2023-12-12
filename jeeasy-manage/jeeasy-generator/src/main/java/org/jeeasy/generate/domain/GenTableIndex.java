@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  * 代码生成 表索引
  *
  * @author AlpsDDJ
- * @description 菜单权限
  * @since 2021-01-14 13:52:05
  */
 @Data

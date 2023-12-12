@@ -90,7 +90,7 @@ public class DictAspect {
                 dataResult.setData(translate(dataResult.getData()));
             }
         }
-        log.debug(stopWatch.stopAndPrettyPrint());
+        log.debug("\n{}", stopWatch.stopAndPrettyPrint());
         return result;
     }
 
@@ -132,10 +132,13 @@ public class DictAspect {
                 // 对有 @Dict 注解的字段进行翻译
                 if (Tools.isNotEmpty(dictAnnotation)) {
                     //翻译字典值对应的txt
-                    String textValue = translateDictValue(dictAnnotation, fieldValue);
+                    String textValue = null;
+                    if (dictAnnotation != null) {
+                        textValue = translateDictValue(dictAnnotation, fieldValue);
+                    }
 
-                    log.debug(" 字典Val : " + textValue);
-                    log.debug(" __翻译字典字段__ " + fieldName + dictTextSuffix + "： " + textValue);
+                    //log.debug(" 字典Val : " + textValue);
+                    log.debug("翻译字典字段： fieldName = " + fieldName + dictTextSuffix + ", textValue = " + textValue);
                     assert objectNode != null;
                     objectNode.put(fieldName + dictTextSuffix, textValue);
                 } else {

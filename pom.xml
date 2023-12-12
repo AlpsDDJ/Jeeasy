@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.15</version>
+        <version>2.7.18</version>
     </parent>
 
     <groupId>mobie.alps</groupId>
@@ -42,8 +42,8 @@
         <mysql.version>8.0.33</mysql.version>
         <!-- MyBatis 版 本 -->
         <mybatis.version>2.3.2</mybatis.version>
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <nacos.version>2021.1</nacos.version>
         <nacos-client.version>2.2.0</nacos-client.version>
         <!-- Fast Json 序 列 化 版 本 -->
@@ -55,9 +55,9 @@
         <!-- 安 全 模 块 版 本 -->
         <!--        <jeeasy.security.version>${revision}</jeeasy.security.version>-->
         <!-- Sa-Token SSO统一认证 -->
-        <sa-token.version>1.31.0</sa-token.version>
-        <!-- Sa-Token SSO统一认证 -->
-        <okhttps.version>3.1.1</okhttps.version>
+        <sa-token.version>1.37.0</sa-token.version>
+        <!--        &lt;!&ndash; Sa-Token SSO统一认证 &ndash;&gt;-->
+        <!--        <sa-token-redis-jackson.version>1.37.0</sa-token-redis-jackson.version>-->
         <!-- apache 工 具 类 -->
         <commons.lang3.version>3.10</commons.lang3.version>
         <commons.pool2.version>2.9.0</commons.pool2.version>
@@ -275,6 +275,12 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot-starter</artifactId>
                 <version>${sa-token.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- Sa-Token 插件：整合SSO -->
@@ -287,15 +293,13 @@
             <!-- Sa-Token 整合 Redis (使用 jackson 序列化方式) -->
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <artifactId>sa-token-redis-jackson</artifactId>
                 <version>${sa-token.version}</version>
             </dependency>
-
-            <!-- Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉） -->
             <dependency>
-                <groupId>com.ejlchina</groupId>
-                <artifactId>okhttps</artifactId>
-                <version>${okhttps.version}</version>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>2.2</version>
             </dependency>
             <!--Apache 工 具 包-->
             <dependency>

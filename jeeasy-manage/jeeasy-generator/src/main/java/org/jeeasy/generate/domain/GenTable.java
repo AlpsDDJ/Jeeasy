@@ -21,7 +21,6 @@ import java.util.List;
  * 代码生成 表配置
  *
  * @author AlpsDDJ
- * @description 菜单权限
  * @since 2021-01-14 13:52:05
  */
 @Data
@@ -99,8 +98,6 @@ public class GenTable extends Model<GenTable> implements Serializable {
 
     /**
      * 表单风格
-     *
-     * @description 12 一列、6 二列、4 三列、3 四列
      */
     @Schema(description = "表单风格")
     @Dict(dictEnum = TableStyleEnum.class)
@@ -168,15 +165,7 @@ public class GenTable extends Model<GenTable> implements Serializable {
     private String slaveColumnCode = "";
 
     /**
-     * 显示样式
-     */
-//    @Schema(description = "显示样式")
-//    private String formStyle = "default";
-
-    /**
      * 映射关系
-     *
-     * @description oneToMany一对多  oneToOne一对一
      */
     @Schema(description = "映射关系")
     @Dict(dictEnum = RelationTypeEnum.class)
