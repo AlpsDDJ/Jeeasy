@@ -33,8 +33,8 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * 根据 code 获取 TableDict
      *
      * @param code
-     * @return
      */
+    @Override
     @GetMapping("dict/getTableDictByCode")
     R<TableDictVo> getTableDictByCode(@RequestParam("code") String code);
 
@@ -44,6 +44,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * @param dto
      * @return
      */
+    @Override
     @PostMapping("dict/translateDictFromTable")
     R<String> translateDictFromTable(@RequestBody TranslateDictFromTableDTO dto);
 
@@ -53,6 +54,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
      * @param dto
      * @return
      */
+    @Override
     @PostMapping("dict/translateDict")
     R<String> translateDict(@RequestBody TranslateDictDTO dto);
 }

@@ -6,7 +6,7 @@ import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
 import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.domain.vo.TableDictVo;
-import org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl;
+import org.jeeasy.common.core.service.IDictTranslationService;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class DictTranslationApi {
 
     @Resource
-    private DictTranslationServiceImpl dictTranslationService;
+    private IDictTranslationService dictTranslationService;
 
     @GetMapping("/getTableDictByCode")
     public R<TableDictVo> getTableDictByCode(@RequestParam("code") String code) {
