@@ -3,6 +3,7 @@ package org.jeeasy.system.modules.premission.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
@@ -13,7 +14,6 @@ import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.service.SysPermissionService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -21,7 +21,6 @@ import java.util.List;
  *
  * @author AlpsDDJ
  * @since 2020-11-21 13:52:05
- * @description 菜单权限
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -64,10 +63,10 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     }
 
     /**
-     * @author mobie
-     * @date 2020/11/21 16:05
      * @param id
      * @return {@link R}
+     * @author mobie
+     * @date 2020/11/21 16:05
      */
     @GetMapping("/{id}")
     @DictTranslation
@@ -77,10 +76,10 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     }
 
     /**
-     * @author mobie
-     * @date 2020/11/21 16:03
      * @param entity
      * @return {@link R}
+     * @author mobie
+     * @date 2020/11/21 16:03
      */
     @PutMapping
     @Operation(summary = "编辑权限", description = "编辑权限")
@@ -89,10 +88,10 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     }
 
     /**
-     * @author mobie
-     * @date 2020/11/21 16:18
      * @param entity
      * @return {@link R}
+     * @author mobie
+     * @date 2020/11/21 16:18
      */
     @PostMapping
     @Operation(summary = "添加权限", description = "添加权限")
@@ -101,11 +100,10 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     }
 
     /**
-     *
-     * @author AlpsDDJ
-     * @date 2020/11/21 22:11
      * @param id
      * @return {@link org.jeeasy.common.core.domain.vo.R<?>}
+     * @author AlpsDDJ
+     * @date 2020/11/21 22:11
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "根据ID删除权限", description = "根据ID删除权限")
@@ -114,10 +112,10 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     }
 
     /**
-     * @author mobie
-     * @date 2020/11/21 16:10
      * @param ids
      * @return {@link R}
+     * @author mobie
+     * @date 2020/11/21 16:10
      */
     @DeleteMapping("/batch")
     @Operation(summary = "批量删除权限", description = "批量删除权限")

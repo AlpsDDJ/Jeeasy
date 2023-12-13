@@ -6,6 +6,7 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
+import jakarta.annotation.Resource;
 import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.sso.config.property.SaTokenProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

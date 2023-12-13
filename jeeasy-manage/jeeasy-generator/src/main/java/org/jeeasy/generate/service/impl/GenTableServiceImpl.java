@@ -2,6 +2,7 @@ package org.jeeasy.generate.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.generate.domain.GenTable;
 import org.jeeasy.generate.domain.GenTableField;
@@ -11,7 +12,6 @@ import org.jeeasy.generate.service.GenTableService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

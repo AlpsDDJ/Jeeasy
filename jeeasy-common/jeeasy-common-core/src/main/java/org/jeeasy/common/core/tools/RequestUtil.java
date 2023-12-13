@@ -1,10 +1,10 @@
 package org.jeeasy.common.core.tools;
 
 import cn.hutool.json.JSONObject;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;

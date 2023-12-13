@@ -3,11 +3,11 @@ package org.jeeasy.common.core.domain.vo;
 //import com.alibaba.fastjson.JSON;
 
 import cn.hutool.json.JSONUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.enums.RestCode;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 

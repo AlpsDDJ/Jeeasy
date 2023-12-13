@@ -16,14 +16,15 @@ import java.net.UnknownHostException;
 
 /**
  * 入 口 启 动 类
+ *
  * @author AlpsDDJ
  * @date
  */
 @Slf4j
 @EnableAutoTable
-@SpringBootApplication(scanBasePackages = "org.jeeasy")
-@EnableDiscoveryClient
 @EnableFeignClients
+@EnableDiscoveryClient
+@SpringBootApplication(scanBasePackages = "org.jeeasy")
 // @MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
 public class SystemApplication extends SpringBootServletInitializer {
@@ -33,7 +34,7 @@ public class SystemApplication extends SpringBootServletInitializer {
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         String path = env.getProperty("server.servlet.context-path");
-        path = StrUtil.isEmpty(path) ? "": path;
+        path = StrUtil.isEmpty(path) ? "" : path;
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application Jeeasy System is running! Access URLs:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +

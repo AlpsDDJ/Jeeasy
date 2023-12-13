@@ -31,6 +31,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
 
     /**
      * 根据 code 获取 TableDict
+     *
      * @param code
      * @return
      */
@@ -40,8 +41,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
     /**
      * 根据table翻译字典
      *
-     * @param tableDict
-     * @param value
+     * @param dto
      * @return
      */
     @PostMapping("dict/translateDictFromTable")
@@ -50,8 +50,7 @@ public interface IDictTranslationApiFeign extends IDictTranslationService {
     /**
      * 普通字典的翻译
      *
-     * @param code
-     * @param value
+     * @param dto
      * @return
      */
     @PostMapping("dict/translateDict")

@@ -1,5 +1,6 @@
 package org.jeeasy.system.modules.common.service.impl;
 
+import jakarta.annotation.Resource;
 import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
 import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
 import org.jeeasy.common.core.domain.vo.R;
@@ -12,7 +13,6 @@ import org.jeeasy.system.modules.dict.mapper.SysDictMapper;
 import org.jeeasy.system.modules.dict.mapper.SysTableDictMapper;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 /**
  * @author AlpsDDJ
@@ -30,7 +30,7 @@ public class DictTranslationServiceImpl implements IDictTranslationService {
     @Override
     public R<TableDictVo> getTableDictByCode(String code) {
         SysTableDict tableDict = tableDictMapper.getByDictCode(code);
-        if(Tools.isEmpty(tableDict)){
+        if (Tools.isEmpty(tableDict)) {
             return null;
         }
         TableDictVo dictVo = new TableDictVo()
@@ -44,7 +44,7 @@ public class DictTranslationServiceImpl implements IDictTranslationService {
     @Override
     public R<String> translateDictFromTable(TranslateDictFromTableDTO dto) {
         SysDict dict = dictMapper.getOneByTableDictAndCode(dto.getTableDict(), dto.getValue().toString());
-        if(Tools.isNotEmpty(dict)){
+        if (Tools.isNotEmpty(dict)) {
             return R.ok(dict.getDictName());
         }
         return R.ok("");
@@ -53,7 +53,7 @@ public class DictTranslationServiceImpl implements IDictTranslationService {
     @Override
     public R<String> translateDict(TranslateDictDTO dto) {
         SysDict dict = dictMapper.getOneByParentCodeAndDictCode(dto.getCode(), dto.getValue().toString());
-        if(Tools.isNotEmpty(dict)){
+        if (Tools.isNotEmpty(dict)) {
             return R.ok(dict.getDictName());
         }
         return R.ok("");

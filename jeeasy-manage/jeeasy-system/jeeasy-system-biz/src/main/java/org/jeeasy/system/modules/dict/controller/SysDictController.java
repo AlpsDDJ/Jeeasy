@@ -3,6 +3,7 @@ package org.jeeasy.system.modules.dict.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
@@ -13,7 +14,6 @@ import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 数据字典表服务控制器

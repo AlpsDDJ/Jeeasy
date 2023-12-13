@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
@@ -15,8 +17,6 @@ import org.jeeasy.generate.service.GenTableFieldService;
 import org.jeeasy.generate.service.GenTableService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

@@ -3,6 +3,7 @@ package org.jeeasy.biz.mobile.mobile.manage;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.biz.mobile.modules.brand.domain.MbBrand;
 import org.jeeasy.biz.mobile.modules.brand.service.MbBrandService;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
@@ -11,7 +12,6 @@ import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author AlpsDDJ

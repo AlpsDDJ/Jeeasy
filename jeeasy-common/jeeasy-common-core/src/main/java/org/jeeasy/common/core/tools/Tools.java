@@ -11,12 +11,12 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.domain.vo.CaptchaVo;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.exception.JeeasyException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**

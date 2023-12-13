@@ -15,10 +15,7 @@
     <modules>
         <module>mobile-beauty-domain</module>
         <module>mobile-beauty-server</module>
-        <module>mobile-beauty-domain</module>
-        <module>mobile-beauty-server</module>
     </modules>
-
 
 
 </project>

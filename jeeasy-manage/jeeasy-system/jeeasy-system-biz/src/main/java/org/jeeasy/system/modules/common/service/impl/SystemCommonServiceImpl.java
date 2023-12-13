@@ -1,6 +1,7 @@
 package org.jeeasy.system.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import jakarta.annotation.Resource;
 import org.jeeasy.common.core.config.property.DictEnumProperty;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.enums.IDictEnum;
@@ -13,7 +14,6 @@ import org.jeeasy.system.modules.dict.service.SysDictService;
 import org.jeeasy.system.modules.dict.service.SysTableDictService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +38,8 @@ public class SystemCommonServiceImpl implements CommonService {
         if (StrUtil.containsAny(code, dictEnumProperty.getDictTableFlag())) {
             String dictCode = StrUtil.replaceChars(code, dictEnumProperty.getDictTableFlag(), StrUtil.EMPTY);
             SysTableDict sysTableDict = tableDictService.getByDictCode(dictCode);
-            if(Tools.isNotEmpty(sysTableDict)){
-                if(Tools.isNotEmpty(parentId)){
+            if (Tools.isNotEmpty(sysTableDict)) {
+                if (Tools.isNotEmpty(parentId)) {
                     sysTableDict.setParentValue(parentId);
                 }
                 List<? extends DictVo> sysDicts = dictService.queryByTableDict(sysTableDict, async);
@@ -51,7 +51,7 @@ public class SystemCommonServiceImpl implements CommonService {
         } else {
             // 枚举类型字典数据
             List<IDictEnum<?>> dictEnum = DictUtil.getDictEnum(code);
-            if(Tools.isNotEmpty(dictEnum)){
+            if (Tools.isNotEmpty(dictEnum)) {
                 dictEnum.forEach(de -> {
                     dicts.add(new DictVo(de));
                 });
@@ -70,7 +70,7 @@ public class SystemCommonServiceImpl implements CommonService {
 
         String dictCode = StrUtil.replaceChars(code, dictEnumProperty.getDictTableFlag(), StrUtil.EMPTY);
         SysTableDict sysTableDict = tableDictService.getByDictCode(dictCode);
-        if(Tools.isNotEmpty(sysTableDict)){
+        if (Tools.isNotEmpty(sysTableDict)) {
 //            List<DictVo> sysDicts = dictService.queryByTableDict(sysTableDict);
 //            dicts.addAll(sysDicts);
 //                sysDicts.forEach(dict -> {

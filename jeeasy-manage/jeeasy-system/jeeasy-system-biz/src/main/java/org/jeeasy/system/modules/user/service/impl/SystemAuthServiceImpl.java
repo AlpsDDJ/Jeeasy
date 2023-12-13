@@ -1,6 +1,7 @@
 package org.jeeasy.system.modules.user.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.auth.AuthType;
 import org.jeeasy.common.core.config.constant.CommonConstant;
@@ -20,7 +21,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +61,7 @@ public class SystemAuthServiceImpl implements IAuthService<SystemAuthUser> {
     @Override
 //    @CacheEvict(value = CommonConstant.CACHE_SYS_USER_KEY, key = "#username")
     public SystemAuthUser login(String username, String password) {
-        if(sysUserService.checkPasswordByUserName(username, password)) {
+        if (sysUserService.checkPasswordByUserName(username, password)) {
             return getAuthUserByUsername(username);
         } else {
             throw new JeeasyException("用户名或密码不正确");

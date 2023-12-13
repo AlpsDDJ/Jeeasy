@@ -1,5 +1,6 @@
 package org.jeeasy.system.api;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.domain.dto.TranslateDictDTO;
 import org.jeeasy.common.core.domain.dto.TranslateDictFromTableDTO;
@@ -8,7 +9,6 @@ import org.jeeasy.common.core.domain.vo.TableDictVo;
 import org.jeeasy.system.modules.common.service.impl.DictTranslationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 
 /**
  * TODO

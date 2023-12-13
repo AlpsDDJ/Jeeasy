@@ -3,6 +3,7 @@ package org.jeeasy.system.modules.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.jeeasy.common.core.config.constant.CommonConstant;
 import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
@@ -22,7 +23,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

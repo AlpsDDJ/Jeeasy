@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
@@ -12,7 +13,6 @@ import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;

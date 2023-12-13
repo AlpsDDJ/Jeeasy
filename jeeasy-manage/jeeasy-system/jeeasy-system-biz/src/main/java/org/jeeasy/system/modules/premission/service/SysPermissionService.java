@@ -3,11 +3,11 @@ package org.jeeasy.system.modules.premission.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
 import org.jeeasy.system.modules.premission.domain.vo.MenuVo;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -15,7 +15,6 @@ import java.util.List;
  *
  * @author AlpsDDJ
  * @since 2020-11-21 13:52:05
- * @description 菜单权限
  */
 public interface SysPermissionService extends IService<SysPermission> {
 
