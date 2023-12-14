@@ -13,7 +13,9 @@ import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.domain.GenTable;
 import org.jeeasy.generate.domain.GenTableField;
+import org.jeeasy.generate.domain.GenTableIndex;
 import org.jeeasy.generate.service.GenTableFieldService;
+import org.jeeasy.generate.service.GenTableIndexService;
 import org.jeeasy.generate.service.GenTableService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,8 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
 
     @Resource
     GenTableFieldService tableFieldService;
+    @Resource
+    GenTableIndexService tableIndexService;
 
     @GetMapping
     @DictTranslation
@@ -41,6 +45,8 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
             String tid = item.getId();
             List<GenTableField> tableFields = tableFieldService.list(new QueryWrapper<GenTableField>().lambda().eq(GenTableField::getTableId, tid));
             item.setTableFields(tableFields);
+            List<GenTableIndex> tableIndexs = tableIndexService.list(new QueryWrapper<GenTableIndex>().lambda().eq(GenTableIndex::getTableId, tid));
+            item.setTableIndexs(tableIndexs);
         });
         return R.ok(page);
     }
@@ -61,7 +67,7 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
     @PostMapping
     @Operation(summary = "添加表信息")
     public R<?> add(@RequestBody GenTable entity) {
-        return super.insert(entity);
+        return R.ok(service.saveWithFields(entity));
     }
 
     @DeleteMapping("/{id}")

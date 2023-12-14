@@ -13,9 +13,13 @@ import org.jeeasy.common.core.enums.IDictEnum;
 @Getter
 @AllArgsConstructor
 public enum IndexTypeEnum implements IDictEnum<String> {
-    NORMAL("NORMAL", "normal"),
-    UNIQUE("UNIQUE", "unique");
+    NORMAL("normal"),
+    UNIQUE("unique");
 
     private final String value;
-    private final String text;
+
+    @Override
+    public String getText() {
+        return this.value;
+    }
 }

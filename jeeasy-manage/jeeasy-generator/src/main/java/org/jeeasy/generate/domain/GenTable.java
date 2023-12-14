@@ -232,4 +232,8 @@ public class GenTable extends Model<GenTable> implements Serializable {
     @Schema(description = "字段列表")
     @TableField(exist = false)
     private List<GenTableField> tableFields;
+
+    @Schema(description = "索引列表")
+    @TableField(exist = false)
+    private List<GenTableIndex> tableIndexs;
 }
