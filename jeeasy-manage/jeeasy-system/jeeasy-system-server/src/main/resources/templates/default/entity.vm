@@ -1,0 +1,51 @@
+package ${entity.pkg};
+
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.tangzc.mpe.autotable.annotation.Table;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import org.jeeasy.common.core.annotation.dict.Dict;
+import org.jeeasy.common.core.enums.BooleanEnum;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+* ${description}
+*
+* @author ${author}
+* @date ${date}
+*/
+@Data
+@Table(value = "${caseName.underline}", comment = "${description}")
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@Schema(description = "${description}")
+public class ${entity.className} extends Model<${entity.className}> {
+
+#foreach($field in $fields)
+
+    /**
+     * ${field.description}
+     */
+    #if($field.primaryKey == 1)
+    @TableId(type = IdType.ASSIGN_ID)
+    #else
+    #end
+    @Schema(description = "${field.description}")
+    @TableField(value = "${field.fieldName}")
+    #if($field.dictCode)
+    @Dict("${field.dictCode}")
+    #end
+    #if($field.javaType)
+        #set($javaType = $field.javaType)
+    #else
+        #set($javaType = "String")
+    #end
+    private ${javaType} ${field.fieldName};
+#end
+
+}

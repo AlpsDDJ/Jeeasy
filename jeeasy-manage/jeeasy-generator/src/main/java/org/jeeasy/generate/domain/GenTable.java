@@ -13,23 +13,21 @@ import org.jeeasy.generate.emuns.RelationTypeEnum;
 import org.jeeasy.generate.emuns.TableStyleEnum;
 import org.jeeasy.generate.emuns.TableTypeEnum;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 代码生成 表配置
+ * 代码生成 模块
  *
- * @author AlpsDDJ
- * @since 2021-01-14 13:52:05
+ * @author wei.yang
+ * @date 2023-12-14
  */
 @Data
 @Table(value = "gen_table", comment = "表配置")
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Schema(description = "代码生成表信息")
-public class GenTable extends Model<GenTable> implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class GenTable extends Model<GenTable> {
 
     /**
      * 编号

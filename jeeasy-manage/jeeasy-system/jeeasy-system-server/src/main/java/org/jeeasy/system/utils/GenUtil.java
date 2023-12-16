@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jeeasy.common.core.annotation.dict.Dict;
-import org.jeeasy.generate.domain.GenTableField;
+import org.jeeasy.generate.domain.GenModule;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -66,7 +66,7 @@ public class GenUtil {
     }
 
     public static void main(String[] args) {
-        GenUtil.generateTsClass(GenTableField.class);
+        GenUtil.generateTsClass(GenModule.class);
     }
 
 }

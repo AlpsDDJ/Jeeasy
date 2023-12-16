@@ -11,4 +11,6 @@ public interface GenTableService extends IService<GenTable> {
     boolean updateWithFields(GenTable entity);
 
     boolean saveWithFields(GenTable entity);
+
+    GenTable setFields(GenTable entity);
 }

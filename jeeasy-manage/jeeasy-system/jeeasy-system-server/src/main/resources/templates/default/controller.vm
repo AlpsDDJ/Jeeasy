@@ -1,0 +1,65 @@
+package ${controller.pkg};
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import ${entity.pkg}.${entity.className};
+import ${service.pkg}.${service.className};
+import org.jeeasy.common.core.annotation.dict.DictTranslation;
+import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.domain.model.QueryPageModel;
+import org.jeeasy.common.core.domain.vo.R;
+import org.springframework.web.bind.annotation.*;
+
+
+/**
+* ${description} Controller
+*
+* @author ${author}
+* @date ${date}
+*/
+@RestController
+@Tag(name = "${description}")
+@RequestMapping("${apiPath}")
+public class ${controller.className} extends SimpleBaseController<${service.className}, ${entity.className}> {
+
+    @GetMapping
+    @DictTranslation
+    @Operation(summary = "${description}列表", description = "${description}列表")
+    public R<IPage<${entity.className}>> list(QueryPageModel queryPageModel, HttpServletRequest req) {
+        return super.queryPage(queryPageModel, req);
+    }
+
+    @GetMapping("/{id}")
+    @DictTranslation
+    @Operation(summary = "根据ID查找${description}", description = "根据ID查找${description}")
+    public R<${entity.className}> info(@PathVariable("id") String id) {
+        return super.getById(id);
+    }
+
+    @PutMapping
+    @Operation(summary = "编辑${description}", description = "编辑${description}")
+        public R<?> edit(@RequestBody ${entity.className} entity) {
+        return super.update(entity);
+    }
+
+    @PostMapping
+    @Operation(summary = "添加${description}", description = "添加${description}")
+        public R<?> add(@RequestBody ${entity.className} entity) {
+        return super.insert(entity);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "根据ID删除${description}", description = "根据ID删除${description}")
+        public R<?> remove(@PathVariable("id") String id) {
+        return super.deleteById(id);
+    }
+
+    @DeleteMapping("/batch")
+    @Operation(summary = "批量删除${description}", description = "批量删除${description}")
+        public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
+        return super.batchDelete(ids);
+    }
+
+}

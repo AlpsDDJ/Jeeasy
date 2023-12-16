@@ -1,6 +1,5 @@
 package org.jeeasy.generate.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,14 +11,10 @@ import org.jeeasy.common.core.base.SimpleBaseController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.domain.GenTable;
-import org.jeeasy.generate.domain.GenTableField;
-import org.jeeasy.generate.domain.GenTableIndex;
 import org.jeeasy.generate.service.GenTableFieldService;
 import org.jeeasy.generate.service.GenTableIndexService;
 import org.jeeasy.generate.service.GenTableService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author AlpsDDJ
@@ -42,11 +37,7 @@ public class GenTableController extends SimpleBaseController<GenTableService, Ge
         //R<IPage<GenTable>> page = super.queryPage(queryPageModel, req);
         Page<GenTable> page = service.page(queryPageModel.getPage(GenTable.class), getWrapper(req));
         page.getRecords().forEach(item -> {
-            String tid = item.getId();
-            List<GenTableField> tableFields = tableFieldService.list(new QueryWrapper<GenTableField>().lambda().eq(GenTableField::getTableId, tid));
-            item.setTableFields(tableFields);
-            List<GenTableIndex> tableIndexs = tableIndexService.list(new QueryWrapper<GenTableIndex>().lambda().eq(GenTableIndex::getTableId, tid));
-            item.setTableIndexs(tableIndexs);
+            service.setFields(item);
         });
         return R.ok(page);
     }

@@ -126,16 +126,16 @@ public class GenTableField implements Serializable {
     private String viewOptionsJson;
 
     /**
-     * 新增时展示
+     * 新增显示
      */
-    @Schema(description = "新增时展示")
+    @Schema(description = "新增显示")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer showAdd;
 
     /**
-     * 修改时展示
+     * 修改显示
      */
-    @Schema(description = "修改时展示")
+    @Schema(description = "修改显示")
     @Dict(dictEnum = BooleanEnum.class)
     private Integer showEdit;
 

@@ -83,4 +83,16 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
         return entity.insert();
     }
+
+    @Override
+    public GenTable setFields(GenTable entity) {
+        String tid = entity.getId();
+        List<GenTableField> tableFields = tableFieldService.list(new QueryWrapper<GenTableField>().lambda().eq(GenTableField::getTableId, tid));
+        entity.setTableFields(tableFields);
+        List<GenTableIndex> tableIndexs = tableIndexService.list(new QueryWrapper<GenTableIndex>().lambda().eq(GenTableIndex::getTableId, tid));
+        entity.setTableIndexs(tableIndexs);
+        return entity;
+    }
+
+
 }

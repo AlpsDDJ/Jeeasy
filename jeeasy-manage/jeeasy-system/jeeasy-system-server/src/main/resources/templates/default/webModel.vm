@@ -1,0 +1,31 @@
+import { FormDataType, InputType } from '@/enums/EEnum'
+
+@Model('${entity.className}')
+export default class ${entity.className} extends BaseModel {
+#foreach($field in $fields)
+  #if(!$field.ignore)
+    /**
+     * ${field.description}
+     */
+    @Field('${field.description}')
+    #if(${field.formType})
+      #set($formType = ", InputType." + ${field.formType}))
+    #else
+      #set($formType = "")
+    #end
+    #if($field.hiddenType == "true")
+    @Hidden()
+    #elseif($field.hiddenType != "false")
+    @Hidden([${field.hiddenType}])
+    #end
+    #if($field.disabledType == "true")
+    @Disabled()
+    #elseif($field.disabledType != "false")
+    @Disabled([${field.disabledType}])
+    #end
+    @DataType(FormDataType.${field.tsType.toUpperCase()}${formType})
+    ${field.fieldName}?: ${field.tsType}
+  #end
+#end
+
+}

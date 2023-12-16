@@ -11,7 +11,6 @@ import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.tools.QueryGenerator;
 import org.jeeasy.common.core.tools.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author Alps
  */
 @Slf4j
-@RequestMapping("api")
+//@RequestMapping("api")
 public class SimpleBaseController<S extends IService<T>, T> {
 
     @Autowired
