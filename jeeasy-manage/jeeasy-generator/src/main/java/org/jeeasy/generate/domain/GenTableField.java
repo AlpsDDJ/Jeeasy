@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
+import org.jeeasy.generate.emuns.JavaTypeEnum;
 import org.jeeasy.generate.emuns.JdbcTypeEnum;
 
 import java.io.Serializable;
@@ -72,12 +73,15 @@ public class GenTableField implements Serializable {
      */
     @Schema(description = "数据类型")
     @Dict(dictEnum = JdbcTypeEnum.class)
+    @TableField(value = "jdbc_type")
     private String jdbcType;
 
     /**
      * java类型
      */
     @Schema(description = "java类型")
+    @Dict(dictEnum = JavaTypeEnum.class)
+    @TableField(value = "java_type")
     private String javaType;
 
     /**

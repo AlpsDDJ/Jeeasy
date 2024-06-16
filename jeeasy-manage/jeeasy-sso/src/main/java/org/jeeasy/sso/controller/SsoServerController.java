@@ -45,7 +45,7 @@ public class SsoServerController {
     @CrossOrigin("*")
     public Object ssoRequest(@PathVariable("handle") String handle) {
         log.info("SSO：[{}]", handle);
-        log.info("getPermissionList：[{}]", StpUtil.getPermissionList());
+        //log.info("getPermissionList：[{}]", StpUtil.getPermissionList());
 
         return SaSsoProcessor.instance.serverDister();
     }

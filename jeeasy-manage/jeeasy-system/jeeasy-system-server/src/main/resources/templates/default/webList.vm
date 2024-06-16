@@ -4,7 +4,7 @@
       <e-search ref="queryRef" v-model:model-value="queryData" :instance="Model" :load-data="loadData" />
         </template>
           <e-table ref="tableRef" :instance="Model" :query-data="queryData" @show-form="showForm">
-        <template ##enableFlag="row">
+        <template #[[##enableFlag="row"]]#>
           <n-tag :type="row.enableFlag ? 'success' : 'warning'" :bordered="false">{{ row.enableFlag_dict }}</n-tag>
         </template>
     </e-table>

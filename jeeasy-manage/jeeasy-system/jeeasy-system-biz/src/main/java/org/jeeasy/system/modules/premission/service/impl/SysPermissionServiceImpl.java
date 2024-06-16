@@ -53,12 +53,13 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public IPage<SysPermission> queryPageTreeList(String parentId, QueryPageModel query, HttpServletRequest req) {
         QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
-        //if(StringUtils.isEmpty(parentId)) {
-        //    parentId = "0";
-        //}
+        if (StrUtil.isEmpty(parentId)) {
+            //parentId = "0";
+            wrapper.lambda().eq(SysPermission::getParentId, "0");
+        }
 
         wrapper.lambda().orderByAsc(SysPermission::getSortNo);
-        //if(StrUtil.isEmpty(parentId) || "0".equals(parentId)){
+        //if (StrUtil.isEmpty(parentId) || "0".equals(parentId)) {
         //    wrapper.lambda().or().isNull(SysPermission::getParentId);
         //}
         Page<SysPermission> page = this.page(query.getPage(SysPermission.class), wrapper);

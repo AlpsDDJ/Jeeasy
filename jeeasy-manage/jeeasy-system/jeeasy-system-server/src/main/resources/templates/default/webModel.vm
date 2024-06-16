@@ -9,7 +9,7 @@ export default class ${entity.className} extends BaseModel {
      */
     @Field('${field.description}')
     #if(${field.formType})
-      #set($formType = ", InputType." + ${field.formType}))
+      #set($formType = ", InputType." + ${field.formType})
     #else
       #set($formType = "")
     #end

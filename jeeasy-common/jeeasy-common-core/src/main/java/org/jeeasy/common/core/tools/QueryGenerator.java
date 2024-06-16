@@ -51,7 +51,7 @@ public class QueryGenerator {
             // 判断字段是否存在且不包含TableField注解
             if (Objects.nonNull(field)) {
                 TableField tableFieldAnnotation = AnnotationUtils.getAnnotation(field, TableField.class);
-                if (Objects.isNull(tableFieldAnnotation) || !tableFieldAnnotation.exist()) {
+                if (Objects.isNull(tableFieldAnnotation) || tableFieldAnnotation.exist()) {
                     // 解析查询参数
                     parseQueryParameters(wrapper, clazz, key, value);
                 }

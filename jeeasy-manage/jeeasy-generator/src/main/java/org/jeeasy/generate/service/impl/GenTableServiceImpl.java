@@ -3,6 +3,7 @@ package org.jeeasy.generate.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.jeeasy.common.core.exception.JeeasyException;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.generate.domain.GenTable;
 import org.jeeasy.generate.domain.GenTableField;
@@ -65,7 +66,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
             }
             tableIndexService.saveOrUpdateBatch(tableIndexs, 100);
         } else {
-            tableFieldService.remove(new QueryWrapper<GenTableField>().lambda().eq(GenTableField::getTableId, tableId));
+            tableIndexService.remove(new QueryWrapper<GenTableIndex>().lambda().eq(GenTableIndex::getTableId, tableId));
         }
         return entity.updateById();
     }
@@ -73,15 +74,26 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveWithFields(GenTable entity) {
+        int flag = baseMapper.insert(entity);
+        if (flag == 0) {
+            throw new JeeasyException("数据保存失败");
+        }
+        String id = entity.getId();
         List<GenTableField> tableFields = entity.getTableFields();
+        tableFields.forEach(field -> {
+            field.setTableId(id);
+        });
         if (Tools.isNotEmpty(tableFields)) {
             tableFieldService.saveBatch(tableFields, 100);
         }
         List<GenTableIndex> tableIndexs = entity.getTableIndexs();
+        tableIndexs.forEach(field -> {
+            field.setTableId(id);
+        });
         if (Tools.isNotEmpty(tableFields)) {
             tableIndexService.saveBatch(tableIndexs, 100);
         }
-        return entity.insert();
+        return true;
     }
 
     @Override

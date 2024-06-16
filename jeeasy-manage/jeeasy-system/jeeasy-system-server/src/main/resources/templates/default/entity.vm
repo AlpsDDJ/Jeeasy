@@ -36,7 +36,7 @@ public class ${entity.className} extends Model<${entity.className}> {
     #else
     #end
     @Schema(description = "${field.description}")
-    @TableField(value = "${field.fieldName}")
+    @TableField(value = "${field.columnName}")
     #if($field.dictCode)
     @Dict("${field.dictCode}")
     #end
