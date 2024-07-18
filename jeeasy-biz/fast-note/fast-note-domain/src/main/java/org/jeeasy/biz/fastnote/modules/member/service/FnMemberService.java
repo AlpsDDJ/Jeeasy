@@ -3,13 +3,11 @@ package org.jeeasy.biz.fastnote.modules.member.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeeasy.biz.fastnote.modules.member.domain.FnMember;
 import org.jeeasy.biz.fastnote.modules.member.dto.MemberRegisterDTO;
-import org.springframework.stereotype.Service;
 
 /**
  * @author AlpsDDJ
  * @date 2022/9/11 10:01
  */
-@Service
 public interface FnMemberService extends IService<FnMember> {
 
     FnMember login(String phoone, String password);

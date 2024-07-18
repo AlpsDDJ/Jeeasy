@@ -34,14 +34,6 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     @DictTranslation
     @Operation(summary = "权限列表", description = "权限列表")
     public R<List<SysPermission>> tree() {
-//        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
-//        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
-//        String customSqlSegment = wrapper.getCustomSqlSegment();
-//        log.info("customSqlSegment ======== {}", customSqlSegment);
-//        List<SysPermission> list = service.list(wrapper);
-//        IPage<SysPermission> page = new Page<>();
-//        page.setRecords(list);
-//        return R.ok(page);
         return R.ok(service.queryAllChildren(null));
     }
 
@@ -50,16 +42,7 @@ public class SysPermissionController extends SimpleBaseController<SysPermissionS
     @DictTranslation
     @Operation(summary = "权限列表", description = "权限列表")
     public R<IPage<SysPermission>> treePage(QueryPageModel queryPageModel, HttpServletRequest req) {
-//        QueryWrapper<SysPermission> wrapper = QueryGenerator.createWrapper(SysPermission.class, req.getParameterMap());
-//        wrapper.lambda().orderByAsc(SysPermission::getSortNo);
-//        String customSqlSegment = wrapper.getCustomSqlSegment();
-//        log.info("customSqlSegment ======== {}", customSqlSegment);
-//        List<SysPermission> list = service.list(wrapper);
-//        IPage<SysPermission> page = new Page<>();
-//        page.setRecords(list);
-//        return R.ok(page);
-
-        return R.ok(service.queryPageTreeList(null, queryPageModel, req));
+        return R.ok(service.queryPageTreeList(queryPageModel, req));
     }
 
     /**

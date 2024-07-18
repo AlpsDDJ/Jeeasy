@@ -31,10 +31,9 @@ public interface SysPermissionService extends IService<SysPermission> {
     /**
      * 查询所有的子菜单
      *
-     * @param parentId 父id
      * @return {@link List}<{@link SysPermission}>
      */
-    IPage<SysPermission> queryPageTreeList(String parentId, QueryPageModel query, HttpServletRequest req);
+    IPage<SysPermission> queryPageTreeList(QueryPageModel query, HttpServletRequest req);
 
     /**
      * 通过角色id查询权限
