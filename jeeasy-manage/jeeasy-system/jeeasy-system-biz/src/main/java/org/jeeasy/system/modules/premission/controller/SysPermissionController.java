@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
@@ -29,7 +29,7 @@ import java.util.List;
 @RestController
 @Tag(name = "系统权限")
 @RequestMapping("/sys/permission")
-public class SysPermissionController extends SimpleBaseController<SysPermissionService, SysPermission> {
+public class SysPermissionController extends SimpleCurdController<SysPermissionService, SysPermission> {
 
     /**
      * 查询所有权限树结构。

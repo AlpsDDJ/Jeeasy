@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.premission.domain.SysPermission;
@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 @Tag(name = "系统角色")
 @RequestMapping("/sys/role")
-public class SysRoleController extends SimpleBaseController<SysRoleService, SysRole> {
+public class SysRoleController extends SimpleCurdController<SysRoleService, SysRole> {
 
     @Autowired
     private SysPermissionService permissionService;

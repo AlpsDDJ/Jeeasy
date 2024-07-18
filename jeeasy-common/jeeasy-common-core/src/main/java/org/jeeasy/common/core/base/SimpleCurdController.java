@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 //@RequestMapping("api")
-public class SimpleBaseController<S extends IService<T>, T> {
+public class SimpleCurdController<S extends IService<T>, T> {
 
     @Autowired
     protected S service;

@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import ${entity.pkg}.${entity.className};
 import ${service.pkg}.${service.className};
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "${description}")
 @RequestMapping("${apiPath}")
-public class ${controller.className} extends SimpleBaseController<${service.className}, ${entity.className}> {
+public class ${controller.className} extends SimpleCurdController<${service.className}, ${entity.className}> {
 
     @GetMapping
     @DictTranslation

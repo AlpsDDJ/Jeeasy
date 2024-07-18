@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.biz.mobile.modules.model.domain.MbModel;
 import org.jeeasy.biz.mobile.modules.model.service.MbModelService;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "型号")
 @RequestMapping("/mb/model")
-public class ModelController extends SimpleBaseController<MbModelService, MbModel> {
+public class ModelController extends SimpleCurdController<MbModelService, MbModel> {
 
     @GetMapping
     @DictTranslation

@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.domain.GenTable;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "代码生成-表信息")
 @RequestMapping("/gen/table")
-public class GenTableController extends SimpleBaseController<GenTableService, GenTable> {
+public class GenTableController extends SimpleCurdController<GenTableService, GenTable> {
 
     @Resource
     GenTableFieldService tableFieldService;

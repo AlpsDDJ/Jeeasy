@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.domain.GenModule;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "代码生成-模块信息")
 @RequestMapping("/gen/module")
-public class GenModuleController extends SimpleBaseController<GenModuleService, GenModule> {
+public class GenModuleController extends SimpleCurdController<GenModuleService, GenModule> {
 
     @GetMapping
     @DictTranslation

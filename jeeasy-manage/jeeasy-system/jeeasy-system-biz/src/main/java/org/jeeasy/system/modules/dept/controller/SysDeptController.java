@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.dept.domain.SysDept;
 import org.jeeasy.system.modules.dept.service.SysDeptService;
@@ -25,11 +25,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "系统组织机构")
 @RequestMapping("/sys/dept")
-public class SysDeptController extends SimpleBaseController<SysDeptService, SysDept> {
+public class SysDeptController extends SimpleCurdController<SysDeptService, SysDept> {
 
     @GetMapping
     @DictTranslation
-    @Operation(summary =  "组织机构列表", description = "组织机构列表")
+    @Operation(summary = "组织机构列表", description = "组织机构列表")
     public R<List<SysDept>> list() {
 //        QueryWrapper<SysDept> wrapper = QueryGenerator.createWrapper(SysDept.class, req.getParameterMap());
 //        wrapper.lambda().orderByAsc(SysDept::getSortNo);
@@ -48,7 +48,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      */
     @GetMapping("/{id}")
     @DictTranslation
-    @Operation(summary =  "根据ID查找组织机构", description = "根据ID查找组织机构")
+    @Operation(summary = "根据ID查找组织机构", description = "根据ID查找组织机构")
     public R<SysDept> info(@PathVariable("id") String id) {
         return super.getById(id);
     }
@@ -60,7 +60,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      * @date 2020/11/21 16:03
      */
     @PutMapping
-    @Operation(summary =  "编辑组织机构", description = "编辑组织机构")
+    @Operation(summary = "编辑组织机构", description = "编辑组织机构")
     public R<?> edit(@RequestBody SysDept entity) {
         return super.update(entity);
     }
@@ -72,7 +72,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      * @date 2020/11/21 16:18
      */
     @PostMapping
-    @Operation(summary =  "添加组织机构", description = "添加组织机构")
+    @Operation(summary = "添加组织机构", description = "添加组织机构")
     public R<?> add(@RequestBody SysDept entity) {
         service.saveDeptData(entity);
         return R.ok().setData("添加成功");
@@ -85,7 +85,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      * @date 2020/11/21 22:11
      */
     @DeleteMapping("/{id}")
-    @Operation(summary =  "根据ID删除组织机构", description = "根据ID删除组织机构")
+    @Operation(summary = "根据ID删除组织机构", description = "根据ID删除组织机构")
     public R<?> remove(@PathVariable("id") String id) {
         return super.deleteById(id);
     }
@@ -97,7 +97,7 @@ public class SysDeptController extends SimpleBaseController<SysDeptService, SysD
      * @date 2020/11/21 16:10
      */
     @DeleteMapping("/batch")
-    @Operation(summary =  "批量删除组织机构", description = "批量删除组织机构")
+    @Operation(summary = "批量删除组织机构", description = "批量删除组织机构")
     public R<?> batchDelete(@RequestParam(name = "ids") String ids) {
         return super.batchDelete(ids);
     }

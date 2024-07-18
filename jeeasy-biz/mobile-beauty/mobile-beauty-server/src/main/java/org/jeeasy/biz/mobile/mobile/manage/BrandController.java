@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.jeeasy.biz.mobile.modules.brand.domain.MbBrand;
 import org.jeeasy.biz.mobile.modules.brand.service.MbBrandService;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "品牌")
 @RequestMapping("/mb/brand")
-public class BrandController extends SimpleBaseController<MbBrandService, MbBrand> {
+public class BrandController extends SimpleCurdController<MbBrandService, MbBrand> {
 
     @GetMapping
     @DictTranslation

@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.system.modules.dict.domain.SysDict;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "数据字典")
 @RequestMapping("/sys/dict")
-public class SysDictController extends SimpleBaseController<SysDictService, SysDict> {
+public class SysDictController extends SimpleCurdController<SysDictService, SysDict> {
 
     //@Resource
     //private CommonService commonService;

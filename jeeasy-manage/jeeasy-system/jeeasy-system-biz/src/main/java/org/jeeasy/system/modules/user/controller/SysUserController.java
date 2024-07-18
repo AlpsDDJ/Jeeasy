@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
-import org.jeeasy.common.core.base.SimpleBaseController;
+import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.handler.userpwd.UserPasswordHandler;
@@ -35,7 +35,7 @@ import java.util.List;
 @RestController
 @Tag(name = "系统用户")
 @RequestMapping("/sys/user")
-public class SysUserController extends SimpleBaseController<SysUserService, SysUser> {
+public class SysUserController extends SimpleCurdController<SysUserService, SysUser> {
     @Autowired
     private SysPermissionService permissionService;
 
