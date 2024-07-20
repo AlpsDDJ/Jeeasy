@@ -16,7 +16,6 @@
     <properties>
         <application.main.class>org.jeeasy.cloud.gateway.JeeasyGatewayApplication</application.main.class>
         <server-name>jeeasy-gateway</server-name>
-        <root.basedir>${project.parent.parent.basedir}</root.basedir>
     </properties>
 
     <dependencies>
@@ -188,7 +187,7 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>${root.basedir}/scripts/assembly.xml</descriptor>
+                                <descriptor>${project.parent.parent.basedir}/scripts/assembly.xml</descriptor>
                             </descriptors>
                             <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
                             <finalName>${project.name}-${project.version}</finalName>

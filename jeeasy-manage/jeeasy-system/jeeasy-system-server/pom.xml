@@ -50,7 +50,7 @@
                     <include>**/*Mapper.xml</include>
                 </includes>
             </resource>
-            <resource>
+            <!--<resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
@@ -72,12 +72,12 @@
                     <exclude>**/*.xml</exclude>
                     <exclude>*.jet</exclude>
                 </excludes>
-            </resource>
+            </resource>-->
 
 
             <!-- 收集运行脚本 -->
             <resource>
-                <directory>src/main/resources/scripts</directory>
+                <directory>../../../scripts</directory>
                 <targetPath>${project.build.directory}/bin</targetPath>
                 <filtering>true</filtering>
                 <includes>
@@ -90,11 +90,14 @@
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/conf</targetPath>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/rebel.xml</exclude>
+                    <exclude>**/scripts/**</exclude>
+                </excludes>
                 <includes>
-                    <include>application.yml</include>
-                    <include>application-${profiles.active}.yml</include>
-                    <include>*.xml</include>
-                    <include>*.properties</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
 
@@ -164,12 +167,12 @@
             </plugin>
 
             <!-- 打包zip -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>dfrp-portal</id>
+                        <id>zip</id>
                         <configuration>
                             <archive>
                                 <manifest>
@@ -177,9 +180,10 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>src/main/resources/scripts/assembly.xml</descriptor>
+                                <descriptor>${project.parent.parent.parent.basedir}/scripts/assembly.xml</descriptor>
                             </descriptors>
-                            <finalName>${project.artifactId}</finalName>
+                            <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
+                            <finalName>${project.name}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>
@@ -187,7 +191,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 

@@ -8,28 +8,28 @@
     </formats>
     <dependencySets>
         <dependencySet>
-            <useProjectArtifact>true</useProjectArtifact>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
         </dependencySet>
     </dependencySets>
     <fileSets>
         <fileSet>
-            <directory>@project.build.directory@/bin</directory>
+            <directory>${project.build.directory}/bin</directory>
             <outputDirectory>/bin</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>@project.build.directory@/conf</directory>
+            <directory>${project.build.directory}/conf</directory>
             <outputDirectory>/conf</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>@project.build.directory@/static</directory>
+            <directory>${project.build.directory}/static</directory>
             <outputDirectory>/static</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>@project.build.directory@/sdk</directory>
+            <directory>${project.build.directory}/sdk</directory>
             <outputDirectory>/sdk</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
