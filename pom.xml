@@ -30,6 +30,7 @@
         <main.basedir>${basedir}</main.basedir>
         <!-- JDK 版本 -->
         <java.version>17</java.version>
+        <java-home>/www/server/java/jdk-17.0.8/</java-home>
         <sentinel-server>jeeasy-cloud:8849</sentinel-server>
         <nacos-server>jeeasy-cloud:8848</nacos-server>
         <nacos-namespace>c7ad9e2b-e0fb-480e-99db-44451e79e336</nacos-namespace>
