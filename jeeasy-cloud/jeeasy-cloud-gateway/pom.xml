@@ -16,6 +16,7 @@
     <properties>
         <application.main.class>org.jeeasy.cloud.gateway.JeeasyGatewayApplication</application.main.class>
         <server-name>jeeasy-gateway</server-name>
+        <root.basedir>${project.parent.parent.basedir}</root.basedir>
     </properties>
 
     <dependencies>
@@ -57,7 +58,7 @@
                     <include>**/*Mapper.xml</include>
                 </includes>
             </resource>
-            <resource>
+            <!--<resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
@@ -79,12 +80,12 @@
                     <exclude>**/*.xml</exclude>
                     <exclude>*.jet</exclude>
                 </excludes>
-            </resource>
+            </resource>-->
 
 
             <!-- 收集运行脚本 -->
             <resource>
-                <directory>src/main/resources/scripts</directory>
+                <directory>../../scripts</directory>
                 <targetPath>${project.build.directory}/bin</targetPath>
                 <filtering>true</filtering>
                 <includes>
@@ -97,11 +98,14 @@
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/conf</targetPath>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/rebel.xml</exclude>
+                    <exclude>**/scripts/**</exclude>
+                </excludes>
                 <includes>
-                    <include>application.yml</include>
-                    <include>application-${profiles.active}.yml</include>
-                    <include>*.xml</include>
-                    <include>*.properties</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
 
@@ -184,9 +188,9 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>${main.basedir}/scripts/assembly.xml</descriptor>
+                                <descriptor>${root.basedir}/scripts/assembly.xml</descriptor>
                             </descriptors>
-                            <outputDirectory>./zip/${profileActive}/</outputDirectory>
+                            <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
                             <finalName>${project.name}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
