@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ ! -n "$JAVA_HOME" ]; then
-	export JAVA_HOME="/home/java/jdk1.8.0_172"
+	export JAVA_HOME=@java-home@
 fi
 APP_MAIN=@application.main.class@
 PID=0
