@@ -20,6 +20,30 @@ APP_MAIN=@application.main.class@
 JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn128m -XX:ParallelGCThreads=20 -XX:+UseG1GC -XX:MaxGCPauseMillis=850 -Xlog:gc* -Xlog:gc:$APP_LOG/gc.log -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true"
 JAVA_OPTS="$JAVA_OPTS -DlogPath=$APP_LOG"
 JAVA_OPTS="$JAVA_OPTS -Dconf.config=file:${APP_CONFIG}"
+JAVA_OPENS="--add-opens
+java.base/java.lang=ALL-UNNAMED
+--add-opens
+java.base/java.lang.reflect=ALL-UNNAMED
+--add-opens
+java.base/java.lang.invoke=ALL-UNNAMED
+--add-opens
+java.base/java.math=ALL-UNNAMED
+--add-opens
+java.base/sun.net.util=ALL-UNNAMED
+--add-opens
+java.base/java.io=ALL-UNNAMED
+--add-opens
+java.base/java.net=ALL-UNNAMED
+--add-opens
+java.base/java.nio=ALL-UNNAMED
+--add-opens
+java.base/java.security=ALL-UNNAMED
+--add-opens
+java.base/java.text=ALL-UNNAMED
+--add-opens
+java.base/java.time=ALL-UNNAMED
+--add-opens
+java.base/java.util=ALL-UNNAMED"
 
 #remote debug
 #JAVA_OPTS="$JAVA_OPTS"
@@ -57,7 +81,7 @@ startup(){
          if [ ! -d "$APP_LOG" ]; then
             mkdir "$APP_LOG"
          fi
-        nohup $JAVA_HOME/bin/java $JAVA_OPTS -classpath $CLASSPATH $APP_MAIN > $APP_LOG/nohup.log 2>&1 &
+        nohup $JAVA_HOME/bin/java $JAVA_OPENS $JAVA_OPTS -classpath $CLASSPATH $APP_MAIN > $APP_LOG/nohup.log 2>&1 &
         for i in $(seq 5)
         do
         sleep 0.8
