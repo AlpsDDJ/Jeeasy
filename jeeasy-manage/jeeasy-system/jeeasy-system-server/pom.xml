@@ -13,7 +13,7 @@
     <artifactId>jeeasy-system-server</artifactId>
 
     <properties>
-        <application.main.class>org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
+        <application.main.class>org.jeeasy.system.SystemApplication</application.main.class>
         <server-name>jeeasy-system</server-name>
     </properties>
 
@@ -50,7 +50,7 @@
                     <include>**/*Mapper.xml</include>
                 </includes>
             </resource>
-            <!--<resource>
+            <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
@@ -72,7 +72,7 @@
                     <exclude>**/*.xml</exclude>
                     <exclude>*.jet</exclude>
                 </excludes>
-            </resource>-->
+            </resource>
 
 
             <!-- 收集运行脚本 -->

@@ -18,6 +18,7 @@ import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.exception.JeeasyException;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * 常用工具类
@@ -33,7 +34,7 @@ public class Tools {
     private static Cache<String, LineCaptcha> captchaCache = CacheUtil.newFIFOCache(10000);
 
     public static boolean isEmpty(Object obj) {
-        return !isNotEmpty(obj);
+        return Objects.isNull(obj) || !isNotEmpty(obj);
     }
 
     public static boolean isNotEmpty(Object obj) {

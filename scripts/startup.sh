@@ -17,7 +17,7 @@ APP_LOG=${APP_HOME}/logs
 APP_CONFIG=${APP_HOME}/conf/application.yml
 APP_MAIN=@application.main.class@
 
-JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn128m -XX:ParallelGCThreads=20 -XX:+UseConcMarkSweepGC -XX:MaxGCPauseMillis=850 -XX:+PrintGCDetails -Xloggc:$APP_LOG/gc.log -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true"
+JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn128m -XX:ParallelGCThreads=20 -XX:+UseG1GC -XX:MaxGCPauseMillis=850 -Xlog:gc* -Xlog:gc:$APP_LOG/gc.log -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true"
 JAVA_OPTS="$JAVA_OPTS -DlogPath=$APP_LOG"
 JAVA_OPTS="$JAVA_OPTS -Dconf.config=file:${APP_CONFIG}"
 
