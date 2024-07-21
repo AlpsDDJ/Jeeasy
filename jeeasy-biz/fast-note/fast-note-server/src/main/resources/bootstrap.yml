@@ -14,7 +14,7 @@ spring:
         #        server-addr: '@nacos-server@'
         #        prefix: fast-note
         namespace: '@nacos-namespace@'
-        group: 'group-@profiles.active@'
+        group: 'group-${spring.profiles.active}'
         file-extension: yaml
       #        extension-configs:
       #          - data-id: jeeasy-app
@@ -22,7 +22,7 @@ spring:
       #            refresh: true
       discovery:
         namespace: '@nacos-namespace@'
-        group: 'group-@profiles.active@'
+        group: 'group-${spring.profiles.active}'
       #        server-addr: '@nacos-server@'
       server-addr: '@nacos-server@'
     sentinel:

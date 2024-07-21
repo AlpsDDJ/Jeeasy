@@ -3,9 +3,9 @@ spring:
     name: '@server-name@'
   profiles:
     active: '@profiles.active@'
-#  config:
-#    import:
-#      - nacos:jeeasy-app
+  #  config:
+  #    import:
+  #      - nacos:jeeasy-app
   cloud:
     nacos:
       username: '@nacos-username@'
@@ -14,15 +14,15 @@ spring:
         #        server-addr: '@nacos-server@'
         #        prefix: fast-note
         namespace: '@nacos-namespace@'
-        group: 'group-@profiles.active@'
+        group: 'group-${spring.profiles.active}'
         file-extension: yaml
-#        extension-configs:
-#          - data-id: jeeasy-app
-#            group: DEFAULT_GROUP
-#            refresh: true
+      #        extension-configs:
+      #          - data-id: jeeasy-app
+      #            group: DEFAULT_GROUP
+      #            refresh: true
       discovery:
         namespace: '@nacos-namespace@'
-        group: 'group-@profiles.active@'
+        group: 'group-${spring.profiles.active}'
       #        server-addr: '@nacos-server@'
       server-addr: '@nacos-server@'
     sentinel:
