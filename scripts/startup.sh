@@ -116,10 +116,10 @@ startup(){
         done
         getPID
         if [ $PID -ne 0 ]; then
-            echo "(PID=$PID)...[$active Success]"
+            echo "(PID=$PID)...[Start $active Success]"
             echo "================================================================================================================"
         else
-            echo "[$active Failed]"
+            echo "[Start $active Failed]"
             echo "================================================================================================================"
         fi
     fi
