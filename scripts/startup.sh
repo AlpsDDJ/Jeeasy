@@ -15,14 +15,15 @@ while [[ $# -gt 0 ]]; do
     key="$1"
 
     case $key in
-        --act)
-            active=" --spring.profiles.active=$2 "
-			#export SPRING_PROFILES_ACTIVE=$active
+        --e)
+            #active=" --spring.profiles.active=$2 "
+            active=$2
+            export SPRING_PROFILES_ACTIVE=$active
             shift # 过滤掉参数名
             ;;
         --r)
-			sh ./shutdown.sh
-            shift # 过滤掉参数名
+			      sh ./shutdown.sh
+            #shift # 过滤掉参数名
             ;;
         *)
             # 不认识的参数
@@ -107,7 +108,7 @@ startup(){
          if [ ! -d "$APP_LOG" ]; then
             mkdir "$APP_LOG"
          fi
-        nohup $JAVA_HOME/bin/java $JAVA_OPENS $JAVA_OPTS -classpath $CLASSPATH $APP_MAIN $active > $APP_LOG/nohup.log 2>&1 &
+        nohup $JAVA_HOME/bin/java $JAVA_OPENS $JAVA_OPTS -classpath $CLASSPATH $APP_MAIN > $APP_LOG/nohup.log 2>&1 &
         for i in $(seq 5)
         do
         sleep 0.8
@@ -115,10 +116,10 @@ startup(){
         done
         getPID
         if [ $PID -ne 0 ]; then
-            echo "(PID=$PID)...[Success]"
+            echo "(PID=$PID)...[$active Success]"
             echo "================================================================================================================"
         else
-            echo "[Failed]"
+            echo "[$active Failed]"
             echo "================================================================================================================"
         fi
     fi

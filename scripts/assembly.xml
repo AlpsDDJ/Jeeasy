@@ -7,9 +7,23 @@
         <format>zip</format>
     </formats>
     <dependencySets>
+        <!-- 内部模块依赖 -->
         <dependencySet>
-            <useProjectArtifact>true</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+            <useProjectArtifact>true</useProjectArtifact>
+            <includes>
+                <include>${project.groupId}:*</include>
+            </includes>
+        </dependencySet>
+
+        <!-- 外部依赖 -->
+        <dependencySet>
+            <outputDirectory>lib/ext</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <excludes>
+                <exclude>${project.groupId}:*</exclude>
+            </excludes>
         </dependencySet>
     </dependencySets>
     <fileSets>
@@ -30,7 +44,7 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/sdk</directory>
-            <outputDirectory>/sdk</outputDirectory>
+            <outputDirectory>/lib/sdk</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
     </fileSets>

@@ -1,31 +1,17 @@
-package org.jeeasy.cloud.gateway;
+package org.jeeasy.common.core.tools;
 
-import com.alibaba.cloud.commons.lang.StringUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- * 入 口 启 动 类
- *
- * @author AlpsDDJ
- * @date
- */
-@Slf4j
-@SpringBootApplication(scanBasePackages = "org.jeeasy")
-@EnableDiscoveryClient
-// @MapperScan("org.jeeasy.**.mapper")
-//@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
-public class JeeasyGatewayApplication extends SpringBootServletInitializer {
-    public static void main(String[] args) {
-        ConfigurableApplicationContext application = SpringApplication.run(JeeasyGatewayApplication.class, args);
+
+@Log4j2
+public class ApplicationUtil {
+    public static void printAppInfo(ConfigurableApplicationContext application) {
         Environment env = application.getEnvironment();
         try {
             String ip = InetAddress.getLocalHost().getHostAddress();
