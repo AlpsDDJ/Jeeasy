@@ -32,16 +32,16 @@ public class QueryPageModel implements QueryModel {
         return BeanUtil.isNotEmpty(sort) && !StrUtil.EMPTY_JSON.equals(sort);
     }
 
-    public <T> Page<T> getPage(Class<T> tClass){
+    public <T> Page<T> getPage(Class<T> tClass) {
         Page<T> page = new Page<>(this.current, this.size);
         Map<String, String> sortMap = new HashMap<>();
         sortMap = JSONUtil.toBean(sort, sortMap.getClass());
-        if(MapUtil.isNotEmpty(sortMap)){
+        if (MapUtil.isNotEmpty(sortMap)) {
             List<OrderItem> orderItems = new ArrayList<>();
 
             sortMap.forEach((key, val) -> {
                 String columnName = QueryGenerator.getColumnName(key, tClass);
-                orderItems.add(new OrderItem(columnName, "ascend".equals(val)));
+                orderItems.add("ascend".equals(val) ? OrderItem.asc(columnName) : OrderItem.desc(columnName));
             });
 
             page.setOrders(orderItems);

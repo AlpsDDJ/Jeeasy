@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.4</version>
     </parent>
 
     <groupId>mobie.alps</groupId>
@@ -38,18 +38,11 @@
         <nacos-username>nacos</nacos-username>
         <nacos-password>nacos123456</nacos-password>
 
-
-        <!-- 数 据 源 版 本 -->
-        <druid.version>1.2.20</druid.version>
-        <!-- Mysql 版 本 -->
-        <mysql.version>8.0.33</mysql.version>
-        <!-- MyBatis 版 本 -->
-        <mybatis.version>2.3.2</mybatis.version>
-        <spring-cloud.version>2022.0.4</spring-cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
         <nacos.version>2021.1</nacos.version>
         <nacos-client.version>2.2.0</nacos-client.version>
+
         <!-- Fast Json 序 列 化 版 本 -->
         <!--        <fastjson.version>1.2.68</fastjson.version>-->
         <jackson.version>2.16.0</jackson.version>
@@ -67,16 +60,24 @@
         <commons.pool2.version>2.9.0</commons.pool2.version>
         <!-- apache io 工具类 -->
         <commons.io.version>2.7</commons.io.version>
-        <!-- 分 页 工 具 类 -->
-        <pagehelper.version>1.2.10</pagehelper.version>
+
+        <!-- 数 据 源 版 本 -->
+        <druid.version>1.2.23</druid.version>
+        <!-- Mysql 版 本 -->
+        <mysql.version>8.0.33</mysql.version>
+        <!-- MyBatis 版 本 -->
+        <!--        <mybatis.version>2.3.2</mybatis.version>-->
         <!-- mybatis-plus 依 赖 -->
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
-        <!-- mybatis-plus-ext 依 赖 -->
-        <mybatis-plus-ext.version>3.5.4-EXT544-boot3</mybatis-plus-ext.version>
+        <!--        <mybatis-plus.version>3.5.5</mybatis-plus.version>-->
         <!-- dynamic-datasource 依 赖 -->
-        <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
+        <!-- 分 页 工 具 类 -->
+        <!--        <pagehelper.version>1.2.10</pagehelper.version>-->
         <!-- 代 码 生 成 依 赖 -->
-        <mybatis-plus-generator.version>3.5.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.5</mybatis-plus-generator.version>
+        <!-- mybatis-plus-ext 依 赖 -->
+        <mybatis-plus-ext.version>3.5.5-EXT561-boot3</mybatis-plus-ext.version>
+
         <!-- freemarker 版本 -->
         <freemarker.version>2.3.30</freemarker.version>
         <!-- 验 证 码 版 本 -->
