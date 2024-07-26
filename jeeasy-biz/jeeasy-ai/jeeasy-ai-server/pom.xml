@@ -2,20 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jeeasy-system</artifactId>
         <groupId>mobie.alps</groupId>
+        <artifactId>jeeasy-ai</artifactId>
         <version>${revision}</version>
     </parent>
-    <version>${revision}</version>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jeeasy-system-server</artifactId>
+    <artifactId>jeeasy-ai-server</artifactId>
 
     <properties>
-        <application.main.class>org.jeeasy.system.SystemApplication</application.main.class>
-        <server-name>jeeasy-system</server-name>
+        <application.main.class>org.jeeasy.ai.JeeasyAiApplication</application.main.class>
+        <server-name>jeeasy-ai</server-name>
     </properties>
+
 
     <!-- 依赖管理 -->
     <dependencies>
@@ -30,13 +30,8 @@
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-system-biz</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-generator</artifactId>
-            <version>${project.version}</version>
+            <artifactId>jeeasy-ai-biz</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
@@ -195,6 +190,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

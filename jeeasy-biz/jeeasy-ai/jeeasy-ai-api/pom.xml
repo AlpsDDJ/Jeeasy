@@ -4,20 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jeeasy</artifactId>
         <groupId>mobie.alps</groupId>
+        <artifactId>jeeasy-ai</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>jeeasy-biz</artifactId>
-    <name>业务模块</name>
-    <packaging>pom</packaging>
-    <version>${revision}</version>
+    <artifactId>jeeasy-ai-api</artifactId>
 
-    <modules>
-        <module>fast-note</module>
-        <module>mobile-beauty</module>
-        <module>jeeasy-ai</module>
-    </modules>
+    <dependencies>
+        <!-- feign -->
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-cloud-api</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
