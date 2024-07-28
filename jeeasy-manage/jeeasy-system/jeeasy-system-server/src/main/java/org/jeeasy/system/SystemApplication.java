@@ -20,9 +20,9 @@ import java.net.UnknownHostException;
  */
 @Slf4j
 @EnableAutoTable
-@EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "org.jeeasy")
+@EnableFeignClients(basePackages = "org.jeeasy")
 // @MapperScan("org.jeeasy.**.mapper")
 //@EnableConfigurationProperties({ SwaggerModuleConfiguration.class })
 public class SystemApplication extends SpringBootServletInitializer {

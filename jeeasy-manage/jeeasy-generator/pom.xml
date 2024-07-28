@@ -26,6 +26,11 @@
             <artifactId>velocity-engine-core</artifactId>
             <version>2.2</version>
         </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-ai-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
 

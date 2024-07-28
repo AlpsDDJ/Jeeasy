@@ -39,6 +39,7 @@ public class SseUtil {
 
         // 订阅聊天响应流，每当有新的响应时，执行相应的处理。
         final String finalSessionId = sessionId;
+
         AtomicInteger index = new AtomicInteger();
         response.subscribe(x -> {
             try {
@@ -84,6 +85,10 @@ public class SseUtil {
                 log.error(e.getLocalizedMessage());
             }
         });
+        //new Thread(() -> {
+        //
+        //}).start();
+
 
         // 返回SseEmitter实例，供客户端使用。
         return emitter;

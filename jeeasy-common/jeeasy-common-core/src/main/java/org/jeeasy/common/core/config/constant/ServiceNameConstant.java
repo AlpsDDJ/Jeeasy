@@ -26,18 +26,23 @@ package org.jeeasy.common.core.config.constant;
  */
 public interface ServiceNameConstant {
 
-	/**
-	 * 微服务名：系统管理模块
-	 */
-	String SERVICE_SYSTEM = "jeeasy-system";
-	/**
-	 * 微服务名： demo模块
-	 */
-	String SERVICE_DEMO = "jeeasy-demo";
+    /**
+     * 微服务名：系统管理模块
+     */
+    String SERVICE_SYSTEM = "jeeasy-system";
 
-	/**
-	 * gateway通过header传递根路径 basePath
-	 */
-	String X_GATEWAY_BASE_PATH = "X_GATEWAY_BASE_PATH";
+    /**
+     * 微服务名：系统管理模块
+     */
+    String SERVICE_AI = "jeeasy-ai";
+    /**
+     * 微服务名： demo模块
+     */
+    String SERVICE_DEMO = "jeeasy-demo";
+
+    /**
+     * gateway通过header传递根路径 basePath
+     */
+    String X_GATEWAY_BASE_PATH = "X_GATEWAY_BASE_PATH";
 
 }

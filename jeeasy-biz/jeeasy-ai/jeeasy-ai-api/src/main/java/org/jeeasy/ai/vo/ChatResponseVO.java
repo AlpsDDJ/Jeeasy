@@ -2,7 +2,6 @@ package org.jeeasy.ai.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.ai.chat.messages.MessageType;
 
 import java.util.List;
 
@@ -16,6 +15,6 @@ public class ChatResponseVO {
     @Data
     public static class RespMessage {
         private String content;
-        private MessageType type;
+        private String type;
     }
 }

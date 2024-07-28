@@ -33,6 +33,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Slf4j
 public class FeignConfig {
 
+
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
@@ -45,7 +46,6 @@ public class FeignConfig {
     }
 
 
-
     /**
      * Feign 客户端的日志记录，默认级别为NONE
      * Logger.Level 的具体级别如下：
@@ -54,9 +54,9 @@ public class FeignConfig {
      * HEADERS：除了记录 BASIC级别的信息外，还会记录请求和响应的头信息
      * FULL：记录所有请求与响应的明细，包括头信息、请求体、元数据
      *
+     * @return {@link Logger.Level}
      * @author wei.yang
      * @date 2023/1/2 19:12
-     * @return {@link Logger.Level}
      */
     @Bean
     Logger.Level feignLoggerLevel() {
@@ -66,10 +66,10 @@ public class FeignConfig {
     /**
      * Feign支持文件上传
      *
-     * @author wei.yang
-     * @date 2023/1/2 19:12
      * @param messageConverters
      * @return {@link Encoder}
+     * @author wei.yang
+     * @date 2023/1/2 19:12
      */
     @Bean
     @Primary
