@@ -21,10 +21,6 @@
     <dependencies>
         <!-- 模块引用 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-cloud-base</artifactId>
         </dependency>

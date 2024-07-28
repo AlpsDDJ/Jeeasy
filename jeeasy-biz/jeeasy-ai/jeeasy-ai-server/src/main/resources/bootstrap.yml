@@ -1,4 +1,17 @@
 spring:
+  codec:
+    max-in-memory-size: 5000KB
+  ai:
+    openai:
+      api-key: sk-43e3f0a374c64e1ca2929fb827de80f1
+      chat:
+        options:
+          model: 'qwen-max'
+
+          temperature: 0.7
+        base-url: https://dashscope.aliyuncs.com/compatible-mode/
+        api-key: sk-43e3f0a374c64e1ca2929fb827de80f1
+
   application:
     name: @server-name@
   profiles:

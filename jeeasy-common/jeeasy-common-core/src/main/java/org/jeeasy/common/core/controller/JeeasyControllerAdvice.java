@@ -1,6 +1,8 @@
 package org.jeeasy.common.core.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.enums.RestCode;
 import org.jeeasy.common.core.exception.JeeasyException;
@@ -29,9 +31,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(Exception.class)
-    public R<?> handleException(Exception e){
+    public R<?> handleException(Exception e, HttpServletResponse response) {
+        String header = response.getHeader("Content-Type");
+        if (StringUtils.isNoneEmpty(header) && header.contains("text/event-stream")) {
+            return null;
+        }
         log.error(e.getMessage(), e);
-        return R.error("操作失败，"+e.getMessage());
+        return R.error("操作失败，" + e.getMessage());
     }
 
     @ExceptionHandler(JeeasyException.class)
@@ -48,7 +54,7 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public R<?> handleDuplicateKeyException(DuplicateKeyException e){
+    public R<?> handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
         return R.error("数据库中已存在该记录");
     }
@@ -60,15 +66,15 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
 //    }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public R<?> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e){
+    public R<?> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         StringBuffer sb = new StringBuffer();
         sb.append("不支持");
         sb.append(e.getMethod());
         sb.append("请求方法，");
         sb.append("支持以下");
-        String [] methods = e.getSupportedMethods();
-        if(methods!=null){
-            for(String str:methods){
+        String[] methods = e.getSupportedMethods();
+        if (methods != null) {
+            for (String str : methods) {
                 sb.append(str);
                 sb.append("、");
             }
@@ -103,7 +109,7 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse response) {
         log.info(serverHttpRequest.getURI().getPath());
-        if(o instanceof R){
+        if (o instanceof R) {
             R<?> result = (R<?>) o;
             if (!result.isSuccess()) {
                 try {
@@ -115,10 +121,10 @@ public class JeeasyControllerAdvice implements ResponseBodyAdvice<Object> {
                 }
             } else {
                 HttpMethod method = serverHttpRequest.getMethod();
-                if(HttpMethod.DELETE.equals(method)){
+                if (HttpMethod.DELETE.equals(method)) {
                     result.setMessage("删除成功");
                 }
-                if(HttpMethod.PUT.equals(method)){
+                if (HttpMethod.PUT.equals(method)) {
                     result.setMessage("修改成功");
                 }
             }

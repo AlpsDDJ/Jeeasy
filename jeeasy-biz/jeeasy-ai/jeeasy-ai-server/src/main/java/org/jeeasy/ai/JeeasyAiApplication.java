@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 入 口 启 动 类
@@ -16,6 +17,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @date
  */
 @Slf4j
+@EnableAsync
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "org.jeeasy")

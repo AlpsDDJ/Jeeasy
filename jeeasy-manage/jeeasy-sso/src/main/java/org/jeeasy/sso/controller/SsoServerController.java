@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeeasy.common.core.domain.IAuthUser;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.service.IAuthService;
-import org.jeeasy.common.core.tools.RequestUtil;
+import org.jeeasy.common.core.tools.HttpUtil;
 import org.jeeasy.sso.provider.AuthServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -73,7 +73,7 @@ public class SsoServerController {
 //            String username = SaHolder.getRequest().getParam("username");
 //            String password = SaHolder.getRequest().getParam("password");
             HttpServletRequest request = (HttpServletRequest) SaHolder.getRequest().getSource();
-            Map<String, Object> params = RequestUtil.getParams(request);
+            Map<String, Object> params = HttpUtil.getReqParams(request);
             if (StringUtils.isBlank(name)) {
                 name = params.get("name").toString();
             }
