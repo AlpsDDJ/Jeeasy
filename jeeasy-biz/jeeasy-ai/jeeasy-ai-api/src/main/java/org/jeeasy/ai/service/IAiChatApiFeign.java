@@ -1,6 +1,5 @@
 package org.jeeasy.ai.service;
 
-import feign.Response;
 import org.jeeasy.ai.dto.ChatMessageDTO;
 import org.jeeasy.ai.vo.ChatResponseVO;
 import org.jeeasy.common.api.fallback.CommonFallback;
@@ -21,8 +20,11 @@ public interface IAiChatApiFeign {
     class FallbackFactory implements CommonFallback<IAiChatApiFeign> {
     }
 
+    @PostMapping(value = "flux")
+    feign.Response fluxChat(@RequestBody ChatMessageDTO messageDTO);
+
     @PostMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    Response streamChat(@RequestBody ChatMessageDTO messageDTO);
+    feign.Response streamChat(@RequestBody ChatMessageDTO messageDTO);
 
     @PostMapping
     R<ChatResponseVO> chat(@RequestBody ChatMessageDTO messageDTO);

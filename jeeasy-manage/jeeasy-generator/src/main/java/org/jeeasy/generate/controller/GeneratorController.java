@@ -1,6 +1,5 @@
 package org.jeeasy.generate.controller;
 
-import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -48,13 +47,36 @@ public class GeneratorController {
         httpResponse.setCharacterEncoding("UTF-8");
         ChatMessageDTO dto = new ChatMessageDTO();
         dto.setContent(content);
-        Response response = aiChatService.streamChat(dto);
+        feign.Response response = aiChatService.streamChat(dto);
         try (InputStream fileInputStream = response.body().asInputStream()) {
             ServletOutputStream outputStream = httpResponse.getOutputStream();
             fileInputStream.transferTo(outputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping(value = "aiFlux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @Operation(summary = "aiFlux")
+    public void aiFlux(@RequestParam(required = false, defaultValue = "你好，你是谁？") String content, HttpServletResponse httpResponse) {
+        httpResponse.setContentType("text/event-stream");
+        httpResponse.setCharacterEncoding("UTF-8");
+        ChatMessageDTO dto = new ChatMessageDTO();
+        dto.setContent(content);
+        feign.Response stringFlux = aiChatService.fluxChat(dto);
+        try (InputStream inputStream = stringFlux.body().asInputStream()) {
+            inputStream.transferTo(httpResponse.getOutputStream());
+        } catch (IOException e) {
+
+        }
+        //return stringFlux;
+
+        //try (InputStream fileInputStream = response.body().asInputStream()) {
+        //    ServletOutputStream outputStream = httpResponse.getOutputStream();
+        //    fileInputStream.transferTo(outputStream);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 
     @GetMapping("aiTest")
