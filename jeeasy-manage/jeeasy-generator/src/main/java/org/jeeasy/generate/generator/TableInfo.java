@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.context.Context;
 import org.jeeasy.common.core.tools.Tools;
@@ -45,7 +46,8 @@ public class TableInfo extends GenTable {
         String tableName = table.getName();
         this.caseName = new CaseName(tableName);
         this.date = Tools.getTime();
-        this.author = Tools.isEmpty(generatorDto.getAuthor()) ? "wei.yang" : generatorDto.getAuthor();
+
+        this.author = StringUtils.defaultIfBlank(generatorDto.getAuthor(), "wei.yang");
         this.fields = table.getTableFields().stream().map(TableField::new).toList();
         this.indexs = table.getTableIndexs().stream().map(TableIndex::new).toList();
 
