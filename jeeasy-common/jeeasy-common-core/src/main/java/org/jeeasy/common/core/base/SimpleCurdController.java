@@ -36,7 +36,7 @@ public class SimpleCurdController<S extends IService<T>, T> {
     }
 
     protected QueryWrapper<T> getWrapper(HttpServletRequest req) {
-        return QueryGenerator.createWrapper(tClass(), req.getParameterMap());
+        return QueryGenerator.ofWrapper(tClass(), req.getParameterMap());
     }
 
 

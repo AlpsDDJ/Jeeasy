@@ -1,5 +1,6 @@
 package org.jeeasy.common.core.tools;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,11 +27,12 @@ public class ApplicationUtil {
                     \n----------------------------------------------------------
                         Application %s is running!
                         Env: %s
+                        StartTime: %s
                         Access URLs:
                             Local: 		http://localhost:%s/
                             External: 	http://%s:%s/
                     ----------------------------------------------------------
-                    """.formatted(appName, activeProfile, port + path, ip, port + path);
+                    """.formatted(appName, activeProfile, DateUtil.now(), port + path, ip, port + path);
             log.info(appInfo);
         } catch (UnknownHostException e) {
             log.warn(String.valueOf(e));

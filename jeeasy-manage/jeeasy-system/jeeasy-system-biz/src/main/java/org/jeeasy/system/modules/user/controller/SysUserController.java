@@ -43,7 +43,7 @@ public class SysUserController extends SimpleCurdController<SysUserService, SysU
     @DictTranslation
     @Operation(summary = "用户列表", description = "用户列表")
     public R<IPage<SysUser>> list(SysUserQueryPageModel queryPageModel, HttpServletRequest req) {
-        QueryWrapper<SysUser> wrapper = QueryGenerator.createWrapper(SysUser.class, req.getParameterMap());
+        QueryWrapper<SysUser> wrapper = QueryGenerator.ofWrapper(SysUser.class, req.getParameterMap());
         if (!queryPageModel.hasSort()) {
             wrapper.lambda().orderByAsc(SysUser::getUserNo);
         }

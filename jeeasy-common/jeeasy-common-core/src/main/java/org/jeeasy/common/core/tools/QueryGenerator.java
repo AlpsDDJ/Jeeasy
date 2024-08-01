@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -29,7 +30,15 @@ public class QueryGenerator {
 //        return new QueryWrapper<T>();
 //    }
 
-    public static <T> QueryWrapper<T> createWrapper(Class<T> clazz) {
+    public static <T> QueryWrapper<T> ofWrapper() {
+        return new QueryWrapper<T>();
+    }
+
+    public static <T> LambdaQueryWrapper<T> ofLambdaWrapper() {
+        return new QueryWrapper<T>().lambda();
+    }
+
+    public static <T> QueryWrapper<T> ofWrapper(Class<T> clazz) {
         return new QueryWrapper<T>();
     }
 
@@ -41,7 +50,8 @@ public class QueryGenerator {
      * @param <T>    给定的类的类型参数
      * @return 创建的QueryWrapper对象
      */
-    public static <T> QueryWrapper<T> createWrapper(Class<T> clazz, Map<String, String[]> params) {
+    public static <T> QueryWrapper<T> ofWrapper(Class<T> clazz, Map<String, String[]> params) {
+
         QueryWrapper<T> wrapper = new QueryWrapper<>();
 
         // 遍历参数映射

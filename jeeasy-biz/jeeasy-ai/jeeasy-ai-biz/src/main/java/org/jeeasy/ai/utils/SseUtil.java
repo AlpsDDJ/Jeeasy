@@ -8,17 +8,20 @@ import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Log4j2
 public class SseUtil {
+
+    public static void main(String[] args) {
+        String ss = "11111\n1111;11111\n1111\n11111\n";
+        System.out.println(ss.replaceAll("\n", "\\\\n"));
+    }
 
 
     /**
@@ -61,20 +64,43 @@ public class SseUtil {
                             String content = assistantMessage.getContent();
                             if (StringUtils.isNotEmpty(content)) {
                                 // 发送消息内容给客户端。
-                                Set<ResponseBodyEmitter.DataWithMediaType> events = SseEmitter.event()
-                                        .id(String.format("%s-%s", finalSessionId, index.getAndIncrement()))
-                                        .name("chat")
-                                        .data(content)
-                                        .build();
-                                emitter.send(events);
+                                SseEmitter.SseEventBuilder builder = SseEmitter.event();
+                                //content.replaceAll("\n", "\\n");
+                                emitter.send(SseEmitter.event()
+                                        .id(String.valueOf(index.getAndIncrement()))
+                                        .name("result")
+                                        .reconnectTime(System.currentTimeMillis())
+                                        .data(content.replaceAll("\n", "\\\n")));
+                                //for (String line : content.split("\n")) {
+                                //
+                                //    //Set<ResponseBodyEmitter.DataWithMediaType> events = SseEmitter.event()
+                                //    //        .id(String.valueOf(index.getAndIncrement()))
+                                //    //        .name("result")
+                                //    //        .reconnectTime(System.currentTimeMillis())
+                                //    //        .data(line)
+                                //    //        .build();
+                                //    ////new ResponseBodyEmitter.DataWithMediaType(line);
+                                //    ////events.add()
+                                //    emitter.send(SseEmitter.event()
+                                //            .id(String.valueOf(index.getAndIncrement()))
+                                //            .name("result")
+                                //            .reconnectTime(System.currentTimeMillis())
+                                //            .data(line));
+                                //}
                             }
                         } else {
                             // 如果生成结果指示停止，完成SSE发送。
-                            Set<ResponseBodyEmitter.DataWithMediaType> events = SseEmitter.event()
+                            //Set<ResponseBodyEmitter.DataWithMediaType> events = SseEmitter.event()
+                            //        .id(String.valueOf(index.getAndIncrement()))
+                            //        .name("complete")
+                            //        .reconnectTime(System.currentTimeMillis())
+                            //        .data(finalSessionId)
+                            //        .build();
+                            emitter.send(SseEmitter.event()
                                     .id(String.valueOf(index.getAndIncrement()))
-                                    .name("stop")
-                                    .build();
-                            emitter.send(events);
+                                    .name("complete")
+                                    .reconnectTime(System.currentTimeMillis())
+                                    .data(finalSessionId));
                             emitter.complete();
                         }
                     }

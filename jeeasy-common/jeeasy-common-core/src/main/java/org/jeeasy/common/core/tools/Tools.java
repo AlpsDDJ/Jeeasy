@@ -18,7 +18,10 @@ import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.exception.JeeasyException;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 常用工具类
@@ -81,6 +84,30 @@ public class Tools {
             throw new JeeasyException("验证码错误");
         }
         return true;
+    }
+
+    public static String replaceParams(String prompt, Map<String, Object> params) {
+        // 正则表达式匹配 {param} 格式的内容
+        Pattern pattern = Pattern.compile("\\{(.*?)\\}");
+        Matcher matcher = pattern.matcher(prompt);
+
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            // 获取匹配到的参数名
+            String paramName = matcher.group(1);
+            // 从 params Map 中获取对应的值
+            Object paramValue = params.get(paramName);
+            if (paramValue != null) {
+                // 将值转换为字符串并替换
+                matcher.appendReplacement(sb, paramValue.toString());
+            } else {
+                // 如果没有找到对应的值，保留原始内容
+                matcher.appendReplacement(sb, matcher.group());
+            }
+        }
+        matcher.appendTail(sb);
+
+        return sb.toString();
     }
 
 }

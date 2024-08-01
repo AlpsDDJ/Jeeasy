@@ -37,7 +37,7 @@ public class SimpleBaseApi<S extends IService<T>, T> {
     }
 
     protected QueryWrapper<T> getWapper(HttpServletRequest req) {
-        return QueryGenerator.createWrapper(tClass(), req.getParameterMap());
+        return QueryGenerator.ofWrapper(tClass(), req.getParameterMap());
     }
 
 

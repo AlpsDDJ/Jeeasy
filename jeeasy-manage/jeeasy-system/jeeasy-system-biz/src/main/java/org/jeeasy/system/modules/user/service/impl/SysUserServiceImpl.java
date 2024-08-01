@@ -50,7 +50,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
 //    @Cacheable(value = CommonConstant.CACHE_USER_KEY, key= "#username")
     public SysUser getByUserName(String username) {
-        return baseMapper.selectOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
+        return baseMapper.selectOne(QueryGenerator.ofWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean checkPasswordByUserName(String username, String password) {
-        SysUser sysUser = baseMapper.selectOne(QueryGenerator.createWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
+        SysUser sysUser = baseMapper.selectOne(QueryGenerator.ofWrapper(SysUser.class).lambda().eq(SysUser::getUsername, username));
         if (Tools.isEmpty(sysUser)) {
             throw new JeeasyException("用户名不存在");
         }
@@ -91,8 +91,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void saveUserRolesAndDepts(String[] roles, String[] depts, String userId, boolean isInsert) {
         // 修改用户时删除原有 角色 和 部门信息
         if (!isInsert) {
-            userRoleService.remove(QueryGenerator.createWrapper(SysUserRole.class).lambda().eq(SysUserRole::getUserId, userId));
-            userDeptService.remove(QueryGenerator.createWrapper(SysUserDept.class).lambda().eq(SysUserDept::getUserId, userId));
+            userRoleService.remove(QueryGenerator.ofWrapper(SysUserRole.class).lambda().eq(SysUserRole::getUserId, userId));
+            userDeptService.remove(QueryGenerator.ofWrapper(SysUserDept.class).lambda().eq(SysUserDept::getUserId, userId));
         }
         if (Tools.isNotEmpty(roles)) {
             List<SysUserRole> sysUserRoles = new ArrayList<>();

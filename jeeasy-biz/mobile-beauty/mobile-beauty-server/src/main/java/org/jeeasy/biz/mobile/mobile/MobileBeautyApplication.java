@@ -1,17 +1,15 @@
 package org.jeeasy.biz.mobile.mobile;
 
-import cn.hutool.core.util.StrUtil;
 import com.tangzc.mpe.autotable.EnableAutoTable;
 import lombok.extern.slf4j.Slf4j;
+import org.jeeasy.common.core.tools.ApplicationUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.Environment;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -28,17 +26,6 @@ import java.net.UnknownHostException;
 public class MobileBeautyApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext application = SpringApplication.run(MobileBeautyApplication.class, args);
-        Environment env = application.getEnvironment();
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        String port = env.getProperty("server.port");
-        String path = env.getProperty("server.servlet.context-path");
-        path = StrUtil.isEmpty(path) ? "" : path;
-        log.info("\n----------------------------------------------------------\n\t" +
-                "Application Jeeasy System is running! Access URLs:\n\t" +
-                "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
-                "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
-//                "Swagger-ui: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +
-                "Doc文档: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
-                "----------------------------------------------------------");
+        ApplicationUtil.printAppInfo(application);
     }
 }

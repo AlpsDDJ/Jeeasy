@@ -26,6 +26,11 @@
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-system-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-ai-biz</artifactId>
             <version>${revision}</version>
         </dependency>
