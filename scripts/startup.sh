@@ -39,9 +39,9 @@ done
 #-------------------------------------------------------------------------------------------------------------
 DIR=$(cd "$(dirname "$0")"; pwd)
 APP_HOME=${DIR}/..
-CLASSPATH=$APP_HOME/conf
+CLASSPATH=$APP_HOME/conf:$APP_HOME/lib/*:$APP_HOME/lib/ext/*
 APP_LOG=${APP_HOME}/logs
-APP_CONFIG=${APP_HOME}/conf/application.yml
+APP_CONFIG=${APP_HOME}/conf/bootstrap.yml
 APP_MAIN=@application.main.class@
 
 JAVA_OPTS="$JAVA_OPTS -server -Xms1024m -Xmx1024m -Xmn128m -XX:ParallelGCThreads=20 -XX:+UseG1GC -XX:MaxGCPauseMillis=850 -Xlog:gc* -Xlog:gc:$APP_LOG/gc.log -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true"
@@ -82,10 +82,15 @@ echo "JAVA_OPTS="$JAVA_OPTS
 #-------------------------------------------------------------------------------------------------------------
 #   程序开始
 #-------------------------------------------------------------------------------------------------------------
-for appJar in "$APP_HOME"/lib/*.jar;
-do
-   CLASSPATH="$CLASSPATH":"$appJar"
-done
+# 遍历 lib 和 lib/ext 目录下的 .jar 文件
+#for directory in "$APP_HOME"/lib "$APP_HOME"/lib/ext; do
+#    for jarFile in "$directory"/*.jar; do
+#        if [ -f "$jarFile" ]; then
+#            CLASSPATH="$CLASSPATH":"$jarFile"
+#        fi
+#    done
+#done
+
 PID=0
 
 getPID(){

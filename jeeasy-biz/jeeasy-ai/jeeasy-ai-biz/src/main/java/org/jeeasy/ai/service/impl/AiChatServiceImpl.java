@@ -21,6 +21,7 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -39,6 +40,7 @@ public class AiChatServiceImpl implements IAiChatService {
     private Prompt createPrompt(ChatMessageDTO messageDTO) {
         List<Message> messageList = CollectionUtil.toList(ChatUtil.toChatMessage(messageDTO));
         String appCode = messageDTO.getAppCode();
+        OpenAiChatOptions.Builder optionBuilder = OpenAiChatOptions.builder();
         if (Tools.isNotEmpty(appCode)) {
             AiChatApp app = chatAppService.getByCode(appCode);
             if (Tools.isEmpty(app)) {
@@ -48,10 +50,11 @@ public class AiChatServiceImpl implements IAiChatService {
             String prompt = Tools.replaceParams(app.getPrompt(), params);
             Message sysMessage = new SystemMessage(prompt);
             messageList.add(sysMessage);
+            optionBuilder.withModel(app.getModel());
         } else {
             messageList.add(new SystemMessage("你是一个智能助手"));
         }
-        return new Prompt(messageList);
+        return new Prompt(messageList, optionBuilder.build());
     }
 
 

@@ -15,6 +15,6 @@ public class SseMessage {
     public enum Type {
         RESULT,
         COMPLETE,
-        ERROR;
+        ERROR
     }
 }
