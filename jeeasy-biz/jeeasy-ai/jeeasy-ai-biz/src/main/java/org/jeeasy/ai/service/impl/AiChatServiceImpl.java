@@ -83,16 +83,14 @@ public class AiChatServiceImpl implements IAiChatService {
             sessionId = ChatUtil.createSessionId();
         }
         String finalSessionId = sessionId;
-        return response.map(resp -> {
+        return response.mapNotNull(resp -> {
             for (Generation result : resp.getResults()) {
                 String finishReason = result.getMetadata().getFinishReason();
                 if (StringUtils.equalsIgnoreCase(finishReason, "stop")) {
-                    SseMessage message = SseMessage.builder().type(SseMessage.Type.COMPLETE).sessionId(finalSessionId).build();
-                    return message;
+                    return SseMessage.builder().type(SseMessage.Type.COMPLETE).sessionId(finalSessionId).build();
                 }
                 String content = result.getOutput().getContent();
-                SseMessage message = SseMessage.builder().type(SseMessage.Type.RESULT).content(content).build();
-                return message;
+                return SseMessage.builder().type(SseMessage.Type.RESULT).content(content).build();
             }
             return null;
         });

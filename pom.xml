@@ -419,8 +419,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.13.0</version>
                 <configuration>
+                    <parameters>true</parameters>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
@@ -431,7 +432,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.3.1</version>
                 <configuration>
                     <attach>true</attach>
                     <!-- 配置源代码jar文件的存放路径 -->
@@ -440,9 +441,9 @@
                 <executions>
                     <execution>
                         <phase>compile</phase>
-                        <goals>
+                        <!--<goals>
                             <goal>jar</goal>
-                        </goals>
+                        </goals>-->
                     </execution>
                 </executions>
             </plugin>
