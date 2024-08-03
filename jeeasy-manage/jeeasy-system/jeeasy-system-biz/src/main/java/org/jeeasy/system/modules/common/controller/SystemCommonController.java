@@ -3,14 +3,17 @@ package org.jeeasy.system.modules.common.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.common.core.service.CommonService;
+import org.jeeasy.common.core.tools.HttpUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author AlpsDDJ
@@ -38,7 +41,12 @@ public class SystemCommonController {
     @GetMapping("/dicts/{code}")
     @DictTranslation
     @Operation(summary = "根据ID查找数据字典", description = "根据ID查找数据字典")
-    public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") Boolean async) {
+    public R<List<DictVo>> getDictsById(@PathVariable("code") String code, @RequestParam(required = false) String parentId, @RequestParam(required = false, defaultValue = "false") Boolean async, HttpServletRequest request) {
+        //Map<String, String[]> parameterMap = request.getParameterMap();
+        //log.info("parameterMap：{}", parameterMap);
+        Map<String, Object> params = HttpUtil.getReqParams(request);
+        //Map<String, Object> reqParams = HttpUtil.getReqParams();
+        log.info("params：{}", params);
         return R.ok(commonService.getDictsByCode(code, parentId, async));
     }
 

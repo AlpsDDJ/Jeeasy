@@ -9,9 +9,11 @@ import org.jeeasy.common.core.annotation.dict.Dict;
 import org.jeeasy.common.core.enums.BooleanEnum;
 import org.jeeasy.common.core.enums.DelFlagEnum;
 import org.jeeasy.common.core.enums.EnableFlagEnum;
+import org.jeeasy.common.core.tools.Tools;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author mobie
@@ -138,4 +140,10 @@ public class SysTableDict implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public void replaceParams(Map<String, Object> params) {
+        if (Tools.isNotEmpty(this.tableName)) {
+            this.tableName = Tools.replaceParams(this.tableName, params);
+        }
+    }
 }

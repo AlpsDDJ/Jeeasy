@@ -33,6 +33,13 @@ public class GenTemplate extends Model<GenTemplate> {
     private String id;
 
     /**
+     * 模板名称
+     */
+    @Schema(description = "模板名称")
+    @Column(value = "name")
+    private String name;
+
+    /**
      * 文件名
      */
     @Schema(description = "文件名")

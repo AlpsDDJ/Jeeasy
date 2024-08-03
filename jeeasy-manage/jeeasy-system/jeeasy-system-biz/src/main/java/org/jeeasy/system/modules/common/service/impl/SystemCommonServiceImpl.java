@@ -7,6 +7,7 @@ import org.jeeasy.common.core.domain.vo.DictVo;
 import org.jeeasy.common.core.enums.IDictEnum;
 import org.jeeasy.common.core.service.CommonService;
 import org.jeeasy.common.core.tools.DictUtil;
+import org.jeeasy.common.core.tools.HttpUtil;
 import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.system.modules.dict.domain.SysDict;
 import org.jeeasy.system.modules.dict.domain.SysTableDict;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static cn.dev33.satoken.SaManager.log;
 
 /**
  * @author mobie
@@ -42,6 +46,9 @@ public class SystemCommonServiceImpl implements CommonService {
                 if (Tools.isNotEmpty(parentId)) {
                     sysTableDict.setParentValue(parentId);
                 }
+                Map<String, Object> reqParams = HttpUtil.getReqParams();
+                sysTableDict.replaceParams(reqParams);
+                log.debug("tableName: {}", sysTableDict.getTableName());
                 List<? extends DictVo> sysDicts = dictService.queryByTableDict(sysTableDict, async);
                 dicts.addAll(sysDicts);
 //                sysDicts.forEach(dict -> {

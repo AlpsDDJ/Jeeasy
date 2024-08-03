@@ -4,18 +4,26 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.velocity.Template;
+import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
+import org.jeeasy.common.core.tools.Tools;
 import org.jeeasy.generate.domain.GenTable;
+import org.jeeasy.generate.domain.GenTemplate;
 import org.jeeasy.generate.domain.dto.GeneratorDto;
 import org.jeeasy.generate.generator.TableInfo;
 import org.jeeasy.generate.service.GenTableService;
+import org.jeeasy.generate.service.GenTemplateService;
 import org.jeeasy.generate.service.GeneratorService;
+import org.jeeasy.generate.service.vo.GenResultVo;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +32,8 @@ public class GeneratorServiceImpl implements GeneratorService {
 
     @Resource
     GenTableService genTableService;
+    @Resource
+    GenTemplateService templateService;
 
     @Resource
     VelocityEngine velocityEngine;
@@ -50,8 +60,8 @@ public class GeneratorServiceImpl implements GeneratorService {
                     throw new RuntimeException(e);
                 }
                 try (FileWriter fileWriter = new FileWriter(outFile)) {
-                    String type = item.getType();
-                    Template template = getTemplate(item.getTemplate());
+                    //String type = item.getType();
+                    Template template = getTemplateFromResources(item.getTemplate());
                     template.merge(tableInfo.toContext(), fileWriter);
                     //velocityEngine.evaluate(tableInfo.toContext(), fileWriter, "generator-" + type, template);
 
@@ -67,93 +77,45 @@ public class GeneratorServiceImpl implements GeneratorService {
             e.printStackTrace();
         }
 
-        //PackageConfig packageConfig = packageConfig(module);
-        //TemplateConfig templateConfig = templateConfig(table);
-        //InjectionConfig injectionConfig = injectionConfig(table, module);
-        //JeeasyAutoGenerator generator = null;
-        //try {
-        //    generator = new JeeasyAutoGenerator();
-        //} catch (Exception ignored) {
-        //    ignored.printStackTrace();
-        //}
-        //generator.setTemplate(templateConfig);
-        //generator.setPackageInfo(packageConfig);
-        //generator.setInjection(injectionConfig);
-        //generator.table(table);
-        //generator.execute();
-        //generator
     }
 
-    //protected  Optional<String> getTemplateFilePath(@NotNull Function<TemplateConfig, String> function) {
-    //    TemplateConfig templateConfig = this.getConfigBuilder().getTemplateConfig();
-    //    String filePath = (String)function.apply(templateConfig);
-    //    return StringUtils.isNotBlank(filePath) ? Optional.of(this.templateFilePath(filePath)) : Optional.empty();
-    //}
-    private Template getTemplate(String temp) {
+    @Override
+    public List<GenResultVo> genFiles(GeneratorDto module) {
+        String tableId = module.getTableId();
+        GenTable table = genTableService.getById(tableId);
+        genTableService.setFields(table);
+        log.debug("table ---> {}", table);
+        List<GeneratorDto.GeneratorFile> files = module.getFiles();
+        TableInfo tableInfo = new TableInfo(table, module);
+        List<GenResultVo> outFiles = new ArrayList<>();
+        files.forEach(item -> {
+            String templateType = item.getTemplateType();
+            String template = item.getTemplate();
+            GenTemplate genTemplate = templateService.getByTypeAndNFileName(templateType, template);
+            if (Tools.isNotEmpty(genTemplate)) {
+                outFiles.add(render(genTemplate, tableInfo.toContext(), item.getOutputName()));
+            } else {
+                log.warn("template not found ---> type: {}, file: {}", templateType, template);
+            }
+        });
+
+        return outFiles;
+    }
+
+    private Template getTemplateFromResources(String temp) {
+        //templateService.getById()
         return velocityEngine.getTemplate("templates/default/" + temp, Charset.defaultCharset().displayName());
         //return temp;
     }
 
-    //private PackageConfig packageConfig(GenModule module) {
-    //
-    //    String pkg = module.getPkg();
-    //    String moduleCode = module.getModuleCode();
-    //    pkg = pkg.replace("{module}", moduleCode);
-    //    return new PackageConfig.Builder()
-    //            .parent(pkg)
-    //            .moduleName(moduleCode)
-    //            .entity(module.getEntity())
-    //            .mapper(module.getMapper())
-    //            .xml(module.getXml())
-    //            .service(module.getService())
-    //            .serviceImpl(module.getServiceImpl())
-    //            .controller(module.getController())
-    //            //.other("other")
-    //            //.pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D://generator"))
-    //            .build();
-    //}
-    //
-    //private String getTemplatePath(GenTable table) {
-    //    String tableType = table.getTableType();
-    //    String templatePath = "/templates/";
-    //    if ("single".equals(tableType)) {
-    //        templatePath += "default";
-    //    } else {
-    //    }
-    //    return templatePath;
-    //}
-    //
-    //private TemplateConfig templateConfig(GenTable table) {
-    //    String templatePath = getTemplatePath(table);
-    //    return new TemplateConfig.Builder()
-    //            .disable(TemplateType.ENTITY)
-    //            .entity(templatePath + "/entity.java")
-    //            .service(templatePath + "/service.java")
-    //            .serviceImpl(templatePath + "/serviceImpl.java")
-    //            .mapper(templatePath + "/mapper.java")
-    //            .xml(templatePath + "/mapper.xml")
-    //            .controller(templatePath + "/controller.java")
-    //            .build();
-    //
-    //}
-    //
-    //private InjectionConfig injectionConfig(GenTable table, GenModule module) {
-    //    String templatePath = getTemplatePath(table);
-    //    String moduleName = module.getName();
-    //    String pascalModuleName = NamingCase.toPascalCase(moduleName);
-    //    String tableName = table.getName();
-    //    String pascalTableName = NamingCase.toPascalCase(tableName);
-    //    String webFilePath = String.format("/%s/%s", pascalModuleName, pascalTableName);
-    //    Map<String, String> wenFileMap = new HashMap<>();
-    //    wenFileMap.put(webFilePath + "/index.vue", templatePath + "/web/list.vm");
-    //    wenFileMap.put(webFilePath + "/model.ts", templatePath + "/web/model.vm");
-    //    return new InjectionConfig.Builder()
-    //            .beforeOutputFile((tableInfo, objectMap) -> {
-    //                log.info("tableInfo: {} objectMap: {}", tableInfo.getEntityName(), objectMap.size());
-    //            })
-    //            .customMap(Collections.singletonMap("table", table))
-    //            .customFile(wenFileMap)
-    //            .build();
-    //
-    //}
+    private GenResultVo render(GenTemplate genTemplate, Context context, String outPutName) {
+        StringWriter writer = new StringWriter();
+        Velocity.evaluate(context, writer, String.format("%s: %s", genTemplate.getType(), genTemplate.getFileName()), genTemplate.getContext());
+        GenResultVo resultVo = new GenResultVo();
+        resultVo.setName(genTemplate.getName());
+        resultVo.setContent(writer.toString());
+        resultVo.setOutputName(outPutName);
+        return resultVo;
+    }
+
 }

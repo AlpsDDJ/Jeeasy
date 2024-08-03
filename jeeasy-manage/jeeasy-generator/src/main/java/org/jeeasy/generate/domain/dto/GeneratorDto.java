@@ -13,6 +13,7 @@ public class GeneratorDto {
 
     @Data
     public static class GeneratorFile {
+        private String templateType = "default";
         private String pkg;
         private String path;
         private String type;

@@ -53,7 +53,12 @@ public class HttpUtil {
         } catch (IOException e1) {
             log.error("" + e1);
         }
-        return params;
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Map<String, Object> finalParams = params;
+        parameterMap.entrySet().stream().forEach(entry -> {
+            finalParams.put(entry.getKey(), entry.getValue()[0]);
+        });
+        return finalParams;
     }
 
     /**

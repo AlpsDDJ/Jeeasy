@@ -13,12 +13,14 @@ import org.jeeasy.ai.vo.ChatResponseVO;
 import org.jeeasy.common.core.domain.vo.R;
 import org.jeeasy.generate.domain.dto.GeneratorDto;
 import org.jeeasy.generate.service.GeneratorService;
+import org.jeeasy.generate.service.vo.GenResultVo;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,10 +36,10 @@ public class GeneratorController {
 
     @PostMapping
     @Operation(summary = "执行")
-    public R<?> generator(@RequestBody GeneratorDto module) {
+    public R<List<GenResultVo>> generator(@RequestBody GeneratorDto module) {
         log.info("module:{}", module);
-        generatorService.generator(module);
-        return R.ok();
+        //generatorService.genFiles(module);
+        return R.ok(generatorService.genFiles(module));
     }
 
     @GetMapping(value = "aiStream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
