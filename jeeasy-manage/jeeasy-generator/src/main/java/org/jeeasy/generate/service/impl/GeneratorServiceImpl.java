@@ -93,7 +93,8 @@ public class GeneratorServiceImpl implements GeneratorService {
             String template = item.getTemplate();
             GenTemplate genTemplate = templateService.getByTypeAndNFileName(templateType, template);
             if (Tools.isNotEmpty(genTemplate)) {
-                outFiles.add(render(genTemplate, tableInfo.toContext(), item.getOutputName()));
+                Context context = tableInfo.toContext();
+                outFiles.add(render(genTemplate, context, item.getOutputName()));
             } else {
                 log.warn("template not found ---> type: {}, file: {}", templateType, template);
             }

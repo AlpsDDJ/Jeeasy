@@ -45,6 +45,12 @@ public class GenTable extends Model<GenTable> {
     /**
      * 表描述
      */
+    @Schema(description = "表摘要")
+    private String summary;
+
+    /**
+     * 表描述
+     */
     @Schema(description = "表描述")
     private String description;
 
