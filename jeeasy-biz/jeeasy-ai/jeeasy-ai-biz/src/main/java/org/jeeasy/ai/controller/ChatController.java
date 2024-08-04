@@ -7,6 +7,7 @@ import org.jeeasy.ai.dto.ChatMessageDTO;
 import org.jeeasy.ai.service.IAiChatService;
 import org.jeeasy.ai.vo.ChatResponseVO;
 import org.jeeasy.ai.vo.SseMessage;
+import org.jeeasy.common.core.annotation.controller.RateLimit;
 import org.jeeasy.common.core.domain.vo.R;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -26,14 +27,18 @@ public class ChatController {
     //private final OpenAiChatModel openAIClient;
     //private final AiChatAppService chatAppService;
 
+    private final static String RATE_LIMIT_KEY = "ai-chat";
+
     @PostMapping
     @Operation(summary = "普通对话", description = "普通对话")
+    @RateLimit(max = 5, time = 60, key = RATE_LIMIT_KEY)
     public Mono<R<ChatResponseVO>> chat(@RequestBody ChatMessageDTO messageDTO) {
         return Mono.justOrEmpty(aiChatService.chat(messageDTO));
     }
 
     @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(summary = "流式对话", description = "流式对话")
+    @RateLimit(max = 5, time = 60, key = RATE_LIMIT_KEY)
     public Flux<SseMessage> fluxChat(@RequestBody ChatMessageDTO messageDTO) {
         return aiChatService.fluxChat(messageDTO);
     }
@@ -42,18 +47,21 @@ public class ChatController {
     @Deprecated
     @PostMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(summary = "sse流式对话", description = "sse流式对话")
+    @RateLimit(max = 5, time = 60, key = RATE_LIMIT_KEY)
     public SseEmitter chatSse(@RequestBody ChatMessageDTO messageDTO) {
         return aiChatService.streamChat(messageDTO);
     }
 
     @GetMapping(value = "/test", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(summary = "流式对话", description = "流式对话")
+    @RateLimit(max = 5, time = 60, key = RATE_LIMIT_KEY)
     public SseEmitter test() {
         return aiChatService.streamChat(ChatMessageDTO.withMessage("你好！"));
     }
 
     @PostMapping(value = "/stream")
     @Operation(summary = "流式对话", description = "流式对话")
+    @RateLimit(max = 5, time = 60, key = RATE_LIMIT_KEY)
     public SseEmitter streamChat(@RequestBody ChatMessageDTO messageDTO) {
         SseEmitter sseEmitter = aiChatService.streamChat(messageDTO);
         //return Mono.justOrEmpty(sseEmitter);

@@ -142,9 +142,10 @@ public class TableInfo extends GenTable {
             } else {
                 if (showTable == 0) {
                     hiddenTypes.add("'list'");
+                    hiddenTypes.add("'view'");
                 }
                 if (showSearch == 0) {
-                    hiddenTypes.add("'search'");
+                    hiddenTypes.add("'query'");
                 }
                 if (showAdd + showEdit == 0) {
                     hiddenTypes.add("'form'");
