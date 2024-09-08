@@ -15,6 +15,7 @@ public class ChatMessageDTO {
     private String sessionId;
     private String appCode;
     private Integer maxHistory = 0;
+    private String model;
 
     private Map<String, Object> params;
 

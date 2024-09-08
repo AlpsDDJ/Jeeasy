@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.jeeasy.common.core.annotation.controller.RateLimit;
 import org.jeeasy.common.core.exception.JeeasyException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Aspect
 @Component
+@ConditionalOnProperty(prefix = "spring.profiles.active", value = {"sit", "prod"})
 public class RateLimitAspect {
     private final RedisTemplate<String, String> redisTemplate;
     private final HttpServletRequest request;
@@ -39,7 +41,7 @@ public class RateLimitAspect {
         long time = rateLimit.time();
         int max = rateLimit.max();
         Long expire = redisTemplate.getExpire(key, unit);
-        
+
         if (expire == null || expire <= 0) {
             redisTemplate.opsForValue().set(key, "1", time, unit);
         } else {

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -125,6 +126,23 @@ public class SimpleCurdController<S extends IService<T>, T> {
             return R.ok("删除成功");
         } else {
             return R.error("删除失败");
+        }
+    }
+
+    /**
+     * 根据ids批量删除对象
+     *
+     * @param ids
+     * @return {@link R<?>}
+     * @author mobie
+     * @date 2020/11/21 16:24
+     */
+    protected R<?> batchDelete(Collection<?> ids) {
+        if (Tools.isEmpty(ids)) {
+            return R.error("未选中数据");
+        } else {
+            service.removeByIds(ids);
+            return R.ok("未选中数据");
         }
     }
 

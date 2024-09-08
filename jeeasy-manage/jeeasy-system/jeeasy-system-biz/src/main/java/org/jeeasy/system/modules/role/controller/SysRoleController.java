@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.jeeasy.common.core.annotation.dict.DictTranslation;
 import org.jeeasy.common.core.base.SimpleCurdController;
 import org.jeeasy.common.core.domain.model.QueryPageModel;
@@ -16,7 +17,6 @@ import org.jeeasy.system.modules.role.domian.SysRolePermission;
 import org.jeeasy.system.modules.role.domian.model.RolePermissionsModel;
 import org.jeeasy.system.modules.role.service.SysRolePermissionService;
 import org.jeeasy.system.modules.role.service.SysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,12 +30,11 @@ import java.util.List;
 @RestController
 @Tag(name = "系统角色")
 @RequestMapping("/sys/role")
+@RequiredArgsConstructor
 public class SysRoleController extends SimpleCurdController<SysRoleService, SysRole> {
 
-    @Autowired
-    private SysPermissionService permissionService;
-    @Autowired
-    private SysRolePermissionService rolePermissionService;
+    private final SysPermissionService permissionService;
+    private final SysRolePermissionService rolePermissionService;
 
     @GetMapping
     @DictTranslation
