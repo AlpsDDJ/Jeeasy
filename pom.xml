@@ -64,7 +64,7 @@
         <!-- 数 据 源 版 本 -->
         <druid.version>1.2.23</druid.version>
         <!-- Mysql 版 本 -->
-        <mysql.version>8.0.33</mysql.version>
+        <mysql.version>8.2.0</mysql.version>
         <!-- MyBatis 版 本 -->
         <!--        <mybatis.version>2.3.2</mybatis.version>-->
         <!-- mybatis-plus 依 赖 -->
@@ -93,7 +93,7 @@
         <!-- springdoc 接口文档 -->
         <springdoc.version>1.6.11</springdoc.version>
         <!-- google.guava -->
-        <guava.version>30.1-jre</guava.version>
+        <guava.version>33.3.0-jre</guava.version>
     </properties>
 
     <dependencyManagement>

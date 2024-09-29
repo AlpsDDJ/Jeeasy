@@ -72,8 +72,7 @@ public class ChatController {
     @Operation(summary = "流式对话", description = "流式对话")
     @RateLimit(max = RATE_LIMIT_MAX, time = RATE_LIMIT_TIME, key = RATE_LIMIT_KEY, unit = TimeUnit.HOURS)
     public SseEmitter streamChat(@RequestBody ChatMessageDTO messageDTO) {
-        SseEmitter sseEmitter = aiChatService.streamChat(messageDTO);
         //return Mono.justOrEmpty(sseEmitter);
-        return sseEmitter;
+        return aiChatService.streamChat(messageDTO);
     }
 }
