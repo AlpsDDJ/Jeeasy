@@ -86,7 +86,7 @@
 
             <!-- 收集运行脚本 -->
             <resource>
-                <directory>../../../scripts</directory>
+                <directory>.../scripts</directory>
                 <targetPath>${project.build.directory}/bin</targetPath>
                 <filtering>true</filtering>
                 <includes>
@@ -191,7 +191,7 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>../../../scripts/assembly.xml</descriptor>
+                                <descriptor>../scripts/assembly.xml</descriptor>
                             </descriptors>
                             <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
                             <finalName>${project.name}-${project.version}</finalName>
