@@ -14,7 +14,7 @@
 
 
     <properties>
-        <application.main.class>org.jeeasy.org.jeeasy.biz.fastnote.FastNoteApplication</application.main.class>
+        <application.main.class>org.jeeasy.JeeasyEntranceApplication</application.main.class>
     </properties>
 
     <!-- 依赖管理 -->
@@ -27,14 +27,27 @@
         <dependency>
             <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-system-biz</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-ai-biz</artifactId>
-            <version>${project.version}</version>
+            <artifactId>jeeasy-ai-api</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>standalone</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mobie.alps</groupId>
+                    <artifactId>jeeasy-ai-biz</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <!-- 构建工具 -->
     <build>
@@ -149,6 +162,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.0</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>

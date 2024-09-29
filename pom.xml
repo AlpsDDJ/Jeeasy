@@ -89,7 +89,7 @@
         <!-- 模 板 引 擎 版 本 -->
         <velocity.version>1.7</velocity.version>
         <!-- hutool 工 具 箱 版 本 -->
-        <hutool.version>5.8.23</hutool.version>
+        <hutool.version>5.8.25</hutool.version>
         <!-- springdoc 接口文档 -->
         <springdoc.version>1.6.11</springdoc.version>
         <!-- google.guava -->
@@ -371,6 +371,18 @@
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>cloud</id>
+            <properties>
+                <profiles.active>cloud</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>standalone</id>
+            <properties>
+                <profiles.active>standalone</profiles.active>
+            </properties>
+        </profile>
         <profile>
             <!--不同环境Profile的唯一id-->
             <id>dev</id>

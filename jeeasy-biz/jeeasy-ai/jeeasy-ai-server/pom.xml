@@ -22,10 +22,6 @@
         <!-- 模块引用 -->
         <dependency>
             <groupId>mobie.alps</groupId>
-            <artifactId>jeeasy-cloud-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mobie.alps</groupId>
             <artifactId>jeeasy-system-api</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -35,6 +31,18 @@
             <version>${revision}</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>cloud</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mobie.alps</groupId>
+                    <artifactId>jeeasy-cloud-base</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <!-- 构建工具 -->
     <build>

@@ -9,13 +9,13 @@ spring:
         base-url: http://127.0.0.1:11434/
         api-key: sk-43e3f0a374c64e1ca2929fb827de80f1
         options:
-          model: 'qwen-max'
+          model: qwen2.5
           temperature: 0.7
     ollama:
       base-url: http://127.0.0.1:11434/
       chat:
         options:
-          model: qwen2
+          model: qwen2.5
           temperature: 0.7
           top-k: 50
 

@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class ChatController {
 
-    @Qualifier("OllamaService")
     @Resource
+    @Qualifier("OllamaService")
     private IAiChatService aiChatService;
 
     //@Qualifier("OllamaService")
@@ -42,7 +42,6 @@ public class ChatController {
     @Operation(summary = "普通对话", description = "普通对话")
     @RateLimit(max = RATE_LIMIT_MAX, time = RATE_LIMIT_TIME, key = RATE_LIMIT_KEY, unit = TimeUnit.HOURS)
     public Mono<R<ChatResponseVO>> chat(@RequestBody ChatMessageDTO messageDTO) {
-
         return Mono.justOrEmpty(aiChatService.chat(messageDTO));
     }
 
