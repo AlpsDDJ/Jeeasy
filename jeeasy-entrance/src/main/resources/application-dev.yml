@@ -1,15 +1,51 @@
 server:
   # 端 口
-  port: 9999
+  port: 6666
 #  servlet:
 #    context-path: /jeeasy
 
 # 数据源配置
 spring:
-  # Druid Pool 运行环境
-  #  profiles:
-  #    # 运 行 环 境
-  #    active: '@profiles.active@'
+  ai:
+    openai:
+      api-key: sk-43e3f0a374c64e1ca2929fb827de80f1
+      chat:
+        #        base-url: https://dashscope.aliyuncs.com/compatible-mode/
+        base-url: http://127.0.0.1:11434/
+        api-key: sk-43e3f0a374c64e1ca2929fb827de80f1
+        options:
+          model: 'qwen-max'
+          temperature: 0.7
+    ollama:
+      base-url: http://127.0.0.1:11434/
+      chat:
+        options:
+          model: qwen2
+          temperature: 0.7
+          top-k: 50
+  # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开） -------
+  # 是否打开模式三
+  isHttp: true
+  # 接口调用秘钥（用于SSO模式三的单点注销功能）
+  secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+  # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明）
+  path:
+    base: /**
+    common-exclude:
+      - /sso/doLogin
+      - /api-docs/**
+      - /swagger-ui/**
+      - /webjars/**
+      - /doc.html
+      - /favicon.ico
+    exclude:
+      - /api/fn/member/login
+      - /api/fn/member/register
+    rules:
+      - path: /api/fn/**
+        roles:
+          - ROLE_FN_MEMBER
+
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   #  mvc:
@@ -30,9 +66,9 @@ spring:
     dynamic:
       datasource:
         master:
-          url: jdbc:mysql://data.jeeasy.cn:3306/jeeasy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-          username: jeeasy
-          password: 26yMBG8hRRNKrEMT
+          url: jdbc:mysql://data_jeeasy.cn:3306/jeeasy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: 123123
           driver-class-name: com.mysql.cj.jdbc.Driver
       primary: master #设置默认的数据源或者数据源组,默认值即为master
       strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
@@ -58,19 +94,19 @@ spring:
         # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
         filters: stat,wall,slf4j
         # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-#        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
-
-  redis:
-    host: data.jeeasy.cn
-    password: KaK6Jm55PLaJyWtW
-    port: 6379
-    database: 10
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: 1ms
-        max-idle: 8
-        min-idle: 0
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+  data:
+    redis:
+      host: data_jeeasy.cn
+      #password: KaK6Jm55PLaJyWtW
+      port: 6379
+      database: 10
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: 1ms
+          max-idle: 8
+          min-idle: 0
 
 sa-token:
   # -------------- SSO-模式一相关配置  (非模式一不需要配置)
@@ -130,7 +166,7 @@ mybatis-plus:
   configuration:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-   # logging 配置
+    # logging 配置
 #   logging:
 #     # 日 志 级 别
 #     level:
@@ -142,6 +178,7 @@ logging:
   level:
     # 日 志 包 配 置
     org.jeeasy.*: DEBUG
+    com.lt.crm.service.api: DEBUG
 
 # actable的原配置信息仅保留了如下几项
 # MPE以在代码中对其做了默认配置，正常无需显式声明配置，忽略即可
@@ -153,21 +190,23 @@ logging:
 # update：系统启动后，会自动判断哪些表是新建的，哪些字段要修改类型等，哪些字段要删除，哪些字段要新增，该操作不会破坏原有数据(更改字段名称的情况下，会认为是新增字段)。
 # add：系统启动后，只做新增，比如新增表/新增字段/新增索引/新增唯一约束的功能，而不会去做修改和删除的操作。
 
-actable:
-  table:
-    auto: update
-  # 您的model包路径，多个路径可以用分号或者逗号隔开，会递归这个目录下的全部目录中的java对象，支持类似com.bz.**.entity
-  model:
-    pack: org.jeeasy.**.domain
-  # 数据库类型，目前也仅支持mysql
-  database:
-    type: mysql
-  # 自己定义的索引前缀，该配置项不设置默认使用actable_idx_
-  index:
-    prefix: jeeasy_idx_
-  # 自己定义的唯一约束前缀，该配置项不设置默认使用actable_uni_
-  unique:
-    prefix: jeeasy_uni_
+mpe:
+  auto-table:
+    mode: update
+    # 您的model包路径，多个路径可以用分号或者逗号隔开，会递归这个目录下的全部目录中的java对象，支持类似com.bz.**.entity
+    model-package: org.jeeasy.**.domain
+    # 数据库类型，目前也仅支持mysql
+    # database:
+    #   type: mysql
+    # 自己定义的索引前缀，该配置项不设置默认使用actable_idx_
+    index-prefix: jeeasy_idx_
+    # 自动删除名称不匹配的字段：强烈不建议开启，会发生丢失数据等不可逆的操作。
+    auto-drop-column: false
+    # 是否自动删除名称不匹配的索引
+    auto-drop-index: true
+    # # 自己定义的唯一约束前缀，该配置项不设置默认使用actable_uni_
+    # unique:
+    #   prefix: jeeasy_uni_
 
 springdoc:
   api-docs:
@@ -181,15 +220,44 @@ springdoc:
     disable-swagger-default-url: true
   group-configs:
     #分组名
-    - group: FastNote Manage
+    - group: system
       #按路径匹配
-      packages-to-scan: org.jeeasy.biz.fastnote
-      display-name: FastNote 后管
-      paths-to-match: /manage/**
-      displayName: Fast Note
-    - group: FastNote API
-      #按路径匹配
-      packages-to-scan: org.jeeasy.biz.fastnote
-      display-name: FastNote API
-      paths-to-match: /api/**
+      packages-to-scan: org.jeeasy.system.modules
+      display-name: 系统管理
+      #分组名
+    - group: common
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.common
+      display-name: 公共接口
+    - group: 统一认证
+      #按包路径匹配
+      paths-to-match: /sso/*
+      display-name: 统一认证
+    - group: generate
+      #按包路径匹配
+      packages-to-scan: org.jeeasy.generate
+      display-name: 代码生成
 
+jeeasy:
+  dict:
+    dict-table-flag: ["@", "#"]
+    dict-text-suffix: _dict
+    # 根据属性名称自动翻译字典，无需注释 @Dict
+    auto-translate-enum-class:
+      - org.jeeasy.common.core.enums.EnableFlagEnum
+      - org.jeeasy.common.core.enums.DelFlagEnum
+      - org.jeeasy.common.core.enums.SexEnum
+  modules:
+    system:
+      # 登录图片验证码开关
+      enable-captcha: false
+  cache:
+    manager:
+      # cache自定义键 过期时间
+      configs:
+        - key: menu
+          second: 300
+        - key: user
+          second: 1800
+  #  system:
+  #    enable-captcha: false

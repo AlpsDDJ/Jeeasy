@@ -29,6 +29,11 @@
             <artifactId>jeeasy-system-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>mobie.alps</groupId>
+            <artifactId>jeeasy-ai-biz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 构建工具 -->
@@ -68,7 +73,7 @@
 
             <!-- 收集运行脚本 -->
             <resource>
-                <directory>src/main/resources/scripts</directory>
+                <directory>../../../scripts</directory>
                 <targetPath>${project.build.directory}/bin</targetPath>
                 <filtering>true</filtering>
                 <includes>
@@ -81,11 +86,15 @@
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/conf</targetPath>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/rebel.xml</exclude>
+                    <exclude>**/scripts/**</exclude>
+                </excludes>
                 <includes>
-                    <include>application.yml</include>
-                    <include>application-${profiles.active}.yml</include>
-                    <include>*.xml</include>
-                    <include>*.properties</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.vm</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
 
@@ -160,7 +169,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>dfrp-portal</id>
+                        <id>zip</id>
                         <configuration>
                             <archive>
                                 <manifest>
@@ -168,9 +177,10 @@
                                 </manifest>
                             </archive>
                             <descriptors>
-                                <descriptor>src/main/resources/scripts/assembly.xml</descriptor>
+                                <descriptor>../../../scripts/assembly.xml</descriptor>
                             </descriptors>
-                            <finalName>${project.artifactId}</finalName>
+                            <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
+                            <finalName>${project.name}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>

@@ -5,10 +5,13 @@ server:
 
 # Spring 配置
 spring:
+  codec:
+    max-in-memory-size: 5000KB
   # Druid Pool 运行环境
-  #  profiles:
-  #    # 运 行 环 境
-  #    active: '@profiles.active@'
+  profiles:
+    # 运 行 环 境
+    active: @profiles.active@
+
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   #  mvc:
