@@ -41,183 +41,25 @@
                     <artifactId>jeeasy-cloud-base</artifactId>
                 </dependency>
             </dependencies>
+            <!-- 构建工具 -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
-    <!-- 构建工具 -->
-    <build>
-        <plugins>
-            <!-- 选择性地启用父级模块中的插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-<!--
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*Mapper.xml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>*.properties</include>
-                    <include>*.yml</include>
-                    <include>**/*.xml</include>
-                    <include>*.jet</include>
-                    <include>*.bat</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <excludes>
-                    <exclude>scripts/**</exclude>
-                    <exclude>sdk/**</exclude>
-                    <exclude>*.properties</exclude>
-                    <exclude>*.yml</exclude>
-                    <exclude>**/*.xml</exclude>
-                    <exclude>*.jet</exclude>
-                </excludes>
-            </resource>
-
-
-            &lt;!&ndash; 收集运行脚本 &ndash;&gt;
-            <resource>
-                <directory>../../../scripts</directory>
-                <targetPath>${project.build.directory}/bin</targetPath>
-                <filtering>true</filtering>
-                <includes>
-                    <include>*.sh</include>
-                    <include>*.bat</include>
-                </includes>
-            </resource>
-            &lt;!&ndash; 收集配置文件 &ndash;&gt;
-            <resource>
-                <directory>src/main/resources</directory>
-                <targetPath>${project.build.directory}/conf</targetPath>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/rebel.xml</exclude>
-                    <exclude>**/scripts/**</exclude>
-                </excludes>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.vm</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-
-            &lt;!&ndash; 收集静态资源文件 &ndash;&gt;
-            <resource>
-                <directory>src/main/resources/static</directory>
-                <targetPath>${project.build.directory}/static</targetPath>
-            </resource>
-
-            &lt;!&ndash; 收集sdk文件 &ndash;&gt;
-            <resource>
-                <directory>src/main/resources/sdk</directory>
-                <targetPath>${project.build.directory}/sdk</targetPath>
-            </resource>
-
-            &lt;!&ndash; 收集手动导入的jar包 &ndash;&gt;
-            <resource>
-                <directory>lib</directory>
-                <targetPath>${project.build.directory}/lib</targetPath>
-            </resource>
-        </resources>
-        <plugins>
-            &lt;!&ndash; <plugin> &ndash;&gt;
-            &lt;!&ndash; <artifactId>maven-war-plugin</artifactId> &ndash;&gt;
-            &lt;!&ndash; <version>3.0.0</version> &ndash;&gt;
-            &lt;!&ndash; </plugin> &ndash;&gt;
-
-            &lt;!&ndash; 2.用于生成jar包的plugin &ndash;&gt;
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                    <excludes>
-                        <exclude>static/**</exclude>
-                        <exclude>*.properties</exclude>
-                        <exclude>*.yml</exclude>
-                        <exclude>*.xml</exclude>
-                        <exclude>*.jet</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            &lt;!&ndash; 3.用于拷贝maven依赖(lib)的plugin &ndash;&gt;
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            &lt;!&ndash; 打包zip &ndash;&gt;
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>zip</id>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>${application.main.class}</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptors>
-                                <descriptor>../../../scripts/assembly.xml</descriptor>
-                            </descriptors>
-                            <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
-                            <finalName>${project.name}-${project.version}</finalName>
-                        </configuration>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
--->
 
 </project>
