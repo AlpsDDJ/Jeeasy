@@ -98,7 +98,7 @@ spring:
   data:
     redis:
       host: data_jeeasy.cn
-      #password: KaK6Jm55PLaJyWtW
+      password: qixiu2023
       port: 6379
       database: 10
       lettuce:
