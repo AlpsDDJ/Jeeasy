@@ -30,6 +30,7 @@
         <main.basedir>${basedir}</main.basedir>
         <!-- JDK 版本 -->
         <java.version>17</java.version>
+        <application.main.class>jeeasy</application.main.class>
         <java-home>/www/server/java/jdk-17.0.8/</java-home>
         <sentinel-server>jeeasy-cloud:8849</sentinel-server>
         <nacos-server>jeeasy-cloud:8848</nacos-server>
@@ -389,6 +390,7 @@
             <properties>
                 <!--profiles.active是自定义的字段（名字随便起），自定义字段可以有多个-->
                 <profiles.active>dev</profiles.active>
+                <java-home>/home/Alps/.jabba/jdk/openjdk@1.17.0/</java-home>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -410,112 +412,142 @@
 
     <!-- 构建工具 -->
     <build>
-        <finalName>${project.artifactId}</finalName>
+<!--        <sourceDirectory>src/main/java</sourceDirectory>-->
         <resources>
-            <!-- 加载 .Java 下的 XML 文件 -->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**/*.xml</include>
+                    <include>**/*Mapper.xml</include>
                 </includes>
             </resource>
-            <!-- 加载 .Java 下的 XML 文件 -->
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
                 <includes>
+                    <include>*.properties</include>
+                    <include>*.yml</include>
                     <include>**/*.xml</include>
+                    <include>*.jet</include>
+                    <include>*.bat</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>scripts/**</exclude>
+                    <exclude>sdk/**</exclude>
+                    <exclude>*.properties</exclude>
+                    <exclude>*.yml</exclude>
+                    <exclude>**/*.xml</exclude>
+                    <exclude>*.jet</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>${maven.multiModuleProjectDirectory}/scripts</directory>
+                <targetPath>${project.build.directory}/bin</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.sh</include>
+                    <include>*.bat</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/conf</targetPath>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/rebel.xml</exclude>
+                    <exclude>**/scripts/**</exclude>
+                </excludes>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.vm</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/static</directory>
+                <targetPath>${project.build.directory}/static</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources/sdk</directory>
+                <targetPath>${project.build.directory}/sdk</targetPath>
+            </resource>
+            <resource>
+                <directory>lib</directory>
+                <targetPath>${project.build.directory}/lib</targetPath>
+            </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <parameters>true</parameters>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <!-- 配置生成源代码jar的plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.1</version>
-                <configuration>
-                    <attach>true</attach>
-                    <!-- 配置源代码jar文件的存放路径 -->
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <!--<goals>
-                            <goal>jar</goal>
-                        </goals>-->
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- 使用方式命令： versions:set -DoldVersion=* -DnewVersion=1.2.1 -DprocessAllModules=true -DallowSnapshots=true -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <generateBackupPoms>false</generateBackupPoms>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.2</version>
-            </plugin>
-
-            <!-- javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.10.0</version>
-                <!--<configuration>
-                    <reportOutputDirectory>../javadocs</reportOutputDirectory>
-                    <destDir>easy-delivery</destDir>
-                </configuration>-->
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <configuration>
-                    <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
-                    <flattenedPomFilename>pom-xml-flattened</flattenedPomFilename>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!-- 构建工具 --><plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <classpathPrefix>lib/</classpathPrefix>
+                            </manifest>
+                        </archive>
+                        <excludes>
+                            <exclude>static/**</exclude>
+                            <exclude>*.properties</exclude>
+                            <exclude>*.yml</exclude>
+                            <exclude>*.xml</exclude>
+                            <exclude>*.jet</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>zip</id>
+                            <configuration>
+                                <archive>
+                                    <manifest>
+                                        <mainClass>${application.main.class}</mainClass>
+                                    </manifest>
+                                </archive>
+                                <descriptors>
+                                    <descriptor>${maven.multiModuleProjectDirectory}/scripts/assembly.xml</descriptor>
+                                </descriptors>
+                                <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
+                                <finalName>${project.artifactId}-${project.version}</finalName>
+                            </configuration>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
-
     <!--<repositories>
         <repository>
             <id>aliyun-spring</id>

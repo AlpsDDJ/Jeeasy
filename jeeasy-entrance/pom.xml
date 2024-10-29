@@ -50,6 +50,7 @@
     </profiles>
 
     <!-- 构建工具 -->
+<!--
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
@@ -84,9 +85,9 @@
             </resource>
 
 
-            <!-- 收集运行脚本 -->
+            &lt;!&ndash; 收集运行脚本 &ndash;&gt;
             <resource>
-                <directory>.../scripts</directory>
+                <directory>../scripts</directory>
                 <targetPath>${project.build.directory}/bin</targetPath>
                 <filtering>true</filtering>
                 <includes>
@@ -94,7 +95,7 @@
                     <include>*.bat</include>
                 </includes>
             </resource>
-            <!-- 收集配置文件 -->
+            &lt;!&ndash; 收集配置文件 &ndash;&gt;
             <resource>
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/conf</targetPath>
@@ -111,31 +112,31 @@
                 </includes>
             </resource>
 
-            <!-- 收集静态资源文件 -->
+            &lt;!&ndash; 收集静态资源文件 &ndash;&gt;
             <resource>
                 <directory>src/main/resources/static</directory>
                 <targetPath>${project.build.directory}/static</targetPath>
             </resource>
 
-            <!-- 收集sdk文件 -->
+            &lt;!&ndash; 收集sdk文件 &ndash;&gt;
             <resource>
                 <directory>src/main/resources/sdk</directory>
                 <targetPath>${project.build.directory}/sdk</targetPath>
             </resource>
 
-            <!-- 收集手动导入的jar包 -->
+            &lt;!&ndash; 收集手动导入的jar包 &ndash;&gt;
             <resource>
                 <directory>lib</directory>
                 <targetPath>${project.build.directory}/lib</targetPath>
             </resource>
         </resources>
         <plugins>
-            <!-- <plugin> -->
-            <!-- <artifactId>maven-war-plugin</artifactId> -->
-            <!-- <version>3.0.0</version> -->
-            <!-- </plugin> -->
+            &lt;!&ndash; <plugin> &ndash;&gt;
+            &lt;!&ndash; <artifactId>maven-war-plugin</artifactId> &ndash;&gt;
+            &lt;!&ndash; <version>3.0.0</version> &ndash;&gt;
+            &lt;!&ndash; </plugin> &ndash;&gt;
 
-            <!-- 2.用于生成jar包的plugin -->
+            &lt;!&ndash; 2.用于生成jar包的plugin &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -158,7 +159,7 @@
                 </configuration>
             </plugin>
 
-            <!-- 3.用于拷贝maven依赖(lib)的plugin -->
+            &lt;!&ndash; 3.用于拷贝maven依赖(lib)的plugin &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -177,7 +178,7 @@
                 </executions>
             </plugin>
 
-            <!-- 打包zip -->
+            &lt;!&ndash; 打包zip &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -194,7 +195,7 @@
                                 <descriptor>../scripts/assembly.xml</descriptor>
                             </descriptors>
                             <outputDirectory>./target/zip/${profiles.active}/</outputDirectory>
-                            <finalName>${project.name}-${project.version}</finalName>
+                            <finalName>${project.artifactId}-${project.version}</finalName>
                         </configuration>
                         <phase>package</phase>
                         <goals>
@@ -202,6 +203,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+        </plugins>
+    </build>
+-->
+    <build>
+        <plugins>
+            <!-- 选择性地启用父级模块中的插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
